@@ -1,0 +1,321 @@
+package fhires
+
+import v2 "encoding/json/v2"
+
+// An event (i.e.
+//
+// any change to current patient status) that may be related to unintended effects on a patient or research participant. The unintended effects may require additional monitoring, treatment, hospitalization, or may result in death. The AdverseEvent resource also extends to potential or avoided events that could have had such effects. There are two major domains where the AdverseEvent resource is expected to be used. One is in clinical care reported adverse events and the other is in reporting adverse events in clinical  research trial management.  Adverse events can be reported by healthcare providers, patients, caregivers or by medical products manufacturers.  Given the differences between these two concepts, we recommend consulting the domain specific implementation guides when implementing the AdverseEvent Resource. The implementation guides include specific extensions, value sets and constraints.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/StructureDefinition/AdverseEvent
+type AdverseEvent struct {
+	// The logical id of the resource, as used in the URL for the resource.
+	//
+	// Once assigned, this value never changes.
+	//
+	// Comment: Within the context of the FHIR RESTful interactions, the resource has an id except for cases like the create and conditional update. Otherwise, the use of the resouce id depends on the given use case.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// The metadata about the resource.
+	//
+	// This is content that is maintained by the infrastructure. Changes to the content might not always be associated with version changes to the resource.
+	Meta *Meta `bson:"meta,omitempty" json:"meta,omitempty" xml:"meta,omitempty"`
+	// A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content.
+	//
+	// Often, this is a reference to an implementation guide that defines the special rules along with other profiles etc.
+	//
+	// Comment: Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. Often, when used, the URL is a reference to an implementation guide that defines these special rules as part of its narrative along with other profiles, value sets, etc.
+	ImplicitRules *string `bson:"implicitRules,omitempty" json:"implicitRules,omitempty" xml:"implicitRules,omitempty"`
+	// The base language in which the resource is written.
+	//
+	// Comment: Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource. Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).
+	Language *string `bson:"language,omitempty" json:"language,omitempty" xml:"language,omitempty"`
+	// A human-readable narrative that contains a summary of the resource and can be used to represent the content of the resource to a human.
+	//
+	// The narrative need not encode all the structured data, but is required to contain sufficient detail to make it "clinically safe" for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety.
+	//
+	// Comment: Contained resources do not have a narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a "text blob" or where text is additionally entered raw or narrated and encoded information is added later.
+	Text *Narrative `bson:"text,omitempty" json:"text,omitempty" xml:"text,omitempty"`
+	// These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, nor can they have their own independent transaction scope.
+	//
+	// This is allowed to be a Parameters resource if and only if it is referenced by a resource that provides context/meaning.
+	//
+	// Comment: This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again. Contained resources may have profiles and tags in their meta elements, but SHALL NOT have security labels.
+	// May be used to represent additional information that is not part of the basic definition of the resource.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// Business identifiers assigned to this adverse event by the performer or other systems which remain constant as the resource is updated and propagates from server to server.
+	//
+	// Comment: This is a business identifier, not a resource identifier (see [discussion](resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number.
+	Identifier []Identifier `bson:"identifier,omitempty" json:"identifier,omitempty" xml:"identifier,omitempty"`
+	// The current state of the adverse event or potential adverse event.
+	//
+	// Comment: This is not the reporting of the event to any regulatory or quality organization.  This is not the outcome of the patient's condition.
+	Status AdverseEventStatus `bson:"status" json:"status" xml:"status"`
+	// Whether the event actually happened or was a near miss.
+	//
+	// Note that this is independent of whether anyone was affected or harmed or how severely.
+	//
+	// Comment: AllergyIntolerance should be used for the initial capture or recording of the individual's propensity to an adverse reaction to a substance.  If an AllergyIntolerance does not exist, then an adverse reaction should be recorded as an AllergyIntolerance. If an AllergyIntolerance does exist and the substance was given, then an adverse reaction should be recorded as an AdverseEvent due to the aberrant workflow.
+	Actuality AdverseEventActuality `bson:"actuality" json:"actuality" xml:"actuality"`
+	// The overall type of event, intended for search and filtering purposes.
+	Category []CodeableConcept `bson:"category,omitempty" json:"category,omitempty" xml:"category,omitempty"`
+	// Specific event that occurred or that was averted, such as patient fall, wrong organ removed, or wrong blood transfused.
+	Code *CodeableConcept `bson:"code,omitempty" json:"code,omitempty" xml:"code,omitempty"`
+	// This subject or group impacted by the event.
+	//
+	// Comment: If AdverseEvent.resultingEffect differs among members of the group, then use Patient as the subject.
+	Subject Reference `bson:"subject" json:"subject" xml:"subject"`
+	// The Encounter associated with the start of the AdverseEvent.
+	//
+	// Comment: This will typically be the encounter the event occurred within, but some activities may be initiated prior to or after the official completion of an encounter but still be tied to the context of the encounter. For example, if a medication administration was considered an adverse event because it resulted in a rash, then the encounter when the medication administration was given is the associated encounter. If the patient reports the AdverseEvent during a second encounter, that second encounter is not the associated encounter.
+	Encounter *Reference `bson:"encounter,omitempty" json:"encounter,omitempty" xml:"encounter,omitempty"`
+	// The date (and perhaps time) when the adverse event occurred.
+	OccurrenceDateTime *string `bson:"occurrenceDateTime,omitempty" json:"occurrenceDateTime,omitempty" xml:"occurrenceDateTime,omitempty"`
+	OccurrencePeriod   *Period `bson:"occurrencePeriod,omitempty" json:"occurrencePeriod,omitempty" xml:"occurrencePeriod,omitempty"`
+	OccurrenceTiming   *Timing `bson:"occurrenceTiming,omitempty" json:"occurrenceTiming,omitempty" xml:"occurrenceTiming,omitempty"`
+	// Estimated or actual date the AdverseEvent began, in the opinion of the reporter.
+	Detected *string `bson:"detected,omitempty" json:"detected,omitempty" xml:"detected,omitempty"`
+	// The date on which the existence of the AdverseEvent was first recorded.
+	//
+	// Comment: The recordedDate represents the date when this particular AdverseEvent record was created in the system, not the date of the most recent update.  The date of the last record modification can be retrieved from the resource metadata.
+	RecordedDate *string `bson:"recordedDate,omitempty" json:"recordedDate,omitempty" xml:"recordedDate,omitempty"`
+	// Information about the condition that occurred as a result of the adverse event, such as hives due to the exposure to a substance (for example, a drug or a chemical) or a broken leg as a result of the fall.
+	ResultingEffect []Reference `bson:"resultingEffect,omitempty" json:"resultingEffect,omitempty" xml:"resultingEffect,omitempty"`
+	// The information about where the adverse event occurred.
+	Location *Reference `bson:"location,omitempty" json:"location,omitempty" xml:"location,omitempty"`
+	// Assessment whether this event, or averted event, was of clinical importance.
+	//
+	// Comment: Using an example, a rash can have an AdverseEvent.resultingEffect.severity = severe, yet an AdverseEvent.seriousness = non-serious.  Alternatively, a medication given with the wrong dose (chemotherapy given with too low of a dose) can have an AdverseEvent.resultingEffect.severity = mild, yet an adverseEvent.seriousness = serious.  Another example would be a beta blocker clinical trial where patients with asthma should be excluded, yet a patient with asthma was included and had an asthmatic episode where  AdverseEvent.resultingEffect.severity = mild, yet an adverseEvent.seriousness = serious.
+	Seriousness *CodeableConcept `bson:"seriousness,omitempty" json:"seriousness,omitempty" xml:"seriousness,omitempty"`
+	// Describes the type of outcome from the adverse event, such as resolved, recovering, ongoing, resolved-with-sequelae, or fatal.
+	Outcome []CodeableConcept `bson:"outcome,omitempty" json:"outcome,omitempty" xml:"outcome,omitempty"`
+	// Information on who recorded the adverse event.  May be the patient or a practitioner.
+	Recorder *Reference `bson:"recorder,omitempty" json:"recorder,omitempty" xml:"recorder,omitempty"`
+	// Indicates who or what participated in the adverse event and how they were involved.
+	Participant []AdverseEventParticipant `bson:"participant,omitempty" json:"participant,omitempty" xml:"participant,omitempty"`
+	// The research study that the subject is enrolled in.
+	Study []Reference `bson:"study,omitempty" json:"study,omitempty" xml:"study,omitempty"`
+	// Considered likely or probable or anticipated in the research study.
+	//
+	//  Whether the reported event matches any of the outcomes for the patient that are considered by the study as known or likely.
+	ExpectedInResearchStudy *bool `bson:"expectedInResearchStudy,omitempty" json:"expectedInResearchStudy,omitempty" xml:"expectedInResearchStudy,omitempty"`
+	// Describes the entity that is suspected to have caused the adverse event.
+	SuspectEntity []AdverseEventSuspectEntity `bson:"suspectEntity,omitempty" json:"suspectEntity,omitempty" xml:"suspectEntity,omitempty"`
+	// The contributing factors suspected to have increased the probability or severity of the adverse event.
+	ContributingFactor []AdverseEventContributingFactor `bson:"contributingFactor,omitempty" json:"contributingFactor,omitempty" xml:"contributingFactor,omitempty"`
+	// Preventive actions that contributed to avoiding the adverse event.
+	PreventiveAction []AdverseEventPreventiveAction `bson:"preventiveAction,omitempty" json:"preventiveAction,omitempty" xml:"preventiveAction,omitempty"`
+	// The ameliorating action taken after the adverse event occured in order to reduce the extent of harm.
+	MitigatingAction []AdverseEventMitigatingAction `bson:"mitigatingAction,omitempty" json:"mitigatingAction,omitempty" xml:"mitigatingAction,omitempty"`
+	// Supporting information relevant to the event.
+	SupportingInfo []AdverseEventSupportingInfo `bson:"supportingInfo,omitempty" json:"supportingInfo,omitempty" xml:"supportingInfo,omitempty"`
+	// Comments made about the adverse event by the performer, subject or other participants.
+	Note []Annotation `bson:"note,omitempty" json:"note,omitempty" xml:"note,omitempty"`
+}
+
+type AdverseEventParticipant struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// Distinguishes the type of involvement of the actor in the adverse event, such as contributor or informant.
+	Function *CodeableConcept `bson:"function,omitempty" json:"function,omitempty" xml:"function,omitempty"`
+	// Indicates who or what participated in the event.
+	//
+	// Comment: For example, the physician prescribing a drug, a nurse administering the drug, a device that administered the drug, a witness to the event, or an informant of clinical history.
+	Actor Reference `bson:"actor" json:"actor" xml:"actor"`
+}
+
+type AdverseEventSuspectEntity struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// Identifies the actual instance of what caused the adverse event.
+	//
+	//  May be a substance, medication, medication administration, medication statement or a device.
+	InstanceCodeableConcept CodeableConcept `bson:"instanceCodeableConcept" json:"instanceCodeableConcept" xml:"instanceCodeableConcept"`
+	InstanceReference       Reference       `bson:"instanceReference" json:"instanceReference" xml:"instanceReference"`
+	// Information on the possible cause of the event.
+	Causality *AdverseEventSuspectEntityCausality `bson:"causality,omitempty" json:"causality,omitempty" xml:"causality,omitempty"`
+}
+
+type AdverseEventSuspectEntityCausality struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// The method of evaluating the relatedness of the suspected entity to the event.
+	AssessmentMethod *CodeableConcept `bson:"assessmentMethod,omitempty" json:"assessmentMethod,omitempty" xml:"assessmentMethod,omitempty"`
+	// The result of the assessment regarding the relatedness of the suspected entity to the event.
+	EntityRelatedness *CodeableConcept `bson:"entityRelatedness,omitempty" json:"entityRelatedness,omitempty" xml:"entityRelatedness,omitempty"`
+	// The author of the information on the possible cause of the event.
+	Author *Reference `bson:"author,omitempty" json:"author,omitempty" xml:"author,omitempty"`
+}
+
+type AdverseEventContributingFactor struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// The item that is suspected to have increased the probability or severity of the adverse event.
+	ItemReference       Reference       `bson:"itemReference" json:"itemReference" xml:"itemReference"`
+	ItemCodeableConcept CodeableConcept `bson:"itemCodeableConcept" json:"itemCodeableConcept" xml:"itemCodeableConcept"`
+}
+
+type AdverseEventPreventiveAction struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// The action that contributed to avoiding the adverse event.
+	ItemReference       Reference       `bson:"itemReference" json:"itemReference" xml:"itemReference"`
+	ItemCodeableConcept CodeableConcept `bson:"itemCodeableConcept" json:"itemCodeableConcept" xml:"itemCodeableConcept"`
+}
+
+type AdverseEventMitigatingAction struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// The ameliorating action taken after the adverse event occured in order to reduce the extent of harm.
+	ItemReference       Reference       `bson:"itemReference" json:"itemReference" xml:"itemReference"`
+	ItemCodeableConcept CodeableConcept `bson:"itemCodeableConcept" json:"itemCodeableConcept" xml:"itemCodeableConcept"`
+}
+
+type AdverseEventSupportingInfo struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// Relevant past history for the subject.
+	//
+	// In a clinical care context, an example being a patient had an adverse event following a pencillin administration and the patient had a previously documented penicillin allergy. In a clinical trials context, an example is a bunion or rash that was present prior to the study. Additionally, the supporting item can be a document that is relevant to this instance of the adverse event that is not part of the subject's medical history. For example, a clinical note, staff list, or material safety data sheet (MSDS).  Supporting information is not a contributing factor, preventive action, or mitigating action.
+	ItemReference       Reference       `bson:"itemReference" json:"itemReference" xml:"itemReference"`
+	ItemCodeableConcept CodeableConcept `bson:"itemCodeableConcept" json:"itemCodeableConcept" xml:"itemCodeableConcept"`
+}
+
+func (r AdverseEvent) ResourceType() string {
+	return "AdverseEvent"
+}
+
+// MarshalJSON implements json.Marshaler
+func (r AdverseEvent) MarshalJSON() ([]byte, error) {
+	return v2.Marshal(struct {
+		AdverseEvent
+		ResourceType string `json:"resourceType"`
+	}{
+		AdverseEvent: r,
+		ResourceType: r.ResourceType(),
+	})
+}

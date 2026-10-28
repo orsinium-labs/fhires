@@ -1,0 +1,911 @@
+package fhires
+
+import v2 "encoding/json/v2"
+
+// A structured set of tests against a FHIR server or client implementation to determine compliance against the FHIR specification.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/StructureDefinition/TestScript
+type TestScript struct {
+	// The logical id of the resource, as used in the URL for the resource.
+	//
+	// Once assigned, this value never changes.
+	//
+	// Comment: Within the context of the FHIR RESTful interactions, the resource has an id except for cases like the create and conditional update. Otherwise, the use of the resouce id depends on the given use case.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// The metadata about the resource.
+	//
+	// This is content that is maintained by the infrastructure. Changes to the content might not always be associated with version changes to the resource.
+	Meta *Meta `bson:"meta,omitempty" json:"meta,omitempty" xml:"meta,omitempty"`
+	// A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content.
+	//
+	// Often, this is a reference to an implementation guide that defines the special rules along with other profiles etc.
+	//
+	// Comment: Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. Often, when used, the URL is a reference to an implementation guide that defines these special rules as part of its narrative along with other profiles, value sets, etc.
+	ImplicitRules *string `bson:"implicitRules,omitempty" json:"implicitRules,omitempty" xml:"implicitRules,omitempty"`
+	// The base language in which the resource is written.
+	//
+	// Comment: Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource. Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).
+	Language *string `bson:"language,omitempty" json:"language,omitempty" xml:"language,omitempty"`
+	// A human-readable narrative that contains a summary of the resource and can be used to represent the content of the resource to a human.
+	//
+	// The narrative need not encode all the structured data, but is required to contain sufficient detail to make it "clinically safe" for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety.
+	//
+	// Comment: Contained resources do not have a narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a "text blob" or where text is additionally entered raw or narrated and encoded information is added later.
+	Text *Narrative `bson:"text,omitempty" json:"text,omitempty" xml:"text,omitempty"`
+	// These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, nor can they have their own independent transaction scope.
+	//
+	// This is allowed to be a Parameters resource if and only if it is referenced by a resource that provides context/meaning.
+	//
+	// Comment: This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again. Contained resources may have profiles and tags in their meta elements, but SHALL NOT have security labels.
+	// May be used to represent additional information that is not part of the basic definition of the resource.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// An absolute URI that is used to identify this test script when it is referenced in a specification, model, design or an instance; also called its canonical identifier.
+	//
+	// This SHOULD be globally unique and SHOULD be a literal address at which an authoritative instance of this test script is (or will be) published. This URL can be the target of a canonical reference. It SHALL remain the same when the test script is stored on different servers.
+	//
+	// Comment: Can be a urn:uuid: or a urn:oid: but real http: addresses are preferred.  Multiple instances may share the same URL if they have a distinct version.
+	//
+	// The determination of when to create a new version of a resource (same url, new version) vs. defining a new artifact is up to the author.  Considerations for making this decision are found in [Technical and Business Versions](resource.html#versions).
+	//
+	// In some cases, the resource can no longer be found at the stated url, but the url itself cannot change. Implementations can use the [meta.source](resource.html#meta) element to indicate where the current master source of the resource can be found.
+	URL *string `bson:"url,omitempty" json:"url,omitempty" xml:"url,omitempty"`
+	// A formal identifier that is used to identify this test script when it is represented in other formats, or referenced in a specification, model, design or an instance.
+	//
+	// Comment: Typically, this is used for identifiers that can go in an HL7 V3 II (instance identifier) data type, and can then identify this test script outside of FHIR, where it is not possible to use the logical URI.
+	Identifier []Identifier `bson:"identifier,omitempty" json:"identifier,omitempty" xml:"identifier,omitempty"`
+	// The identifier that is used to identify this version of the test script when it is referenced in a specification, model, design or instance.
+	//
+	// This is an arbitrary value managed by the test script author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available. There is also no expectation that versions can be placed in a lexicographical sequence.
+	//
+	// Comment: There may be different test script instances that have the same identifier but different versions.  The version can be appended to the url in a reference to allow a reference to a particular business version of the test script with the format [url]|[version]. The version SHOULD NOT contain a '#' - see [Business Version](resource.html#bv-format).
+	Version *string `bson:"version,omitempty" json:"version,omitempty" xml:"version,omitempty"`
+	// Indicates the mechanism used to compare versions to determine which is more current.
+	//
+	// Comment: If set as a string, this is a FHIRPath expression that has two additional context variables passed in - %version1 and %version2 and will return a negative number if version1 is newer, a positive number if version2 and a 0 if the version ordering can't be successfully be determined.
+	VersionAlgorithmString *string `bson:"versionAlgorithmString,omitempty" json:"versionAlgorithmString,omitempty" xml:"versionAlgorithmString,omitempty"`
+	VersionAlgorithmCoding *Coding `bson:"versionAlgorithmCoding,omitempty" json:"versionAlgorithmCoding,omitempty" xml:"versionAlgorithmCoding,omitempty"`
+	// A natural language name identifying the test script.
+	//
+	// This name should be usable as an identifier for the module by machine processing applications such as code generation.
+	//
+	// Comment: The name is not expected to be globally unique. The name should be a simple alphanumeric type name to ensure that it is machine-processing friendly.
+	Name string `bson:"name" json:"name" xml:"name"`
+	// A short, descriptive, user-friendly title for the test script.
+	//
+	// Comment: This name does not need to be machine-processing friendly and may contain punctuation, white-space, etc.
+	Title *string `bson:"title,omitempty" json:"title,omitempty" xml:"title,omitempty"`
+	// The status of this test script. Enables tracking the life-cycle of the content.
+	//
+	// Comment: Allows filtering of test scripts that are appropriate for use versus not.
+	//
+	// See guidance around (not) making local changes to elements [here](canonicalresource.html#localization).
+	Status PublicationStatus `bson:"status" json:"status" xml:"status"`
+	// A Boolean value to indicate that this test script is authored for testing purposes (or education/evaluation/marketing) and is not intended to be used for genuine usage.
+	//
+	// Comment: Allows filtering of test scripts that are appropriate for use versus not.
+	Experimental *bool `bson:"experimental,omitempty" json:"experimental,omitempty" xml:"experimental,omitempty"`
+	// The date (and optionally time) when the test script was last significantly changed.
+	//
+	// The date must change when the business version changes and it must change if the status code changes. In addition, it should change when the substantive content of the test script changes.
+	//
+	// Comment: The date is often not tracked until the resource is published, but may be present on draft content. Note that this is not the same as the resource last-modified-date, since the resource may be a secondary representation of the test script. Additional specific dates may be added as extensions or be found by consulting Provenances associated with past versions of the resource.
+	//
+	// See guidance around (not) making local changes to elements [here](canonicalresource.html#localization).
+	Date *string `bson:"date,omitempty" json:"date,omitempty" xml:"date,omitempty"`
+	// The name of the organization or individual responsible for the release and ongoing maintenance of the test script.
+	//
+	// Comment: Usually an organization but may be an individual. The publisher (or steward) of the test script is the organization or individual primarily responsible for the maintenance and upkeep of the test script. This is not necessarily the same individual or organization that developed and initially authored the content. The publisher is the primary point of contact for questions or issues with the test script. This item SHOULD be populated unless the information is available from context.
+	Publisher *string `bson:"publisher,omitempty" json:"publisher,omitempty" xml:"publisher,omitempty"`
+	// Contact details to assist a user in finding and communicating with the publisher.
+	//
+	// Comment: May be a web site, an email address, a telephone number, etc.
+	//
+	// See guidance around (not) making local changes to elements [here](canonicalresource.html#localization).
+	Contact []ContactDetail `bson:"contact,omitempty" json:"contact,omitempty" xml:"contact,omitempty"`
+	// A free text natural language description of the test script from a consumer's perspective.
+	//
+	// Comment: This description can be used to capture details such as comments about misuse, instructions for clinical use and interpretation, literature references, examples from the paper world, etc. It is not a rendering of the test script as conveyed in the 'text' field of the resource itself. This item SHOULD be populated unless the information is available from context (e.g. the language of the test script is presumed to be the predominant language in the place the test script was created).
+	Description *string `bson:"description,omitempty" json:"description,omitempty" xml:"description,omitempty"`
+	// The content was developed with a focus and intent of supporting the contexts that are listed.
+	//
+	// These contexts may be general categories (gender, age, ...) or may be references to specific programs (insurance plans, studies, ...) and may be used to assist with indexing and searching for appropriate test script instances.
+	//
+	// Comment: When multiple useContexts are specified, there is no expectation that all or any of the contexts apply.
+	UseContext []UsageContext `bson:"useContext,omitempty" json:"useContext,omitempty" xml:"useContext,omitempty"`
+	// A legal or geographic region in which the test script is intended to be used.
+	//
+	// Comment: It may be possible for the test script to be used in jurisdictions other than those for which it was originally designed or intended.
+	//
+	// DEPRECATION NOTE: For consistency, implementations are encouraged to migrate to using the new 'jurisdiction' code in the useContext element.  (I.e. useContext.code indicating http://terminology.hl7.org/CodeSystem/usage-context-type#jurisdiction and useContext.valueCodeableConcept indicating the jurisdiction.)
+	Jurisdiction []CodeableConcept `bson:"jurisdiction,omitempty" json:"jurisdiction,omitempty" xml:"jurisdiction,omitempty"`
+	// Explanation of why this test script is needed and why it has been designed as it has.
+	//
+	// Comment: This element does not describe the usage of the test script. Instead, it provides traceability of ''why'' the resource is either needed or ''why'' it is defined as it is.  This may be used to point to source materials or specifications that drove the structure of this test script.
+	Purpose *string `bson:"purpose,omitempty" json:"purpose,omitempty" xml:"purpose,omitempty"`
+	// A copyright statement relating to the test script and/or its contents.
+	//
+	// Copyright statements are generally legal restrictions on the use and publishing of the test script.
+	Copyright *string `bson:"copyright,omitempty" json:"copyright,omitempty" xml:"copyright,omitempty"`
+	// A short string (<50 characters), suitable for inclusion in a page footer that identifies the copyright holder, effective period, and optionally whether rights are resctricted.
+	//
+	// (e.g. 'All rights reserved', 'Some rights reserved').
+	//
+	// Comment: The (c) symbol should NOT be included in this string. It will be added by software when rendering the notation. Full details about licensing, restrictions, warrantees, etc. goes in the more general 'copyright' element.
+	CopyrightLabel *string `bson:"copyrightLabel,omitempty" json:"copyrightLabel,omitempty" xml:"copyrightLabel,omitempty"`
+	// An abstract server used in operations within this test script in the origin element.
+	//
+	// Comment: The purpose of this element is to define the profile of an origin element used elsewhere in the script.  Test engines could then use the origin-profile mapping to offer a filtered list of test systems that can serve as the sender for the interaction.
+	Origin []TestScriptOrigin `bson:"origin,omitempty" json:"origin,omitempty" xml:"origin,omitempty"`
+	// An abstract server used in operations within this test script in the destination element.
+	//
+	// Comment: The purpose of this element is to define the profile of a destination element used elsewhere in the script.  Test engines could then use the destination-profile mapping to offer a filtered list of test systems that can serve as the receiver for the interaction.
+	Destination []TestScriptDestination `bson:"destination,omitempty" json:"destination,omitempty" xml:"destination,omitempty"`
+	// The required capability must exist and are assumed to function correctly on the FHIR server being tested.
+	Metadata *TestScriptMetadata `bson:"metadata,omitempty" json:"metadata,omitempty" xml:"metadata,omitempty"`
+	// The scope indicates a conformance artifact that is tested by the test(s) within this test case and the expectation of the test outcome(s) as well as the intended test phase inclusion.
+	Scope []TestScriptScope `bson:"scope,omitempty" json:"scope,omitempty" xml:"scope,omitempty"`
+	// Fixture in the test script - by reference (uri).
+	//
+	// All fixtures are required for the test script to execute.
+	Fixture []TestScriptFixture `bson:"fixture,omitempty" json:"fixture,omitempty" xml:"fixture,omitempty"`
+	// Reference to the profile to be used for validation.
+	//
+	// Comment: See the [Resource List](resourcelist.html) for complete list of resource types.
+	Profile []string `bson:"profile,omitempty" json:"profile,omitempty" xml:"profile,omitempty"`
+	// Variable is set based either on element value in response body or on header field value in the response headers.
+	//
+	// Comment: Variables would be set based either on XPath/JSONPath expressions against fixtures (static and response), or headerField evaluations against response headers. If variable evaluates to nodelist or anything other than a primitive value, then test engine would report an error.  Variables would be used to perform clean replacements in "operation.params", "operation.requestHeader.value", and "operation.url" element values during operation calls and in "assert.value" during assertion evaluations. This limits the places that test engines would need to look for placeholders "${}".  Variables are scoped to the whole script. They are NOT evaluated at declaration. They are evaluated by test engine when used for substitutions in "operation.params", "operation.requestHeader.value", and "operation.url" element values during operation calls and in "assert.value" during assertion evaluations.  See example testscript-search.xml.
+	Variable []TestScriptVariable `bson:"variable,omitempty" json:"variable,omitempty" xml:"variable,omitempty"`
+	// A series of required setup operations before tests are executed.
+	Setup *TestScriptSetup `bson:"setup,omitempty" json:"setup,omitempty" xml:"setup,omitempty"`
+	// A test in this script.
+	Test []TestScriptTest `bson:"test,omitempty" json:"test,omitempty" xml:"test,omitempty"`
+	// A series of operations required to clean up after all the tests are executed (successfully or otherwise).
+	Teardown *TestScriptTeardown `bson:"teardown,omitempty" json:"teardown,omitempty" xml:"teardown,omitempty"`
+}
+
+type TestScriptOrigin struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// Abstract name given to an origin server in this test script.
+	//
+	//  The name is provided as a number starting at 1.
+	//
+	// Comment: A given origin index (e.g. 1) can appear only once in the list (e.g. Origin 1 cannot be specified twice ... once as FormFiller and again as FormProcessor within the same script as that could get confusing during test configuration).
+	//
+	// Different origin indices could play the same actor in the same test script (e.g. You could have two different test systems acting as Form-Filler).
+	//
+	// The origin indices provided elsewhere in the test script must be one of these origin indices.
+	Index int `bson:"index" json:"index" xml:"index"`
+	// The type of origin profile the test system supports.
+	//
+	// Comment: Must be a "sender"/"client" profile.
+	Profile Coding `bson:"profile" json:"profile" xml:"profile"`
+	// The explicit url path of the origin server used in this test script.
+	//
+	// Comment: If provided, the test engine is not expected to prompt for or accept external input of this value.
+	URL *string `bson:"url,omitempty" json:"url,omitempty" xml:"url,omitempty"`
+}
+
+type TestScriptDestination struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// Abstract name given to a destination server in this test script.
+	//
+	//  The name is provided as a number starting at 1.
+	//
+	// Comment: A given destination index (e.g. 1) can appear only once in the list (e.g. Destination 1 cannot be specified twice ... once as Form-Manager and again as Form-Processor within the same script as that could get confusing during test configuration).
+	//
+	// Different destination indices could play the same actor in the same test script (e.g. You could have two different test systems acting as Form-Manager).
+	//
+	// The destination indices provided elsewhere in the test script must be one of these destination indices.
+	Index int `bson:"index" json:"index" xml:"index"`
+	// The type of destination profile the test system supports.
+	//
+	// Comment: Must be a "receiver"/"server" profile.
+	Profile Coding `bson:"profile" json:"profile" xml:"profile"`
+	// The explicit url path of the destination server used in this test script.
+	//
+	// Comment: If provided, the test engine is not expected to prompt for or accept external input of this value.
+	URL *string `bson:"url,omitempty" json:"url,omitempty" xml:"url,omitempty"`
+}
+
+type TestScriptMetadata struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// A link to the FHIR specification that this test is covering.
+	Link []TestScriptMetadataLink `bson:"link,omitempty" json:"link,omitempty" xml:"link,omitempty"`
+	// Capabilities that must exist and are assumed to function correctly on the FHIR server being tested.
+	//
+	// Comment: When the metadata capabilities section is defined at TestScript.metadata or at TestScript.setup.metadata, and the server's conformance statement does not contain the elements defined in the minimal conformance statement, then all the tests in the TestScript are skipped.  When the metadata capabilities section is defined at TestScript.test.metadata and the server's conformance statement does not contain the elements defined in the minimal conformance statement, then only that test is skipped.  The "metadata.capabilities.required" and "metadata.capabilities.validated" elements only indicate whether the capabilities are the primary focus of the test script or not.  They do not impact the skipping logic.  Capabilities whose "metadata.capabilities.validated" flag is true are the primary focus of the test script.
+	Capability []TestScriptMetadataCapability `bson:"capability" json:"capability" xml:"capability"`
+}
+
+type TestScriptMetadataLink struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// URL to a particular requirement or feature within the FHIR specification.
+	URL string `bson:"url" json:"url" xml:"url"`
+	// Short description of the link.
+	Description *string `bson:"description,omitempty" json:"description,omitempty" xml:"description,omitempty"`
+}
+
+type TestScriptMetadataCapability struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// Whether or not the test execution will require the given capabilities of the server in order for this test script to execute.
+	Required bool `bson:"required" json:"required" xml:"required"`
+	// Whether or not the test execution will validate the given capabilities of the server in order for this test script to execute.
+	Validated bool `bson:"validated" json:"validated" xml:"validated"`
+	// Description of the capabilities that this test script is requiring the server to support.
+	Description *string `bson:"description,omitempty" json:"description,omitempty" xml:"description,omitempty"`
+	// Which origin server these requirements apply to.
+	Origin []int `bson:"origin,omitempty" json:"origin,omitempty" xml:"origin,omitempty"`
+	// Which server these requirements apply to.
+	Destination *int `bson:"destination,omitempty" json:"destination,omitempty" xml:"destination,omitempty"`
+	// Links to the FHIR specification that describes this interaction and the resources involved in more detail.
+	Link []string `bson:"link,omitempty" json:"link,omitempty" xml:"link,omitempty"`
+	// Minimum capabilities required of server for test script to execute successfully.
+	//
+	//   If server does not meet at a minimum the referenced capability statement, then all tests in this script are skipped.
+	//
+	// Comment: The conformance statement of the server has to contain at a minimum the contents of the reference pointed to by this element.
+	Capabilities string `bson:"capabilities" json:"capabilities" xml:"capabilities"`
+}
+
+type TestScriptScope struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// The specific conformance artifact being tested.
+	//
+	// The canonical reference can be version-specific.
+	Artifact string `bson:"artifact" json:"artifact" xml:"artifact"`
+	// The expectation of whether the test must pass for the system to be considered conformant with the artifact: required - all tests are expected to pass, optional - all test are expected to pass but non-pass status may be allowed, strict - all tests are expected to pass and warnings are treated as a failure.
+	Conformance *CodeableConcept `bson:"conformance,omitempty" json:"conformance,omitempty" xml:"conformance,omitempty"`
+	// The phase of testing for this artifact: unit - development / implementation phase, integration - internal system to system phase, production - live system to system phase (Note, this may involve pii/phi data).
+	Phase *CodeableConcept `bson:"phase,omitempty" json:"phase,omitempty" xml:"phase,omitempty"`
+}
+
+type TestScriptFixture struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// Whether or not to implicitly create the fixture during setup.
+	//
+	// If true, the fixture is automatically created on each server being tested during setup, therefore no create operation is required for this fixture in the TestScript.setup section.
+	Autocreate bool `bson:"autocreate" json:"autocreate" xml:"autocreate"`
+	// Whether or not to implicitly delete the fixture during teardown.
+	//
+	// If true, the fixture is automatically deleted on each server being tested during teardown, therefore no delete operation is required for this fixture in the TestScript.teardown section.
+	Autodelete bool `bson:"autodelete" json:"autodelete" xml:"autodelete"`
+	// Reference to the resource (containing the contents of the resource needed for operations).
+	//
+	// This is allowed to be a Parameters resource.
+	//
+	// Comment: See the [Resource List](resourcelist.html) for complete list of resource types.
+	Resource *Reference `bson:"resource,omitempty" json:"resource,omitempty" xml:"resource,omitempty"`
+}
+
+type TestScriptVariable struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// Descriptive name for this variable.
+	//
+	// Comment: Placeholders would contain the variable name wrapped in ${} in "operation.params", "operation.requestHeader.value", and "operation.url" elements.  These placeholders would need to be replaced by the variable value before the operation is executed.
+	Name string `bson:"name" json:"name" xml:"name"`
+	// A default, hard-coded, or user-defined value for this variable.
+	//
+	// Comment: The purpose of this element is to allow for a pre-defined value that can be used as a default or as an override value. Test engines can optionally use this as a placeholder for user-defined execution time values.
+	DefaultValue *string `bson:"defaultValue,omitempty" json:"defaultValue,omitempty" xml:"defaultValue,omitempty"`
+	// A free text natural language description of the variable and its purpose.
+	Description *string `bson:"description,omitempty" json:"description,omitempty" xml:"description,omitempty"`
+	// The FHIRPath expression for a specific value to evaluate against the fixture body.
+	//
+	// When variables are defined, only one of either expression, headerField or path must be specified.
+	//
+	// Comment: If headerField is defined, then the variable will be evaluated against the headers that sourceId is pointing to.  If expression or path is defined, then the variable will be evaluated against the fixture body that sourceId is pointing to.  It is an error to define any combination of expression, headerField and path.
+	Expression *string `bson:"expression,omitempty" json:"expression,omitempty" xml:"expression,omitempty"`
+	// Will be used to grab the HTTP header field value from the headers that sourceId is pointing to.
+	//
+	// Comment: If headerField is defined, then the variable will be evaluated against the headers that sourceId is pointing to.  If path is defined, then the variable will be evaluated against the fixture body that sourceId is pointing to.  It is an error to define both headerField and path.
+	HeaderField *string `bson:"headerField,omitempty" json:"headerField,omitempty" xml:"headerField,omitempty"`
+	// Displayable text string with hint help information to the user when entering a default value.
+	Hint *string `bson:"hint,omitempty" json:"hint,omitempty" xml:"hint,omitempty"`
+	// XPath or JSONPath to evaluate against the fixture body.
+	//
+	//  When variables are defined, only one of either expression, headerField or path must be specified.
+	//
+	// Comment: If headerField is defined, then the variable will be evaluated against the headers that sourceId is pointing to.  If expression or path is defined, then the variable will be evaluated against the fixture body that sourceId is pointing to.  It is an error to define any combination of expression, headerField and path.
+	Path *string `bson:"path,omitempty" json:"path,omitempty" xml:"path,omitempty"`
+	// Fixture to evaluate the XPath/JSONPath expression or the headerField  against within this variable.
+	//
+	// Comment: This can be a statically defined fixture (at the top of the TestScript) or a dynamically set fixture created by responseId of the `action.operation` element.
+	SourceID *string `bson:"sourceId,omitempty" json:"sourceId,omitempty" xml:"sourceId,omitempty"`
+}
+
+type TestScriptSetup struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// Action would contain either an operation or an assertion.
+	//
+	// Comment: An action should contain either an operation or an assertion but not both.  It can contain any number of variables.
+	Action []TestScriptSetupAction `bson:"action" json:"action" xml:"action"`
+}
+
+type TestScriptSetupAction struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// The operation to perform.
+	Operation *TestScriptSetupActionOperation `bson:"operation,omitempty" json:"operation,omitempty" xml:"operation,omitempty"`
+	// Evaluates the results of previous operations to determine if the server under test behaves appropriately.
+	//
+	// Comment: In order to evaluate an assertion, the request, response, and results of the most recently executed operation must always be maintained by the test engine.
+	Assert *TestScriptSetupActionAssert `bson:"assert,omitempty" json:"assert,omitempty" xml:"assert,omitempty"`
+}
+
+type TestScriptSetupActionOperation struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// Server interaction or operation type.
+	//
+	// Comment: See the list of [server interactions](http.html).
+	Type *Coding `bson:"type,omitempty" json:"type,omitempty" xml:"type,omitempty"`
+	// The type of the FHIR resource.
+	//
+	// See the [resource list](resourcelist.html). Data type of uri is needed when non-HL7 artifacts are identified.
+	//
+	// Comment: If "url" element is specified, then "targetId", "params", and "resource" elements will be ignored as "url" element will have everything needed for constructing the request url.  If "params" element is specified, then "targetId" element is ignored. For FHIR operations that require a resource (e.g. "read" and "vread" operations), the "resource" element must be specified when "params" element is specified.  If "url" and "params" elements are absent, then the request url will be constructed from "targetId" fixture if present. For "read" operation, the resource and id values will be extracted from "targetId" fixture and used to construct the url. For "vread" and "history" operations, the versionId value will also be used.
+	Resource *string `bson:"resource,omitempty" json:"resource,omitempty" xml:"resource,omitempty"`
+	// The label would be used for tracking/logging purposes by test engines.
+	//
+	// Comment: This has no impact on the verification itself.
+	Label *string `bson:"label,omitempty" json:"label,omitempty" xml:"label,omitempty"`
+	// The description would be used by test engines for tracking and reporting purposes.
+	//
+	// Comment: This has no impact on the verification itself.
+	Description *string `bson:"description,omitempty" json:"description,omitempty" xml:"description,omitempty"`
+	// The mime-type to use for RESTful operation in the 'Accept' header.
+	//
+	// Comment: If this is specified, then test engine shall set the 'Accept' header to the corresponding value.  If you'd like to explicitly set the 'Accept' to some other value then use the 'requestHeader' element.
+	Accept *string `bson:"accept,omitempty" json:"accept,omitempty" xml:"accept,omitempty"`
+	// The mime-type to use for RESTful operation in the 'Content-Type' header.
+	//
+	// Comment: If this is specified, then test engine shall set the 'Content-Type' header to the corresponding value.  If you'd like to explicitly set the 'Content-Type' to some other value then use the 'requestHeader' element.
+	ContentType *string `bson:"contentType,omitempty" json:"contentType,omitempty" xml:"contentType,omitempty"`
+	// The server where the request message is destined for.
+	//
+	//  Must be one of the server numbers listed in TestScript.destination section.
+	//
+	// Comment: If multiple TestScript.destination elements are defined and operation.destination is undefined, test engine will report an error as it cannot determine what destination to use for the exchange.
+	Destination *int `bson:"destination,omitempty" json:"destination,omitempty" xml:"destination,omitempty"`
+	// Whether or not to implicitly send the request url in encoded format.
+	//
+	// The default is true to match the standard RESTful client behavior. Set to false when communicating with a server that does not support encoded url paths.
+	EncodeRequestUURL bool `bson:"encodeRequestUrl" json:"encodeRequestUrl" xml:"encodeRequestUrl"`
+	// The HTTP method the test engine MUST use for this operation regardless of any other operation details.
+	//
+	// Comment: The primary purpose of the explicit HTTP method is support of  HTTP POST method invocation of the FHIR search. Other uses will include support of negative testing.
+	Method *TestScriptRequestMethodCode `bson:"method,omitempty" json:"method,omitempty" xml:"method,omitempty"`
+	// The server where the request message originates from.
+	//
+	//  Must be one of the server numbers listed in TestScript.origin section.
+	//
+	// Comment: If absent, test engine will send the message.  When present, test engine will not send the request message but will wait for the request message to be sent from this origin server.
+	Origin *int `bson:"origin,omitempty" json:"origin,omitempty" xml:"origin,omitempty"`
+	// Path plus parameters after [type].  Used to set parts of the request URL explicitly.
+	//
+	// Comment: If "url" element is specified, then "targetId", "params", and "resource" elements will be ignored as "url" element will have everything needed for constructing the request url.  If "params" element is specified, then "targetId" element is ignored.  For FHIR operations that require a resource (e.g. "read" and "vread" operations), the "resource" element must be specified when "params" element is specified.  If "url" and "params" elements are absent, then the request url will be constructed from "targetId" fixture if present.  For "read" operation, the resource and id values will be extracted from "targetId" fixture and used to construct the url.  For "vread" and "history" operations, the versionId value will also be used.   Test engines would append whatever is specified for "params" to the URL after the resource type without tampering with the string (beyond encoding the URL for HTTP).  The "params" element does not correspond exactly to "search parameters".  Nor is it the "path".  It corresponds to the part of the URL that comes after the [type] (when "resource" element is specified); e.g. It corresponds to "/[id]/_history/[vid] {?_format=[mime-type]}" in the following operation: GET [base]/[type]/[id]/_history/[vid] {?_format=[mime-type]}  Test engines do have to look for placeholders (${}) and replace the variable placeholders with the variable values at runtime before sending the request.
+	Params *string `bson:"params,omitempty" json:"params,omitempty" xml:"params,omitempty"`
+	// Header elements would be used to set HTTP headers.
+	//
+	// Comment: This gives control to test-script writers to set headers explicitly based on test requirements.  It will allow for testing using:  - "If-Modified-Since" and "If-None-Match" headers.  ["If-Match" header](http.html#2.1.0.5.1).  See [Conditional Create using "If-None-Exist"](http.html#2.1.0.11).  See [Invalid "Content-Type" header](http.html#2.1.0.13.1) for negative testing. - etc.
+	RequestHeader []TestScriptSetupActionOperationRequestHeader `bson:"requestHeader,omitempty" json:"requestHeader,omitempty" xml:"requestHeader,omitempty"`
+	// The fixture id (maybe new) to map to the request.
+	//
+	// Comment: If a requestId is supplied, then the resulting request (both headers and body) is mapped to the fixture ID (which may be entirely new and previously undeclared) designated by "requestId".  If requestId is not specified, it is the test engine's responsibility to store the request and use it as the requestId in subsequent assertions when assertion path and/or headerField is specified, direction is equal to request, and the requestId in not specified.
+	RequestID *string `bson:"requestId,omitempty" json:"requestId,omitempty" xml:"requestId,omitempty"`
+	// The fixture id (maybe new) to map to the response.
+	//
+	// Comment: If a responseId is supplied, and the server responds, then the resulting response (both headers and body) is mapped to the fixture ID (which may be entirely new and previously undeclared) designated by "responseId".  If responseId is not specified, it is the test engine's responsibility to store the response and use it as the responseId in subsequent assertions when assertion path and/or headerField is specified and the responseId is not specified.
+	ResponseID *string `bson:"responseId,omitempty" json:"responseId,omitempty" xml:"responseId,omitempty"`
+	// The id of the fixture used as the body of a PUT or POST request.
+	SourceID *string `bson:"sourceId,omitempty" json:"sourceId,omitempty" xml:"sourceId,omitempty"`
+	// Id of fixture used for extracting the [id],  [type], and [vid] for GET requests.
+	//
+	// Comment: If "url" element is specified, then "targetId", "params", and "resource" elements will be ignored as "url" element will have everything needed for constructing the request url.  If "params" element is specified, then "targetId" element is ignored.  For FHIR operations that require a resource (e.g. "read" and "vread" operations), the "resource" element must be specified when "params" element is specified.  If "url" and "params" elements are absent, then the request url will be constructed from "targetId" fixture if present.  For "read" operation, the resource and id values will be extracted from "targetId" fixture and used to construct the url.  For "vread" and "history" operations, the versionId value will also be used.
+	TargetID *string `bson:"targetId,omitempty" json:"targetId,omitempty" xml:"targetId,omitempty"`
+	// Complete request URL.
+	//
+	// Comment: Used to set the request URL explicitly.  If "url" element is defined, then "targetId", "resource", and "params" elements will be ignored.  Test engines would use whatever is specified in "url" without tampering with the string (beyond encoding the URL for HTTP).  Test engines do have to look for placeholders (${}) and replace the variable placeholders with the variable values at runtime before sending the request.
+	URL *string `bson:"url,omitempty" json:"url,omitempty" xml:"url,omitempty"`
+}
+
+type TestScriptSetupActionOperationRequestHeader struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// The HTTP header field e.g. "Accept".
+	//
+	// Comment: If header element is specified, then field is required.
+	Field string `bson:"field" json:"field" xml:"field"`
+	// The value of the header e.g. "application/fhir+xml".
+	//
+	// Comment: If header element is specified, then value is required.  No conversions will be done by the test engine e.g. "xml" to "application/fhir+xml".  The values will be set in HTTP headers "as-is".  Test engines do have to look for placeholders (${}) and replace the variable placeholders with the variable values at runtime before sending the request.
+	Value string `bson:"value" json:"value" xml:"value"`
+}
+
+type TestScriptSetupActionAssert struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// The label would be used for tracking/logging purposes by test engines.
+	//
+	// Comment: This has no impact on the verification itself.
+	Label *string `bson:"label,omitempty" json:"label,omitempty" xml:"label,omitempty"`
+	// The description would be used by test engines for tracking and reporting purposes.
+	//
+	// Comment: This has no impact on the verification itself.
+	Description *string `bson:"description,omitempty" json:"description,omitempty" xml:"description,omitempty"`
+	// The direction to use for the assertion.
+	//
+	// Comment: If the direction is specified as "response" (the default), then the processing of this assert is against the received response message. If the direction is specified as "request", then the processing of this assert is against the sent request message.
+	Direction *AssertionDirectionType `bson:"direction,omitempty" json:"direction,omitempty" xml:"direction,omitempty"`
+	// Id of the source fixture used as the contents to be evaluated by either the "source/expression" or "sourceId/path" definition.
+	CompareToSourceID *string `bson:"compareToSourceId,omitempty" json:"compareToSourceId,omitempty" xml:"compareToSourceId,omitempty"`
+	// The FHIRPath expression for a specific value to evaluate against the source fixture.
+	//
+	// When compareToSourceId is defined, either compareToSourceExpression or compareToSourcePath must be defined, but not both.
+	//
+	// Comment: Thefhirpath expression to be evaluated against the expected fixture to compare to. Ignored if "assert.value" is used. The evaluation will be done before the assertion is evaluated.
+	CompareToSourceExpression *string `bson:"compareToSourceExpression,omitempty" json:"compareToSourceExpression,omitempty" xml:"compareToSourceExpression,omitempty"`
+	// XPath or JSONPath expression to evaluate against the source fixture.
+	//
+	// When compareToSourceId is defined, either compareToSourceExpression or compareToSourcePath must be defined, but not both.
+	//
+	// Comment: The XPath or JSONPath expression to be evaluated against the expected fixture to compare to. Ignored if "assert.value" is used. The evaluation will be done before the assertion is evaluated.
+	CompareToSourcePath *string `bson:"compareToSourcePath,omitempty" json:"compareToSourcePath,omitempty" xml:"compareToSourcePath,omitempty"`
+	// The mime-type contents to compare against the request or response message 'Content-Type' header.
+	//
+	// Comment: If this is specified, then test engine shall confirm that the content-type of the last operation's headers is set to this value.  If "assert.sourceId" element is specified, then the evaluation will be done against the headers mapped to that sourceId (and not the last operation's headers).  If you'd like to have more control over the string, then use 'assert.headerField' instead.
+	ContentType *string `bson:"contentType,omitempty" json:"contentType,omitempty" xml:"contentType,omitempty"`
+	// The default manual completion outcome applied to this assertion.
+	//
+	// Comment: Manual completion is used to pause the test engine execution and evaluation allowing an external review of the defined assert condition. The defaultManualCompletion defines the default manual completion outcome applied if one of the enumerated values is not applied.
+	DefaultManualCompletion *AssertionManualCompletionType `bson:"defaultManualCompletion,omitempty" json:"defaultManualCompletion,omitempty" xml:"defaultManualCompletion,omitempty"`
+	// The FHIRPath expression to be evaluated against the request or response message contents - HTTP headers and payload.
+	//
+	// Comment: If both "expression" and a "fixtureId" are specified, then the expression will be evaluated against the request or response body mapped to the fixtureId. If "expression" is specified and a "fixtureId" is not, then the expression will be evaluated against the response body of the last operation. Test engines are to store the request and response body and headers of the last operation at all times for subsequent assertions.
+	//
+	// The FHIRPath expression can be evaluated as either a path to a specific value or as a boolean expression against the given FHIR resource. When the FHIRPath is a boolean expression, the assert.value element is not used. See [Testing FHIR Use Expressions](testing.html#expressions).
+	Expression *string `bson:"expression,omitempty" json:"expression,omitempty" xml:"expression,omitempty"`
+	// The HTTP header field name e.g. 'Location'.
+	//
+	// Comment: If "headerField" is specified then "value" must be specified.  If "sourceId" is not specified, then "headerField" will be evaluated against the last operation's response headers.  Test engines are to keep track of the last operation's response body and response headers.
+	HeaderField *string `bson:"headerField,omitempty" json:"headerField,omitempty" xml:"headerField,omitempty"`
+	// The ID of a fixture.
+	//
+	// Asserts that the response contains at a minimum the fixture specified by minimumId.
+	//
+	// Comment: Asserts that the response contains all the element/content in another fixture pointed to by minimumId. This can be a statically defined fixture or one that is dynamically set via responseId.
+	//
+	// See [Testing FHIR Use minimumId](testing.html##minimumId) for a more complete description of the test engine's comparison logic.
+	MinimumID *string `bson:"minimumId,omitempty" json:"minimumId,omitempty" xml:"minimumId,omitempty"`
+	// Whether or not the test execution performs validation on the bundle navigation links.
+	//
+	// Comment: Asserts that the Bundle contains first, last, and next links.
+	NavigationLinks *bool `bson:"navigationLinks,omitempty" json:"navigationLinks,omitempty" xml:"navigationLinks,omitempty"`
+	// The operator type defines the conditional behavior of the assert.
+	//
+	// Comment: Operators are useful for both positive and negative testing. If operator is not specified, then the default conditional behavior is implemented as defined in [Testing FHIR Assertions](testing.html#assertion-table).
+	Operator *AssertionOperatorType `bson:"operator,omitempty" json:"operator,omitempty" xml:"operator,omitempty"`
+	// The XPath or JSONPath expression to be evaluated against the fixture representing the response received from server.
+	//
+	// Comment: If both "path" and a "fixtureId" are specified, then the path will be evaluated against the request or response body mapped to the fixtureId.  If "path" is specified and a "fixtureId" is not, then the path will be evaluated against the response body of the last operation.  Test engines are to store the request and response body and headers of the last operation at all times for subsequent assertions.
+	Path *string `bson:"path,omitempty" json:"path,omitempty" xml:"path,omitempty"`
+	// The request method or HTTP operation code to compare against that used by the client system under test.
+	//
+	// Comment: If "requestMethod" is specified then it will be used in place of "value". The "requestMethod" will evaluate against the last operation's request HTTP operation.
+	RequestMethod *TestScriptRequestMethodCode `bson:"requestMethod,omitempty" json:"requestMethod,omitempty" xml:"requestMethod,omitempty"`
+	// The value to use in a comparison against the request URL path string.
+	//
+	// Comment: If "requestURL" is specified then it will be used in place of "value". The "requestURL" will evaluate against the last operation's full request URL path string.
+	RequestURL *string `bson:"requestURL,omitempty" json:"requestURL,omitempty" xml:"requestURL,omitempty"`
+	// The type of the resource.  See the [resource list](resourcelist.html).
+	//
+	// Comment: This will be expected resource type in response body e.g. in read, vread, search, etc.  See the [Resource List](resourcelist.html) for complete list of resource types; e.g. <assert > <resourceType value="Patient" </assert>.
+	Resource *string `bson:"resource,omitempty" json:"resource,omitempty" xml:"resource,omitempty"`
+	// continue | switchingProtocols | okay | created | accepted | nonAuthoritativeInformation | noContent | resetContent | partialContent | multipleChoices | movedPermanently | found | seeOther | notModified | useProxy | temporaryRedirect | permanentRedirect | badRequest | unauthorized | paymentRequired | forbidden | notFound | methodNotAllowed | notAcceptable | proxyAuthenticationRequired | requestTimeout | conflict | gone | lengthRequired | preconditionFailed | contentTooLarge | uriTooLong | unsupportedMediaType | rangeNotSatisfiable | expectationFailed | misdirectedRequest | unprocessableContent | upgradeRequired | internalServerError | notImplemented | badGateway | serviceUnavailable | gatewayTimeout | httpVersionNotSupported.
+	//
+	// Comment: This is a shorter way of achieving similar verifications via "assert.responseCode".  If you need more control, then use "assert.responseCode"  e.g. <assert>  <contentType value="json" />  <response value="okay"/> </assert>.
+	Response *AssertionResponseTypes `bson:"response,omitempty" json:"response,omitempty" xml:"response,omitempty"`
+	// The value of the HTTP response code to be tested.
+	//
+	// Comment: To be used with "operator" attribute value. Asserts that the response code equals this value if "operator" is not specified.   If the operator is "in" or "notIn" then the responseCode would be a comma-separated list of values e.g. "200,201". Otherwise, it's expected to be a numeric value.   If "fixture" is not specified, then the "responseBodyId" value of the last operation is assumed.
+	ResponseCode *string `bson:"responseCode,omitempty" json:"responseCode,omitempty" xml:"responseCode,omitempty"`
+	// Fixture to evaluate the XPath/JSONPath expression or the headerField  against.
+	//
+	// Comment: This can be a statically defined fixture (at the top of the testscript) or a dynamically set fixture created by responseId of the action.operation element.
+	SourceID *string `bson:"sourceId,omitempty" json:"sourceId,omitempty" xml:"sourceId,omitempty"`
+	// Whether or not the current test execution will stop on failure for this assert.
+	//
+	// Comment: If this element is specified and it is true, then assertion failures should not stop the current test execution from proceeding.
+	StopTestOnFail bool `bson:"stopTestOnFail" json:"stopTestOnFail" xml:"stopTestOnFail"`
+	// The ID of the Profile to validate against.
+	//
+	// Comment: The ID of a Profile fixture. Asserts that the response is valid according to the Profile specified by validateProfileId.
+	ValidateProfileID *string `bson:"validateProfileId,omitempty" json:"validateProfileId,omitempty" xml:"validateProfileId,omitempty"`
+	// The value to compare to.
+	//
+	// Comment: The string-representation of a number, string, or boolean that is expected.  Test engines do have to look for placeholders (${}) and replace the variable placeholders with the variable values at runtime before comparing this value to the actual value.
+	Value *string `bson:"value,omitempty" json:"value,omitempty" xml:"value,omitempty"`
+	// Whether or not the test execution will produce a warning only on error for this assert.
+	//
+	// Comment: If this element is specified and it is true, then assertion failures can be logged by test engine but should not stop the test script execution from proceeding.  There are likely cases where the spec is not clear on what should happen. If the spec says something is optional (maybe a response header for example), but a server doesn’t do it, we could choose to issue a warning.
+	WarningOnly bool `bson:"warningOnly" json:"warningOnly" xml:"warningOnly"`
+	// Links or references providing traceability to the testing requirements for this assert.
+	//
+	// Comment: TestScript and TestReport instances are typically (and expected to be) based on known, defined test requirements and documentation. These links provide traceability from the executable/executed TestScript and TestReport tests to these requirements.
+	Requirement []TestScriptSetupActionAssertRequirement `bson:"requirement,omitempty" json:"requirement,omitempty" xml:"requirement,omitempty"`
+}
+
+type TestScriptSetupActionAssertRequirement struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// Link or reference providing traceability to the testing requirement for this test.
+	LinkUri       *string `bson:"linkUri,omitempty" json:"linkUri,omitempty" xml:"linkUri,omitempty"`
+	LinkCanonical *string `bson:"linkCanonical,omitempty" json:"linkCanonical,omitempty" xml:"linkCanonical,omitempty"`
+}
+
+type TestScriptTest struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// The name of this test used for tracking/logging purposes by test engines.
+	Name *string `bson:"name,omitempty" json:"name,omitempty" xml:"name,omitempty"`
+	// A short description of the test used by test engines for tracking and reporting purposes.
+	Description *string `bson:"description,omitempty" json:"description,omitempty" xml:"description,omitempty"`
+	// Action would contain either an operation or an assertion.
+	//
+	// Comment: An action should contain either an operation or an assertion but not both.  It can contain any number of variables.
+	Action []TestScriptTestAction `bson:"action" json:"action" xml:"action"`
+}
+
+type TestScriptTestAction struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// An operation would involve a REST request to a server.
+	Operation *TestScriptSetupActionOperation `bson:"operation,omitempty" json:"operation,omitempty"`
+	// Evaluates the results of previous operations to determine if the server under test behaves appropriately.
+	//
+	// Comment: In order to evaluate an assertion, the request, response, and results of the most recently executed operation must always be maintained by the test engine.
+	Assert *TestScriptSetupActionAssert `bson:"assert,omitempty" json:"assert,omitempty"`
+}
+
+type TestScriptTeardown struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// The teardown action will only contain an operation.
+	//
+	// Comment: An action should contain either an operation or an assertion but not both.  It can contain any number of variables.
+	Action []TestScriptTeardownAction `bson:"action" json:"action" xml:"action"`
+}
+
+type TestScriptTeardownAction struct {
+	// Unique id for the element within a resource (for internal references).
+	//
+	// This may be any string value that does not contain spaces.
+	ID *string `bson:"id,omitempty" json:"id,omitempty" xml:"id,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element.
+	//
+	// To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	Extension []Extension `bson:"extension,omitempty" json:"extension,omitempty" xml:"extension,omitempty"`
+	// May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants.
+	//
+	// Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+	//
+	// Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).
+	//
+	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
+	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
+	// An operation would involve a REST request to a server.
+	Operation TestScriptSetupActionOperation `bson:"operation,omitempty" json:"operation,omitempty"`
+}
+
+func (r TestScript) ResourceType() string {
+	return "TestScript"
+}
+
+// MarshalJSON implements json.Marshaler
+func (r TestScript) MarshalJSON() ([]byte, error) {
+	return v2.Marshal(struct {
+		TestScript
+		ResourceType string `json:"resourceType"`
+	}{
+		ResourceType: r.ResourceType(),
+		TestScript:   r,
+	})
+}
