@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	decimal "github.com/shopspring/decimal"
+	"github.com/shopspring/decimal"
 )
 
 // A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context.

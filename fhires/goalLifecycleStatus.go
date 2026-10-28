@@ -6,18 +6,30 @@ import (
 	"strings"
 )
 
-// GoalLifecycleStatus is documented here http://hl7.org/fhir/ValueSet/goal-status
+// Codes that reflect the current state of a goal and whether the goal is still being targeted.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/goal-status
 type GoalLifecycleStatus int
 
 const (
 	GoalLifecycleStatusProposed GoalLifecycleStatus = iota
+	// A goal is planned for this patient.
 	GoalLifecycleStatusPlanned
+	// A proposed goal was accepted or acknowledged.
 	GoalLifecycleStatusAccepted
+	// The goal is being sought actively.
 	GoalLifecycleStatusActive
+	// The goal remains a long term objective but is no longer being actively pursued for a temporary period of time.
 	GoalLifecycleStatusOnHold
+	// The goal is no longer being sought.
 	GoalLifecycleStatusCompleted
+	// The goal has been abandoned.
 	GoalLifecycleStatusCancelled
+	// The goal was entered in error and voided.
 	GoalLifecycleStatusEnteredInError
+	// A proposed goal was rejected.
 	GoalLifecycleStatusRejected
 )
 

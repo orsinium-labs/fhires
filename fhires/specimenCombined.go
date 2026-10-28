@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// SpecimenCombined is documented here http://hl7.org/fhir/ValueSet/specimen-combined
+// Codes providing the combined status of a specimen.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/specimen-combined
 type SpecimenCombined int
 
 const (
 	SpecimenCombinedGrouped SpecimenCombined = iota
+	// The specimen is pooled.
 	SpecimenCombinedPooled
 )
 

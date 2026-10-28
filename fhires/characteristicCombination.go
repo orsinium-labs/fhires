@@ -6,16 +6,26 @@ import (
 	"strings"
 )
 
-// CharacteristicCombination is documented here http://hl7.org/fhir/ValueSet/characteristic-combination
+// Logical grouping of characteristics.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/characteristic-combination
 type CharacteristicCombination int
 
 const (
 	CharacteristicCombinationAllOf CharacteristicCombination = iota
+	// Combine characteristics with OR.
 	CharacteristicCombinationAnyOf
+	// Meet at least the threshold number of characteristics for definition.
 	CharacteristicCombinationAtLeast
+	// Meet at most the threshold number of characteristics for definition.
 	CharacteristicCombinationAtMost
+	// Combine characteristics statistically. Use method to specify the statistical method.
 	CharacteristicCombinationStatistical
+	// Combine characteristics by addition of benefits and subtraction of harms.
 	CharacteristicCombinationNetEffect
+	// Combine characteristics as a collection used as the dataset.
 	CharacteristicCombinationDataset
 )
 

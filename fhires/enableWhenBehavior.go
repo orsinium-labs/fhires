@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// EnableWhenBehavior is documented here http://hl7.org/fhir/ValueSet/questionnaire-enable-behavior
+// Controls how multiple enableWhen values are interpreted -  whether all or any must be true.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/questionnaire-enable-behavior
 type EnableWhenBehavior int
 
 const (
 	EnableWhenBehaviorAll EnableWhenBehavior = iota
+	// Enable the question when any of the enableWhen criteria are satisfied.
 	EnableWhenBehaviorAny
 )
 

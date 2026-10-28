@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// DeviceNameType is documented here http://hl7.org/fhir/ValueSet/device-nametype
+// The type of name the device is referred by.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/device-nametype
 type DeviceNameType int
 
 const (
 	DeviceNameTypeRegisteredName DeviceNameType = iota
+	// The term that generically describes the device by a name as assigned by the manufacturer that is recognized by lay person.  This common or generic name may be printed on the package it came in or some combination of that name with the model number, serial number, or other attribute that makes the name easy to understand for the user of that device. It is often exposed in communicating devices transport protocols. It is provided to help users identify the device when reported in discovery operations.
 	DeviceNameTypeUserFriendlyName
+	// the term used by the patient associated with the device when describing the device, for example 'knee implant', when documented as a self-reported device.
 	DeviceNameTypePatientReportedName
 )
 

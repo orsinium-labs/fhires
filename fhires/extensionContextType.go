@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// ExtensionContextType is documented here http://hl7.org/fhir/ValueSet/extension-context-type
+// How an extension context is interpreted.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/extension-context-type
 type ExtensionContextType int
 
 const (
 	ExtensionContextTypeFhirpath ExtensionContextType = iota
+	// The context is any element that has an ElementDefinition.id that matches that found in the expression. This includes ElementDefinition Ids that have slicing identifiers. The full path for the element is [url]#[elementid]. If there is no #, the Element id is one defined in the base specification.
 	ExtensionContextTypeElement
+	// The context is a particular extension from a particular StructureDefinition, and the expression is just a uri that identifies the extension.
 	ExtensionContextTypeExtension
 )
 

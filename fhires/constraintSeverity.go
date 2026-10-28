@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// ConstraintSeverity is documented here http://hl7.org/fhir/ValueSet/constraint-severity
+// SHALL applications comply with this constraint?
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/constraint-severity
 type ConstraintSeverity int
 
 const (
 	ConstraintSeverityError ConstraintSeverity = iota
+	// If the constraint is violated, the resource is conformant, but it is not necessarily following best practice.
 	ConstraintSeverityWarning
 )
 

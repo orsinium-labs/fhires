@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// AdministrativeGender is documented here http://hl7.org/fhir/ValueSet/administrative-gender
+// The gender of a person used for administrative purposes.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/administrative-gender
 type AdministrativeGender int
 
 const (
 	AdministrativeGenderMale AdministrativeGender = iota
+	// Female.
 	AdministrativeGenderFemale
+	// Other.
 	AdministrativeGenderOther
+	// Unknown.
 	AdministrativeGenderUnknown
 )
 

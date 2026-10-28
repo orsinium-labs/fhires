@@ -6,15 +6,24 @@ import (
 	"strings"
 )
 
-// PriceComponentType is documented here http://hl7.org/fhir/ValueSet/price-component-type
+// Codes indicating the kind of the price component.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/price-component-type
 type PriceComponentType int
 
 const (
 	PriceComponentTypeBase PriceComponentType = iota
+	// the amount is a surcharge applied on the base price.
 	PriceComponentTypeSurcharge
+	// the amount is a deduction applied on the base price.
 	PriceComponentTypeDeduction
+	// the amount is a discount applied on the base price.
 	PriceComponentTypeDiscount
+	// the amount is the tax component of the total price.
 	PriceComponentTypeTax
+	// the amount is of informational character, it has not been applied in the calculation of the total price.
 	PriceComponentTypeInformational
 )
 

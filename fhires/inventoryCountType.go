@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// InventoryCountType is documented here http://hl7.org/fhir/ValueSet/inventoryreport-counttype
+// The type of count.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/inventoryreport-counttype
 type InventoryCountType int
 
 const (
 	InventoryCountTypeSnapshot InventoryCountType = iota
+	// The inventory report is about the difference between a previous count and a current count, i.e. it represents the items that have been added/subtracted from inventory.
 	InventoryCountTypeDifference
 )
 

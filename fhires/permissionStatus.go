@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// PermissionStatus is documented here http://hl7.org/fhir/ValueSet/permission-status
+// Codes identifying the lifecycle stage of a product.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/permission-status
 type PermissionStatus int
 
 const (
 	PermissionStatusActive PermissionStatus = iota
+	// Permission was entered in error and is not active.
 	PermissionStatusEnteredInError
+	// Permission is being defined.
 	PermissionStatusDraft
+	// Permission not granted.
 	PermissionStatusRejected
 )
 

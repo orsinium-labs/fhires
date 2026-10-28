@@ -6,11 +6,18 @@ import (
 	"strings"
 )
 
-// SubmitDataUpdateType is documented here http://hl7.org/fhir/ValueSet/submit-data-update-type
+// Concepts for how a measure report consumer and receiver coordinate data exchange updates.
+//
+// # The choices are snapshot or incremental updates
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/submit-data-update-type
 type SubmitDataUpdateType int
 
 const (
 	SubmitDataUpdateTypeIncremental SubmitDataUpdateType = iota
+	// In contrast to the Incremental Update, the FHIR Parameters resource used in a Submit Data or the Collect Data scenario contains all the DEQM and QI Core Profiles for each transaction.  If the Consumer supports snapshot updates, the contents of the updated payload entirely replaces the previous payload
 	SubmitDataUpdateTypeSnapshot
 )
 

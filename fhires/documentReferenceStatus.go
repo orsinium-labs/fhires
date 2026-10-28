@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// DocumentReferenceStatus is documented here http://hl7.org/fhir/ValueSet/document-reference-status
+// The status of the document reference.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/document-reference-status
 type DocumentReferenceStatus int
 
 const (
 	DocumentReferenceStatusCurrent DocumentReferenceStatus = iota
+	// This reference has been superseded by another reference.
 	DocumentReferenceStatusSuperseded
+	// This reference was created in error.
 	DocumentReferenceStatusEnteredInError
 )
 

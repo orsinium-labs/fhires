@@ -6,27 +6,48 @@ import (
 	"strings"
 )
 
-// TypeRestfulInteraction is documented here http://hl7.org/fhir/ValueSet/type-restful-interaction
+// Operations supported by REST at the type or instance level.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/type-restful-interaction
 type TypeRestfulInteraction int
 
 const (
 	TypeRestfulInteractionRead TypeRestfulInteraction = iota
+	// Read the state of a specific version of the resource.
 	TypeRestfulInteractionVread
+	// Update an existing resource by its id (or create it if it is new).
 	TypeRestfulInteractionUpdate
+	// Update an existing resource by posting a set of changes to it.
 	TypeRestfulInteractionPatch
+	// Delete a resource.
 	TypeRestfulInteractionDelete
+	// Retrieve the change history for a particular resource, type of resource, or the entire system.
 	TypeRestfulInteractionHistory
+	// Retrieve the change history for a particular resource.
 	TypeRestfulInteractionHistoryInstance
+	// Retrieve the change history for all resources of a particular type.
 	TypeRestfulInteractionHistoryType
+	// Retrieve the change history for all resources on a system.
 	TypeRestfulInteractionHistorySystem
+	// Create a new resource with a server assigned id.
 	TypeRestfulInteractionCreate
+	// Search a resource type or all resources based on some filter criteria.
 	TypeRestfulInteractionSearch
+	// Search all resources of the specified type based on some filter criteria.
 	TypeRestfulInteractionSearchType
+	// Search all resources based on some filter criteria.
 	TypeRestfulInteractionSearchSystem
+	// Search resources in a compartment based on some filter criteria.
 	TypeRestfulInteractionSearchCompartment
+	// Get a Capability Statement for the system.
 	TypeRestfulInteractionCapabilities
+	// Update, create or delete a set of resources as a single transaction.
 	TypeRestfulInteractionTransaction
+	// perform a set of a separate interactions in a single http operation
 	TypeRestfulInteractionBatch
+	// Perform an operation as defined by an OperationDefinition.
 	TypeRestfulInteractionOperation
 )
 

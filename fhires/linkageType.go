@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// LinkageType is documented here http://hl7.org/fhir/ValueSet/linkage-type
+// Used to distinguish different roles a resource can play within a set of linked resources.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/linkage-type
 type LinkageType int
 
 const (
 	LinkageTypeSource LinkageType = iota
+	// The resource represents an alternative view of the underlying event/condition/etc.  The resource may still be actively maintained, even though it is not considered to be the source of truth.
 	LinkageTypeAlternate
+	// The resource represents an obsolete record of the underlying event/condition/etc.  It is not expected to be actively maintained.
 	LinkageTypeHistorical
 )
 

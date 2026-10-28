@@ -6,24 +6,42 @@ import (
 	"strings"
 )
 
-// SearchModifierCode is documented here http://hl7.org/fhir/ValueSet/search-modifier-code
+// A supported modifier for a search parameter.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/search-modifier-code
 type SearchModifierCode int
 
 const (
 	SearchModifierCodeMissing SearchModifierCode = iota
+	// The search parameter returns resources that have a value that exactly matches the supplied parameter (the whole string, including casing and accents).
 	SearchModifierCodeExact
+	// The search parameter returns resources that include the supplied parameter value anywhere within the field being searched.
 	SearchModifierCodeContains
+	// The search parameter returns resources that do not contain a match.
 	SearchModifierCodeNot
+	// The search parameter is processed as a string that searches text associated with the code/value - either CodeableConcept.text, Coding.display, Identifier.type.text, or Reference.display.
 	SearchModifierCodeText
+	// The search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the coding is in the specified value set.
 	SearchModifierCodeIn
+	// The search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the coding is not in the specified value set.
 	SearchModifierCodeNotIn
+	// The search parameter tests whether the value in a resource is subsumed by the specified value (is-a, or hierarchical relationships).
 	SearchModifierCodeBelow
+	// The search parameter tests whether the value in a resource subsumes the specified value (is-a, or hierarchical relationships).
 	SearchModifierCodeAbove
+	// The search parameter only applies to the Resource Type specified as a modifier (e.g. the modifier is not actually :type, but :Patient etc.).
 	SearchModifierCodeType
+	// The search parameter applies to the identifier on the resource, not the reference.
 	SearchModifierCodeIdentifier
+	// The search parameter has the format system|code|value, where the system and code refer to an Identifier.type.coding.system and .code, and match if any of the type codes match. All 3 parts must be present.
 	SearchModifierCodeOfType
+	// Tests whether the textual display value in a resource (e.g., CodeableConcept.text, Coding.display, or Reference.display) matches the supplied parameter value.
 	SearchModifierCodeCodeText
+	// Tests whether the value in a resource matches the supplied parameter value using advanced text handling that searches text associated with the code/value - e.g., CodeableConcept.text, Coding.display, or Identifier.type.text.
 	SearchModifierCodeTextAdvanced
+	// The search parameter indicates an inclusion directive (_include, _revinclude) that is applied to an included resource instead of the matching resource.
 	SearchModifierCodeIterate
 )
 

@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// AggregationMode is documented here http://hl7.org/fhir/ValueSet/resource-aggregation-mode
+// How resource references can be aggregated.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/resource-aggregation-mode
 type AggregationMode int
 
 const (
 	AggregationModeContained AggregationMode = iota
+	// The reference to a resource that has to be resolved externally to the resource that includes the reference.
 	AggregationModeReferenced
+	// When the resource is in a Bundle, the resource the reference points to will be found in the same bundle as the resource that includes the reference.
 	AggregationModeBundled
 )
 

@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// EndpointStatus is documented here http://hl7.org/fhir/ValueSet/endpoint-status
+// The status of the endpoint.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/endpoint-status
 type EndpointStatus int
 
 const (
 	EndpointStatusActive EndpointStatus = iota
+	// This endpoint is temporarily unavailable.
 	EndpointStatusSuspended
+	// This endpoint has exceeded connectivity thresholds and is considered in an error state and should no longer be attempted to connect to until corrective action is taken.
 	EndpointStatusError
+	// This endpoint is no longer to be used.
 	EndpointStatusOff
+	// This instance should not have been part of this patient's medical record.
 	EndpointStatusEnteredInError
 )
 

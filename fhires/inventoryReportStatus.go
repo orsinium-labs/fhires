@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// InventoryReportStatus is documented here http://hl7.org/fhir/ValueSet/inventoryreport-status
+// The status of the InventoryReport.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/inventoryreport-status
 type InventoryReportStatus int
 
 const (
 	InventoryReportStatusDraft InventoryReportStatus = iota
+	// The inventory report has been requested but there is no data available.
 	InventoryReportStatusRequested
+	// This report is submitted as current.
 	InventoryReportStatusActive
+	// The report has been withdrawn following a previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it.
 	InventoryReportStatusEnteredInError
 )
 

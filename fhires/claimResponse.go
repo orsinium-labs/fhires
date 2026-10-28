@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	decimal "github.com/shopspring/decimal"
+	"github.com/shopspring/decimal"
 )
 
 // This resource provides the adjudication details from the processing of a Claim resource.

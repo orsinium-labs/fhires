@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// ActionPrecheckBehavior is documented here http://hl7.org/fhir/ValueSet/action-precheck-behavior
+// Defines selection frequency behavior for an action or group.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/action-precheck-behavior
 type ActionPrecheckBehavior int
 
 const (
 	ActionPrecheckBehaviorYes ActionPrecheckBehavior = iota
+	// An action with this behavior is one of the less frequent actions included by the end user, for the particular context in which the action occurs. The system displaying the actions to the end user would typically not "pre-check" such an action.
 	ActionPrecheckBehaviorNo
 )
 

@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// LinkType is documented here http://hl7.org/fhir/ValueSet/link-type
+// The type of link between this Patient resource and another Patient/RelatedPerson resource.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/link-type
 type LinkType int
 
 const (
 	LinkTypeReplacedBy LinkType = iota
+	// The patient resource containing this link is the current active patient record. The link points back to an inactive patient resource that has been merged into this resource, and should be consulted to retrieve additional referenced information.
 	LinkTypeReplaces
+	// The patient resource containing this link is in use and valid but not considered the main source of information about a patient. The link points forward to another patient resource that should be consulted to retrieve additional patient information.
 	LinkTypeRefer
+	// The patient resource containing this link is in use and valid, but points to another Patient or RelatedPerson resource that is known to contain data about the same person. Data in this resource might overlap or contradict information found in the other Patient/RelatedPerson resource. This link does not indicate any relative importance of the resources concerned, and both should be regarded as equally valid.
 	LinkTypeSeealso
 )
 

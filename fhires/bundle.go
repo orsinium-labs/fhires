@@ -4,7 +4,7 @@ import (
 	jsontext "encoding/json/jsontext"
 	"encoding/json/v2"
 
-	decimal "github.com/shopspring/decimal"
+	"github.com/shopspring/decimal"
 )
 
 // A container for a collection of resources.

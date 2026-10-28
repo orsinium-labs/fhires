@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// ArtifactAssessmentDisposition is documented here http://hl7.org/fhir/ValueSet/artifactassessment-disposition
+// Possible values for the disposition of a comment or change request, typically used for comments and change requests, to indicate the disposition of the responsible party towards the changes suggested by the comment or change request.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/artifactassessment-disposition
 type ArtifactAssessmentDisposition int
 
 const (
 	ArtifactAssessmentDispositionUnresolved ArtifactAssessmentDisposition = iota
+	// The comment is not persuasive (rejected in full)
 	ArtifactAssessmentDispositionNotPersuasive
+	// The comment is persuasive (accepted in full)
 	ArtifactAssessmentDispositionPersuasive
+	// The comment is persuasive with modification (partially accepted)
 	ArtifactAssessmentDispositionPersuasiveWithModification
+	// The comment is not persuasive with modification (partially rejected)
 	ArtifactAssessmentDispositionNotPersuasiveWithModification
 )
 

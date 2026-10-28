@@ -6,16 +6,26 @@ import (
 	"strings"
 )
 
-// TestScriptRequestMethodCode is documented here http://hl7.org/fhir/ValueSet/http-operations
+// The allowable request method or HTTP operation codes.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/http-operations
 type TestScriptRequestMethodCode int
 
 const (
 	TestScriptRequestMethodCodeDelete TestScriptRequestMethodCode = iota
+	// HTTP GET operation.
 	TestScriptRequestMethodCodeGet
+	// HTTP OPTIONS operation.
 	TestScriptRequestMethodCodeOptions
+	// HTTP PATCH operation.
 	TestScriptRequestMethodCodePatch
+	// HTTP POST operation.
 	TestScriptRequestMethodCodePost
+	// HTTP PUT operation.
 	TestScriptRequestMethodCodePut
+	// HTTP HEAD operation.
 	TestScriptRequestMethodCodeHead
 )
 

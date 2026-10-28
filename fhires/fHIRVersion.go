@@ -6,66 +6,126 @@ import (
 	"strings"
 )
 
-// FHIRVersion is documented here http://hl7.org/fhir/ValueSet/FHIR-version
+// All published FHIR Versions.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/FHIR-version
 type FHIRVersion int
 
 const (
 	FHIRVersion0_01 FHIRVersion = iota
+	// 1st Draft for Comment (Sept 2012 Ballot).
 	FHIRVersion0_05
+	// 2nd Draft for Comment (January 2013 Ballot).
 	FHIRVersion0_06
+	// DSTU 1 Ballot version.
 	FHIRVersion0_11
+	// DSTU 1 version.
 	FHIRVersion0_0
+	// DSTU 1 Official version.
 	FHIRVersion0_0_80
+	// DSTU 1 Official version Technical Errata #1.
 	FHIRVersion0_0_81
+	// DSTU 1 Official version Technical Errata #2.
 	FHIRVersion0_0_82
+	// January 2015 Ballot.
 	FHIRVersion0_4
+	// Draft For Comment (January 2015 Ballot).
 	FHIRVersion0_4_0
+	// May 2015 Ballot.
 	FHIRVersion0_5
+	// DSTU 2 Ballot version (May 2015 Ballot).
 	FHIRVersion0_5_0
+	// DSTU 2 version.
 	FHIRVersion1_0
+	// DSTU 2 QA Preview + CQIF Ballot (Sep 2015).
 	FHIRVersion1_0_0
+	// DSTU 2 (Official version).
 	FHIRVersion1_0_1
+	// DSTU 2 (Official version) with 1 technical errata.
 	FHIRVersion1_0_2
+	// GAO Ballot version.
 	FHIRVersion1_1
+	// GAO Ballot + draft changes to main FHIR standard.
 	FHIRVersion1_1_0
+	// Connectathon 12 (Montreal) version.
 	FHIRVersion1_4
+	// CQF on FHIR Ballot + Connectathon 12 (Montreal).
 	FHIRVersion1_4_0
+	// Connectathon 13 (Baltimore) version.
 	FHIRVersion1_6
+	// FHIR STU3 Ballot + Connectathon 13 (Baltimore).
 	FHIRVersion1_6_0
+	// Connectathon 14 (San Antonio) version.
 	FHIRVersion1_8
+	// FHIR STU3 Candidate + Connectathon 14 (San Antonio).
 	FHIRVersion1_8_0
+	// STU3 version.
 	FHIRVersion3_0
+	// FHIR Release 3 (STU).
 	FHIRVersion3_0_0
+	// FHIR Release 3 (STU) with 1 technical errata.
 	FHIRVersion3_0_1
+	// FHIR Release 3 (STU) with 2 technical errata.
 	FHIRVersion3_0_2
+	// R4 Ballot #1 version.
 	FHIRVersion3_3
+	// R4 Ballot #1 + Connectaton 18 (Cologne).
 	FHIRVersion3_3_0
+	// R4 Ballot #2 version.
 	FHIRVersion3_5
+	// R4 Ballot #2 + Connectathon 19 (Baltimore).
 	FHIRVersion3_5_0
+	// R4 version.
 	FHIRVersion4_0
+	// FHIR Release 4 (Normative + STU).
 	FHIRVersion4_0_0
+	// FHIR Release 4 (Normative + STU) with 1 technical errata.
 	FHIRVersion4_0_1
+	// R4B Ballot #1 version.
 	FHIRVersion4_1
+	// R4B Ballot #1 + Connectathon 27 (Virtual).
 	FHIRVersion4_1_0
+	// R5 Preview #1 version.
 	FHIRVersion4_2
+	// R5 Preview #1 + Connectathon 23 (Sydney).
 	FHIRVersion4_2_0
+	// R4B version.
 	FHIRVersion4_3
+	// FHIR Release 4B (Normative + STU).
 	FHIRVersion4_3_0
+	// FHIR Release 4B CI-Builld.
 	FHIRVersion4_3_0Cibuild
+	// FHIR Release 4B Snapshot #1.
 	FHIRVersion4_3_0Snapshot1
+	// R5 Preview #2 version.
 	FHIRVersion4_4
+	// R5 Preview #2 + Connectathon 24 (Virtual).
 	FHIRVersion4_4_0
+	// R5 Preview #3 version.
 	FHIRVersion4_5
+	// R5 Preview #3 + Connectathon 25 (Virtual).
 	FHIRVersion4_5_0
+	// R5 Draft Ballot version.
 	FHIRVersion4_6
+	// R5 Draft Ballot + Connectathon 27 (Virtual).
 	FHIRVersion4_6_0
+	// R5 Versions.
 	FHIRVersion5_0
+	// R5 Final Version.
 	FHIRVersion5_0_0
+	// R5 Rolling ci-build.
 	FHIRVersion5_0_0Cibuild
+	// R5 Preview #2.
 	FHIRVersion5_0_0Snapshot1
+	// R5 Interim tooling stage.
 	FHIRVersion5_0_0Snapshot2
+	// R5 Ballot.
 	FHIRVersion5_0_0Ballot
+	// R5 January 2023 Staging Release + Connectathon 32.
 	FHIRVersion5_0_0Snapshot3
+	// R5 Final QA.
 	FHIRVersion5_0_0DraftFinal
 )
 

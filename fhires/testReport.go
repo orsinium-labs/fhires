@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	decimal "github.com/shopspring/decimal"
+	"github.com/shopspring/decimal"
 )
 
 // A summary of information based on the results of executing a TestScript.

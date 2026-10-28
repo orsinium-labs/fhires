@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// Kind is documented here http://hl7.org/fhir/ValueSet/coverage-kind
+// The kind of coverage: insurance, selfpay or other.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/coverage-kind
 type Kind int
 
 const (
 	KindInsurance Kind = iota
+	// One or more persons and/or organizations are paying for the services rendered.
 	KindSelfPay
+	// Some other organization is paying for the service.
 	KindOther
 )
 

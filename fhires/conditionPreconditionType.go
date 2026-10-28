@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// ConditionPreconditionType is documented here http://hl7.org/fhir/ValueSet/condition-precondition-type
+// Kind of precondition for the condition.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/condition-precondition-type
 type ConditionPreconditionType int
 
 const (
 	ConditionPreconditionTypeSensitive ConditionPreconditionType = iota
+	// The observation is very specific for this condition, but not particularly sensitive.
 	ConditionPreconditionTypeSpecific
 )
 

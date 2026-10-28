@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// ConformanceExpectation is documented here http://hl7.org/fhir/ValueSet/conformance-expectation
+// Description Needed Here
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/conformance-expectation
 type ConformanceExpectation int
 
 const (
 	ConformanceExpectationSHALL ConformanceExpectation = iota
+	// Support for the specified capability is strongly encouraged, and failure to support it should only occur after careful consideration.
 	ConformanceExpectationSHOULD
+	// Support for the specified capability is not necessary to be considered conformant, and the requirement should be considered strictly optional.
 	ConformanceExpectationMAY
+	// Support for the specified capability is strongly discouraged and should occur only after careful consideration.
 	ConformanceExpectationSHOULDNOT
 )
 

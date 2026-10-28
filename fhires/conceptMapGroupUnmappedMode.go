@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// ConceptMapGroupUnmappedMode is documented here http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode
+// Defines which action to take if there is no match in the group.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode
 type ConceptMapGroupUnmappedMode int
 
 const (
 	ConceptMapGroupUnmappedModeUseSourceCode ConceptMapGroupUnmappedMode = iota
+	// Use the code(s) explicitly provided in the group.unmapped 'code' or 'valueSet' element.
 	ConceptMapGroupUnmappedModeFixed
+	// Use the map identified by the canonical URL in the url element.
 	ConceptMapGroupUnmappedModeOtherMap
 )
 

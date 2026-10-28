@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// ObservationRangeCategory is documented here http://hl7.org/fhir/ValueSet/observation-range-category
+// Codes identifying the category of observation range.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/observation-range-category
 type ObservationRangeCategory int
 
 const (
 	ObservationRangeCategoryReference ObservationRangeCategory = iota
+	// Critical Range for Ordinal and Continuous Observations. Results outside this range are critical.
 	ObservationRangeCategoryCritical
+	// Absolute Range for Ordinal and Continuous Observations. Results outside this range are not possible.
 	ObservationRangeCategoryAbsolute
 )
 

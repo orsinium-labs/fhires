@@ -6,21 +6,36 @@ import (
 	"strings"
 )
 
-// AssertionOperatorType is documented here http://hl7.org/fhir/ValueSet/assert-operator-codes
+// The type of operator to use for assertion.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/assert-operator-codes
 type AssertionOperatorType int
 
 const (
 	AssertionOperatorTypeEquals AssertionOperatorType = iota
+	// Not equals comparison.
 	AssertionOperatorTypeNotEquals
+	// Compare value within a known set of values.
 	AssertionOperatorTypeIn
+	// Compare value not within a known set of values.
 	AssertionOperatorTypeNotIn
+	// Compare value to be greater than a known value.
 	AssertionOperatorTypeGreaterThan
+	// Compare value to be less than a known value.
 	AssertionOperatorTypeLessThan
+	// Compare value is empty.
 	AssertionOperatorTypeEmpty
+	// Compare value is not empty.
 	AssertionOperatorTypeNotEmpty
+	// Compare value string contains a known value.
 	AssertionOperatorTypeContains
+	// Compare value string does not contain a known value.
 	AssertionOperatorTypeNotContains
+	// Evaluate the FHIRPath expression as a boolean condition.
 	AssertionOperatorTypeEval
+	// Manually evaluate the condition described by this assert. The test engine SHALL pause and provide an input mechanism to set the outcome of this assert to 'pass', 'fail', 'skip' or 'stop'.
 	AssertionOperatorTypeManualEval
 )
 

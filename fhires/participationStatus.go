@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// ParticipationStatus is documented here http://hl7.org/fhir/ValueSet/participationstatus
+// The Participation status of an appointment.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/participationstatus
 type ParticipationStatus int
 
 const (
 	ParticipationStatusAccepted ParticipationStatus = iota
+	// The participant has declined the appointment and will not participate in the appointment.
 	ParticipationStatusDeclined
+	// The participant has  tentatively accepted the appointment. This could be automatically created by a system and requires further processing before it can be accepted. There is no commitment that attendance will occur.
 	ParticipationStatusTentative
+	// The participant needs to indicate if they accept the appointment by changing this status to one of the other statuses.
 	ParticipationStatusNeedsAction
 )
 

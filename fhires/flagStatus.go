@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// FlagStatus is documented here http://hl7.org/fhir/ValueSet/flag-status
+// Indicates whether this flag is active and needs to be displayed to a user, or whether it is no longer needed or was entered in error.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/flag-status
 type FlagStatus int
 
 const (
 	FlagStatusActive FlagStatus = iota
+	// The flag no longer needs to be displayed.
 	FlagStatusInactive
+	// The flag was added in error and should no longer be displayed.
 	FlagStatusEnteredInError
 )
 

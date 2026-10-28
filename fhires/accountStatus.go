@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// AccountStatus is documented here http://hl7.org/fhir/ValueSet/account-status
+// Indicates whether the account is available to be used.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/account-status
 type AccountStatus int
 
 const (
 	AccountStatusActive AccountStatus = iota
+	// This account is inactive and should not be used to track financial information.
 	AccountStatusInactive
+	// This instance should not have been part of this patient's medical record.
 	AccountStatusEnteredInError
+	// This account is on hold.
 	AccountStatusOnHold
+	// The account status is unknown.
 	AccountStatusUnknown
 )
 

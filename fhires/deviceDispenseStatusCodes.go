@@ -6,18 +6,30 @@ import (
 	"strings"
 )
 
-// DeviceDispenseStatusCodes is documented here http://hl7.org/fhir/ValueSet/devicedispense-status
+// DeviceDispense Status Codes
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/devicedispense-status
 type DeviceDispenseStatusCodes int
 
 const (
 	DeviceDispenseStatusCodesPreparation DeviceDispenseStatusCodes = iota
+	// The dispensed product is ready for pickup.
 	DeviceDispenseStatusCodesInProgress
+	// The dispensed product was not and will never be picked up by the patient.
 	DeviceDispenseStatusCodesCancelled
+	// The dispense process is paused while waiting for an external event to reactivate the dispense.  For example, new stock has arrived or the prescriber has called.
 	DeviceDispenseStatusCodesOnHold
+	// The dispensed product has been picked up.
 	DeviceDispenseStatusCodesCompleted
+	// The dispense was entered in error and therefore nullified.
 	DeviceDispenseStatusCodesEnteredInError
+	// Actions implied by the dispense have been permanently halted, before all of them occurred.
 	DeviceDispenseStatusCodesStopped
+	// The dispense was declined and not performed.
 	DeviceDispenseStatusCodesDeclined
+	// The authoring system does not know which of the status values applies for this dispense.  Note: this concept is not to be used for other - one of the listed statuses is presumed to apply, it's just now known which one.
 	DeviceDispenseStatusCodesUnknown
 )
 

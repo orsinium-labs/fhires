@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// SearchProcessingModeType is documented here http://hl7.org/fhir/ValueSet/search-processingmode
+// How a search parameter relates to the set of elements returned by evaluating its expression query.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/search-processingmode
 type SearchProcessingModeType int
 
 const (
 	SearchProcessingModeTypeNormal SearchProcessingModeType = iota
+	// The search parameter is derived by a phonetic transform from the selected nodes.
 	SearchProcessingModeTypePhonetic
+	// The interpretation of the xpath statement is unknown (and can't be automated).
 	SearchProcessingModeTypeOther
 )
 

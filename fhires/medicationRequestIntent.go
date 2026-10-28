@@ -6,17 +6,28 @@ import (
 	"strings"
 )
 
-// MedicationRequestIntent is documented here http://hl7.org/fhir/ValueSet/medicationrequest-intent
+// MedicationRequest Intent Codes
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/medicationrequest-intent
 type MedicationRequestIntent int
 
 const (
 	MedicationRequestIntentProposal MedicationRequestIntent = iota
+	// The request represents an intention to ensure something occurs without providing an authorization for others to act.
 	MedicationRequestIntentPlan
+	// The request represents a request/demand and authorization for action
 	MedicationRequestIntentOrder
+	// The request represents the original authorization for the medication request.
 	MedicationRequestIntentOriginalOrder
+	// The request represents an automatically generated supplemental authorization for action based on a parent authorization together with initial results of the action taken against that parent authorization..
 	MedicationRequestIntentReflexOrder
+	// The request represents the view of an authorization instantiated by a fulfilling system representing the details of the fulfiller's intention to act upon a submitted order.
 	MedicationRequestIntentFillerOrder
+	// The request represents an instance for the particular order and is used to generate a schedule of requests on a medication administration record (MAR).
 	MedicationRequestIntentInstanceOrder
+	// The request represents a component or option for a RequestOrchestration that establishes timing, conditionality and/or  other constraints among a set of requests.
 	MedicationRequestIntentOption
 )
 

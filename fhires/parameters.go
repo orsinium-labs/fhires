@@ -4,7 +4,7 @@ import (
 	jsontext "encoding/json/jsontext"
 	"encoding/json/v2"
 
-	decimal "github.com/shopspring/decimal"
+	"github.com/shopspring/decimal"
 )
 
 // This resource is used to pass information into and back from an operation (whether invoked directly from REST or within a messaging environment).

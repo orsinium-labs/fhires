@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// AssertionManualCompletionType is documented here http://hl7.org/fhir/ValueSet/assert-manual-completion-codes
+// The type of manual completion to use for assertion.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/assert-manual-completion-codes
 type AssertionManualCompletionType int
 
 const (
 	AssertionManualCompletionTypeFail AssertionManualCompletionType = iota
+	// Mark the currently waiting test passed (if the test is not failed already) and proceed with the next action in the TestScript.
 	AssertionManualCompletionTypePass
+	// Mark this assert as skipped and proceed with the next action in the TestScript.
 	AssertionManualCompletionTypeSkip
+	// Stop execution of this TestScript. The overall status of this TestScript is evaluated based on the status of the completed tests.
 	AssertionManualCompletionTypeStop
 )
 

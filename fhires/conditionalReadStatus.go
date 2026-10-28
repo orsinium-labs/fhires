@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// ConditionalReadStatus is documented here http://hl7.org/fhir/ValueSet/conditional-read-status
+// A code that indicates how the server supports conditional read.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/conditional-read-status
 type ConditionalReadStatus int
 
 const (
 	ConditionalReadStatusNotSupported ConditionalReadStatus = iota
+	// Conditional reads are supported, but only with the If-Modified-Since HTTP Header.
 	ConditionalReadStatusModifiedSince
+	// Conditional reads are supported, but only with the If-None-Match HTTP Header.
 	ConditionalReadStatusNotMatch
+	// Conditional reads are supported, with both If-Modified-Since and If-None-Match HTTP Headers.
 	ConditionalReadStatusFullSupport
 )
 

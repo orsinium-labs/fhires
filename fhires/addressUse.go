@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// AddressUse is documented here http://hl7.org/fhir/ValueSet/address-use
+// The use of an address.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/address-use
 type AddressUse int
 
 const (
 	AddressUseHome AddressUse = iota
+	// An office address. First choice for business related contacts during business hours.
 	AddressUseWork
+	// A temporary address. The period can provide more detailed information.
 	AddressUseTemp
+	// This address is no longer in use (or was never correct but retained for records).
 	AddressUseOld
+	// An address to be used to send bills, invoices, receipts etc.
 	AddressUseBilling
 )
 

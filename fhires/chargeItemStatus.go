@@ -6,16 +6,26 @@ import (
 	"strings"
 )
 
-// ChargeItemStatus is documented here http://hl7.org/fhir/ValueSet/chargeitem-status
+// Codes identifying the lifecycle stage of a ChargeItem.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/chargeitem-status
 type ChargeItemStatus int
 
 const (
 	ChargeItemStatusPlanned ChargeItemStatus = iota
+	// The charge item is ready for billing.
 	ChargeItemStatusBillable
+	// The charge item has been determined to be not billable (e.g. due to rules associated with the billing code).
 	ChargeItemStatusNotBillable
+	// The processing of the charge was aborted.
 	ChargeItemStatusAborted
+	// The charge item has been billed (e.g. a billing engine has generated financial transactions by applying the associated ruled for the charge item to the context of the Encounter, and placed them into Claims/Invoices.
 	ChargeItemStatusBilled
+	// The charge item has been entered in error and should not be processed for billing.
 	ChargeItemStatusEnteredInError
+	// The authoring system does not know which of the status values currently applies for this charge item  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
 	ChargeItemStatusUnknown
 )
 

@@ -80446,7 +80446,7 @@
               "path": "CapabilityStatement.rest.resource.conditionalCreate",
               "short": "If allows/uses conditional create",
               "definition": "A flag that indicates that the server supports conditional create.",
-              "comment": "Conditional Create is mainly appropriate for interface engine scripts converting from other formats, such as json.",
+              "comment": "Conditional Create is mainly appropriate for interface engine scripts converting from other formats, such as ",
               "min": 0,
               "max": "1",
               "base": {
@@ -80483,7 +80483,7 @@
               "path": "CapabilityStatement.rest.resource.conditionalRead",
               "short": "not-supported | modified-since | not-match | full-support",
               "definition": "A code that indicates how the server supports conditional read.",
-              "comment": "Conditional Read is mainly appropriate for interface engine scripts converting from other formats, such as json.",
+              "comment": "Conditional Read is mainly appropriate for interface engine scripts converting from other formats, such as ",
               "min": 0,
               "max": "1",
               "base": {
@@ -80531,7 +80531,7 @@
               "path": "CapabilityStatement.rest.resource.conditionalUpdate",
               "short": "If allows/uses conditional update",
               "definition": "A flag that indicates that the server supports conditional update.",
-              "comment": "Conditional Update is mainly appropriate for interface engine scripts converting from other formats, such as json.",
+              "comment": "Conditional Update is mainly appropriate for interface engine scripts converting from other formats, such as ",
               "min": 0,
               "max": "1",
               "base": {
@@ -80568,7 +80568,7 @@
               "path": "CapabilityStatement.rest.resource.conditionalPatch",
               "short": "If allows/uses conditional patch",
               "definition": "A flag that indicates that the server supports conditional patch.",
-              "comment": "Conditional Patch is mainly appropriate for interface engine scripts converting from other formats, such as json.",
+              "comment": "Conditional Patch is mainly appropriate for interface engine scripts converting from other formats, such as ",
               "min": 0,
               "max": "1",
               "base": {
@@ -80605,7 +80605,7 @@
               "path": "CapabilityStatement.rest.resource.conditionalDelete",
               "short": "not-supported | single | multiple - how conditional delete is supported",
               "definition": "A code that indicates how the server supports conditional delete.",
-              "comment": "Conditional Delete is mainly appropriate for interface engine scripts converting from other formats, such as json.",
+              "comment": "Conditional Delete is mainly appropriate for interface engine scripts converting from other formats, such as ",
               "min": 0,
               "max": "1",
               "base": {
@@ -84058,7 +84058,7 @@
               "path": "CapabilityStatement.rest.resource.conditionalCreate",
               "short": "If allows/uses conditional create",
               "definition": "A flag that indicates that the server supports conditional create.",
-              "comment": "Conditional Create is mainly appropriate for interface engine scripts converting from other formats, such as json.",
+              "comment": "Conditional Create is mainly appropriate for interface engine scripts converting from other formats, such as ",
               "min": 0,
               "max": "1",
               "type": [
@@ -84081,7 +84081,7 @@
               "path": "CapabilityStatement.rest.resource.conditionalRead",
               "short": "not-supported | modified-since | not-match | full-support",
               "definition": "A code that indicates how the server supports conditional read.",
-              "comment": "Conditional Read is mainly appropriate for interface engine scripts converting from other formats, such as json.",
+              "comment": "Conditional Read is mainly appropriate for interface engine scripts converting from other formats, such as ",
               "min": 0,
               "max": "1",
               "type": [
@@ -84115,7 +84115,7 @@
               "path": "CapabilityStatement.rest.resource.conditionalUpdate",
               "short": "If allows/uses conditional update",
               "definition": "A flag that indicates that the server supports conditional update.",
-              "comment": "Conditional Update is mainly appropriate for interface engine scripts converting from other formats, such as json.",
+              "comment": "Conditional Update is mainly appropriate for interface engine scripts converting from other formats, such as ",
               "min": 0,
               "max": "1",
               "type": [
@@ -84138,7 +84138,7 @@
               "path": "CapabilityStatement.rest.resource.conditionalPatch",
               "short": "If allows/uses conditional patch",
               "definition": "A flag that indicates that the server supports conditional patch.",
-              "comment": "Conditional Patch is mainly appropriate for interface engine scripts converting from other formats, such as json.",
+              "comment": "Conditional Patch is mainly appropriate for interface engine scripts converting from other formats, such as ",
               "min": 0,
               "max": "1",
               "type": [
@@ -84161,7 +84161,7 @@
               "path": "CapabilityStatement.rest.resource.conditionalDelete",
               "short": "not-supported | single | multiple - how conditional delete is supported",
               "definition": "A code that indicates how the server supports conditional delete.",
-              "comment": "Conditional Delete is mainly appropriate for interface engine scripts converting from other formats, such as json.",
+              "comment": "Conditional Delete is mainly appropriate for interface engine scripts converting from other formats, such as ",
               "min": 0,
               "max": "1",
               "type": [

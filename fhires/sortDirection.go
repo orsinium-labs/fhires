@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// SortDirection is documented here http://hl7.org/fhir/ValueSet/sort-direction
+// The possible sort directions, ascending or descending.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/sort-direction
 type SortDirection int
 
 const (
 	SortDirectionAscending SortDirection = iota
+	// Sort by the value descending, so that lower values appear last.
 	SortDirectionDescending
 )
 

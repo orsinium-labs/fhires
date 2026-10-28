@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// SubscriptionStatusCodes is documented here http://hl7.org/fhir/ValueSet/subscription-status
+// State values for FHIR Subscriptions.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/subscription-status
 type SubscriptionStatusCodes int
 
 const (
 	SubscriptionStatusCodesRequested SubscriptionStatusCodes = iota
+	// The subscription is active.
 	SubscriptionStatusCodesActive
+	// The server has an error executing the notification.
 	SubscriptionStatusCodesError
+	// Too many errors have occurred or the subscription has expired.
 	SubscriptionStatusCodesOff
+	// This subscription has been flagged as incorrect.
 	SubscriptionStatusCodesEnteredInError
 )
 

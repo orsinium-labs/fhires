@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// SubscriptionNotificationType is documented here http://hl7.org/fhir/ValueSet/subscription-notification-type
+// The type of notification represented by the status message.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/subscription-notification-type
 type SubscriptionNotificationType int
 
 const (
 	SubscriptionNotificationTypeHandshake SubscriptionNotificationType = iota
+	// The status was generated to perform a heartbeat notification to the subscriber.
 	SubscriptionNotificationTypeHeartbeat
+	// The status was generated for an event to the subscriber.
 	SubscriptionNotificationTypeEventNotification
+	// The status was generated in response to a status query/request.
 	SubscriptionNotificationTypeQueryStatus
+	// The status was generated in response to an event query/request.
 	SubscriptionNotificationTypeQueryEvent
 )
 

@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// GraphCompartmentRule is documented here http://hl7.org/fhir/ValueSet/graph-compartment-rule
+// How a compartment must be linked.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/graph-compartment-rule
 type GraphCompartmentRule int
 
 const (
 	GraphCompartmentRuleIdentical GraphCompartmentRule = iota
+	// The compartment must be the same - the record must be about the same patient, but the reference may be different.
 	GraphCompartmentRuleMatching
+	// The compartment must be different.
 	GraphCompartmentRuleDifferent
+	// The compartment rule is defined in the accompanying FHIRPath expression.
 	GraphCompartmentRuleCustom
 )
 

@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// FamilyHistoryStatus is documented here http://hl7.org/fhir/ValueSet/history-status
+// A code that identifies the status of the family history record.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/history-status
 type FamilyHistoryStatus int
 
 const (
 	FamilyHistoryStatusPartial FamilyHistoryStatus = iota
+	// All available related health information is captured as of the date (and possibly time) when the family member history was taken.
 	FamilyHistoryStatusCompleted
+	// This instance should not have been part of this patient's medical record.
 	FamilyHistoryStatusEnteredInError
+	// Health information for this family member is unavailable/unknown.
 	FamilyHistoryStatusHealthUnknown
 )
 

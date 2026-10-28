@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// RequestPriority is documented here http://hl7.org/fhir/ValueSet/request-priority
+// Identifies the level of importance to be assigned to actioning the request.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/request-priority
 type RequestPriority int
 
 const (
 	RequestPriorityRoutine RequestPriority = iota
+	// The request should be actioned promptly - higher priority than routine.
 	RequestPriorityUrgent
+	// The request should be actioned as soon as possible - higher priority than urgent.
 	RequestPriorityAsap
+	// The request should be actioned immediately - highest possible priority.  E.g. an emergency.
 	RequestPriorityStat
 )
 

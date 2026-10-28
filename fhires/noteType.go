@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// NoteType is documented here http://hl7.org/fhir/ValueSet/note-type
+// The presentation types of notes.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/note-type
 type NoteType int
 
 const (
 	NoteTypeDisplay NoteType = iota
+	// Print the note on the form.
 	NoteTypePrint
+	// Print the note for the operator.
 	NoteTypePrintoper
 )
 

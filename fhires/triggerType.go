@@ -6,17 +6,28 @@ import (
 	"strings"
 )
 
-// TriggerType is documented here http://hl7.org/fhir/ValueSet/trigger-type
+// The type of trigger.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/trigger-type
 type TriggerType int
 
 const (
 	TriggerTypeNamedEvent TriggerType = iota
+	// The trigger occurs at a specific time or periodically as described by a timing or schedule. A periodic event cannot have any data elements, but may have a name assigned as a shorthand for the event.
 	TriggerTypePeriodic
+	// The trigger occurs whenever data of a particular type is changed in any way, either added, modified, or removed.
 	TriggerTypeDataChanged
+	// The trigger occurs whenever data of a particular type is added.
 	TriggerTypeDataAdded
+	// The trigger occurs whenever data of a particular type is modified.
 	TriggerTypeDataModified
+	// The trigger occurs whenever data of a particular type is removed.
 	TriggerTypeDataRemoved
+	// The trigger occurs whenever data of a particular type is accessed.
 	TriggerTypeDataAccessed
+	// The trigger occurs whenever access to data of a particular type is completed.
 	TriggerTypeDataAccessEnded
 )
 

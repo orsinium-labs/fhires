@@ -6,16 +6,26 @@ import (
 	"strings"
 )
 
-// UDIEntryType is documented here http://hl7.org/fhir/ValueSet/udi-entry-type
+// Codes to identify how UDI data was entered.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/udi-entry-type
 type UDIEntryType int
 
 const (
 	UDIEntryTypeBarcode UDIEntryType = iota
+	// An RFID chip reader captured the data from the device label.
 	UDIEntryTypeRfid
+	// The data was read from the label by a person and manually entered. (e.g.  via a keyboard).
 	UDIEntryTypeManual
+	// The data originated from a patient's implant card and was read by an operator.
 	UDIEntryTypeCard
+	// The data originated from a patient source and was not directly scanned or read from a label or card.
 	UDIEntryTypeSelfReported
+	// The UDI information was received electronically from the device through a communication protocol, such as the IEEE 11073 20601 version 4 exchange protocol over Bluetooth or USB.
 	UDIEntryTypeElectronicTransmission
+	// The method of data capture has not been determined.
 	UDIEntryTypeUnknown
 )
 

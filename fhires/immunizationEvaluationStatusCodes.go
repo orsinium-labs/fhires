@@ -6,16 +6,26 @@ import (
 	"strings"
 )
 
-// ImmunizationEvaluationStatusCodes is documented here http://hl7.org/fhir/ValueSet/immunization-evaluation-status
+// The value set to instantiate this attribute should be drawn from a terminologically robust code system that consists of or contains concepts to support describing the current status of the evaluation for vaccine administration event.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/immunization-evaluation-status
 type ImmunizationEvaluationStatusCodes int
 
 const (
 	ImmunizationEvaluationStatusCodesInProgress ImmunizationEvaluationStatusCodes = iota
+	// The administration was terminated prior to any impact on the subject (though preparatory actions may have been taken)
 	ImmunizationEvaluationStatusCodesNotDone
+	// Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called 'suspended'.
 	ImmunizationEvaluationStatusCodesOnHold
+	// All actions that are implied by the administration have occurred.
 	ImmunizationEvaluationStatusCodesCompleted
+	// The administration was entered in error and therefore nullified.
 	ImmunizationEvaluationStatusCodesEnteredInError
+	// Actions implied by the administration have been permanently halted, before all of them occurred.
 	ImmunizationEvaluationStatusCodesStopped
+	// The authoring system does not know which of the status values currently applies for this request. Note: This concept is not to be used for 'other' - one of the listed statuses is presumed to apply, it's just not known which one.
 	ImmunizationEvaluationStatusCodesUnknown
 )
 

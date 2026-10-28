@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// DocumentMode is documented here http://hl7.org/fhir/ValueSet/document-mode
+// Whether the application produces or consumes documents.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/document-mode
 type DocumentMode int
 
 const (
 	DocumentModeProducer DocumentMode = iota
+	// The application consumes documents of the specified type.
 	DocumentModeConsumer
 )
 

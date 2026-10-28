@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	decimal "github.com/shopspring/decimal"
+	"github.com/shopspring/decimal"
 )
 
 // An assessment of the likely outcome(s) for a patient or other subject as well as the likelihood of each outcome.

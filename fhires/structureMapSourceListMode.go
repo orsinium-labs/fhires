@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// StructureMapSourceListMode is documented here http://hl7.org/fhir/ValueSet/map-source-list-mode
+// If field is a list, how to manage the source.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/map-source-list-mode
 type StructureMapSourceListMode int
 
 const (
 	StructureMapSourceListModeFirst StructureMapSourceListMode = iota
+	// Process this rule for all but the first.
 	StructureMapSourceListModeNot_first
+	// Only process this rule for the last in the list.
 	StructureMapSourceListModeLast
+	// Process this rule for all but the last.
 	StructureMapSourceListModeNot_last
+	// Only process this rule is there is only item.
 	StructureMapSourceListModeOnly_one
 )
 

@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// IdentifierUse is documented here http://hl7.org/fhir/ValueSet/identifier-use
+// Identifies the purpose for this identifier, if known .
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/identifier-use
 type IdentifierUse int
 
 const (
 	IdentifierUseUsual IdentifierUse = iota
+	// The identifier considered to be most trusted for the identification of this item. Sometimes also known as "primary" and "main". The determination of "official" is subjective and implementation guides often provide additional guidelines for use.
 	IdentifierUseOfficial
+	// A temporary identifier.
 	IdentifierUseTemp
+	// An identifier that was assigned in secondary use - it serves to identify the object in a relative context, but cannot be consistently assigned to the same object again in a different context.
 	IdentifierUseSecondary
+	// The identifier id no longer considered valid, but may be relevant for search purposes.  E.g. Changes to identifier schemes, account merges, etc.
 	IdentifierUseOld
 )
 

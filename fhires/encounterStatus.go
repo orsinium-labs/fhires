@@ -6,18 +6,30 @@ import (
 	"strings"
 )
 
-// EncounterStatus is documented here http://hl7.org/fhir/ValueSet/encounter-status
+// Current state of the encounter.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/encounter-status
 type EncounterStatus int
 
 const (
 	EncounterStatusPlanned EncounterStatus = iota
+	// The Encounter has begun and the patient is present / the practitioner and the patient are meeting.
 	EncounterStatusInProgress
+	// The Encounter has begun, but is currently on hold, e.g. because the patient is temporarily on leave.
 	EncounterStatusOnHold
+	// The Encounter has been clinically completed, the patient has been discharged from the facility or the visit has ended, and the patient may have departed (refer to subjectStatus). While the encounter is in this status, administrative activities are usually performed, collating all required documentation and charge information before being released for billing, at which point the status will move to completed.
 	EncounterStatusDischarged
+	// The Encounter has ended.
 	EncounterStatusCompleted
+	// The Encounter has ended before it has begun.
 	EncounterStatusCancelled
+	// The Encounter has started, but was not able to be completed. Further action may need to be performed, such as rescheduling appointments related to this encounter.
 	EncounterStatusDiscontinued
+	// This instance should not have been part of this patient's medical record.
 	EncounterStatusEnteredInError
+	// The encounter status is unknown. Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown".
 	EncounterStatusUnknown
 )
 

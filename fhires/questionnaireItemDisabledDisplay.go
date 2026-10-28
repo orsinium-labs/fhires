@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// QuestionnaireItemDisabledDisplay is documented here http://hl7.org/fhir/ValueSet/questionnaire-disabled-display
+// Codes that guide the display of disabled questionnaire items
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/questionnaire-disabled-display
 type QuestionnaireItemDisabledDisplay int
 
 const (
 	QuestionnaireItemDisabledDisplayHidden QuestionnaireItemDisabledDisplay = iota
+	// The item (and possibly its children) should not be selectable or editable but should still be visible - to allow the user to see what questions *could* have been completed had other answers caused the item to be enabled.
 	QuestionnaireItemDisabledDisplayProtected
 )
 

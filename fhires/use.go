@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// Use is documented here http://hl7.org/fhir/ValueSet/claim-use
+// The purpose of the Claim: predetermination, preauthorization, claim.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/claim-use
 type Use int
 
 const (
 	UseClaim Use = iota
+	// The treatment is proposed and this represents a Pre-authorization for the services.
 	UsePreauthorization
+	// The treatment is proposed and this represents a Pre-determination for the services.
 	UsePredetermination
 )
 

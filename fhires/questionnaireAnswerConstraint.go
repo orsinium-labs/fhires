@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// QuestionnaireAnswerConstraint is documented here http://hl7.org/fhir/ValueSet/questionnaire-answer-constraint
+// Codes that describe the types of constraints possible on a question item that has a list of permitted answers
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/questionnaire-answer-constraint
 type QuestionnaireAnswerConstraint int
 
 const (
 	QuestionnaireAnswerConstraintOptionsOnly QuestionnaireAnswerConstraint = iota
+	// In addition to the values listed as answerOption or in the expansion of the answerValueSet, any other values that correspond to the specified item.type are permitted
 	QuestionnaireAnswerConstraintOptionsOrType
+	// In addition to the values listed as answerOption or in the expansion of the answerValueSet, free-text strings are permitted.  Answers will have a type of 'string'.
 	QuestionnaireAnswerConstraintOptionsOrString
 )
 

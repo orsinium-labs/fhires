@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// AddressType is documented here http://hl7.org/fhir/ValueSet/address-type
+// The type of an address (physical / postal).
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/address-type
 type AddressType int
 
 const (
 	AddressTypePostal AddressType = iota
+	// A physical address that can be visited.
 	AddressTypePhysical
+	// An address that is both physical and postal.
 	AddressTypeBoth
 )
 

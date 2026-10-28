@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// SpecimenContainedPreference is documented here http://hl7.org/fhir/ValueSet/specimen-contained-preference
+// Degree of preference of a type of conditioned specimen.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/specimen-contained-preference
 type SpecimenContainedPreference int
 
 const (
 	SpecimenContainedPreferencePreferred SpecimenContainedPreference = iota
+	// This type of conditioned specimen is an alternate.
 	SpecimenContainedPreferenceAlternate
 )
 

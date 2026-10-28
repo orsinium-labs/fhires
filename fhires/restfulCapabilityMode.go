@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// RestfulCapabilityMode is documented here http://hl7.org/fhir/ValueSet/restful-capability-mode
+// The mode of a RESTful capability statement.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/restful-capability-mode
 type RestfulCapabilityMode int
 
 const (
 	RestfulCapabilityModeClient RestfulCapabilityMode = iota
+	// The application acts as a server for this resource.
 	RestfulCapabilityModeServer
 )
 

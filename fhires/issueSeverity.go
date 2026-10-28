@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// IssueSeverity is documented here http://hl7.org/fhir/ValueSet/issue-severity
+// How the issue affects the success of the action.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/issue-severity
 type IssueSeverity int
 
 const (
 	IssueSeverityFatal IssueSeverity = iota
+	// The issue is sufficiently important to cause the action to fail.
 	IssueSeverityError
+	// The issue is not important enough to cause the action to fail but may cause it to be performed suboptimally or in a way that is not as desired.
 	IssueSeverityWarning
+	// The issue has no relation to the degree of success of the action.
 	IssueSeverityInformation
+	// The operation completed successfully.
 	IssueSeveritySuccess
 )
 

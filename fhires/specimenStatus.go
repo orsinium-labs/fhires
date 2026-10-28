@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// SpecimenStatus is documented here http://hl7.org/fhir/ValueSet/specimen-status
+// Codes providing the status/availability of a specimen.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/specimen-status
 type SpecimenStatus int
 
 const (
 	SpecimenStatusAvailable SpecimenStatus = iota
+	// There is no physical specimen because it is either lost, destroyed or consumed.
 	SpecimenStatusUnavailable
+	// The specimen cannot be used because of a quality issue such as a broken container, contamination, or too old.
 	SpecimenStatusUnsatisfactory
+	// The specimen was entered in error and therefore nullified.
 	SpecimenStatusEnteredInError
 )
 

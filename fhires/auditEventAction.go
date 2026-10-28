@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// AuditEventAction is documented here http://hl7.org/fhir/ValueSet/audit-event-action
+// Indicator for type of action performed during the event that generated the event.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/audit-event-action
 type AuditEventAction int
 
 const (
 	AuditEventActionC AuditEventAction = iota
+	// Read data, such as to print or display to a doctor.
 	AuditEventActionR
+	// Update data, such as revise patient information.
 	AuditEventActionU
+	// Delete items, such as a doctor master file record.
 	AuditEventActionD
+	// Perform a system or application function such as log-on, program execution or use of an object's method, or perform a query/search operation.
 	AuditEventActionE
 )
 

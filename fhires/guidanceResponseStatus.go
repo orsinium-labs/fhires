@@ -6,15 +6,24 @@ import (
 	"strings"
 )
 
-// GuidanceResponseStatus is documented here http://hl7.org/fhir/ValueSet/guidance-response-status
+// The status of a guidance response.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/guidance-response-status
 type GuidanceResponseStatus int
 
 const (
 	GuidanceResponseStatusSuccess GuidanceResponseStatus = iota
+	// The request was processed successfully, but more data may result in a more complete evaluation.
 	GuidanceResponseStatusDataRequested
+	// The request was processed, but more data is required to complete the evaluation.
 	GuidanceResponseStatusDataRequired
+	// The request is currently being processed.
 	GuidanceResponseStatusInProgress
+	// The request was not processed successfully.
 	GuidanceResponseStatusFailure
+	// The response was entered in error.
 	GuidanceResponseStatusEnteredInError
 )
 

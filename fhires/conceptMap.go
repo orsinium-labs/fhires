@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	decimal "github.com/shopspring/decimal"
+	"github.com/shopspring/decimal"
 )
 
 // A statement of relationships from one set of concepts to one or more other concepts - either concepts in code systems, or data element/data element concepts, or classes in class models.
@@ -204,7 +204,7 @@ type ConceptMap struct {
 	//
 	// Some mappings are based on data in addition to the source data element, where codes in multiple fields are combined to a single field (or vice versa).
 	//
-	// Comment: Additional attributes are used to define additional data elements where mapping data can be found. For an example, see [Specimen Type v2 -> SNOMED CT Mapping(conceptmap-example-specimen-type.html)
+	// Comment: Additional attributes are used to define additional data elements where mapping data can be found. For an example, see [Specimen Type json.-> SNOMED CT Mapping(conceptmap-example-specimen-type.html)
 	AdditionalAttribute []ConceptMapAdditionalAttribute `bson:"additionalAttribute,omitempty" json:"additionalAttribute,omitempty" xml:"additionalAttribute,omitempty"`
 	// Identifier for the source value set that contains the concepts that are being mapped and provides context for the mappings.
 	//

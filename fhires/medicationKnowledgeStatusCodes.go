@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// MedicationKnowledgeStatusCodes is documented here http://hl7.org/fhir/ValueSet/medicationknowledge-status
+// MedicationKnowledge Status Codes
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/medicationknowledge-status
 type MedicationKnowledgeStatusCodes int
 
 const (
 	MedicationKnowledgeStatusCodesActive MedicationKnowledgeStatusCodes = iota
+	// The medication referred to by this MedicationKnowledge was entered in error within the drug database or inventory system.
 	MedicationKnowledgeStatusCodesEnteredInError
+	// The medication referred to by this MedicationKnowledge is not in active use within the drug database or inventory system.
 	MedicationKnowledgeStatusCodesInactive
 )
 

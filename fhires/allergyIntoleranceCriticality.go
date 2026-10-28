@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// AllergyIntoleranceCriticality is documented here http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality
+// Estimate of the potential clinical harm, or seriousness, of a reaction to an identified substance.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality
 type AllergyIntoleranceCriticality int
 
 const (
 	AllergyIntoleranceCriticalityLow AllergyIntoleranceCriticality = iota
+	// Worst case result of a future exposure is assessed to be life-threatening or having high potential for organ system failure.
 	AllergyIntoleranceCriticalityHigh
+	// Unable to assess the worst case result of a future exposure.
 	AllergyIntoleranceCriticalityUnableToAssess
 )
 

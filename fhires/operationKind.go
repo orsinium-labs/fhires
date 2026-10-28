@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// OperationKind is documented here http://hl7.org/fhir/ValueSet/operation-kind
+// Whether an operation is a normal operation or a query.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/operation-kind
 type OperationKind int
 
 const (
 	OperationKindOperation OperationKind = iota
+	// This operation is a named query, invoked using the search mechanism.
 	OperationKindQuery
 )
 

@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// SupplyDeliveryStatus is documented here http://hl7.org/fhir/ValueSet/supplydelivery-status
+// Status of the supply delivery.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/supplydelivery-status
 type SupplyDeliveryStatus int
 
 const (
 	SupplyDeliveryStatusInProgress SupplyDeliveryStatus = iota
+	// Supply has been delivered ("completed").
 	SupplyDeliveryStatusCompleted
+	// Delivery was not completed.
 	SupplyDeliveryStatusAbandoned
+	// This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "abandoned" rather than "entered-in-error".).
 	SupplyDeliveryStatusEnteredInError
 )
 

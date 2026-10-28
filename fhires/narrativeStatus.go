@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// NarrativeStatus is documented here http://hl7.org/fhir/ValueSet/narrative-status
+// The status of a resource narrative.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/narrative-status
 type NarrativeStatus int
 
 const (
 	NarrativeStatusGenerated NarrativeStatus = iota
+	// The contents of the narrative are entirely generated from the core elements in the content and some of the content is generated from extensions. The narrative SHALL reflect the impact of all modifier extensions.
 	NarrativeStatusExtensions
+	// The contents of the narrative may contain additional information not found in the structured data. Note that there is no computable way to determine what the extra information is, other than by human inspection.
 	NarrativeStatusAdditional
+	// The contents of the narrative are some equivalent of "No human-readable text provided in this case".
 	NarrativeStatusEmpty
 )
 

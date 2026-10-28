@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// FHIRDeviceStatus is documented here http://hl7.org/fhir/ValueSet/device-status
+// The status of the Device record.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/device-status
 type FHIRDeviceStatus int
 
 const (
 	FHIRDeviceStatusActive FHIRDeviceStatus = iota
+	// The device record is not current and is not appropriate for reference in new instances.
 	FHIRDeviceStatusInactive
+	// The device record is not current and is not appropriate for reference in new instances.
 	FHIRDeviceStatusEnteredInError
 )
 

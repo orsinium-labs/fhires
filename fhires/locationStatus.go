@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// LocationStatus is documented here http://hl7.org/fhir/ValueSet/location-status
+// Indicates whether the location is still in use.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/location-status
 type LocationStatus int
 
 const (
 	LocationStatusActive LocationStatus = iota
+	// The location is temporarily closed.
 	LocationStatusSuspended
+	// The location is no longer used.
 	LocationStatusInactive
 )
 

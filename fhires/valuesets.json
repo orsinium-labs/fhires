@@ -24799,7 +24799,7 @@
           {
             "code": "generate-json",
             "display": "Generate JSON",
-            "definition": "The value of this boolean 0..1 parameter specifies whether the IG publisher creates examples in JSON format. If not present, the Publication Tool decides whether to generate JSON."
+            "definition": "The value of this boolean 0..1 parameter specifies whether the IG publisher creates examples in JSON format. If not present, the Publication Tool decides whether to generate "
           },
           {
             "code": "generate-turtle",

@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// InventoryItemStatusCodes is documented here http://hl7.org/fhir/ValueSet/inventoryitem-status
+// InventoryItem Status Codes
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/inventoryitem-status
 type InventoryItemStatusCodes int
 
 const (
 	InventoryItemStatusCodesActive InventoryItemStatusCodes = iota
+	// The item is presently inactive - there may be references to it but the item is not expected to be used.
 	InventoryItemStatusCodesInactive
+	// The item record was entered in error.
 	InventoryItemStatusCodesEnteredInError
+	// The item status has not been determined.
 	InventoryItemStatusCodesUnknown
 )
 

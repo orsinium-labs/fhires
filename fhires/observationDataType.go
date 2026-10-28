@@ -6,20 +6,34 @@ import (
 	"strings"
 )
 
-// ObservationDataType is documented here http://hl7.org/fhir/ValueSet/permitted-data-type
+// Permitted data type for observation value.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/permitted-data-type
 type ObservationDataType int
 
 const (
 	ObservationDataTypeQuantity ObservationDataType = iota
+	// A coded concept from a reference terminology and/or text.
 	ObservationDataTypeCodeableConcept
+	// A sequence of Unicode characters.
 	ObservationDataTypeString
+	// true or false.
 	ObservationDataTypeBoolean
+	// A signed integer.
 	ObservationDataTypeInteger
+	// A set of values bounded by low and high.
 	ObservationDataTypeRange
+	// A ratio of two Quantity values - a numerator and a denominator.
 	ObservationDataTypeRatio
+	// A series of measurements taken by a device.
 	ObservationDataTypeSampledData
+	// A time during the day, in the format hh:mm:ss.
 	ObservationDataTypeTime
+	// A date, date-time or partial date (e.g. just year or year + month) as used in human communication.
 	ObservationDataTypeDateTime
+	// A time range defined by start and end date/time.
 	ObservationDataTypePeriod
 )
 

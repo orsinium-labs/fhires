@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// CodeSearchSupport is documented here http://hl7.org/fhir/ValueSet/code-search-support
+// The degree to which the server supports the code search parameter on ValueSet, if it is supported.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/code-search-support
 type CodeSearchSupport int
 
 const (
 	CodeSearchSupportInCompose CodeSearchSupport = iota
+	// The search for code on ValueSet returns ValueSet resources where the code is contained in the  ValueSet expansion.
 	CodeSearchSupportInExpansion
+	// The search for code on ValueSet returns ValueSet resources where the code is included in the extensional definition or contained in the ValueSet expansion.
 	CodeSearchSupportInComposeOrExpansion
 )
 

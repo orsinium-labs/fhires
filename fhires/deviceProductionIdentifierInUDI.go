@@ -6,15 +6,24 @@ import (
 	"strings"
 )
 
-// DeviceProductionIdentifierInUDI is documented here http://hl7.org/fhir/ValueSet/device-productidentifierinudi
+// Device Production Identifier in UDI
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/device-productidentifierinudi
 type DeviceProductionIdentifierInUDI int
 
 const (
 	DeviceProductionIdentifierInUDILotNumber DeviceProductionIdentifierInUDI = iota
+	// The label includes the manufacture date.
 	DeviceProductionIdentifierInUDIManufacturedDate
+	// The label includes the serial number.
 	DeviceProductionIdentifierInUDISerialNumber
+	// The label includes the expiration date.
 	DeviceProductionIdentifierInUDIExpirationDate
+	// The label includes the biological source identifier.
 	DeviceProductionIdentifierInUDIBiologicalSource
+	// The label includes the software version.
 	DeviceProductionIdentifierInUDISoftwareVersion
 )
 

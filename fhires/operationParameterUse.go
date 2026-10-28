@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// OperationParameterUse is documented here http://hl7.org/fhir/ValueSet/operation-parameter-use
+// Whether an operation parameter is an input or an output parameter.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/operation-parameter-use
 type OperationParameterUse int
 
 const (
 	OperationParameterUseIn OperationParameterUse = iota
+	// This is an output parameter.
 	OperationParameterUseOut
 )
 

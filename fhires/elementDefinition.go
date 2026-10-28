@@ -32,7 +32,7 @@ type ElementDefinition struct {
 	//
 	// No extensions are allowed on elements with a representation of 'xmlAttr', no matter what FHIR serialization format is used.
 	//
-	// Comment: In resources, this is rarely used except for special cases where the representation deviates from the normal, and can only be done in the base standard (and profiles must reproduce what the base standard does). This element is used quite commonly in Logical models when the logical models represent a specific serialization format (e.g. CDA, v2 etc.).
+	// Comment: In resources, this is rarely used except for special cases where the representation deviates from the normal, and can only be done in the base standard (and profiles must reproduce what the base standard does). This element is used quite commonly in Logical models when the logical models represent a specific serialization format (e.g. CDA, json.etc.).
 	Representation []PropertyRepresentation `bson:"representation,omitempty" json:"representation,omitempty" xml:"representation,omitempty"`
 	// The name of this element definition slice, when slicing is working.
 	//

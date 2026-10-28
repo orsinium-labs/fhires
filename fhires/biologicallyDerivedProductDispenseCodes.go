@@ -6,17 +6,28 @@ import (
 	"strings"
 )
 
-// BiologicallyDerivedProductDispenseCodes is documented here http://hl7.org/fhir/ValueSet/biologicallyderivedproductdispense-status
+// BiologicallyDerivedProductDispense Status Codes
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/biologicallyderivedproductdispense-status
 type BiologicallyDerivedProductDispenseCodes int
 
 const (
 	BiologicallyDerivedProductDispenseCodesPreparation BiologicallyDerivedProductDispenseCodes = iota
+	// The dispense process is in progress.
 	BiologicallyDerivedProductDispenseCodesInProgress
+	// The requested product has been allocated and is ready for transport.
 	BiologicallyDerivedProductDispenseCodesAllocated
+	// The dispensed product has been picked up.
 	BiologicallyDerivedProductDispenseCodesIssued
+	// The dispense could not be completed.
 	BiologicallyDerivedProductDispenseCodesUnfulfilled
+	// The dispensed product was returned.
 	BiologicallyDerivedProductDispenseCodesReturned
+	// The dispense was entered in error and therefore nullified.
 	BiologicallyDerivedProductDispenseCodesEnteredInError
+	// The authoring system does not know which of the status values applies for this dispense. Note: this concept is not to be used for other - one of the listed statuses is presumed to apply, it's just not known which one.
 	BiologicallyDerivedProductDispenseCodesUnknown
 )
 

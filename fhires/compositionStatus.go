@@ -6,20 +6,34 @@ import (
 	"strings"
 )
 
-// CompositionStatus is documented here http://hl7.org/fhir/ValueSet/composition-status
+// The workflow/clinical status of the composition.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/composition-status
 type CompositionStatus int
 
 const (
 	CompositionStatusRegistered CompositionStatus = iota
+	// This is a partial (e.g. initial, interim or preliminary) composition: data in the composition may be incomplete or unverified.
 	CompositionStatusPartial
+	// Verified early results are available, but not all results are final.
 	CompositionStatusPreliminary
+	// This version of the composition is complete and verified by an appropriate person and no further work is planned. Any subsequent updates would be on a new version of the composition.
 	CompositionStatusFinal
+	// The composition content or the referenced resources have been modified (edited or added to) subsequent to being released as "final" and the composition is complete and verified by an authorized person.
 	CompositionStatusAmended
+	// Subsequent to being final, the composition content has been modified to correct an error in the composition or referenced results.
 	CompositionStatusCorrected
+	// Subsequent to being final, the composition content has been modified by adding new content. The existing content is unchanged.
 	CompositionStatusAppended
+	// The composition is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
 	CompositionStatusCancelled
+	// The composition or document was originally created/issued in error, and this is an amendment that marks that the entire series should not be considered as valid.
 	CompositionStatusEnteredInError
+	// This composition has been withdrawn or superseded and should no longer be used.
 	CompositionStatusDeprecated
+	// The authoring/source system does not know which of the status values currently applies for this observation. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, but the authoring/source system does not know which.
 	CompositionStatusUnknown
 )
 

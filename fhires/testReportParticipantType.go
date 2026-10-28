@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// TestReportParticipantType is documented here http://hl7.org/fhir/ValueSet/report-participant-type
+// The type of participant.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/report-participant-type
 type TestReportParticipantType int
 
 const (
 	TestReportParticipantTypeTestEngine TestReportParticipantType = iota
+	// A FHIR Client.
 	TestReportParticipantTypeClient
+	// A FHIR Server.
 	TestReportParticipantTypeServer
 )
 

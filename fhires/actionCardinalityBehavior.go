@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// ActionCardinalityBehavior is documented here http://hl7.org/fhir/ValueSet/action-cardinality-behavior
+// Defines behavior for an action or a group for how many times that item may be repeated.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/action-cardinality-behavior
 type ActionCardinalityBehavior int
 
 const (
 	ActionCardinalityBehaviorSingle ActionCardinalityBehavior = iota
+	// The action may be selected multiple times.
 	ActionCardinalityBehaviorMultiple
 )
 

@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// TriggeredBytype is documented here http://hl7.org/fhir/ValueSet/observation-triggeredbytype
+// Codes providing the type of triggeredBy observation.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/observation-triggeredbytype
 type TriggeredBytype int
 
 const (
 	TriggeredBytypeReflex TriggeredBytype = iota
+	// Performance of the same test again with the same parameters/settings/solution.
 	TriggeredBytypeRepeat
+	// Performance of the same test but with different parameters/settings/solution.
 	TriggeredBytypeReRun
 )
 

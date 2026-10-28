@@ -6,13 +6,22 @@ import (
 	"strings"
 )
 
-// EvidenceVariableHandling is documented here http://hl7.org/fhir/ValueSet/variable-handling
+// The handling of the variable in statistical analysis for exposures or outcomes (E.g.
+//
+// Dichotomous, Continuous, Descriptive).
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/variable-handling
 type EvidenceVariableHandling int
 
 const (
 	EvidenceVariableHandlingContinuous EvidenceVariableHandling = iota
+	// A dichotomous variable is a categorical variable which is defined to have only 2 categories or possible values (from STATO http://purl.obolibrary.org/obo/STATO_0000090).
 	EvidenceVariableHandlingDichotomous
+	// An ordinal variable is a categorical variable where the discrete possible values are ordered or correspond to an implicit ranking (from STATO http://purl.obolibrary.org/obo/STATO_0000228).
 	EvidenceVariableHandlingOrdinal
+	// A polychotomous variable is a categorical variable which is defined to have minimally 2 categories or possible values. (from STATO  http://purl.obolibrary.org/obo/STATO_0000087).  Suggestion to limit code use to situations when neither dichotomous nor ordinal variables apply.
 	EvidenceVariableHandlingPolychotomous
 )
 

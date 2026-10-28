@@ -6,27 +6,48 @@ import (
 	"strings"
 )
 
-// InteractionTrigger is documented here http://hl7.org/fhir/ValueSet/interaction-trigger
+// FHIR RESTful interaction codes used for SubscriptionTopic trigger.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/interaction-trigger
 type InteractionTrigger int
 
 const (
 	InteractionTriggerRead InteractionTrigger = iota
+	// Read the state of a specific version of the resource.
 	InteractionTriggerVread
+	// Update an existing resource by its id (or create it if it is new).
 	InteractionTriggerUpdate
+	// Update an existing resource by posting a set of changes to it.
 	InteractionTriggerPatch
+	// Delete a resource.
 	InteractionTriggerDelete
+	// Retrieve the change history for a particular resource, type of resource, or the entire system.
 	InteractionTriggerHistory
+	// Retrieve the change history for a particular resource.
 	InteractionTriggerHistoryInstance
+	// Retrieve the change history for all resources of a particular type.
 	InteractionTriggerHistoryType
+	// Retrieve the change history for all resources on a system.
 	InteractionTriggerHistorySystem
+	// Create a new resource with a server assigned id.
 	InteractionTriggerCreate
+	// Search a resource type or all resources based on some filter criteria.
 	InteractionTriggerSearch
+	// Search all resources of the specified type based on some filter criteria.
 	InteractionTriggerSearchType
+	// Search all resources based on some filter criteria.
 	InteractionTriggerSearchSystem
+	// Search resources in a compartment based on some filter criteria.
 	InteractionTriggerSearchCompartment
+	// Get a Capability Statement for the system.
 	InteractionTriggerCapabilities
+	// Update, create or delete a set of resources as a single transaction.
 	InteractionTriggerTransaction
+	// perform a set of a separate interactions in a single http operation
 	InteractionTriggerBatch
+	// Perform an operation as defined by an OperationDefinition.
 	InteractionTriggerOperation
 )
 

@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// IdentityAssuranceLevel is documented here http://hl7.org/fhir/ValueSet/identity-assuranceLevel
+// The level of confidence that this link represents the same actual person, based on NIST Authentication Levels.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/identity-assuranceLevel
 type IdentityAssuranceLevel int
 
 const (
 	IdentityAssuranceLevelLevel1 IdentityAssuranceLevel = iota
+	// Some confidence in the asserted identity's accuracy.
 	IdentityAssuranceLevelLevel2
+	// High confidence in the asserted identity's accuracy.
 	IdentityAssuranceLevelLevel3
+	// Very high confidence in the asserted identity's accuracy.
 	IdentityAssuranceLevelLevel4
 )
 

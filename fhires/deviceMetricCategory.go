@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// DeviceMetricCategory is documented here http://hl7.org/fhir/ValueSet/metric-category
+// Describes the category of the metric.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/metric-category
 type DeviceMetricCategory int
 
 const (
 	DeviceMetricCategoryMeasurement DeviceMetricCategory = iota
+	// Observations generated for this DeviceMetric is a setting that will influence the behavior of the Device.
 	DeviceMetricCategorySetting
+	// Observations generated for this DeviceMetric are calculated.
 	DeviceMetricCategoryCalculation
+	// The category of this DeviceMetric is unspecified.
 	DeviceMetricCategoryUnspecified
 )
 

@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// StructureMapModelMode is documented here http://hl7.org/fhir/ValueSet/map-model-mode
+// How the referenced structure is used in this mapping.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/map-model-mode
 type StructureMapModelMode int
 
 const (
 	StructureMapModelModeSource StructureMapModelMode = iota
+	// This structure describes an instance that the mapping engine may ask for that is used a source of data.
 	StructureMapModelModeQueried
+	// This structure describes an instance passed to the mapping engine that is used a target of data.
 	StructureMapModelModeTarget
+	// This structure describes an instance that the mapping engine may ask to create that is used a target of data.
 	StructureMapModelModeProduced
 )
 

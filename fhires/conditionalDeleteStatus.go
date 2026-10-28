@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// ConditionalDeleteStatus is documented here http://hl7.org/fhir/ValueSet/conditional-delete-status
+// A code that indicates how the server supports conditional delete.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/conditional-delete-status
 type ConditionalDeleteStatus int
 
 const (
 	ConditionalDeleteStatusNotSupported ConditionalDeleteStatus = iota
+	// Conditional deletes are supported, but only single resources at a time.
 	ConditionalDeleteStatusSingle
+	// Conditional deletes are supported, and multiple resources can be deleted in a single interaction.
 	ConditionalDeleteStatusMultiple
 )
 

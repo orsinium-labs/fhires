@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// DeviceCorrectiveActionScope is documented here http://hl7.org/fhir/ValueSet/device-correctiveactionscope
+// Device - Corrective action scope
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/device-correctiveactionscope
 type DeviceCorrectiveActionScope int
 
 const (
 	DeviceCorrectiveActionScopeModel DeviceCorrectiveActionScope = iota
+	// The corrective action was intended for a specific batch of units identified by a lot number.
 	DeviceCorrectiveActionScopeLotNumbers
+	// The corrective action was intended for an individual unit (or a set of units) individually identified by serial number.
 	DeviceCorrectiveActionScopeSerialNumbers
 )
 

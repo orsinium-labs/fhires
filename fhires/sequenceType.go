@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// SequenceType is documented here http://hl7.org/fhir/ValueSet/sequence-type
+// Type if a sequence -- DNA, RNA, or amino acid sequence.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/sequence-type
 type SequenceType int
 
 const (
 	SequenceTypeAa SequenceType = iota
+	// DNA Sequence.
 	SequenceTypeDna
+	// RNA Sequence.
 	SequenceTypeRna
 )
 

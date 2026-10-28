@@ -6,17 +6,28 @@ import (
 	"strings"
 )
 
-// EventStatus is documented here http://hl7.org/fhir/ValueSet/event-status
+// Codes identifying the lifecycle stage of an event.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/event-status
 type EventStatus int
 
 const (
 	EventStatusPreparation EventStatus = iota
+	// The event is currently occurring.
 	EventStatusInProgress
+	// The event was terminated prior to any activity beyond preparation.  I.e. The 'main' activity has not yet begun.  The boundary between preparatory and the 'main' activity is context-specific.
 	EventStatusNotDone
+	// The event has been temporarily stopped but is expected to resume in the future.
 	EventStatusOnHold
+	// The event was terminated prior to the full completion of the intended activity but after at least some of the 'main' activity (beyond preparation) has occurred.
 	EventStatusStopped
+	// The event has now concluded.
 	EventStatusCompleted
+	// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "stopped" rather than "entered-in-error".).
 	EventStatusEnteredInError
+	// The authoring/source system does not know which of the status values currently applies for this event.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
 	EventStatusUnknown
 )
 

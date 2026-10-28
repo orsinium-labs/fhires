@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// ConceptMapRelationship is documented here http://hl7.org/fhir/ValueSet/concept-map-relationship
+// The relationship between concepts.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/concept-map-relationship
 type ConceptMapRelationship int
 
 const (
 	ConceptMapRelationshipRelatedTo ConceptMapRelationship = iota
+	// The definitions of the concepts mean the same thing.
 	ConceptMapRelationshipEquivalent
+	// The source concept is narrower in meaning than the target concept.
 	ConceptMapRelationshipSourceIsNarrowerThanTarget
+	// The source concept is broader in meaning than the target concept.
 	ConceptMapRelationshipSourceIsBroaderThanTarget
+	// This is an explicit assertion that the target concept is not related to the source concept.
 	ConceptMapRelationshipNotRelatedTo
 )
 

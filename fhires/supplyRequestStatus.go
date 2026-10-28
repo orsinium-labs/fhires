@@ -6,16 +6,26 @@ import (
 	"strings"
 )
 
-// SupplyRequestStatus is documented here http://hl7.org/fhir/ValueSet/supplyrequest-status
+// Status of the supply request.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/supplyrequest-status
 type SupplyRequestStatus int
 
 const (
 	SupplyRequestStatusDraft SupplyRequestStatus = iota
+	// The request is ready to be acted upon.
 	SupplyRequestStatusActive
+	// The authorization/request to act has been temporarily withdrawn but is expected to resume in the future.
 	SupplyRequestStatusSuspended
+	// The authorization/request to act has been terminated prior to the full completion of the intended actions.  No further activity should occur.
 	SupplyRequestStatusCancelled
+	// Activity against the request has been sufficiently completed to the satisfaction of the requester.
 	SupplyRequestStatusCompleted
+	// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
 	SupplyRequestStatusEnteredInError
+	// The authoring/source system does not know which of the status values currently applies for this observation. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, but the authoring/source system does not know which.
 	SupplyRequestStatusUnknown
 )
 

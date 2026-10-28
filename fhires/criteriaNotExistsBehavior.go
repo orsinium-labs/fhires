@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// CriteriaNotExistsBehavior is documented here http://hl7.org/fhir/ValueSet/subscriptiontopic-cr-behavior
+// Behavior a server can exhibit when a criteria state does not exist (e.g., state prior to a create or after a delete).
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/subscriptiontopic-cr-behavior
 type CriteriaNotExistsBehavior int
 
 const (
 	CriteriaNotExistsBehaviorTestPasses CriteriaNotExistsBehavior = iota
+	// The requested conditional statement will fail if a matching state does not exist (e.g., previous state during create).
 	CriteriaNotExistsBehaviorTestFails
 )
 

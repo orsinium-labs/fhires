@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// MeasureReportType is documented here http://hl7.org/fhir/ValueSet/measure-report-type
+// The type of the measure report.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/measure-report-type
 type MeasureReportType int
 
 const (
 	MeasureReportTypeIndividual MeasureReportType = iota
+	// A subject list report that includes a listing of subjects that satisfied each population criteria in the measure.
 	MeasureReportTypeSubjectList
+	// A summary report that returns the number of members in each population criteria for the measure.
 	MeasureReportTypeSummary
+	// A data exchange report that contains data-of-interest for the measure (i.e. data that is needed to calculate the measure)
 	MeasureReportTypeDataExchange
 )
 

@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// ResourceVersionPolicy is documented here http://hl7.org/fhir/ValueSet/versioning-policy
+// How the system supports versioning for a resource.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/versioning-policy
 type ResourceVersionPolicy int
 
 const (
 	ResourceVersionPolicyNoVersion ResourceVersionPolicy = iota
+	// VersionId meta-property is supported (server) or used (client).
 	ResourceVersionPolicyVersioned
+	// Supports version-aware updates (server) or will be specified (If-match header) for updates (client).
 	ResourceVersionPolicyVersionedUpdate
 )
 

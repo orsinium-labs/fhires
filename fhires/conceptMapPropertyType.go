@@ -6,16 +6,26 @@ import (
 	"strings"
 )
 
-// ConceptMapPropertyType is documented here http://hl7.org/fhir/ValueSet/conceptmap-property-type
+// The type of a ConceptMap mapping property value.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/conceptmap-property-type
 type ConceptMapPropertyType int
 
 const (
 	ConceptMapPropertyTypeCoding ConceptMapPropertyType = iota
+	// The property value is a string.
 	ConceptMapPropertyTypeString
+	// The property value is an integer (often used to assign ranking values to concepts for supporting score assessments).
 	ConceptMapPropertyTypeInteger
+	// The property value is a boolean true | false.
 	ConceptMapPropertyTypeBoolean
+	// The property is a date or a date + time.
 	ConceptMapPropertyTypeDateTime
+	// The property value is a decimal number.
 	ConceptMapPropertyTypeDecimal
+	// The property value is a code as defined in the CodeSystem in ConceptMap.property.system.
 	ConceptMapPropertyTypeCode
 )
 

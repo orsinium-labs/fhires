@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// DeviceDefinitionRegulatoryIdentifierType is documented here http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type
+// Regulatory Identifier type
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type
 type DeviceDefinitionRegulatoryIdentifierType int
 
 const (
 	DeviceDefinitionRegulatoryIdentifierTypeBasic DeviceDefinitionRegulatoryIdentifierType = iota
+	// EUDAMED's master UDI-DI identifier.
 	DeviceDefinitionRegulatoryIdentifierTypeMaster
+	// The identifier is a license number.
 	DeviceDefinitionRegulatoryIdentifierTypeLicense
 )
 

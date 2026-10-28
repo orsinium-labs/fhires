@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// ListStatus is documented here http://hl7.org/fhir/ValueSet/list-status
+// The current state of the list.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/list-status
 type ListStatus int
 
 const (
 	ListStatusCurrent ListStatus = iota
+	// The list is "old" and should no longer be considered accurate or relevant.
 	ListStatusRetired
+	// The list was never accurate.  It is retained for medico-legal purposes only.
 	ListStatusEnteredInError
 )
 

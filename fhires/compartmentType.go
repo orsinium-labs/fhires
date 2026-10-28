@@ -6,15 +6,24 @@ import (
 	"strings"
 )
 
-// CompartmentType is documented here http://hl7.org/fhir/ValueSet/compartment-type
+// Which type a compartment definition describes.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/compartment-type
 type CompartmentType int
 
 const (
 	CompartmentTypePatient CompartmentType = iota
+	// The compartment definition is for the encounter compartment.
 	CompartmentTypeEncounter
+	// The compartment definition is for the related-person compartment.
 	CompartmentTypeRelatedPerson
+	// The compartment definition is for the practitioner compartment.
 	CompartmentTypePractitioner
+	// The compartment definition is for the device compartment.
 	CompartmentTypeDevice
+	// The compartment definition is for the episodeofcare compartment.
 	CompartmentTypeEpisodeOfCare
 )
 

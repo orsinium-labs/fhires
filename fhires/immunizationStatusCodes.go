@@ -6,17 +6,28 @@ import (
 	"strings"
 )
 
-// ImmunizationStatusCodes is documented here http://hl7.org/fhir/ValueSet/immunization-status
+// The value set to instantiate this attribute should be drawn from a terminologically robust code system that consists of or contains concepts to support describing the current status of the administered dose of vaccine.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/immunization-status
 type ImmunizationStatusCodes int
 
 const (
 	ImmunizationStatusCodesPreparation ImmunizationStatusCodes = iota
+	// The event is currently occurring.
 	ImmunizationStatusCodesInProgress
+	// The event was terminated prior to any activity beyond preparation.  I.e. The 'main' activity has not yet begun.  The boundary between preparatory and the 'main' activity is context-specific.
 	ImmunizationStatusCodesNotDone
+	// The event has been temporarily stopped but is expected to resume in the future.
 	ImmunizationStatusCodesOnHold
+	// The event was terminated prior to the full completion of the intended activity but after at least some of the 'main' activity (beyond preparation) has occurred.
 	ImmunizationStatusCodesStopped
+	// The event has now concluded.
 	ImmunizationStatusCodesCompleted
+	// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "stopped" rather than "entered-in-error".).
 	ImmunizationStatusCodesEnteredInError
+	// The authoring/source system does not know which of the status values currently applies for this event.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
 	ImmunizationStatusCodesUnknown
 )
 

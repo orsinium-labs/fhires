@@ -235,7 +235,7 @@ type NamingSystemUniqueID struct {
 	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
 	// Identifies the unique identifier scheme used for this particular identifier.
 	//
-	// Comment: Different identifier types may be used in different types of communications (OIDs for v3, URIs for FHIR, etc.).  Other includes RUIDs from v3, standard v2 code name strings, etc. Preferred identifiers for the same identifier type SHOULD NOT overlap by period.
+	// Comment: Different identifier types may be used in different types of communications (OIDs for v3, URIs for FHIR, etc.).  Other includes RUIDs from v3, standard json.code name strings, etc. Preferred identifiers for the same identifier type SHOULD NOT overlap by period.
 	Type NamingSystemIdentifierType `bson:"type" json:"type" xml:"type"`
 	// The string that should be sent over the wire to identify the code system or identifier system.
 	//

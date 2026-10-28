@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// StrandType is documented here http://hl7.org/fhir/ValueSet/strand-type
+// Type for strand.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/strand-type
 type StrandType int
 
 const (
 	StrandTypeWatson StrandType = iota
+	// Crick strand of starting sequence.
 	StrandTypeCrick
 )
 

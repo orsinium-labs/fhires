@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// StructureMapGroupTypeMode is documented here http://hl7.org/fhir/ValueSet/map-group-type-mode
+// If this is the default rule set to apply for the source type, or this combination of types.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/map-group-type-mode
 type StructureMapGroupTypeMode int
 
 const (
 	StructureMapGroupTypeModeTypes StructureMapGroupTypeMode = iota
+	// This group is a default mapping group for the specified types.
 	StructureMapGroupTypeModeTypeAndTypes
 )
 

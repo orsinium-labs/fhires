@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	decimal "github.com/shopspring/decimal"
+	"github.com/shopspring/decimal"
 )
 
 // Legally enforceable, formally recorded unilateral or bilateral directive i.e., a policy or agreement.

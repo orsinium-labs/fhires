@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// AllergyIntoleranceSeverity is documented here http://hl7.org/fhir/ValueSet/reaction-event-severity
+// Clinical assessment of the severity of a reaction event as a whole, potentially considering multiple different manifestations.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/reaction-event-severity
 type AllergyIntoleranceSeverity int
 
 const (
 	AllergyIntoleranceSeverityMild AllergyIntoleranceSeverity = iota
+	// Causes moderate physiological effects.
 	AllergyIntoleranceSeverityModerate
+	// Causes severe physiological effects.
 	AllergyIntoleranceSeveritySevere
 )
 

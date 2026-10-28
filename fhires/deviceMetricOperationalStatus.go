@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// DeviceMetricOperationalStatus is documented here http://hl7.org/fhir/ValueSet/metric-operational-status
+// Describes the operational status of the DeviceMetric.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/metric-operational-status
 type DeviceMetricOperationalStatus int
 
 const (
 	DeviceMetricOperationalStatusOn DeviceMetricOperationalStatus = iota
+	// The DeviceMetric is not operating.
 	DeviceMetricOperationalStatusOff
+	// The DeviceMetric is operating, but will not generate any Observations.
 	DeviceMetricOperationalStatusStandby
+	// The DeviceMetric was entered in error.
 	DeviceMetricOperationalStatusEnteredInError
 )
 

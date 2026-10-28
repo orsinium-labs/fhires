@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// ClinicalUseDefinitionType is documented here http://hl7.org/fhir/ValueSet/clinical-use-definition-type
+// Overall defining type of this clinical use definition.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/clinical-use-definition-type
 type ClinicalUseDefinitionType int
 
 const (
 	ClinicalUseDefinitionTypeIndication ClinicalUseDefinitionType = iota
+	// A reason for not giving the medication.
 	ClinicalUseDefinitionTypeContraindication
+	// Interactions between the medication and other substances.
 	ClinicalUseDefinitionTypeInteraction
+	// Side effects or adverse effects associated with the medication.
 	ClinicalUseDefinitionTypeUndesirableEffect
+	// A general warning or issue that is not specifically one of the other types.
 	ClinicalUseDefinitionTypeWarning
 )
 

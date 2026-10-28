@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// EncounterLocationStatus is documented here http://hl7.org/fhir/ValueSet/encounter-location-status
+// The status of the location.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/encounter-location-status
 type EncounterLocationStatus int
 
 const (
 	EncounterLocationStatusPlanned EncounterLocationStatus = iota
+	// The patient is currently at this location, or was between the period specified.A system may update these records when the patient leaves the location to either reserved, or completed.
 	EncounterLocationStatusActive
+	// This location is held empty for this patient.
 	EncounterLocationStatusReserved
+	// The patient was at this location during the period specified.Not to be used when the patient is currently at the location.
 	EncounterLocationStatusCompleted
 )
 

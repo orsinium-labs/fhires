@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// DeviceMetricCalibrationType is documented here http://hl7.org/fhir/ValueSet/metric-calibration-type
+// Describes the type of a metric calibration.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/metric-calibration-type
 type DeviceMetricCalibrationType int
 
 const (
 	DeviceMetricCalibrationTypeUnspecified DeviceMetricCalibrationType = iota
+	// Offset metric calibration method.
 	DeviceMetricCalibrationTypeOffset
+	// Gain metric calibration method.
 	DeviceMetricCalibrationTypeGain
+	// Two-point metric calibration method.
 	DeviceMetricCalibrationTypeTwoPoint
 )
 

@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// GenomicStudyStatus is documented here http://hl7.org/fhir/ValueSet/genomicstudy-status
+// The status of the GenomicStudy.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/genomicstudy-status
 type GenomicStudyStatus int
 
 const (
 	GenomicStudyStatusRegistered GenomicStudyStatus = iota
+	// At least one instance has been associated with this genomic study.
 	GenomicStudyStatusAvailable
+	// The genomic study is unavailable because the genomic study was not started or not completed (also sometimes called "aborted").
 	GenomicStudyStatusCancelled
+	// The genomic study has been withdrawn following a previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
 	GenomicStudyStatusEnteredInError
+	// The system does not know which of the status values currently applies for this request. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
 	GenomicStudyStatusUnknown
 )
 

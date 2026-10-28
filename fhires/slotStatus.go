@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// SlotStatus is documented here http://hl7.org/fhir/ValueSet/slotstatus
+// The free/busy status of the slot.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/slotstatus
 type SlotStatus int
 
 const (
 	SlotStatusBusy SlotStatus = iota
+	// Indicates that the time interval is free for scheduling.
 	SlotStatusFree
+	// Indicates that the time interval is busy and that the interval cannot be scheduled.
 	SlotStatusBusyUnavailable
+	// Indicates that the time interval is busy because one or more events have been tentatively scheduled for that interval.
 	SlotStatusBusyTentative
+	// This instance should not have been part of this patient's medical record.
 	SlotStatusEnteredInError
 )
 

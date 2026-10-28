@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// EligibilityOutcome is documented here http://hl7.org/fhir/ValueSet/eligibility-outcome
+// The outcome of the processing.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/eligibility-outcome
 type EligibilityOutcome int
 
 const (
 	EligibilityOutcomeQueued EligibilityOutcome = iota
+	// The processing has completed without errors
 	EligibilityOutcomeComplete
+	// One or more errors have been detected in the Claim
 	EligibilityOutcomeError
+	// No errors have been detected in the Claim and some of the adjudication has been performed.
 	EligibilityOutcomePartial
 )
 

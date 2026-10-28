@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// ConceptMapAttributeType is documented here http://hl7.org/fhir/ValueSet/conceptmap-attribute-type
+// The type of a ConceptMap mapping attribute value.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/conceptmap-attribute-type
 type ConceptMapAttributeType int
 
 const (
 	ConceptMapAttributeTypeCode ConceptMapAttributeType = iota
+	// The attribute value is a code defined in a code system.
 	ConceptMapAttributeTypeCoding
+	// The attribute value is a string.
 	ConceptMapAttributeTypeString
+	// The attribute value is a boolean true | false.
 	ConceptMapAttributeTypeBoolean
+	// The attribute is a Quantity (may represent an integer or a decimal with no units).
 	ConceptMapAttributeTypeQuantity
 )
 

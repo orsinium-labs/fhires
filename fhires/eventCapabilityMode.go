@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// EventCapabilityMode is documented here http://hl7.org/fhir/ValueSet/event-capability-mode
+// The mode of a message capability statement.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/event-capability-mode
 type EventCapabilityMode int
 
 const (
 	EventCapabilityModeSender EventCapabilityMode = iota
+	// The application receives requests and sends responses.
 	EventCapabilityModeReceiver
 )
 

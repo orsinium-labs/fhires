@@ -6,18 +6,30 @@ import (
 	"strings"
 )
 
-// ValueFilterComparator is documented here http://hl7.org/fhir/ValueSet/value-filter-comparator
+// The type of comparator operator to use
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/value-filter-comparator
 type ValueFilterComparator int
 
 const (
 	ValueFilterComparatorEq ValueFilterComparator = iota
+	// the value for the parameter in the resource is not equal to the provided value.
 	ValueFilterComparatorNe
+	// the value for the parameter in the resource is greater than the provided value.
 	ValueFilterComparatorGt
+	// the value for the parameter in the resource is less than the provided value.
 	ValueFilterComparatorLt
+	// the value for the parameter in the resource is greater or equal to the provided value.
 	ValueFilterComparatorGe
+	// the value for the parameter in the resource is less or equal to the provided value.
 	ValueFilterComparatorLe
+	// the value for the parameter in the resource starts after the provided value.
 	ValueFilterComparatorSa
+	// the value for the parameter in the resource ends before the provided value.
 	ValueFilterComparatorEb
+	// the value for the parameter in the resource is approximately the same to the provided value.
 	ValueFilterComparatorAp
 )
 

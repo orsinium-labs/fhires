@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// MessageheaderResponseRequest is documented here http://hl7.org/fhir/ValueSet/messageheader-response-request
+// HL7-defined table of codes which identify conditions under which acknowledgments are required to be returned in response to a message.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/messageheader-response-request
 type MessageheaderResponseRequest int
 
 const (
 	MessageheaderResponseRequestAlways MessageheaderResponseRequest = iota
+	// initiator expects a response only if in error.
 	MessageheaderResponseRequestOnError
+	// initiator does not expect a response.
 	MessageheaderResponseRequestNever
+	// initiator expects a response only if successful.
 	MessageheaderResponseRequestOnSuccess
 )
 

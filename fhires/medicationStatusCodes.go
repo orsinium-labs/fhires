@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// MedicationStatusCodes is documented here http://hl7.org/fhir/ValueSet/medication-status
+// Medication Status Codes
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/medication-status
 type MedicationStatusCodes int
 
 const (
 	MedicationStatusCodesActive MedicationStatusCodes = iota
+	// The medication record is not current and is not is appropriate for reference in new instances.
 	MedicationStatusCodesInactive
+	// The medication record was created erroneously and is not appropriated for reference in new instances.
 	MedicationStatusCodesEnteredInError
 )
 

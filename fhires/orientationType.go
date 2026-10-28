@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// OrientationType is documented here http://hl7.org/fhir/ValueSet/orientation-type
+// Type for orientation.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/orientation-type
 type OrientationType int
 
 const (
 	OrientationTypeSense OrientationType = iota
+	// Antisense orientation of reference sequence.
 	OrientationTypeAntisense
 )
 

@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// CodeSystemHierarchyMeaning is documented here http://hl7.org/fhir/ValueSet/codesystem-hierarchy-meaning
+// The meaning of the hierarchy of concepts in a code system.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/codesystem-hierarchy-meaning
 type CodeSystemHierarchyMeaning int
 
 const (
 	CodeSystemHierarchyMeaningGroupedBy CodeSystemHierarchyMeaning = iota
+	// A hierarchy where the child concepts have an IS-A relationship with the parents - that is, all the properties of the parent are also true for its child concepts. Not that is-a is a property of the concepts, so additional subsumption relationships may be defined using properties.
 	CodeSystemHierarchyMeaningIsA
+	// Child elements list the individual parts of a composite whole (e.g. body site).
 	CodeSystemHierarchyMeaningPartOf
+	// Child concepts in the hierarchy may have only one parent, and there is a presumption that the code system is a "closed world" meaning all things must be in the hierarchy. This results in concepts such as "not otherwise classified.".
 	CodeSystemHierarchyMeaningClassifiedWith
 )
 

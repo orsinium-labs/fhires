@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// MeasureReportStatus is documented here http://hl7.org/fhir/ValueSet/measure-report-status
+// The status of the measure report.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/measure-report-status
 type MeasureReportStatus int
 
 const (
 	MeasureReportStatusComplete MeasureReportStatus = iota
+	// The report is currently being generated.
 	MeasureReportStatusPending
+	// An error occurred attempting to generate the report.
 	MeasureReportStatusError
 )
 

@@ -6,18 +6,30 @@ import (
 	"strings"
 )
 
-// ActionRelationshipType is documented here http://hl7.org/fhir/ValueSet/action-relationship-type
+// Defines the types of relationships between actions.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/action-relationship-type
 type ActionRelationshipType int
 
 const (
 	ActionRelationshipTypeBefore ActionRelationshipType = iota
+	// The action must be performed before the start of the related action.
 	ActionRelationshipTypeBeforeStart
+	// The action must be performed before the end of the related action.
 	ActionRelationshipTypeBeforeEnd
+	// The action must be performed concurrent with the related action.
 	ActionRelationshipTypeConcurrent
+	// The action must be performed concurrent with the start of the related action.
 	ActionRelationshipTypeConcurrentWithStart
+	// The action must be performed concurrent with the end of the related action.
 	ActionRelationshipTypeConcurrentWithEnd
+	// The action must be performed after the related action.
 	ActionRelationshipTypeAfter
+	// The action must be performed after the start of the related action.
 	ActionRelationshipTypeAfterStart
+	// The action must be performed after the end of the related action.
 	ActionRelationshipTypeAfterEnd
 )
 

@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// MessageSignificanceCategory is documented here http://hl7.org/fhir/ValueSet/message-significance-category
+// The impact of the content of a message.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/message-significance-category
 type MessageSignificanceCategory int
 
 const (
 	MessageSignificanceCategoryConsequence MessageSignificanceCategory = iota
+	// The message represents a response to query for current information. Retrospective processing is wrong and/or wasteful.
 	MessageSignificanceCategoryCurrency
+	// The content is not necessarily intended to be current, and it can be reprocessed, though there may be version issues created by processing old notifications.
 	MessageSignificanceCategoryNotification
 )
 

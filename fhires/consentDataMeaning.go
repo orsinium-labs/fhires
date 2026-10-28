@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// ConsentDataMeaning is documented here http://hl7.org/fhir/ValueSet/consent-data-meaning
+// How a resource reference is interpreted when testing consent restrictions.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/consent-data-meaning
 type ConsentDataMeaning int
 
 const (
 	ConsentDataMeaningInstance ConsentDataMeaning = iota
+	// The consent applies directly to the instance of the resource and instances it refers to.
 	ConsentDataMeaningRelated
+	// The consent applies directly to the instance of the resource and instances that refer to it.
 	ConsentDataMeaningDependents
+	// The consent applies to instances of resources that are authored by.
 	ConsentDataMeaningAuthoredby
 )
 

@@ -6,18 +6,30 @@ import (
 	"strings"
 )
 
-// SearchParamType is documented here http://hl7.org/fhir/ValueSet/search-param-type
+// Data types allowed to be used for search parameters.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/search-param-type
 type SearchParamType int
 
 const (
 	SearchParamTypeNumber SearchParamType = iota
+	// Search parameter is on a date/time. The date format is the standard XML format, though other formats may be supported.
 	SearchParamTypeDate
+	// Search parameter is a simple string, like a name part. Search is case-insensitive and accent-insensitive. May match just the start of a string. String parameters may contain spaces.
 	SearchParamTypeString
+	// Search parameter on a coded element or identifier. May be used to search through the text, display, code and code/codesystem (for codes) and label, system and key (for identifier). Its value is either a string or a pair of namespace and value, separated by a "|", depending on the modifier used.
 	SearchParamTypeToken
+	// A reference to another resource (Reference or canonical).
 	SearchParamTypeReference
+	// A composite search parameter that combines a search on two values together.
 	SearchParamTypeComposite
+	// A search parameter that searches on a quantity.
 	SearchParamTypeQuantity
+	// A search parameter that searches on a URI (RFC 3986).
 	SearchParamTypeUri
+	// Special logic applies to this parameter per the description of the search parameter.
 	SearchParamTypeSpecial
 )
 

@@ -6,19 +6,32 @@ import (
 	"strings"
 )
 
-// ArtifactAssessmentWorkflowStatus is documented here http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status
+// Possible values for the workflow status of the comment or assessment, typically used to coordinate workflow around the process of accepting and rejecting changes and comments on the artifact.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status
 type ArtifactAssessmentWorkflowStatus int
 
 const (
 	ArtifactAssessmentWorkflowStatusSubmitted ArtifactAssessmentWorkflowStatus = iota
+	// The comment has been triaged, meaning the responsible party has been determined and next steps have been identified to address the comment.
 	ArtifactAssessmentWorkflowStatusTriaged
+	// The comment is waiting for input from a specific party before next steps can be taken.
 	ArtifactAssessmentWorkflowStatusWaitingForInput
+	// The comment has been resolved and no changes resulted from the resolution
 	ArtifactAssessmentWorkflowStatusResolvedNoChange
+	// The comment has been resolved and changes are required to address the comment
 	ArtifactAssessmentWorkflowStatusResolvedChangeRequired
+	// The comment is acceptable, but resolution of the comment and application of any associated changes have been deferred
 	ArtifactAssessmentWorkflowStatusDeferred
+	// The comment is a duplicate of another comment already received
 	ArtifactAssessmentWorkflowStatusDuplicate
+	// The comment is resolved and any necessary changes have been applied
 	ArtifactAssessmentWorkflowStatusApplied
+	// The necessary changes to the artifact have been published in a new version of the artifact
 	ArtifactAssessmentWorkflowStatusPublished
+	// The assessment was entered in error
 	ArtifactAssessmentWorkflowStatusEnteredInError
 )
 

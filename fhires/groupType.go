@@ -6,19 +6,32 @@ import (
 	"strings"
 )
 
-// GroupType is documented here http://hl7.org/fhir/ValueSet/group-type
+// Types of resources that are part of group.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/group-type
 type GroupType int
 
 const (
 	GroupTypePerson GroupType = iota
+	// Group contains "animal" Patient resources.
 	GroupTypeAnimal
+	// Group contains healthcare practitioner resources (Practitioner or PractitionerRole).
 	GroupTypePractitioner
+	// Group contains Device resources.
 	GroupTypeDevice
+	// Group contains CareTeam resources.
 	GroupTypeCareteam
+	// Group contains HealthcareService resources.
 	GroupTypeHealthcareservice
+	// Group contains Location resources.
 	GroupTypeLocation
+	// Group contains Organization resources.
 	GroupTypeOrganization
+	// Group contains RelatedPerson resources.
 	GroupTypeRelatedperson
+	// Group contains Specimen resources.
 	GroupTypeSpecimen
 )
 

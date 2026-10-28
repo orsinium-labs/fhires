@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// MedicationStatementStatusCodes is documented here http://hl7.org/fhir/ValueSet/medication-statement-status
+// MedicationStatement Status Codes
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/medication-statement-status
 type MedicationStatementStatusCodes int
 
 const (
 	MedicationStatementStatusCodesRecorded MedicationStatementStatusCodes = iota
+	// Some of the actions that are implied by the medication usage may have occurred.  For example, the patient may have taken some of the medication.  Clinical decision support systems should take this status into account.
 	MedicationStatementStatusCodesEnteredInError
+	// The medication usage is draft or preliminary.
 	MedicationStatementStatusCodesDraft
 )
 

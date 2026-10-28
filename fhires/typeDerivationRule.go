@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// TypeDerivationRule is documented here http://hl7.org/fhir/ValueSet/type-derivation-rule
+// How a type relates to its baseDefinition.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/type-derivation-rule
 type TypeDerivationRule int
 
 const (
 	TypeDerivationRuleSpecialization TypeDerivationRule = iota
+	// This definition adds additional rules to an existing concrete type.
 	TypeDerivationRuleConstraint
 )
 

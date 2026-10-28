@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// PublicationStatus is documented here http://hl7.org/fhir/ValueSet/publication-status
+// The lifecycle status of an artifact.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/publication-status
 type PublicationStatus int
 
 const (
 	PublicationStatusDraft PublicationStatus = iota
+	// This resource is ready for normal use.
 	PublicationStatusActive
+	// This resource has been withdrawn or superseded and should no longer be used.
 	PublicationStatusRetired
+	// The authoring system does not know which of the status values currently applies for this resource.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
 	PublicationStatusUnknown
 )
 

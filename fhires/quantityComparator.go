@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// QuantityComparator is documented here http://hl7.org/fhir/ValueSet/quantity-comparator
+// How the Quantity should be understood and represented.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/quantity-comparator
 type QuantityComparator int
 
 const (
 	QuantityComparatorLessThan QuantityComparator = iota
+	// The actual value is less than or equal to the given value.
 	QuantityComparatorLessOrEquals
+	// The actual value is greater than or equal to the given value.
 	QuantityComparatorGreaterOrEquals
+	// The actual value is greater than the given value.
 	QuantityComparatorGreaterThan
+	// The actual value is sufficient for the total quantity to equal the given value.
 	QuantityComparatorAd
 )
 

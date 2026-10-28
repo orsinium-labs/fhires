@@ -6,19 +6,35 @@ import (
 	"strings"
 )
 
-// AppointmentStatus is documented here http://hl7.org/fhir/ValueSet/appointmentstatus
+// The free/busy status of an appointment.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/appointmentstatus
 type AppointmentStatus int
 
 const (
 	AppointmentStatusProposed AppointmentStatus = iota
+	// Some or all of the participant(s) have not finalized their acceptance of the appointment request.
 	AppointmentStatusPending
+	// All participant(s) have been considered and the appointment is confirmed to go ahead at the date/times specified.
 	AppointmentStatusBooked
+	// The patient/patients has/have arrived and is/are waiting to be seen.
 	AppointmentStatusArrived
+	// The planning stages of the appointment are now complete, the encounter resource will exist and will track further status changes. Note that an encounter may exist before the appointment status is fulfilled for many reasons.
 	AppointmentStatusFulfilled
+	// The appointment has been cancelled.
 	AppointmentStatusCancelled
+	// Some or all of the participant(s) have not/did not appear for the appointment (usually the patient).
 	AppointmentStatusNoshow
+	// This instance should not have been part of this patient's medical record.
 	AppointmentStatusEnteredInError
+	// When checked in, all pre-encounter administrative work is complete, and the encounter may begin. (where multiple patients are involved, they are all present).
 	AppointmentStatusCheckedIn
+	/*
+	   The appointment has been placed on a waitlist, to be scheduled/confirmed in the future when a slot/service is available.
+	   A specific time might or might not be pre-allocated.
+	*/
 	AppointmentStatusWaitlist
 )
 

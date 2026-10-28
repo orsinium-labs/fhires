@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// FormularyItemStatusCodes is documented here http://hl7.org/fhir/ValueSet/formularyitem-status
+// FormularyItem Status Codes
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/formularyitem-status
 type FormularyItemStatusCodes int
 
 const (
 	FormularyItemStatusCodesActive FormularyItemStatusCodes = iota
+	// The service or product referred to by this FormularyItem was entered in error within the drug database or inventory system.
 	FormularyItemStatusCodesEnteredInError
+	// The service or product referred to by this FormularyItem is not in active use within the drug database or inventory system.
 	FormularyItemStatusCodesInactive
 )
 

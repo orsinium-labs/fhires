@@ -6,16 +6,26 @@ import (
 	"strings"
 )
 
-// VerificationResultStatus is documented here http://hl7.org/fhir/ValueSet/verificationresult-status
+// The validation status of the target
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/verificationresult-status
 type VerificationResultStatus int
 
 const (
 	VerificationResultStatusAttested VerificationResultStatus = iota
+	// ***TODO***
 	VerificationResultStatusValidated
+	// ***TODO***
 	VerificationResultStatusInProcess
+	// ***TODO***
 	VerificationResultStatusReqRevalid
+	// ***TODO***
 	VerificationResultStatusValFail
+	// ***TODO***
 	VerificationResultStatusRevalFail
+	// The VerificationResult record was created erroneously and is not appropriated for use.
 	VerificationResultStatusEnteredInError
 )
 

@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// ActionConditionKind is documented here http://hl7.org/fhir/ValueSet/action-condition-kind
+// Defines the kinds of conditions that can appear on actions.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/action-condition-kind
 type ActionConditionKind int
 
 const (
 	ActionConditionKindApplicability ActionConditionKind = iota
+	// The condition is a starting condition for the action.
 	ActionConditionKindStart
+	// The condition is a stop, or exit condition for the action.
 	ActionConditionKindStop
 )
 

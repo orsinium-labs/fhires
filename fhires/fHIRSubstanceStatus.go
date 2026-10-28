@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// FHIRSubstanceStatus is documented here http://hl7.org/fhir/ValueSet/substance-status
+// A code to indicate if the substance is actively used.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/substance-status
 type FHIRSubstanceStatus int
 
 const (
 	FHIRSubstanceStatusActive FHIRSubstanceStatus = iota
+	// The substance is considered for reference, but not for use.
 	FHIRSubstanceStatusInactive
+	// The substance was entered in error.
 	FHIRSubstanceStatusEnteredInError
 )
 

@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// EnrollmentOutcome is documented here http://hl7.org/fhir/ValueSet/enrollment-outcome
+// The outcome of the processing.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/enrollment-outcome
 type EnrollmentOutcome int
 
 const (
 	EnrollmentOutcomeQueued EnrollmentOutcome = iota
+	// The processing has completed without errors
 	EnrollmentOutcomeComplete
+	// One or more errors have been detected in the Claim
 	EnrollmentOutcomeError
+	// No errors have been detected in the Claim and some of the adjudication has been performed.
 	EnrollmentOutcomePartial
 )
 

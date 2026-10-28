@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// QuestionnaireResponseStatus is documented here http://hl7.org/fhir/ValueSet/questionnaire-answers-status
+// Lifecycle status of the questionnaire response.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/questionnaire-answers-status
 type QuestionnaireResponseStatus int
 
 const (
 	QuestionnaireResponseStatusInProgress QuestionnaireResponseStatus = iota
+	// This QuestionnaireResponse has been filled out with answers and the current content is regarded as definitive.
 	QuestionnaireResponseStatusCompleted
+	// This QuestionnaireResponse has been filled out with answers, then marked as complete, yet changes or additions have been made to it afterwards.
 	QuestionnaireResponseStatusAmended
+	// This QuestionnaireResponse was entered in error and voided.
 	QuestionnaireResponseStatusEnteredInError
+	// This QuestionnaireResponse has been partially filled out with answers but has been abandoned. No subsequent changes can be made.
 	QuestionnaireResponseStatusStopped
 )
 

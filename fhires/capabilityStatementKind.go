@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// CapabilityStatementKind is documented here http://hl7.org/fhir/ValueSet/capability-statement-kind
+// How a capability statement is intended to be used.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/capability-statement-kind
 type CapabilityStatementKind int
 
 const (
 	CapabilityStatementKindInstance CapabilityStatementKind = iota
+	// The CapabilityStatement instance represents the capabilities of a system or piece of software, independent of a particular installation.
 	CapabilityStatementKindCapability
+	// The CapabilityStatement instance represents a set of requirements for other systems to meet; e.g. as part of an implementation guide or 'request for proposal'.
 	CapabilityStatementKindRequirements
 )
 

@@ -6,355 +6,706 @@ import (
 	"strings"
 )
 
-// SPDXLicense is documented here http://hl7.org/fhir/ValueSet/spdx-license
+// The license that applies to an Implementation Guide (using an SPDX license Identifiers, or 'not-open-source').
+//
+// The binding is required but new SPDX license Identifiers are allowed to be used (https://spdx.org/licenses/).
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/spdx-license
 type SPDXLicense int
 
 const (
 	SPDXLicenseNotOpenSource SPDXLicense = iota
+	// BSD Zero Clause License.
 	SPDXLicense0BSD
+	// Attribution Assurance License.
 	SPDXLicenseAAL
+	// Abstyles License.
 	SPDXLicenseAbstyles
+	// Adobe Systems Incorporated Source Code License Agreement.
 	SPDXLicenseAdobe2006
+	// Adobe Glyph List License.
 	SPDXLicenseAdobeGlyph
+	// Amazon Digital Services License.
 	SPDXLicenseADSL
+	// Academic Free License v1.1.
 	SPDXLicenseAFL1_1
+	// Academic Free License v1.2.
 	SPDXLicenseAFL1_2
+	// Academic Free License json.0.
 	SPDXLicenseAFL2_0
+	// Academic Free License json.1.
 	SPDXLicenseAFL2_1
+	// Academic Free License v3.0.
 	SPDXLicenseAFL3_0
+	// Afmparse License.
 	SPDXLicenseAfmparse
+	// Affero General Public License v1.0 only.
 	SPDXLicenseAGPL1_0Only
+	// Affero General Public License v1.0 or later.
 	SPDXLicenseAGPL1_0OrLater
+	// GNU Affero General Public License v3.0 only.
 	SPDXLicenseAGPL3_0Only
+	// GNU Affero General Public License v3.0 or later.
 	SPDXLicenseAGPL3_0OrLater
+	// Aladdin Free Public License.
 	SPDXLicenseAladdin
+	// AMD's plpa_map.c License.
 	SPDXLicenseAMDPLPA
+	// Apple MIT License.
 	SPDXLicenseAML
+	// Academy of Motion Picture Arts and Sciences BSD.
 	SPDXLicenseAMPAS
+	// ANTLR Software Rights Notice.
 	SPDXLicenseANTLRPD
+	// Apache License 1.0.
 	SPDXLicenseApache1_0
+	// Apache License 1.1.
 	SPDXLicenseApache1_1
+	// Apache License 2.0.
 	SPDXLicenseApache2_0
+	// Adobe Postscript AFM License.
 	SPDXLicenseAPAFML
+	// Adaptive Public License 1.0.
 	SPDXLicenseAPL1_0
+	// Apple Public Source License 1.0.
 	SPDXLicenseAPSL1_0
+	// Apple Public Source License 1.1.
 	SPDXLicenseAPSL1_1
+	// Apple Public Source License 1.2.
 	SPDXLicenseAPSL1_2
+	// Apple Public Source License 2.0.
 	SPDXLicenseAPSL2_0
+	// Artistic License 1.0 w/clause 8.
 	SPDXLicenseArtistic1_0Cl8
+	// Artistic License 1.0 (Perl).
 	SPDXLicenseArtistic1_0Perl
+	// Artistic License 1.0.
 	SPDXLicenseArtistic1_0
+	// Artistic License 2.0.
 	SPDXLicenseArtistic2_0
+	// Bahyph License.
 	SPDXLicenseBahyph
+	// Barr License.
 	SPDXLicenseBarr
+	// Beerware License.
 	SPDXLicenseBeerware
+	// BitTorrent Open Source License v1.0.
 	SPDXLicenseBitTorrent1_0
+	// BitTorrent Open Source License v1.1.
 	SPDXLicenseBitTorrent1_1
+	// Borceux license.
 	SPDXLicenseBorceux
+	// BSD 1-Clause License.
 	SPDXLicenseBSD1Clause
+	// BSD 2-Clause FreeBSD License.
 	SPDXLicenseBSD2ClauseFreeBSD
+	// BSD 2-Clause NetBSD License.
 	SPDXLicenseBSD2ClauseNetBSD
+	// BSD-2-Clause Plus Patent License.
 	SPDXLicenseBSD2ClausePatent
+	// BSD 2-Clause "Simplified" License.
 	SPDXLicenseBSD2Clause
+	// BSD with attribution.
 	SPDXLicenseBSD3ClauseAttribution
+	// BSD 3-Clause Clear License.
 	SPDXLicenseBSD3ClauseClear
+	// Lawrence Berkeley National Labs BSD variant license.
 	SPDXLicenseBSD3ClauseLBNL
+	// BSD 3-Clause No Nuclear License 2014.
 	SPDXLicenseBSD3ClauseNoNuclearLicense2014
+	// BSD 3-Clause No Nuclear License.
 	SPDXLicenseBSD3ClauseNoNuclearLicense
+	// BSD 3-Clause No Nuclear Warranty.
 	SPDXLicenseBSD3ClauseNoNuclearWarranty
+	// BSD 3-Clause "New" or "Revised" License.
 	SPDXLicenseBSD3Clause
+	// BSD-4-Clause (University of California-Specific).
 	SPDXLicenseBSD4ClauseUC
+	// BSD 4-Clause "Original" or "Old" License.
 	SPDXLicenseBSD4Clause
+	// BSD Protection License.
 	SPDXLicenseBSDProtection
+	// BSD Source Code Attribution.
 	SPDXLicenseBSDSourceCode
+	// Boost Software License 1.0.
 	SPDXLicenseBSL1_0
+	// bzip2 and libbzip2 License v1.0.5.
 	SPDXLicenseBzip21_0_5
+	// bzip2 and libbzip2 License v1.0.6.
 	SPDXLicenseBzip21_0_6
+	// Caldera License.
 	SPDXLicenseCaldera
+	// Computer Associates Trusted Open Source License 1.1.
 	SPDXLicenseCATOSL1_1
+	// Creative Commons Attribution 1.0 Generic.
 	SPDXLicenseCCBY1_0
+	// Creative Commons Attribution 2.0 Generic.
 	SPDXLicenseCCBY2_0
+	// Creative Commons Attribution 2.5 Generic.
 	SPDXLicenseCCBY2_5
+	// Creative Commons Attribution 3.0 Unported.
 	SPDXLicenseCCBY3_0
+	// Creative Commons Attribution 4.0 International.
 	SPDXLicenseCCBY4_0
+	// Creative Commons Attribution Non Commercial 1.0 Generic.
 	SPDXLicenseCCBYNC1_0
+	// Creative Commons Attribution Non Commercial 2.0 Generic.
 	SPDXLicenseCCBYNC2_0
+	// Creative Commons Attribution Non Commercial 2.5 Generic.
 	SPDXLicenseCCBYNC2_5
+	// Creative Commons Attribution Non Commercial 3.0 Unported.
 	SPDXLicenseCCBYNC3_0
+	// Creative Commons Attribution Non Commercial 4.0 International.
 	SPDXLicenseCCBYNC4_0
+	// Creative Commons Attribution Non Commercial No Derivatives 1.0 Generic.
 	SPDXLicenseCCBYNCND1_0
+	// Creative Commons Attribution Non Commercial No Derivatives 2.0 Generic.
 	SPDXLicenseCCBYNCND2_0
+	// Creative Commons Attribution Non Commercial No Derivatives 2.5 Generic.
 	SPDXLicenseCCBYNCND2_5
+	// Creative Commons Attribution Non Commercial No Derivatives 3.0 Unported.
 	SPDXLicenseCCBYNCND3_0
+	// Creative Commons Attribution Non Commercial No Derivatives 4.0 International.
 	SPDXLicenseCCBYNCND4_0
+	// Creative Commons Attribution Non Commercial Share Alike 1.0 Generic.
 	SPDXLicenseCCBYNCSA1_0
+	// Creative Commons Attribution Non Commercial Share Alike 2.0 Generic.
 	SPDXLicenseCCBYNCSA2_0
+	// Creative Commons Attribution Non Commercial Share Alike 2.5 Generic.
 	SPDXLicenseCCBYNCSA2_5
+	// Creative Commons Attribution Non Commercial Share Alike 3.0 Unported.
 	SPDXLicenseCCBYNCSA3_0
+	// Creative Commons Attribution Non Commercial Share Alike 4.0 International.
 	SPDXLicenseCCBYNCSA4_0
+	// Creative Commons Attribution No Derivatives 1.0 Generic.
 	SPDXLicenseCCBYND1_0
+	// Creative Commons Attribution No Derivatives 2.0 Generic.
 	SPDXLicenseCCBYND2_0
+	// Creative Commons Attribution No Derivatives 2.5 Generic.
 	SPDXLicenseCCBYND2_5
+	// Creative Commons Attribution No Derivatives 3.0 Unported.
 	SPDXLicenseCCBYND3_0
+	// Creative Commons Attribution No Derivatives 4.0 International.
 	SPDXLicenseCCBYND4_0
+	// Creative Commons Attribution Share Alike 1.0 Generic.
 	SPDXLicenseCCBYSA1_0
+	// Creative Commons Attribution Share Alike 2.0 Generic.
 	SPDXLicenseCCBYSA2_0
+	// Creative Commons Attribution Share Alike 2.5 Generic.
 	SPDXLicenseCCBYSA2_5
+	// Creative Commons Attribution Share Alike 3.0 Unported.
 	SPDXLicenseCCBYSA3_0
+	// Creative Commons Attribution Share Alike 4.0 International.
 	SPDXLicenseCCBYSA4_0
+	// Creative Commons Zero v1.0 Universal.
 	SPDXLicenseCC01_0
+	// Common Development and Distribution License 1.0.
 	SPDXLicenseCDDL1_0
+	// Common Development and Distribution License 1.1.
 	SPDXLicenseCDDL1_1
+	// Community Data License Agreement Permissive 1.0.
 	SPDXLicenseCDLAPermissive1_0
+	// Community Data License Agreement Sharing 1.0.
 	SPDXLicenseCDLASharing1_0
+	// CeCILL Free Software License Agreement v1.0.
 	SPDXLicenseCECILL1_0
+	// CeCILL Free Software License Agreement v1.1.
 	SPDXLicenseCECILL1_1
+	// CeCILL Free Software License Agreement json.0.
 	SPDXLicenseCECILL2_0
+	// CeCILL Free Software License Agreement json.1.
 	SPDXLicenseCECILL2_1
+	// CeCILL-B Free Software License Agreement.
 	SPDXLicenseCECILLB
+	// CeCILL-C Free Software License Agreement.
 	SPDXLicenseCECILLC
+	// Clarified Artistic License.
 	SPDXLicenseClArtistic
+	// CNRI Jython License.
 	SPDXLicenseCNRIJython
+	// CNRI Python Open Source GPL Compatible License Agreement.
 	SPDXLicenseCNRIPythonGPLCompatible
+	// CNRI Python License.
 	SPDXLicenseCNRIPython
+	// Condor Public License v1.1.
 	SPDXLicenseCondor1_1
+	// Common Public Attribution License 1.0.
 	SPDXLicenseCPAL1_0
+	// Common Public License 1.0.
 	SPDXLicenseCPL1_0
+	// Code Project Open License 1.02.
 	SPDXLicenseCPOL1_02
+	// Crossword License.
 	SPDXLicenseCrossword
+	// CrystalStacker License.
 	SPDXLicenseCrystalStacker
+	// CUA Office Public License v1.0.
 	SPDXLicenseCUAOPL1_0
+	// Cube License.
 	SPDXLicenseCube
+	// curl License.
 	SPDXLicenseCurl
+	// Deutsche Freie Software Lizenz.
 	SPDXLicenseDFSL1_0
+	// diffmark license.
 	SPDXLicenseDiffmark
+	// DOC License.
 	SPDXLicenseDOC
+	// Dotseqn License.
 	SPDXLicenseDotseqn
+	// DSDP License.
 	SPDXLicenseDSDP
+	// dvipdfm License.
 	SPDXLicenseDvipdfm
+	// Educational Community License v1.0.
 	SPDXLicenseECL1_0
+	// Educational Community License json.0.
 	SPDXLicenseECL2_0
+	// Eiffel Forum License v1.0.
 	SPDXLicenseEFL1_0
+	// Eiffel Forum License json.0.
 	SPDXLicenseEFL2_0
+	// eGenix.com Public License 1.1.0.
 	SPDXLicenseEGenix
+	// Entessa Public License v1.0.
 	SPDXLicenseEntessa
+	// Eclipse Public License 1.0.
 	SPDXLicenseEPL1_0
+	// Eclipse Public License 2.0.
 	SPDXLicenseEPL2_0
+	// Erlang Public License v1.1.
 	SPDXLicenseErlPL1_1
+	// EU DataGrid Software License.
 	SPDXLicenseEUDatagrid
+	// European Union Public License 1.0.
 	SPDXLicenseEUPL1_0
+	// European Union Public License 1.1.
 	SPDXLicenseEUPL1_1
+	// European Union Public License 1.2.
 	SPDXLicenseEUPL1_2
+	// Eurosym License.
 	SPDXLicenseEurosym
+	// Fair License.
 	SPDXLicenseFair
+	// Frameworx Open License 1.0.
 	SPDXLicenseFrameworx1_0
+	// FreeImage Public License v1.0.
 	SPDXLicenseFreeImage
+	// FSF All Permissive License.
 	SPDXLicenseFSFAP
+	// FSF Unlimited License.
 	SPDXLicenseFSFUL
+	// FSF Unlimited License (with License Retention).
 	SPDXLicenseFSFULLR
+	// Freetype Project License.
 	SPDXLicenseFTL
+	// GNU Free Documentation License v1.1 only.
 	SPDXLicenseGFDL1_1Only
+	// GNU Free Documentation License v1.1 or later.
 	SPDXLicenseGFDL1_1OrLater
+	// GNU Free Documentation License v1.2 only.
 	SPDXLicenseGFDL1_2Only
+	// GNU Free Documentation License v1.2 or later.
 	SPDXLicenseGFDL1_2OrLater
+	// GNU Free Documentation License v1.3 only.
 	SPDXLicenseGFDL1_3Only
+	// GNU Free Documentation License v1.3 or later.
 	SPDXLicenseGFDL1_3OrLater
+	// Giftware License.
 	SPDXLicenseGiftware
+	// GL2PS License.
 	SPDXLicenseGL2PS
+	// 3dfx Glide License.
 	SPDXLicenseGlide
+	// Glulxe License.
 	SPDXLicenseGlulxe
+	// gnuplot License.
 	SPDXLicenseGnuplot
+	// GNU General Public License v1.0 only.
 	SPDXLicenseGPL1_0Only
+	// GNU General Public License v1.0 or later.
 	SPDXLicenseGPL1_0OrLater
+	// GNU General Public License json.0 only.
 	SPDXLicenseGPL2_0Only
+	// GNU General Public License json.0 or later.
 	SPDXLicenseGPL2_0OrLater
+	// GNU General Public License v3.0 only.
 	SPDXLicenseGPL3_0Only
+	// GNU General Public License v3.0 or later.
 	SPDXLicenseGPL3_0OrLater
+	// gSOAP Public License v1.3b.
 	SPDXLicenseGSOAP1_3b
+	// Haskell Language Report License.
 	SPDXLicenseHaskellReport
+	// Historical Permission Notice and Disclaimer.
 	SPDXLicenseHPND
+	// IBM PowerPC Initialization and Boot Software.
 	SPDXLicenseIBMPibs
+	// ICU License.
 	SPDXLicenseICU
+	// Independent JPEG Group License.
 	SPDXLicenseIJG
+	// ImageMagick License.
 	SPDXLicenseImageMagick
+	// iMatix Standard Function Library Agreement.
 	SPDXLicenseIMatix
+	// Imlib2 License.
 	SPDXLicenseImlib2
+	// Info-ZIP License.
 	SPDXLicenseInfoZIP
+	// Intel ACPI Software License Agreement.
 	SPDXLicenseIntelACPI
+	// Intel Open Source License.
 	SPDXLicenseIntel
+	// Interbase Public License v1.0.
 	SPDXLicenseInterbase1_0
+	// IPA Font License.
 	SPDXLicenseIPA
+	// IBM Public License v1.0.
 	SPDXLicenseIPL1_0
+	// ISC License.
 	SPDXLicenseISC
+	// JasPer License.
 	SPDXLicenseJasPer2_0
+	// JSON License.
 	SPDXLicenseJSON
+	// Licence Art Libre 1.2.
 	SPDXLicenseLAL1_2
+	// Licence Art Libre 1.3.
 	SPDXLicenseLAL1_3
+	// Latex2e License.
 	SPDXLicenseLatex2e
+	// Leptonica License.
 	SPDXLicenseLeptonica
+	// GNU Library General Public License json.only.
 	SPDXLicenseLGPL2_0Only
+	// GNU Library General Public License json.or later.
 	SPDXLicenseLGPL2_0OrLater
+	// GNU Lesser General Public License json.1 only.
 	SPDXLicenseLGPL2_1Only
+	// GNU Lesser General Public License json.1 or later.
 	SPDXLicenseLGPL2_1OrLater
+	// GNU Lesser General Public License v3.0 only.
 	SPDXLicenseLGPL3_0Only
+	// GNU Lesser General Public License v3.0 or later.
 	SPDXLicenseLGPL3_0OrLater
+	// Lesser General Public License For Linguistic Resources.
 	SPDXLicenseLGPLLR
+	// libpng License.
 	SPDXLicenseLibpng
+	// libtiff License.
 	SPDXLicenseLibtiff
+	// Licence Libre du Québec – Permissive version 1.1.
 	SPDXLicenseLiLiQP1_1
+	// Licence Libre du Québec – Réciprocité version 1.1.
 	SPDXLicenseLiLiQR1_1
+	// Licence Libre du Québec – Réciprocité forte version 1.1.
 	SPDXLicenseLiLiQRplus1_1
+	// Linux Kernel Variant of OpenIB.org license.
 	SPDXLicenseLinuxOpenIB
+	// Lucent Public License Version 1.0.
 	SPDXLicenseLPL1_0
+	// Lucent Public License v1.02.
 	SPDXLicenseLPL1_02
+	// LaTeX Project Public License v1.0.
 	SPDXLicenseLPPL1_0
+	// LaTeX Project Public License v1.1.
 	SPDXLicenseLPPL1_1
+	// LaTeX Project Public License v1.2.
 	SPDXLicenseLPPL1_2
+	// LaTeX Project Public License v1.3a.
 	SPDXLicenseLPPL1_3a
+	// LaTeX Project Public License v1.3c.
 	SPDXLicenseLPPL1_3c
+	// MakeIndex License.
 	SPDXLicenseMakeIndex
+	// MirOS License.
 	SPDXLicenseMirOS
+	// MIT No Attribution.
 	SPDXLicenseMIT0
+	// Enlightenment License (e16).
 	SPDXLicenseMITAdvertising
+	// CMU License.
 	SPDXLicenseMITCMU
+	// enna License.
 	SPDXLicenseMITEnna
+	// feh License.
 	SPDXLicenseMITFeh
+	// MIT License.
 	SPDXLicenseMIT
+	// MIT +no-false-attribs license.
 	SPDXLicenseMITNFA
+	// Motosoto License.
 	SPDXLicenseMotosoto
+	// mpich2 License.
 	SPDXLicenseMpich2
+	// Mozilla Public License 1.0.
 	SPDXLicenseMPL1_0
+	// Mozilla Public License 1.1.
 	SPDXLicenseMPL1_1
+	// Mozilla Public License 2.0 (no copyleft exception).
 	SPDXLicenseMPL2_0NoCopyleftException
+	// Mozilla Public License 2.0.
 	SPDXLicenseMPL2_0
+	// Microsoft Public License.
 	SPDXLicenseMSPL
+	// Microsoft Reciprocal License.
 	SPDXLicenseMSRL
+	// Matrix Template Library License.
 	SPDXLicenseMTLL
+	// Multics License.
 	SPDXLicenseMultics
+	// Mup License.
 	SPDXLicenseMup
+	// NASA Open Source Agreement 1.3.
 	SPDXLicenseNASA1_3
+	// Naumen Public License.
 	SPDXLicenseNaumen
+	// Net Boolean Public License v1.
 	SPDXLicenseNBPL1_0
+	// University of Illinois/NCSA Open Source License.
 	SPDXLicenseNCSA
+	// Net-SNMP License.
 	SPDXLicenseNetSNMP
+	// NetCDF license.
 	SPDXLicenseNetCDF
+	// Newsletr License.
 	SPDXLicenseNewsletr
+	// Nethack General Public License.
 	SPDXLicenseNGPL
+	// Norwegian Licence for Open Government Data.
 	SPDXLicenseNLOD1_0
+	// No Limit Public License.
 	SPDXLicenseNLPL
+	// Nokia Open Source License.
 	SPDXLicenseNokia
+	// Netizen Open Source License.
 	SPDXLicenseNOSL
+	// Noweb License.
 	SPDXLicenseNoweb
+	// Netscape Public License v1.0.
 	SPDXLicenseNPL1_0
+	// Netscape Public License v1.1.
 	SPDXLicenseNPL1_1
+	// Non-Profit Open Software License 3.0.
 	SPDXLicenseNPOSL3_0
+	// NRL License.
 	SPDXLicenseNRL
+	// NTP License.
 	SPDXLicenseNTP
+	// Open CASCADE Technology Public License.
 	SPDXLicenseOCCTPL
+	// OCLC Research Public License 2.0.
 	SPDXLicenseOCLC2_0
+	// ODC Open Database License v1.0.
 	SPDXLicenseODbL1_0
+	// SIL Open Font License 1.0.
 	SPDXLicenseOFL1_0
+	// SIL Open Font License 1.1.
 	SPDXLicenseOFL1_1
+	// Open Group Test Suite License.
 	SPDXLicenseOGTSL
+	// Open LDAP Public License v1.1.
 	SPDXLicenseOLDAP1_1
+	// Open LDAP Public License v1.2.
 	SPDXLicenseOLDAP1_2
+	// Open LDAP Public License v1.3.
 	SPDXLicenseOLDAP1_3
+	// Open LDAP Public License v1.4.
 	SPDXLicenseOLDAP1_4
+	// Open LDAP Public License json.0.1.
 	SPDXLicenseOLDAP2_0_1
+	// Open LDAP Public License json.0 (or possibly 2.0A and 2.0B).
 	SPDXLicenseOLDAP2_0
+	// Open LDAP Public License json.1.
 	SPDXLicenseOLDAP2_1
+	// Open LDAP Public License json.2.1.
 	SPDXLicenseOLDAP2_2_1
+	// Open LDAP Public License 2.2.2.
 	SPDXLicenseOLDAP2_2_2
+	// Open LDAP Public License json.2.
 	SPDXLicenseOLDAP2_2
+	// Open LDAP Public License json.3.
 	SPDXLicenseOLDAP2_3
+	// Open LDAP Public License json.4.
 	SPDXLicenseOLDAP2_4
+	// Open LDAP Public License json.5.
 	SPDXLicenseOLDAP2_5
+	// Open LDAP Public License json.6.
 	SPDXLicenseOLDAP2_6
+	// Open LDAP Public License json.7.
 	SPDXLicenseOLDAP2_7
+	// Open LDAP Public License json.8.
 	SPDXLicenseOLDAP2_8
+	// Open Market License.
 	SPDXLicenseOML
+	// OpenSSL License.
 	SPDXLicenseOpenSSL
+	// Open Public License v1.0.
 	SPDXLicenseOPL1_0
+	// OSET Public License version 2.1.
 	SPDXLicenseOSETPL2_1
+	// Open Software License 1.0.
 	SPDXLicenseOSL1_0
+	// Open Software License 1.1.
 	SPDXLicenseOSL1_1
+	// Open Software License 2.0.
 	SPDXLicenseOSL2_0
+	// Open Software License 2.1.
 	SPDXLicenseOSL2_1
+	// Open Software License 3.0.
 	SPDXLicenseOSL3_0
+	// ODC Public Domain Dedication & License 1.0.
 	SPDXLicensePDDL1_0
+	// PHP License v3.0.
 	SPDXLicensePHP3_0
+	// PHP License v3.01.
 	SPDXLicensePHP3_01
+	// Plexus Classworlds License.
 	SPDXLicensePlexus
+	// PostgreSQL License.
 	SPDXLicensePostgreSQL
+	// psfrag License.
 	SPDXLicensePsfrag
+	// psutils License.
 	SPDXLicensePsutils
+	// Python License 2.0.
 	SPDXLicensePython2_0
+	// Qhull License.
 	SPDXLicenseQhull
+	// Q Public License 1.0.
 	SPDXLicenseQPL1_0
+	// Rdisc License.
 	SPDXLicenseRdisc
+	// Red Hat eCos Public License v1.1.
 	SPDXLicenseRHeCos1_1
+	// Reciprocal Public License 1.1.
 	SPDXLicenseRPL1_1
+	// Reciprocal Public License 1.5.
 	SPDXLicenseRPL1_5
+	// RealNetworks Public Source License v1.0.
 	SPDXLicenseRPSL1_0
+	// RSA Message-Digest License.
 	SPDXLicenseRSAMD
+	// Ricoh Source Code Public License.
 	SPDXLicenseRSCPL
+	// Ruby License.
 	SPDXLicenseRuby
+	// Sax Public Domain Notice.
 	SPDXLicenseSAXPD
+	// Saxpath License.
 	SPDXLicenseSaxpath
+	// SCEA Shared Source License.
 	SPDXLicenseSCEA
+	// Sendmail License.
 	SPDXLicenseSendmail
+	// SGI Free Software License B v1.0.
 	SPDXLicenseSGIB1_0
+	// SGI Free Software License B v1.1.
 	SPDXLicenseSGIB1_1
+	// SGI Free Software License B json.0.
 	SPDXLicenseSGIB2_0
+	// Simple Public License 2.0.
 	SPDXLicenseSimPL2_0
+	// Sun Industry Standards Source License v1.2.
 	SPDXLicenseSISSL1_2
+	// Sun Industry Standards Source License v1.1.
 	SPDXLicenseSISSL
+	// Sleepycat License.
 	SPDXLicenseSleepycat
+	// Standard ML of New Jersey License.
 	SPDXLicenseSMLNJ
+	// Secure Messaging Protocol Public License.
 	SPDXLicenseSMPPL
+	// SNIA Public License 1.1.
 	SPDXLicenseSNIA
+	// Spencer License 86.
 	SPDXLicenseSpencer86
+	// Spencer License 94.
 	SPDXLicenseSpencer94
+	// Spencer License 99.
 	SPDXLicenseSpencer99
+	// Sun Public License v1.0.
 	SPDXLicenseSPL1_0
+	// SugarCRM Public License v1.1.3.
 	SPDXLicenseSugarCRM1_1_3
+	// Scheme Widget Library (SWL) Software License Agreement.
 	SPDXLicenseSWL
+	// TCL/TK License.
 	SPDXLicenseTCL
+	// TCP Wrappers License.
 	SPDXLicenseTCPWrappers
+	// TMate Open Source License.
 	SPDXLicenseTMate
+	// TORQUE json.5+ Software License v1.1.
 	SPDXLicenseTORQUE1_1
+	// Trusster Open Source License.
 	SPDXLicenseTOSL
+	// Unicode License Agreement - Data Files and Software (2015).
 	SPDXLicenseUnicodeDFS2015
+	// Unicode License Agreement - Data Files and Software (2016).
 	SPDXLicenseUnicodeDFS2016
+	// Unicode Terms of Use.
 	SPDXLicenseUnicodeTOU
+	// The Unlicense.
 	SPDXLicenseUnlicense
+	// Universal Permissive License v1.0.
 	SPDXLicenseUPL1_0
+	// Vim License.
 	SPDXLicenseVim
+	// VOSTROM Public License for Open Source.
 	SPDXLicenseVOSTROM
+	// Vovida Software License v1.0.
 	SPDXLicenseVSL1_0
+	// W3C Software Notice and License (1998-07-20).
 	SPDXLicenseW3C19980720
+	// W3C Software Notice and Document License (2015-05-13).
 	SPDXLicenseW3C20150513
+	// W3C Software Notice and License (2002-12-31).
 	SPDXLicenseW3C
+	// Sybase Open Watcom Public License 1.0.
 	SPDXLicenseWatcom1_0
+	// Wsuipa License.
 	SPDXLicenseWsuipa
+	// Do What The F*ck You Want To Public License.
 	SPDXLicenseWTFPL
+	// X11 License.
 	SPDXLicenseX11
+	// Xerox License.
 	SPDXLicenseXerox
+	// XFree86 License 1.1.
 	SPDXLicenseXFree861_1
+	// xinetd License.
 	SPDXLicenseXinetd
+	// X.Net License.
 	SPDXLicenseXnet
+	// XPP License.
 	SPDXLicenseXpp
+	// XSkat License.
 	SPDXLicenseXSkat
+	// Yahoo! Public License v1.0.
 	SPDXLicenseYPL1_0
+	// Yahoo! Public License v1.1.
 	SPDXLicenseYPL1_1
+	// Zed License.
 	SPDXLicenseZed
+	// Zend License json.0.
 	SPDXLicenseZend2_0
+	// Zimbra Public License v1.3.
 	SPDXLicenseZimbra1_3
+	// Zimbra Public License v1.4.
 	SPDXLicenseZimbra1_4
+	// zlib/libpng License with Acknowledgement.
 	SPDXLicenseZlibAcknowledgement
+	// zlib License.
 	SPDXLicenseZlib
+	// Zope Public License 1.1.
 	SPDXLicenseZPL1_1
+	// Zope Public License 2.0.
 	SPDXLicenseZPL2_0
+	// Zope Public License 2.1.
 	SPDXLicenseZPL2_1
 )
 
@@ -2132,9 +2483,9 @@ func (code SPDXLicense) Display() string {
 	case SPDXLicenseLeptonica:
 		return "Leptonica License"
 	case SPDXLicenseLGPL2_0Only:
-		return "GNU Library General Public License v2 only"
+		return "GNU Library General Public License json.only"
 	case SPDXLicenseLGPL2_0OrLater:
-		return "GNU Library General Public License v2 or later"
+		return "GNU Library General Public License json.or later"
 	case SPDXLicenseLGPL2_1Only:
 		return "GNU Lesser General Public License json.1 only"
 	case SPDXLicenseLGPL2_1OrLater:
@@ -2830,9 +3181,9 @@ func (code SPDXLicense) Definition() string {
 	case SPDXLicenseLeptonica:
 		return "Leptonica License."
 	case SPDXLicenseLGPL2_0Only:
-		return "GNU Library General Public License v2 only."
+		return "GNU Library General Public License json.only."
 	case SPDXLicenseLGPL2_0OrLater:
-		return "GNU Library General Public License v2 or later."
+		return "GNU Library General Public License json.or later."
 	case SPDXLicenseLGPL2_1Only:
 		return "GNU Lesser General Public License json.1 only."
 	case SPDXLicenseLGPL2_1OrLater:

@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// OperationParameterScope is documented here http://hl7.org/fhir/ValueSet/operation-parameter-scope
+// Indicates that a parameter applies when the operation is being invoked at the specified level
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/operation-parameter-scope
 type OperationParameterScope int
 
 const (
 	OperationParameterScopeInstance OperationParameterScope = iota
+	// This is a parameter that can be used at the type level.
 	OperationParameterScopeType
+	// This is a parameter that can be used at the system level.
 	OperationParameterScopeSystem
 )
 

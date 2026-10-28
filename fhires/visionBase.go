@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// VisionBase is documented here http://hl7.org/fhir/ValueSet/vision-base-codes
+// A coded concept listing the base codes.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/vision-base-codes
 type VisionBase int
 
 const (
 	VisionBaseUp VisionBase = iota
+	// bottom.
 	VisionBaseDown
+	// inner edge.
 	VisionBaseIn
+	// outer edge.
 	VisionBaseOut
 )
 

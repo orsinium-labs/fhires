@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// SubscriptionPayloadContent is documented here http://hl7.org/fhir/ValueSet/subscription-payload-content
+// Codes to represent how much resource content to send in the notification payload.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/subscription-payload-content
 type SubscriptionPayloadContent int
 
 const (
 	SubscriptionPayloadContentEmpty SubscriptionPayloadContent = iota
+	// Only the resource id is transacted in the notification payload.
 	SubscriptionPayloadContentIdOnly
+	// The entire resource is transacted in the notification payload.
 	SubscriptionPayloadContentFullResource
 )
 

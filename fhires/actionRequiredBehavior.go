@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// ActionRequiredBehavior is documented here http://hl7.org/fhir/ValueSet/action-required-behavior
+// Defines expectations around whether an action or action group is required.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/action-required-behavior
 type ActionRequiredBehavior int
 
 const (
 	ActionRequiredBehaviorMust ActionRequiredBehavior = iota
+	// An action with this behavior may be included in the set of actions processed by the end user.
 	ActionRequiredBehaviorCould
+	// An action with this behavior must be included in the set of actions processed by the end user, unless the end user provides documentation as to why the action was not included.
 	ActionRequiredBehaviorMustUnlessDocumented
 )
 

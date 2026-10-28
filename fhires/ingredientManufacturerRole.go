@@ -6,7 +6,13 @@ import (
 	"strings"
 )
 
-// IngredientManufacturerRole is documented here http://hl7.org/fhir/ValueSet/ingredient-manufacturer-role
+// The way in which this manufacturer is associated with the ingredient.
+//
+// For example whether it is a possible one (others allowed), or an exclusive authorized one for this ingredient. Note that this is not the manufacturing process role.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/ingredient-manufacturer-role
 type IngredientManufacturerRole int
 
 const (

@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// FinancialResourceStatusCodes is documented here http://hl7.org/fhir/ValueSet/fm-status
+// This value set includes Status codes.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/fm-status
 type FinancialResourceStatusCodes int
 
 const (
 	FinancialResourceStatusCodesActive FinancialResourceStatusCodes = iota
+	// The instance is withdrawn, rescinded or reversed.
 	FinancialResourceStatusCodesCancelled
+	// A new instance the contents of which is not complete.
 	FinancialResourceStatusCodesDraft
+	// The instance was entered in error.
 	FinancialResourceStatusCodesEnteredInError
 )
 

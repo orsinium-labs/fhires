@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// ConsentProvisionType is documented here http://hl7.org/fhir/ValueSet/consent-provision-type
+// How a rule statement is applied, such as adding additional consent or removing consent.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/consent-provision-type
 type ConsentProvisionType int
 
 const (
 	ConsentProvisionTypeDeny ConsentProvisionType = iota
+	// Consent is provided for actions meeting these rules.
 	ConsentProvisionTypePermit
 )
 

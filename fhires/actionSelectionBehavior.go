@@ -6,15 +6,24 @@ import (
 	"strings"
 )
 
-// ActionSelectionBehavior is documented here http://hl7.org/fhir/ValueSet/action-selection-behavior
+// Defines selection behavior of a group.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/action-selection-behavior
 type ActionSelectionBehavior int
 
 const (
 	ActionSelectionBehaviorAny ActionSelectionBehavior = iota
+	// All the actions in the group must be selected as a single unit.
 	ActionSelectionBehaviorAll
+	// All the actions in the group are meant to be chosen as a single unit: either all must be selected by the end user, or none may be selected.
 	ActionSelectionBehaviorAllOrNone
+	// The end user must choose one and only one of the selectable actions in the group. The user SHALL NOT choose none of the actions in the group.
 	ActionSelectionBehaviorExactlyOne
+	// The end user may choose zero or at most one of the actions in the group.
 	ActionSelectionBehaviorAtMostOne
+	// The end user must choose a minimum of one, and as many additional as desired.
 	ActionSelectionBehaviorOneOrMore
 )
 

@@ -6,16 +6,26 @@ import (
 	"strings"
 )
 
-// DeviceUsageStatus is documented here http://hl7.org/fhir/ValueSet/deviceusage-status
+// A coded concept indicating the current status of the Device Usage.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/deviceusage-status
 type DeviceUsageStatus int
 
 const (
 	DeviceUsageStatusActive DeviceUsageStatus = iota
+	// The device is no longer being used.
 	DeviceUsageStatusCompleted
+	// The device was not used.
 	DeviceUsageStatusNotDone
+	// The statement was recorded incorrectly.
 	DeviceUsageStatusEnteredInError
+	// The device may be used at some time in the future.
 	DeviceUsageStatusIntended
+	// Actions implied by the statement have been permanently halted, before all of them occurred.
 	DeviceUsageStatusStopped
+	// Actions implied by the statement have been temporarily halted, but are expected to continue later. May also be called "suspended".
 	DeviceUsageStatusOnHold
 )
 

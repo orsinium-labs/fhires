@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// DetectedIssueSeverity is documented here http://hl7.org/fhir/ValueSet/detectedissue-severity
+// Indicates the potential degree of impact of the identified issue on the patient.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/detectedissue-severity
 type DetectedIssueSeverity int
 
 const (
 	DetectedIssueSeverityHigh DetectedIssueSeverity = iota
+	// Indicates the issue may result in noticeable adverse consequences but is unlikely to be life-threatening or cause permanent injury.
 	DetectedIssueSeverityModerate
+	// Indicates the issue may result in some adverse consequences but is unlikely to substantially affect the situation of the subject.
 	DetectedIssueSeverityLow
 )
 

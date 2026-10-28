@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// InvoiceStatus is documented here http://hl7.org/fhir/ValueSet/invoice-status
+// Codes identifying the lifecycle stage of an Invoice.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/invoice-status
 type InvoiceStatus int
 
 const (
 	InvoiceStatusDraft InvoiceStatus = iota
+	// the invoice has been finalized and sent to the recipient.
 	InvoiceStatusIssued
+	// the invoice has been balaced / completely paid.
 	InvoiceStatusBalanced
+	// the invoice was cancelled.
 	InvoiceStatusCancelled
+	// the invoice was determined as entered in error before it was issued.
 	InvoiceStatusEnteredInError
 )
 

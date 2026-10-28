@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// LocationMode is documented here http://hl7.org/fhir/ValueSet/location-mode
+// Indicates whether a resource instance represents a specific location or a class of locations.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/location-mode
 type LocationMode int
 
 const (
 	LocationModeInstance LocationMode = iota
+	// The Location represents a class of locations (e.g. Any Operating Theatre) although this class of locations could be constrained within a specific boundary (such as organization, or parent location, address etc.).
 	LocationModeKind
 )
 

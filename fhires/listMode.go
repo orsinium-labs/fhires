@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// ListMode is documented here http://hl7.org/fhir/ValueSet/list-mode
+// The processing mode that applies to this list.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/list-mode
 type ListMode int
 
 const (
 	ListModeWorking ListMode = iota
+	// This list was prepared as a snapshot. It should not be assumed to be current.
 	ListModeSnapshot
+	// A point-in-time list that shows what changes have been made or recommended.  E.g. a discharge medication list showing what was added and removed during an encounter.
 	ListModeChanges
 )
 

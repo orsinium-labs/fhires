@@ -6,16 +6,26 @@ import (
 	"strings"
 )
 
-// QuestionnaireItemOperator is documented here http://hl7.org/fhir/ValueSet/questionnaire-enable-operator
+// The criteria by which a question is enabled.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/questionnaire-enable-operator
 type QuestionnaireItemOperator int
 
 const (
 	QuestionnaireItemOperatorExists QuestionnaireItemOperator = iota
+	// True if at least one answer has a value that is equal to the enableWhen answer.
 	QuestionnaireItemOperatorEquals
+	// True if no answer has a value that is equal to the enableWhen answer.
 	QuestionnaireItemOperatorNotEquals
+	// True if at least one answer has a value that is greater than the enableWhen answer.
 	QuestionnaireItemOperatorGreaterThan
+	// True if at least one answer has a value that is less than the enableWhen answer.
 	QuestionnaireItemOperatorLessThan
+	// True if at least one answer has a value that is greater or equal to the enableWhen answer.
 	QuestionnaireItemOperatorGreaterOrEquals
+	// True if at least one answer has a value that is less or equal to the enableWhen answer.
 	QuestionnaireItemOperatorLessOrEquals
 )
 

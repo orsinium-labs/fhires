@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// GroupMembershipBasis is documented here http://hl7.org/fhir/ValueSet/group-membership-basis
+// Basis for membership in a group
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/group-membership-basis
 type GroupMembershipBasis int
 
 const (
 	GroupMembershipBasisDefinitional GroupMembershipBasis = iota
+	// The Group.characteristics are necessary but not sufficient to determine membership. Membership is determined by being listed as one of the Group.member.
 	GroupMembershipBasisEnumerated
 )
 

@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// ExampleScenarioActorType is documented here http://hl7.org/fhir/ValueSet/examplescenario-actor-type
+// The type of actor - system or human.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/examplescenario-actor-type
 type ExampleScenarioActorType int
 
 const (
 	ExampleScenarioActorTypePerson ExampleScenarioActorType = iota
+	// A software application or other system
 	ExampleScenarioActorTypeSystem
 )
 

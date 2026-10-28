@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// DeviceMetricCalibrationState is documented here http://hl7.org/fhir/ValueSet/metric-calibration-state
+// Describes the state of a metric calibration.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/metric-calibration-state
 type DeviceMetricCalibrationState int
 
 const (
 	DeviceMetricCalibrationStateNotCalibrated DeviceMetricCalibrationState = iota
+	// The metric needs to be calibrated.
 	DeviceMetricCalibrationStateCalibrationRequired
+	// The metric has been calibrated.
 	DeviceMetricCalibrationStateCalibrated
+	// The state of calibration of this metric is unspecified.
 	DeviceMetricCalibrationStateUnspecified
 )
 

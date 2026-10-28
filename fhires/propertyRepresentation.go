@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// PropertyRepresentation is documented here http://hl7.org/fhir/ValueSet/property-representation
+// How a property is represented when serialized.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/property-representation
 type PropertyRepresentation int
 
 const (
 	PropertyRepresentationXmlAttr PropertyRepresentation = iota
+	// This element is represented using the XML text attribute (primitives only).
 	PropertyRepresentationXmlText
+	// The type of this element is indicated using xsi:type.
 	PropertyRepresentationTypeAttr
+	// Use CDA narrative instead of XHTML.
 	PropertyRepresentationCdaText
+	// The property is represented using XHTML.
 	PropertyRepresentationXhtml
 )
 

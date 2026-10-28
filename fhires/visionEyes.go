@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// VisionEyes is documented here http://hl7.org/fhir/ValueSet/vision-eye-codes
+// A coded concept listing the eye codes.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/vision-eye-codes
 type VisionEyes int
 
 const (
 	VisionEyesRight VisionEyes = iota
+	// Left Eye.
 	VisionEyesLeft
 )
 

@@ -6,21 +6,36 @@ import (
 	"strings"
 )
 
-// TaskStatus is documented here http://hl7.org/fhir/ValueSet/task-status
+// The current status of the task.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/task-status
 type TaskStatus int
 
 const (
 	TaskStatusDraft TaskStatus = iota
+	// The task is ready to be acted upon and action is sought.
 	TaskStatusRequested
+	// A potential performer has claimed ownership of the task and is evaluating whether to perform it.
 	TaskStatusReceived
+	// The potential performer has agreed to execute the task but has not yet started work.
 	TaskStatusAccepted
+	// The potential performer who claimed ownership of the task has decided not to execute it prior to performing any action.
 	TaskStatusRejected
+	// The task is ready to be performed, but no action has yet been taken.  Used in place of requested/received/accepted/rejected when request assignment and acceptance is a given.
 	TaskStatusReady
+	// The task was not completed.
 	TaskStatusCancelled
+	// The task has been started but is not yet complete.
 	TaskStatusInProgress
+	// The task has been started but work has been paused.
 	TaskStatusOnHold
+	// The task was attempted but could not be completed due to some error.
 	TaskStatusFailed
+	// The task has been completed.
 	TaskStatusCompleted
+	// The task should never have existed and is retained only because of the possibility it may have used.
 	TaskStatusEnteredInError
 )
 

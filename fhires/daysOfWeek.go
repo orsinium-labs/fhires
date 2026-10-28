@@ -6,16 +6,26 @@ import (
 	"strings"
 )
 
-// DaysOfWeek is documented here http://hl7.org/fhir/ValueSet/days-of-week
+// The days of the week.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/days-of-week
 type DaysOfWeek int
 
 const (
 	DaysOfWeekMon DaysOfWeek = iota
+	// Tuesday.
 	DaysOfWeekTue
+	// Wednesday.
 	DaysOfWeekWed
+	// Thursday.
 	DaysOfWeekThu
+	// Friday.
 	DaysOfWeekFri
+	// Saturday.
 	DaysOfWeekSat
+	// Sunday.
 	DaysOfWeekSun
 )
 

@@ -6,20 +6,34 @@ import (
 	"strings"
 )
 
-// DiagnosticReportStatus is documented here http://hl7.org/fhir/ValueSet/diagnostic-report-status
+// The status of the diagnostic report.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/diagnostic-report-status
 type DiagnosticReportStatus int
 
 const (
 	DiagnosticReportStatusRegistered DiagnosticReportStatus = iota
+	// This is a partial (e.g. initial, interim or preliminary) report: data in the report may be incomplete or unverified.
 	DiagnosticReportStatusPartial
+	// Verified early results are available, but not all results are final.
 	DiagnosticReportStatusPreliminary
+	// Prior to being final, the report has been modified.  This includes any change in the results, diagnosis, narrative text, or other content of a non-finalized (e.g., preliminary) report that has been issued.
 	DiagnosticReportStatusModified
+	// The report is complete and verified by an authorized person.
 	DiagnosticReportStatusFinal
+	// Subsequent to being final, the report has been modified.  This includes any change in the results, diagnosis, narrative text, or other content of a report that has been issued.
 	DiagnosticReportStatusAmended
+	// Subsequent to being final, the report has been modified to correct an error in the report or referenced results.
 	DiagnosticReportStatusCorrected
+	// Subsequent to being final, the report has been modified by adding new content. The existing content is unchanged.
 	DiagnosticReportStatusAppended
+	// The report is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
 	DiagnosticReportStatusCancelled
+	// The report has been withdrawn following a previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
 	DiagnosticReportStatusEnteredInError
+	// The authoring/source system does not know which of the status values currently applies for this observation. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, but the authoring/source system does not know which.
 	DiagnosticReportStatusUnknown
 )
 

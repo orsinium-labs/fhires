@@ -6,15 +6,24 @@ import (
 	"strings"
 )
 
-// TransportStatus is documented here http://hl7.org/fhir/ValueSet/transport-status
+// Status of the transport
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/transport-status
 type TransportStatus int
 
 const (
 	TransportStatusInProgress TransportStatus = iota
+	// Transport has been completed.
 	TransportStatusCompleted
+	// Transport was started but not completed.
 	TransportStatusAbandoned
+	// Transport was cancelled before started.
 	TransportStatusCancelled
+	// Planned transport that is not yet requested.
 	TransportStatusPlanned
+	// This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "abandoned" rather than "entered-in-error".).
 	TransportStatusEnteredInError
 )
 

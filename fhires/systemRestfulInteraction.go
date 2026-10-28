@@ -6,27 +6,48 @@ import (
 	"strings"
 )
 
-// SystemRestfulInteraction is documented here http://hl7.org/fhir/ValueSet/system-restful-interaction
+// Operations supported by REST at the system level.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/system-restful-interaction
 type SystemRestfulInteraction int
 
 const (
 	SystemRestfulInteractionRead SystemRestfulInteraction = iota
+	// Read the state of a specific version of the resource.
 	SystemRestfulInteractionVread
+	// Update an existing resource by its id (or create it if it is new).
 	SystemRestfulInteractionUpdate
+	// Update an existing resource by posting a set of changes to it.
 	SystemRestfulInteractionPatch
+	// Delete a resource.
 	SystemRestfulInteractionDelete
+	// Retrieve the change history for a particular resource, type of resource, or the entire system.
 	SystemRestfulInteractionHistory
+	// Retrieve the change history for a particular resource.
 	SystemRestfulInteractionHistoryInstance
+	// Retrieve the change history for all resources of a particular type.
 	SystemRestfulInteractionHistoryType
+	// Retrieve the change history for all resources on a system.
 	SystemRestfulInteractionHistorySystem
+	// Create a new resource with a server assigned id.
 	SystemRestfulInteractionCreate
+	// Search a resource type or all resources based on some filter criteria.
 	SystemRestfulInteractionSearch
+	// Search all resources of the specified type based on some filter criteria.
 	SystemRestfulInteractionSearchType
+	// Search all resources based on some filter criteria.
 	SystemRestfulInteractionSearchSystem
+	// Search resources in a compartment based on some filter criteria.
 	SystemRestfulInteractionSearchCompartment
+	// Get a Capability Statement for the system.
 	SystemRestfulInteractionCapabilities
+	// Update, create or delete a set of resources as a single transaction.
 	SystemRestfulInteractionTransaction
+	// perform a set of a separate interactions in a single http operation
 	SystemRestfulInteractionBatch
+	// Perform an operation as defined by an OperationDefinition.
 	SystemRestfulInteractionOperation
 )
 

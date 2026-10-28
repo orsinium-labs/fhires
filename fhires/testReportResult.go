@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// TestReportResult is documented here http://hl7.org/fhir/ValueSet/report-result-codes
+// The reported execution result.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/report-result-codes
 type TestReportResult int
 
 const (
 	TestReportResultPass TestReportResult = iota
+	// One or more test operations failed one or more asserts.
 	TestReportResultFail
+	// One or more test operations is pending execution completion.
 	TestReportResultPending
 )
 

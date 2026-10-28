@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// PaymentOutcome is documented here http://hl7.org/fhir/ValueSet/payment-outcome
+// The outcome of the processing.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/payment-outcome
 type PaymentOutcome int
 
 const (
 	PaymentOutcomeQueued PaymentOutcome = iota
+	// The processing has completed without errors
 	PaymentOutcomeComplete
+	// One or more errors have been detected in the Claim
 	PaymentOutcomeError
+	// No errors have been detected in the Claim and some of the adjudication has been performed.
 	PaymentOutcomePartial
 )
 

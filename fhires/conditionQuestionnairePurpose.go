@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// ConditionQuestionnairePurpose is documented here http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose
+// The use of a questionnaire.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose
 type ConditionQuestionnairePurpose int
 
 const (
 	ConditionQuestionnairePurposePreadmit ConditionQuestionnairePurpose = iota
+	// A questionnaire that helps with diferential diagnosis.
 	ConditionQuestionnairePurposeDiffDiagnosis
+	// A questionnaire to check on outcomes for the patient.
 	ConditionQuestionnairePurposeOutcome
 )
 

@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// TestReportActionResult is documented here http://hl7.org/fhir/ValueSet/report-action-result-codes
+// The results of executing an action.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/report-action-result-codes
 type TestReportActionResult int
 
 const (
 	TestReportActionResultPass TestReportActionResult = iota
+	// The action was skipped.
 	TestReportActionResultSkip
+	// The action failed.
 	TestReportActionResultFail
+	// The action passed but with warnings.
 	TestReportActionResultWarning
+	// The action encountered a fatal error and the engine was unable to process.
 	TestReportActionResultError
 )
 

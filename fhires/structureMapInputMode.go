@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// StructureMapInputMode is documented here http://hl7.org/fhir/ValueSet/map-input-mode
+// Mode for this instance of data.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/map-input-mode
 type StructureMapInputMode int
 
 const (
 	StructureMapInputModeSource StructureMapInputMode = iota
+	// Names an instance that is being populated.
 	StructureMapInputModeTarget
 )
 

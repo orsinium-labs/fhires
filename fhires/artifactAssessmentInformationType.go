@@ -6,15 +6,24 @@ import (
 	"strings"
 )
 
-// ArtifactAssessmentInformationType is documented here http://hl7.org/fhir/ValueSet/artifactassessment-information-type
+// The type of information contained in a component of an artifact assessment.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/artifactassessment-information-type
 type ArtifactAssessmentInformationType int
 
 const (
 	ArtifactAssessmentInformationTypeComment ArtifactAssessmentInformationType = iota
+	// A classifier of the artifact
 	ArtifactAssessmentInformationTypeClassifier
+	// A rating of the artifact
 	ArtifactAssessmentInformationTypeRating
+	// A container for multiple components
 	ArtifactAssessmentInformationTypeContainer
+	// A response to a comment
 	ArtifactAssessmentInformationTypeResponse
+	// A change request for the artifact
 	ArtifactAssessmentInformationTypeChangeRequest
 )
 

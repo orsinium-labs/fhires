@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// ContactPointUse is documented here http://hl7.org/fhir/ValueSet/contact-point-use
+// Use of contact point.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/contact-point-use
 type ContactPointUse int
 
 const (
 	ContactPointUseHome ContactPointUse = iota
+	// An office contact point. First choice for business related contacts during business hours.
 	ContactPointUseWork
+	// A temporary contact point. The period can provide more detailed information.
 	ContactPointUseTemp
+	// This contact point is no longer in use (or was never correct, but retained for records).
 	ContactPointUseOld
+	// A telecommunication device that moves and stays with its owner. May have characteristics of all other use codes, suitable for urgent matters, not the first choice for routine business.
 	ContactPointUseMobile
 )
 

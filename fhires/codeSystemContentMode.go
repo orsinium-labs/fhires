@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// CodeSystemContentMode is documented here http://hl7.org/fhir/ValueSet/codesystem-content-mode
+// The extent of the content of the code system (the concepts and codes it defines) are represented in a code system resource.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/codesystem-content-mode
 type CodeSystemContentMode int
 
 const (
 	CodeSystemContentModeNotPresent CodeSystemContentMode = iota
+	// A subset of the valid externally defined concepts are included in the code system resource. There is no specific purpose or documented intent other than for illustrative purposes.
 	CodeSystemContentModeExample
+	// A subset of the code system concepts are included in the code system resource. This is a curated subset released for a specific purpose under the governance of the code system steward, and that the intent, bounds and consequences of the fragmentation are clearly defined in the fragment or the code system documentation. Fragments are also known as partitions.
 	CodeSystemContentModeFragment
+	// All the concepts defined by the code system are included in the code system resource.
 	CodeSystemContentModeComplete
+	// The resource doesn't define any new concepts; it just provides additional designations and properties to another code system.
 	CodeSystemContentModeSupplement
 )
 

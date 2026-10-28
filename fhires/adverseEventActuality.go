@@ -6,11 +6,18 @@ import (
 	"strings"
 )
 
-// AdverseEventActuality is documented here http://hl7.org/fhir/ValueSet/adverse-event-actuality
+// Overall nature of the adverse event, e.g.
+//
+// real or potential.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/adverse-event-actuality
 type AdverseEventActuality int
 
 const (
 	AdverseEventActualityActual AdverseEventActuality = iota
+	// A potential adverse event.
 	AdverseEventActualityPotential
 )
 

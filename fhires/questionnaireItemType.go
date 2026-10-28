@@ -6,25 +6,44 @@ import (
 	"strings"
 )
 
-// QuestionnaireItemType is documented here http://hl7.org/fhir/ValueSet/item-type
+// Distinguishes groups from questions and display text and indicates data type for questions.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/item-type
 type QuestionnaireItemType int
 
 const (
 	QuestionnaireItemTypeGroup QuestionnaireItemType = iota
+	// Text for display that will not capture an answer or have child items.
 	QuestionnaireItemTypeDisplay
+	// An item that defines a specific answer to be captured, and which may have child items. (the answer provided in the QuestionnaireResponse should be of the defined datatype).
 	QuestionnaireItemTypeQuestion
+	// Question with a yes/no answer (valueBoolean).
 	QuestionnaireItemTypeBoolean
+	// Question with is a real number answer (valueDecimal).  There is an extension 'http://hl7.org/fhir/StructureDefinition/questionnaire-unit' that can be used to computably convey the unit of measure associated with the answer for use when performing data extraction to an element of type Quantity.
 	QuestionnaireItemTypeDecimal
+	// Question with an integer answer (valueInteger).  There is an extension 'http://hl7.org/fhir/StructureDefinition/questionnaire-unit' that can be used to computably convey the unit of measure associated with the answer for use when performing data extraction to an element of type Quantity.
 	QuestionnaireItemTypeInteger
+	// Question with a date answer (valueDate).
 	QuestionnaireItemTypeDate
+	// Question with a date and time answer (valueDateTime).
 	QuestionnaireItemTypeDateTime
+	// Question with a time (hour:minute:second) answer independent of date. (valueTime).
 	QuestionnaireItemTypeTime
+	// Question with a short (few words to short sentence) free-text entry answer (valueString).  Strings SHOULD NOT contain carriage return or newline characters.  If multi-line answers are needed, use the 'text' type.
 	QuestionnaireItemTypeString
+	// Question with a long (potentially multi-paragraph) free-text entry answer (valueString).
 	QuestionnaireItemTypeText
+	// Question with a URL (website, FTP site, etc.) answer (valueUri).
 	QuestionnaireItemTypeUrl
+	// Question with a Coding - generally drawn from a list of possible answers (valueCoding)
 	QuestionnaireItemTypeCoding
+	// Question with binary content such as an image, PDF, etc. as an answer (valueAttachment).
 	QuestionnaireItemTypeAttachment
+	// Question with a reference to another resource (practitioner, organization, etc.) as an answer (valueReference).
 	QuestionnaireItemTypeReference
+	// Question with a combination of a numeric value and unit as an answer. (valueSimpleQuantity)  There are two extensions ('http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption' and 'http://hl7.org/fhir/StructureDefinition/questionnaire-unitValueSet')  that can be used to define what unit should be selected for the Quantity.code and Quantity.system.
 	QuestionnaireItemTypeQuantity
 )
 

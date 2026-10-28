@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// ClaimProcessingCodes is documented here http://hl7.org/fhir/ValueSet/claim-outcome
+// This value set includes Claim Processing Outcome codes.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/claim-outcome
 type ClaimProcessingCodes int
 
 const (
 	ClaimProcessingCodesQueued ClaimProcessingCodes = iota
+	// The processing has completed without errors
 	ClaimProcessingCodesComplete
+	// One or more errors have been detected in the Claim
 	ClaimProcessingCodesError
+	// No errors have been detected in the Claim and some of the adjudication has been performed.
 	ClaimProcessingCodesPartial
 )
 

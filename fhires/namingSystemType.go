@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// NamingSystemType is documented here http://hl7.org/fhir/ValueSet/namingsystem-type
+// Identifies the purpose of the naming system.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/namingsystem-type
 type NamingSystemType int
 
 const (
 	NamingSystemTypeCodesystem NamingSystemType = iota
+	// The naming system is used to manage identifiers (e.g. license numbers, order numbers, etc.).
 	NamingSystemTypeIdentifier
+	// The naming system is used as the root for other identifiers and naming systems.
 	NamingSystemTypeRoot
 )
 

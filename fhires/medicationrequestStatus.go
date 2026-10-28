@@ -6,18 +6,30 @@ import (
 	"strings"
 )
 
-// MedicationrequestStatus is documented here http://hl7.org/fhir/ValueSet/medicationrequest-status
+// MedicationRequest Status Codes
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/medicationrequest-status
 type MedicationrequestStatus int
 
 const (
 	MedicationrequestStatusActive MedicationrequestStatus = iota
+	// Actions implied by the request are to be temporarily halted. The request might or might not be resumed. May also be called 'suspended'.
 	MedicationrequestStatusOnHold
+	// The request is no longer active and the subject should no longer be taking the medication.
 	MedicationrequestStatusEnded
+	// Actions implied by the request are to be permanently halted, before all of the administrations occurred. This should not be used if the original order was entered in error
 	MedicationrequestStatusStopped
+	// All actions that are implied by the request have occurred.
 	MedicationrequestStatusCompleted
+	// The request has been withdrawn before any administrations have occurred
 	MedicationrequestStatusCancelled
+	// The request was recorded against the wrong patient or for some reason should not have been recorded (e.g. wrong medication, wrong dose, etc.). Some of the actions that are implied by the medication request may have occurred. For example, the medication may have been dispensed and the patient may have taken some of the medication.
 	MedicationrequestStatusEnteredInError
+	// The request is not yet 'actionable', e.g. it is a work in progress, requires sign-off, verification or needs to be run through decision support process.
 	MedicationrequestStatusDraft
+	// The authoring/source system does not know which of the status values currently applies for this request. Note: This concept is not to be used for 'other' - one of the listed statuses is presumed to apply, but the authoring/source system does not know which.
 	MedicationrequestStatusUnknown
 )
 

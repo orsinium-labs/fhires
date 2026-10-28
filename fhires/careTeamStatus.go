@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// CareTeamStatus is documented here http://hl7.org/fhir/ValueSet/care-team-status
+// Indicates the status of the care team.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/care-team-status
 type CareTeamStatus int
 
 const (
 	CareTeamStatusProposed CareTeamStatus = iota
+	// The care team is currently participating in the coordination and delivery of care.
 	CareTeamStatusActive
+	// The care team is temporarily on hold or suspended and not participating in the coordination and delivery of care.
 	CareTeamStatusSuspended
+	// The care team was, but is no longer, participating in the coordination and delivery of care.
 	CareTeamStatusInactive
+	// The care team should have never existed.
 	CareTeamStatusEnteredInError
 )
 

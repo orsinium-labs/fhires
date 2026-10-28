@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// ReferenceVersionRules is documented here http://hl7.org/fhir/ValueSet/reference-version-rules
+// Whether a reference needs to be version specific or version independent, or whether either can be used.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/reference-version-rules
 type ReferenceVersionRules int
 
 const (
 	ReferenceVersionRulesEither ReferenceVersionRules = iota
+	// The reference must be version independent.
 	ReferenceVersionRulesIndependent
+	// The reference must be version specific.
 	ReferenceVersionRulesSpecific
 )
 

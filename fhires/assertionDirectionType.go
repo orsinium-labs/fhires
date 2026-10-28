@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// AssertionDirectionType is documented here http://hl7.org/fhir/ValueSet/assert-direction-codes
+// The type of direction to use for assertion.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/assert-direction-codes
 type AssertionDirectionType int
 
 const (
 	AssertionDirectionTypeResponse AssertionDirectionType = iota
+	// The assertion is evaluated on the request.
 	AssertionDirectionTypeRequest
 )
 

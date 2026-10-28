@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// ProvenanceEntityRole is documented here http://hl7.org/fhir/ValueSet/provenance-entity-role
+// How an entity was used in an activity.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/provenance-entity-role
 type ProvenanceEntityRole int
 
 const (
 	ProvenanceEntityRoleRevision ProvenanceEntityRole = iota
+	// An entity that is copied in full or part by an agent that is not the author of the entity.
 	ProvenanceEntityRoleQuotation
+	// An entity that is used as input to the activity that produced the target.
 	ProvenanceEntityRoleSource
+	// The record resulting from this event adheres to the protocol, guideline, order set or other definition represented by this entity.
 	ProvenanceEntityRoleInstantiates
+	// An entity that is removed from accessibility, usually through the DELETE operator.
 	ProvenanceEntityRoleRemoval
 )
 

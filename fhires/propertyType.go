@@ -6,16 +6,26 @@ import (
 	"strings"
 )
 
-// PropertyType is documented here http://hl7.org/fhir/ValueSet/concept-property-type
+// The type of a property value.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/concept-property-type
 type PropertyType int
 
 const (
 	PropertyTypeCode PropertyType = iota
+	// The property  value is a code defined in an external code system. This may be used for translations, but is not the intent.
 	PropertyTypeCoding
+	// The property value is a string.
 	PropertyTypeString
+	// The property value is an integer (often used to assign ranking values to concepts for supporting score assessments).
 	PropertyTypeInteger
+	// The property value is a boolean true | false.
 	PropertyTypeBoolean
+	// The property is a date or a date + time.
 	PropertyTypeDateTime
+	// The property value is a decimal number.
 	PropertyTypeDecimal
 )
 

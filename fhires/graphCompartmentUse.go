@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
-// GraphCompartmentUse is documented here http://hl7.org/fhir/ValueSet/graph-compartment-use
+// Defines how a compartment rule is used.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/graph-compartment-use
 type GraphCompartmentUse int
 
 const (
 	GraphCompartmentUseWhere GraphCompartmentUse = iota
+	// This compartment rule is enforced on any relationships that meet the conditions.
 	GraphCompartmentUseRequires
 )
 

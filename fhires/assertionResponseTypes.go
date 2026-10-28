@@ -6,53 +6,100 @@ import (
 	"strings"
 )
 
-// AssertionResponseTypes is documented here http://hl7.org/fhir/ValueSet/assert-response-code-types
+// The type of response code to use for assertion.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/assert-response-code-types
 type AssertionResponseTypes int
 
 const (
 	AssertionResponseTypesContinue AssertionResponseTypes = iota
+	// Response code is 101.
 	AssertionResponseTypesSwitchingProtocols
+	// Response code is 200.
 	AssertionResponseTypesOkay
+	// Response code is 201.
 	AssertionResponseTypesCreated
+	// Response code is 202.
 	AssertionResponseTypesAccepted
+	// Response code is 203.
 	AssertionResponseTypesNonAuthoritativeInformation
+	// Response code is 204.
 	AssertionResponseTypesNoContent
+	// Response code is 205.
 	AssertionResponseTypesResetContent
+	// Response code is 206.
 	AssertionResponseTypesPartialContent
+	// Response code is 300.
 	AssertionResponseTypesMultipleChoices
+	// Response code is 301.
 	AssertionResponseTypesMovedPermanently
+	// Response code is 302.
 	AssertionResponseTypesFound
+	// Response code is 303.
 	AssertionResponseTypesSeeOther
+	// Response code is 304.
 	AssertionResponseTypesNotModified
+	// Response code is 305.
 	AssertionResponseTypesUseProxy
+	// Response code is 307.
 	AssertionResponseTypesTemporaryRedirect
+	// Response code is 308.
 	AssertionResponseTypesPermanentRedirect
+	// Response code is 400.
 	AssertionResponseTypesBadRequest
+	// Response code is 401.
 	AssertionResponseTypesUnauthorized
+	// Response code is 402.
 	AssertionResponseTypesPaymentRequired
+	// Response code is 403.
 	AssertionResponseTypesForbidden
+	// Response code is 404.
 	AssertionResponseTypesNotFound
+	// Response code is 405.
 	AssertionResponseTypesMethodNotAllowed
+	// Response code is 406.
 	AssertionResponseTypesNotAcceptable
+	// Response code is 407.
 	AssertionResponseTypesProxyAuthenticationRequired
+	// Response code is 408.
 	AssertionResponseTypesRequestTimeout
+	// Response code is 409.
 	AssertionResponseTypesConflict
+	// Response code is 410.
 	AssertionResponseTypesGone
+	// Response code is 411.
 	AssertionResponseTypesLengthRequired
+	// Response code is 412.
 	AssertionResponseTypesPreconditionFailed
+	// Response code is 413.
 	AssertionResponseTypesContentTooLarge
+	// Response code is 414.
 	AssertionResponseTypesUriTooLong
+	// Response code is 415.
 	AssertionResponseTypesUnsupportedMediaType
+	// Response code is 416.
 	AssertionResponseTypesRangeNotSatisfiable
+	// Response code is 417.
 	AssertionResponseTypesExpectationFailed
+	// Response code is 421.
 	AssertionResponseTypesMisdirectedRequest
+	// Response code is 422.
 	AssertionResponseTypesUnprocessableContent
+	// Response code is 426.
 	AssertionResponseTypesUpgradeRequired
+	// Response code is 500.
 	AssertionResponseTypesInternalServerError
+	// Response code is 501.
 	AssertionResponseTypesNotImplemented
+	// Response code is 502.
 	AssertionResponseTypesBadGateway
+	// Response code is 503.
 	AssertionResponseTypesServiceUnavailable
+	// Response code is 504.
 	AssertionResponseTypesGatewayTimeout
+	// Response code is 505.
 	AssertionResponseTypesHttpVersionNotSupported
 )
 

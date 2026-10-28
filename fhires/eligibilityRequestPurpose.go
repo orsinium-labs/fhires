@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// EligibilityRequestPurpose is documented here http://hl7.org/fhir/ValueSet/eligibilityrequest-purpose
+// A code specifying the types of information being requested.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/eligibilityrequest-purpose
 type EligibilityRequestPurpose int
 
 const (
 	EligibilityRequestPurposeAuthRequirements EligibilityRequestPurpose = iota
+	// The plan benefits and optionally benefits consumed  for the listed, or discovered if specified, converages are requested.
 	EligibilityRequestPurposeBenefits
+	// The insurer is requested to report on any coverages which they are aware of in addition to any specifed.
 	EligibilityRequestPurposeDiscovery
+	// A check that the specified coverages are in-force is requested.
 	EligibilityRequestPurposeValidation
 )
 

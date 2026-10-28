@@ -6,15 +6,24 @@ import (
 	"strings"
 )
 
-// NamingSystemIdentifierType is documented here http://hl7.org/fhir/ValueSet/namingsystem-identifier-type
+// Identifies the style of unique identifier used to identify a namespace.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/namingsystem-identifier-type
 type NamingSystemIdentifierType int
 
 const (
 	NamingSystemIdentifierTypeOid NamingSystemIdentifierType = iota
+	// A universally unique identifier of the form a5afddf4-e880-459b-876e-e4591b0acc11.
 	NamingSystemIdentifierTypeUuid
+	// A uniform resource identifier (ideally a URL - uniform resource locator); e.g. http://unitsofmeasure.org.
 	NamingSystemIdentifierTypeUri
+	// An IRI string that can be prepended to the code to obtain a concept IRI for RDF applications. This should be a valid, absolute IRI as defined in RFC 3987. See rdf.html#iri-stem for details on how this value may be used.
 	NamingSystemIdentifierTypeIriStem
+	// A short string published by HL7 for use in the V2 family of standsrds to idenfify a code system in the V12 coded data types CWE, CNE, and CF. The code values are also published by HL7 at http://www.hl7.org/Special/committees/vocab/table_0396/index.cfm
 	NamingSystemIdentifierTypeV2csmnemonic
+	// Some other type of unique identifier; e.g. HL7-assigned reserved string such as LN for LOINC.
 	NamingSystemIdentifierTypeOther
 )
 
@@ -33,7 +42,7 @@ func (code *NamingSystemIdentifierType) UnmarshalJSON(json []byte) error {
 		*code = NamingSystemIdentifierTypeUri
 	case "iri-stem":
 		*code = NamingSystemIdentifierTypeIriStem
-	case "v2csmnemonic":
+	case "json.smnemonic":
 		*code = NamingSystemIdentifierTypeV2csmnemonic
 	case "other":
 		*code = NamingSystemIdentifierTypeOther
@@ -58,7 +67,7 @@ func (code NamingSystemIdentifierType) Code() string {
 	case NamingSystemIdentifierTypeIriStem:
 		return "iri-stem"
 	case NamingSystemIdentifierTypeV2csmnemonic:
-		return "v2csmnemonic"
+		return "json.smnemonic"
 	case NamingSystemIdentifierTypeOther:
 		return "other"
 	}

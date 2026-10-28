@@ -6,18 +6,30 @@ import (
 	"strings"
 )
 
-// SearchComparator is documented here http://hl7.org/fhir/ValueSet/search-comparator
+// What Search Comparator Codes are supported in search.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/search-comparator
 type SearchComparator int
 
 const (
 	SearchComparatorEq SearchComparator = iota
+	// the value for the parameter in the resource is not equal to the provided value.
 	SearchComparatorNe
+	// the value for the parameter in the resource is greater than the provided value.
 	SearchComparatorGt
+	// the value for the parameter in the resource is less than the provided value.
 	SearchComparatorLt
+	// the value for the parameter in the resource is greater or equal to the provided value.
 	SearchComparatorGe
+	// the value for the parameter in the resource is less or equal to the provided value.
 	SearchComparatorLe
+	// the value for the parameter in the resource starts after the provided value.
 	SearchComparatorSa
+	// the value for the parameter in the resource ends before the provided value.
 	SearchComparatorEb
+	// the value for the parameter in the resource is approximately the same to the provided value.
 	SearchComparatorAp
 )
 

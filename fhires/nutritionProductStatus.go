@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
-// NutritionProductStatus is documented here http://hl7.org/fhir/ValueSet/nutritionproduct-status
+// Codes identifying the lifecycle stage of a product.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/nutritionproduct-status
 type NutritionProductStatus int
 
 const (
 	NutritionProductStatusActive NutritionProductStatus = iota
+	// The product is not expected or allowed to be used.
 	NutritionProductStatusInactive
+	// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
 	NutritionProductStatusEnteredInError
 )
 

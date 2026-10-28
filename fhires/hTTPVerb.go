@@ -6,15 +6,26 @@ import (
 	"strings"
 )
 
-// HTTPVerb is documented here http://hl7.org/fhir/ValueSet/http-verb
+// HTTP verbs (in the HTTP command line).
+//
+// See [HTTP rfc](https://tools.ietf.org/html/rfc7231) for details.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/http-verb
 type HTTPVerb int
 
 const (
 	HTTPVerbGET HTTPVerb = iota
+	// HTTP HEAD Command.
 	HTTPVerbHEAD
+	// HTTP POST Command.
 	HTTPVerbPOST
+	// HTTP PUT Command.
 	HTTPVerbPUT
+	// HTTP DELETE Command.
 	HTTPVerbDELETE
+	// HTTP PATCH Command.
 	HTTPVerbPATCH
 )
 

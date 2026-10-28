@@ -6,20 +6,34 @@ import (
 	"strings"
 )
 
-// FilterOperator is documented here http://hl7.org/fhir/ValueSet/filter-operator
+// The kind of operation to perform as a part of a property based filter.
+//
+// Status: active
+//
+// http://hl7.org/fhir/ValueSet/filter-operator
 type FilterOperator int
 
 const (
 	FilterOperatorEquals FilterOperator = iota
+	// Includes all concept ids that have a transitive is-a relationship with the concept Id provided as the value, including the provided concept itself (include descendant codes and self).
 	FilterOperatorIsA
+	// Includes all concept ids that have a transitive is-a relationship with the concept Id provided as the value, excluding the provided concept itself (i.e. include descendant codes only).
 	FilterOperatorDescendentOf
+	// The specified property of the code does not have an is-a relationship with the provided value.
 	FilterOperatorIsNotA
+	// The specified property of the code  matches the regex specified in the provided value.
 	FilterOperatorRegex
+	// The specified property of the code is in the set of codes or concepts specified in the provided value (comma-separated list).
 	FilterOperatorIn
+	// The specified property of the code is not in the set of codes or concepts specified in the provided value (comma-separated list).
 	FilterOperatorNotIn
+	// Includes all concept ids that have a transitive is-a relationship from the concept Id provided as the value, including the provided concept itself (i.e. include ancestor codes and self).
 	FilterOperatorGeneralizes
+	// Only concepts with a direct hierarchical relationship to the index code and no other concepts. This does not include the index code in the output.
 	FilterOperatorChildOf
+	// Includes concept ids that have a transitive is-a relationship with the concept Id provided as the value, but which do not have any concept ids with transitive is-a relationships with themselves.
 	FilterOperatorDescendentLeaf
+	// The specified property of the code has at least one value (if the specified value is true; if the specified value is false, then matches when the specified property of the code has no values).
 	FilterOperatorExists
 )
 

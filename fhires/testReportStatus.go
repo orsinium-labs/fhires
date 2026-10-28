@@ -6,14 +6,22 @@ import (
 	"strings"
 )
 
-// TestReportStatus is documented here http://hl7.org/fhir/ValueSet/report-status-codes
+// The current status of the test report.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/report-status-codes
 type TestReportStatus int
 
 const (
 	TestReportStatusCompleted TestReportStatus = iota
+	// A test operations is currently executing.
 	TestReportStatusInProgress
+	// A test operation is waiting for an external client request.
 	TestReportStatusWaiting
+	// The test script execution was manually stopped.
 	TestReportStatusStopped
+	// This test report was entered or created in error.
 	TestReportStatusEnteredInError
 )
 

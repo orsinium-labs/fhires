@@ -6,18 +6,30 @@ import (
 	"strings"
 )
 
-// RequestIntent is documented here http://hl7.org/fhir/ValueSet/request-intent
+// Codes indicating the degree of authority/intentionality associated with a request.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/request-intent
 type RequestIntent int
 
 const (
 	RequestIntentProposal RequestIntent = iota
+	// The request represents an intention to ensure something occurs without providing an authorization for others to act.
 	RequestIntentPlan
+	// The request represents a legally binding instruction authored by a Patient or RelatedPerson.
 	RequestIntentDirective
+	// The request represents a request/demand and authorization for action by the requestor.
 	RequestIntentOrder
+	// The request represents an original authorization for action.
 	RequestIntentOriginalOrder
+	// The request represents an automatically generated supplemental authorization for action based on a parent authorization together with initial results of the action taken against that parent authorization.
 	RequestIntentReflexOrder
+	// The request represents the view of an authorization instantiated by a fulfilling system representing the details of the fulfiller's intention to act upon a submitted order.
 	RequestIntentFillerOrder
+	// An order created in fulfillment of a broader order that represents the authorization for a single activity occurrence.  E.g. The administration of a single dose of a drug.
 	RequestIntentInstanceOrder
+	// The request represents a component or option for a RequestOrchestration that establishes timing, conditionality and/or other constraints among a set of requests.  Refer to [[[RequestOrchestration]]] for additional information on how this status is used.
 	RequestIntentOption
 )
 

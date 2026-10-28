@@ -6,15 +6,24 @@ import (
 	"strings"
 )
 
-// ConsentState is documented here http://hl7.org/fhir/ValueSet/consent-state-codes
+// Indicates the state of the consent.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/consent-state-codes
 type ConsentState int
 
 const (
 	ConsentStateDraft ConsentState = iota
+	// The consent is to be followed and enforced.
 	ConsentStateActive
+	// The consent is terminated or replaced.
 	ConsentStateInactive
+	// The consent development has been terminated prior to completion.
 	ConsentStateNotDone
+	// The consent was created wrongly (e.g. wrong patient) and should be ignored.
 	ConsentStateEnteredInError
+	// The resource is in an indeterminate state.
 	ConsentStateUnknown
 )
 

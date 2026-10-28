@@ -6,19 +6,32 @@ import (
 	"strings"
 )
 
-// ActionParticipantType is documented here http://hl7.org/fhir/ValueSet/action-participant-type
+// The type of participant for the action.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/action-participant-type
 type ActionParticipantType int
 
 const (
 	ActionParticipantTypeCareteam ActionParticipantType = iota
+	// The participant is a system or device used in the care of the patient.
 	ActionParticipantTypeDevice
+	// The participant is a group of participants involved in the care of the patient.
 	ActionParticipantTypeGroup
+	// The participant is an institution that can provide the given healthcare service used in the care of the patient.
 	ActionParticipantTypeHealthcareservice
+	// The participant is a location involved in the care of the patient.
 	ActionParticipantTypeLocation
+	// The participant is an organization involved in the care of the patient.
 	ActionParticipantTypeOrganization
+	// The participant is the patient under evaluation.
 	ActionParticipantTypePatient
+	// The participant is a practitioner involved in the patient's care.
 	ActionParticipantTypePractitioner
+	// The participant is a particular practitioner role involved in the patient's care.
 	ActionParticipantTypePractitionerrole
+	// The participant is a person related to the patient.
 	ActionParticipantTypeRelatedperson
 )
 

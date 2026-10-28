@@ -6,13 +6,20 @@ import (
 	"strings"
 )
 
-// ExplanationOfBenefitStatus is documented here http://hl7.org/fhir/ValueSet/explanationofbenefit-status
+// A code specifying the state of the resource instance.
+//
+// Status: draft
+//
+// http://hl7.org/fhir/ValueSet/explanationofbenefit-status
 type ExplanationOfBenefitStatus int
 
 const (
 	ExplanationOfBenefitStatusActive ExplanationOfBenefitStatus = iota
+	// The resource instance is withdrawn, rescinded or reversed.
 	ExplanationOfBenefitStatusCancelled
+	// A new resource instance the contents of which is not complete.
 	ExplanationOfBenefitStatusDraft
+	// The resource instance was entered in error.
 	ExplanationOfBenefitStatusEnteredInError
 )
 
