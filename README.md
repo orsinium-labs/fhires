@@ -20,7 +20,7 @@ go get github.com/orsinium-labs/fhires
 ```go
 import (
     "encoding/json/v2"
-    "github.com/orsinium-labs/fhires"
+    "github.com/orsinium-labs/fhires/fhires"
 )
 
 var patient fhir.Patient
