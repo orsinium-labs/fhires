@@ -1,8 +1,8 @@
 package fhires
 
 import (
-	"encoding/json"
 	jsontext "encoding/json/jsontext"
+	"encoding/json/v2"
 
 	decimal "github.com/shopspring/decimal"
 )

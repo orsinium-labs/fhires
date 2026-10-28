@@ -1,7 +1,7 @@
 package fhires
 
 import (
-	"encoding/json"
+	"encoding/json/v2"
 	"fmt"
 	"strings"
 )
@@ -1786,9 +1786,9 @@ func (code SPDXLicense) Display() string {
 	case SPDXLicenseAFL1_2:
 		return "Academic Free License v1.2"
 	case SPDXLicenseAFL2_0:
-		return "Academic Free License v2.0"
+		return "Academic Free License json.0"
 	case SPDXLicenseAFL2_1:
-		return "Academic Free License v2.1"
+		return "Academic Free License json.1"
 	case SPDXLicenseAFL3_0:
 		return "Academic Free License v3.0"
 	case SPDXLicenseAfmparse:
@@ -1966,9 +1966,9 @@ func (code SPDXLicense) Display() string {
 	case SPDXLicenseCECILL1_1:
 		return "CeCILL Free Software License Agreement v1.1"
 	case SPDXLicenseCECILL2_0:
-		return "CeCILL Free Software License Agreement v2.0"
+		return "CeCILL Free Software License Agreement json.0"
 	case SPDXLicenseCECILL2_1:
-		return "CeCILL Free Software License Agreement v2.1"
+		return "CeCILL Free Software License Agreement json.1"
 	case SPDXLicenseCECILLB:
 		return "CeCILL-B Free Software License Agreement"
 	case SPDXLicenseCECILLC:
@@ -2014,11 +2014,11 @@ func (code SPDXLicense) Display() string {
 	case SPDXLicenseECL1_0:
 		return "Educational Community License v1.0"
 	case SPDXLicenseECL2_0:
-		return "Educational Community License v2.0"
+		return "Educational Community License json.0"
 	case SPDXLicenseEFL1_0:
 		return "Eiffel Forum License v1.0"
 	case SPDXLicenseEFL2_0:
-		return "Eiffel Forum License v2.0"
+		return "Eiffel Forum License json.0"
 	case SPDXLicenseEGenix:
 		return "eGenix.com Public License 1.1.0"
 	case SPDXLicenseEntessa:
@@ -2080,9 +2080,9 @@ func (code SPDXLicense) Display() string {
 	case SPDXLicenseGPL1_0OrLater:
 		return "GNU General Public License v1.0 or later"
 	case SPDXLicenseGPL2_0Only:
-		return "GNU General Public License v2.0 only"
+		return "GNU General Public License json.0 only"
 	case SPDXLicenseGPL2_0OrLater:
-		return "GNU General Public License v2.0 or later"
+		return "GNU General Public License json.0 or later"
 	case SPDXLicenseGPL3_0Only:
 		return "GNU General Public License v3.0 only"
 	case SPDXLicenseGPL3_0OrLater:
@@ -2136,9 +2136,9 @@ func (code SPDXLicense) Display() string {
 	case SPDXLicenseLGPL2_0OrLater:
 		return "GNU Library General Public License v2 or later"
 	case SPDXLicenseLGPL2_1Only:
-		return "GNU Lesser General Public License v2.1 only"
+		return "GNU Lesser General Public License json.1 only"
 	case SPDXLicenseLGPL2_1OrLater:
-		return "GNU Lesser General Public License v2.1 or later"
+		return "GNU Lesser General Public License json.1 or later"
 	case SPDXLicenseLGPL3_0Only:
 		return "GNU Lesser General Public License v3.0 only"
 	case SPDXLicenseLGPL3_0OrLater:
@@ -2268,29 +2268,29 @@ func (code SPDXLicense) Display() string {
 	case SPDXLicenseOLDAP1_4:
 		return "Open LDAP Public License v1.4"
 	case SPDXLicenseOLDAP2_0_1:
-		return "Open LDAP Public License v2.0.1"
+		return "Open LDAP Public License json.0.1"
 	case SPDXLicenseOLDAP2_0:
-		return "Open LDAP Public License v2.0 (or possibly 2.0A and 2.0B)"
+		return "Open LDAP Public License json.0 (or possibly 2.0A and 2.0B)"
 	case SPDXLicenseOLDAP2_1:
-		return "Open LDAP Public License v2.1"
+		return "Open LDAP Public License json.1"
 	case SPDXLicenseOLDAP2_2_1:
-		return "Open LDAP Public License v2.2.1"
+		return "Open LDAP Public License json.2.1"
 	case SPDXLicenseOLDAP2_2_2:
 		return "Open LDAP Public License 2.2.2"
 	case SPDXLicenseOLDAP2_2:
-		return "Open LDAP Public License v2.2"
+		return "Open LDAP Public License json.2"
 	case SPDXLicenseOLDAP2_3:
-		return "Open LDAP Public License v2.3"
+		return "Open LDAP Public License json.3"
 	case SPDXLicenseOLDAP2_4:
-		return "Open LDAP Public License v2.4"
+		return "Open LDAP Public License json.4"
 	case SPDXLicenseOLDAP2_5:
-		return "Open LDAP Public License v2.5"
+		return "Open LDAP Public License json.5"
 	case SPDXLicenseOLDAP2_6:
-		return "Open LDAP Public License v2.6"
+		return "Open LDAP Public License json.6"
 	case SPDXLicenseOLDAP2_7:
-		return "Open LDAP Public License v2.7"
+		return "Open LDAP Public License json.7"
 	case SPDXLicenseOLDAP2_8:
-		return "Open LDAP Public License v2.8"
+		return "Open LDAP Public License json.8"
 	case SPDXLicenseOML:
 		return "Open Market License"
 	case SPDXLicenseOpenSSL:
@@ -2358,7 +2358,7 @@ func (code SPDXLicense) Display() string {
 	case SPDXLicenseSGIB1_1:
 		return "SGI Free Software License B v1.1"
 	case SPDXLicenseSGIB2_0:
-		return "SGI Free Software License B v2.0"
+		return "SGI Free Software License B json.0"
 	case SPDXLicenseSimPL2_0:
 		return "Simple Public License 2.0"
 	case SPDXLicenseSISSL1_2:
@@ -2392,7 +2392,7 @@ func (code SPDXLicense) Display() string {
 	case SPDXLicenseTMate:
 		return "TMate Open Source License"
 	case SPDXLicenseTORQUE1_1:
-		return "TORQUE v2.5+ Software License v1.1"
+		return "TORQUE json.5+ Software License v1.1"
 	case SPDXLicenseTOSL:
 		return "Trusster Open Source License"
 	case SPDXLicenseUnicodeDFS2015:
@@ -2444,7 +2444,7 @@ func (code SPDXLicense) Display() string {
 	case SPDXLicenseZed:
 		return "Zed License"
 	case SPDXLicenseZend2_0:
-		return "Zend License v2.0"
+		return "Zend License json.0"
 	case SPDXLicenseZimbra1_3:
 		return "Zimbra Public License v1.3"
 	case SPDXLicenseZimbra1_4:
@@ -2484,9 +2484,9 @@ func (code SPDXLicense) Definition() string {
 	case SPDXLicenseAFL1_2:
 		return "Academic Free License v1.2."
 	case SPDXLicenseAFL2_0:
-		return "Academic Free License v2.0."
+		return "Academic Free License json.0."
 	case SPDXLicenseAFL2_1:
-		return "Academic Free License v2.1."
+		return "Academic Free License json.1."
 	case SPDXLicenseAFL3_0:
 		return "Academic Free License v3.0."
 	case SPDXLicenseAfmparse:
@@ -2664,9 +2664,9 @@ func (code SPDXLicense) Definition() string {
 	case SPDXLicenseCECILL1_1:
 		return "CeCILL Free Software License Agreement v1.1."
 	case SPDXLicenseCECILL2_0:
-		return "CeCILL Free Software License Agreement v2.0."
+		return "CeCILL Free Software License Agreement json.0."
 	case SPDXLicenseCECILL2_1:
-		return "CeCILL Free Software License Agreement v2.1."
+		return "CeCILL Free Software License Agreement json.1."
 	case SPDXLicenseCECILLB:
 		return "CeCILL-B Free Software License Agreement."
 	case SPDXLicenseCECILLC:
@@ -2712,11 +2712,11 @@ func (code SPDXLicense) Definition() string {
 	case SPDXLicenseECL1_0:
 		return "Educational Community License v1.0."
 	case SPDXLicenseECL2_0:
-		return "Educational Community License v2.0."
+		return "Educational Community License json.0."
 	case SPDXLicenseEFL1_0:
 		return "Eiffel Forum License v1.0."
 	case SPDXLicenseEFL2_0:
-		return "Eiffel Forum License v2.0."
+		return "Eiffel Forum License json.0."
 	case SPDXLicenseEGenix:
 		return "eGenix.com Public License 1.1.0."
 	case SPDXLicenseEntessa:
@@ -2778,9 +2778,9 @@ func (code SPDXLicense) Definition() string {
 	case SPDXLicenseGPL1_0OrLater:
 		return "GNU General Public License v1.0 or later."
 	case SPDXLicenseGPL2_0Only:
-		return "GNU General Public License v2.0 only."
+		return "GNU General Public License json.0 only."
 	case SPDXLicenseGPL2_0OrLater:
-		return "GNU General Public License v2.0 or later."
+		return "GNU General Public License json.0 or later."
 	case SPDXLicenseGPL3_0Only:
 		return "GNU General Public License v3.0 only."
 	case SPDXLicenseGPL3_0OrLater:
@@ -2834,9 +2834,9 @@ func (code SPDXLicense) Definition() string {
 	case SPDXLicenseLGPL2_0OrLater:
 		return "GNU Library General Public License v2 or later."
 	case SPDXLicenseLGPL2_1Only:
-		return "GNU Lesser General Public License v2.1 only."
+		return "GNU Lesser General Public License json.1 only."
 	case SPDXLicenseLGPL2_1OrLater:
-		return "GNU Lesser General Public License v2.1 or later."
+		return "GNU Lesser General Public License json.1 or later."
 	case SPDXLicenseLGPL3_0Only:
 		return "GNU Lesser General Public License v3.0 only."
 	case SPDXLicenseLGPL3_0OrLater:
@@ -2966,29 +2966,29 @@ func (code SPDXLicense) Definition() string {
 	case SPDXLicenseOLDAP1_4:
 		return "Open LDAP Public License v1.4."
 	case SPDXLicenseOLDAP2_0_1:
-		return "Open LDAP Public License v2.0.1."
+		return "Open LDAP Public License json.0.1."
 	case SPDXLicenseOLDAP2_0:
-		return "Open LDAP Public License v2.0 (or possibly 2.0A and 2.0B)."
+		return "Open LDAP Public License json.0 (or possibly 2.0A and 2.0B)."
 	case SPDXLicenseOLDAP2_1:
-		return "Open LDAP Public License v2.1."
+		return "Open LDAP Public License json.1."
 	case SPDXLicenseOLDAP2_2_1:
-		return "Open LDAP Public License v2.2.1."
+		return "Open LDAP Public License json.2.1."
 	case SPDXLicenseOLDAP2_2_2:
 		return "Open LDAP Public License 2.2.2."
 	case SPDXLicenseOLDAP2_2:
-		return "Open LDAP Public License v2.2."
+		return "Open LDAP Public License json.2."
 	case SPDXLicenseOLDAP2_3:
-		return "Open LDAP Public License v2.3."
+		return "Open LDAP Public License json.3."
 	case SPDXLicenseOLDAP2_4:
-		return "Open LDAP Public License v2.4."
+		return "Open LDAP Public License json.4."
 	case SPDXLicenseOLDAP2_5:
-		return "Open LDAP Public License v2.5."
+		return "Open LDAP Public License json.5."
 	case SPDXLicenseOLDAP2_6:
-		return "Open LDAP Public License v2.6."
+		return "Open LDAP Public License json.6."
 	case SPDXLicenseOLDAP2_7:
-		return "Open LDAP Public License v2.7."
+		return "Open LDAP Public License json.7."
 	case SPDXLicenseOLDAP2_8:
-		return "Open LDAP Public License v2.8."
+		return "Open LDAP Public License json.8."
 	case SPDXLicenseOML:
 		return "Open Market License."
 	case SPDXLicenseOpenSSL:
@@ -3056,7 +3056,7 @@ func (code SPDXLicense) Definition() string {
 	case SPDXLicenseSGIB1_1:
 		return "SGI Free Software License B v1.1."
 	case SPDXLicenseSGIB2_0:
-		return "SGI Free Software License B v2.0."
+		return "SGI Free Software License B json.0."
 	case SPDXLicenseSimPL2_0:
 		return "Simple Public License 2.0."
 	case SPDXLicenseSISSL1_2:
@@ -3090,7 +3090,7 @@ func (code SPDXLicense) Definition() string {
 	case SPDXLicenseTMate:
 		return "TMate Open Source License."
 	case SPDXLicenseTORQUE1_1:
-		return "TORQUE v2.5+ Software License v1.1."
+		return "TORQUE json.5+ Software License v1.1."
 	case SPDXLicenseTOSL:
 		return "Trusster Open Source License."
 	case SPDXLicenseUnicodeDFS2015:
@@ -3142,7 +3142,7 @@ func (code SPDXLicense) Definition() string {
 	case SPDXLicenseZed:
 		return "Zed License."
 	case SPDXLicenseZend2_0:
-		return "Zend License v2.0."
+		return "Zend License json.0."
 	case SPDXLicenseZimbra1_3:
 		return "Zimbra Public License v1.3."
 	case SPDXLicenseZimbra1_4:
