@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // The EvidenceVariable resource describes an element that knowledge (Evidence) is about.
 //
@@ -383,7 +383,7 @@ func (r EvidenceVariable) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r EvidenceVariable) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		EvidenceVariable
 		ResourceType string `json:"resourceType"`
 	}{

@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A record of association of a device.
 //
@@ -106,7 +106,7 @@ func (r DeviceAssociation) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r DeviceAssociation) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		DeviceAssociation
 		ResourceType string `json:"resourceType"`
 	}{

@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A definition of a condition and information relevant to managing it.
 //
@@ -304,7 +304,7 @@ func (r ConditionDefinition) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ConditionDefinition) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		ConditionDefinition
 		ResourceType string `json:"resourceType"`
 	}{

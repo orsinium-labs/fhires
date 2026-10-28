@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // The Library resource is a general-purpose container for knowledge asset definitions.
 //
@@ -221,7 +221,7 @@ func (r Library) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Library) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Library
 		ResourceType string `json:"resourceType"`
 	}{

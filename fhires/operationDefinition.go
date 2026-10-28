@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A formal computable definition of an operation (on the RESTful interface) or a named query (using the search interaction).
 //
@@ -362,7 +362,7 @@ func (r OperationDefinition) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r OperationDefinition) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		OperationDefinition
 		ResourceType string `json:"resourceType"`
 	}{

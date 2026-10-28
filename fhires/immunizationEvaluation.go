@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Describes a comparison of an immunization event against published recommendations to determine if the administration is "valid" in relation to those  recommendations.
 //
@@ -91,7 +91,7 @@ func (r ImmunizationEvaluation) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ImmunizationEvaluation) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		ImmunizationEvaluation
 		ResourceType string `json:"resourceType"`
 	}{

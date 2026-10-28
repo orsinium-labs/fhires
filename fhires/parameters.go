@@ -1,8 +1,8 @@
 package fhires
 
 import (
+	"encoding/json"
 	jsontext "encoding/json/jsontext"
-	v2 "encoding/json/v2"
 
 	decimal "github.com/shopspring/decimal"
 )
@@ -129,7 +129,7 @@ func (r Parameters) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Parameters) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Parameters
 		ResourceType string `json:"resourceType"`
 	}{

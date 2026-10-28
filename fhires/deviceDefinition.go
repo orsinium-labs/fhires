@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // This is a specialized resource that defines the characteristics and capabilities of a device.
 //
@@ -599,7 +599,7 @@ func (r DeviceDefinition) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r DeviceDefinition) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		DeviceDefinition
 		ResourceType string `json:"resourceType"`
 	}{

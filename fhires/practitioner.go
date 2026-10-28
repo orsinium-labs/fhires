@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A person who is directly or indirectly involved in the provisioning of healthcare or related services.
 //
@@ -162,7 +162,7 @@ func (r Practitioner) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Practitioner) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Practitioner
 		ResourceType string `json:"resourceType"`
 	}{

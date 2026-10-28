@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A record of significant events/milestones key data throughout the history of an Encounter
 //
@@ -136,7 +136,7 @@ func (r EncounterHistory) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r EncounterHistory) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		EncounterHistory
 		ResourceType string `json:"resourceType"`
 	}{

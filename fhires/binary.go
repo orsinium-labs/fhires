@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A resource that represents the data of a single raw artifact as digital content accessible in its native format.
 //
@@ -52,7 +52,7 @@ func (r Binary) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Binary) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Binary
 		ResourceType string `json:"resourceType"`
 	}{

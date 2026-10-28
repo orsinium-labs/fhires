@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Source material shall capture information on the taxonomic and anatomical origins as well as the fraction of a material that can result in or can be modified to form a substance.
 //
@@ -287,7 +287,7 @@ func (r SubstanceSourceMaterial) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r SubstanceSourceMaterial) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		SubstanceSourceMaterial
 		ResourceType string `json:"resourceType"`
 	}{

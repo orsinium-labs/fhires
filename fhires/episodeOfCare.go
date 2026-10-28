@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // An association between a patient and an organization / healthcare provider(s) during which time encounters may occur.
 //
@@ -182,7 +182,7 @@ func (r EpisodeOfCare) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r EpisodeOfCare) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		EpisodeOfCare
 		ResourceType string `json:"resourceType"`
 	}{

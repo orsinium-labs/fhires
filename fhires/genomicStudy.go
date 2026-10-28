@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A set of analyses performed to analyze and generate genomic data.
 //
@@ -255,7 +255,7 @@ func (r GenomicStudy) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r GenomicStudy) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		GenomicStudy
 		ResourceType string `json:"resourceType"`
 	}{

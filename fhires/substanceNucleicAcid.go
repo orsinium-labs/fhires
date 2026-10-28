@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Nucleic acids are defined by three distinct elements: the base, sugar and linkage.
 //
@@ -184,7 +184,7 @@ func (r SubstanceNucleicAcid) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r SubstanceNucleicAcid) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		SubstanceNucleicAcid
 		ResourceType string `json:"resourceType"`
 	}{

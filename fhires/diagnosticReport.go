@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // The findings and interpretation of diagnostic tests performed on patients, groups of patients, products, substances, devices, and locations, and/or specimens derived from these.
 //
@@ -204,7 +204,7 @@ func (r DiagnosticReport) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r DiagnosticReport) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		DiagnosticReport
 		ResourceType string `json:"resourceType"`
 	}{

@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Provenance of a resource is a record that describes entities and processes involved in producing and delivering or otherwise influencing that resource.
 //
@@ -178,7 +178,7 @@ func (r Provenance) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Provenance) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Provenance
 		ResourceType string `json:"resourceType"`
 	}{

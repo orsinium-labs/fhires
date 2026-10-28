@@ -1,6 +1,6 @@
 package fhires
 
-import decimal "github.com/shopspring/decimal"
+import "github.com/shopspring/decimal"
 
 // Extension Type: Optional Extension Element - found in all resources.
 //

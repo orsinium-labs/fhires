@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Describes validation requirements, source(s), status and dates for one or more elements.
 //
@@ -188,7 +188,7 @@ func (r VerificationResult) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r VerificationResult) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		VerificationResult
 		ResourceType string `json:"resourceType"`
 	}{

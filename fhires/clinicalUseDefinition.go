@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A single issue - either an indication, contraindication, interaction or an undesirable effect for a medicinal product, medication, device or procedure.
 //
@@ -300,7 +300,7 @@ func (r ClinicalUseDefinition) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ClinicalUseDefinition) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		ClinicalUseDefinition
 		ResourceType string `json:"resourceType"`
 	}{

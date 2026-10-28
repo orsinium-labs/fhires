@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A structured set of tests against a FHIR server or client implementation to determine compliance against the FHIR specification.
 //
@@ -901,7 +901,7 @@ func (r TestScript) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r TestScript) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		TestScript
 		ResourceType string `json:"resourceType"`
 	}{

@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // The definition and characteristics of a medicinal manufactured item, such as a tablet or capsule, as contained in a packaged medicinal product.
 //
@@ -190,7 +190,7 @@ func (r ManufacturedItemDefinition) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ManufacturedItemDefinition) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		ManufacturedItemDefinition
 		ResourceType string `json:"resourceType"`
 	}{

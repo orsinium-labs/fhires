@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Measurements and simple assertions made about a patient, device or other subject.
 //
@@ -374,7 +374,7 @@ func (r Observation) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Observation) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Observation
 		ResourceType string `json:"resourceType"`
 	}{

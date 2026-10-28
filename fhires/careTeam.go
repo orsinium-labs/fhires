@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // The Care Team includes all the people and organizations who plan to participate in the coordination and delivery of care.
 //
@@ -137,7 +137,7 @@ func (r CareTeam) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r CareTeam) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		CareTeam
 		ResourceType string `json:"resourceType"`
 	}{

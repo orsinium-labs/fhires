@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A request to convey information; e.g.
 //
@@ -171,7 +171,7 @@ func (r CommunicationRequest) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r CommunicationRequest) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		CommunicationRequest
 		ResourceType string `json:"resourceType"`
 	}{

@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // This resource provides eligibility and plan details from the processing of an CoverageEligibilityRequest resource.
 //
@@ -280,7 +280,7 @@ func (r CoverageEligibilityResponse) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r CoverageEligibilityResponse) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		CoverageEligibilityResponse
 		ResourceType string `json:"resourceType"`
 	}{

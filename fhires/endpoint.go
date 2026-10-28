@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // The technical details of an endpoint that can be used for electronic services, such as for web services providing XDS.b, a REST endpoint for another FHIR server, or a s/Mime email address.
 //
@@ -142,7 +142,7 @@ func (r Endpoint) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Endpoint) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Endpoint
 		ResourceType string `json:"resourceType"`
 	}{

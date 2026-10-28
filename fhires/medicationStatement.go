@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A record of a medication that is being consumed by a patient.
 //
@@ -154,7 +154,7 @@ func (r MedicationStatement) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r MedicationStatement) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		MedicationStatement
 		ResourceType string `json:"resourceType"`
 	}{

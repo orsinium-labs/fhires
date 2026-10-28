@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A collection of error, warning, or information messages that result from a system action.
 //
@@ -114,7 +114,7 @@ func (r OperationOutcome) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r OperationOutcome) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		OperationOutcome
 		ResourceType string `json:"resourceType"`
 	}{

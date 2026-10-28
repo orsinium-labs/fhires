@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Describes the event of a patient being administered a vaccine or a record of an immunization as reported by a patient, a clinician or another party.
 //
@@ -260,7 +260,7 @@ func (r Immunization) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Immunization) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Immunization
 		ResourceType string `json:"resourceType"`
 	}{

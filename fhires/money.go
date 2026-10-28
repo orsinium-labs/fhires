@@ -1,6 +1,6 @@
 package fhires
 
-import decimal "github.com/shopspring/decimal"
+import "github.com/shopspring/decimal"
 
 // Money Type: An amount of economic utility in some recognized currency.
 //

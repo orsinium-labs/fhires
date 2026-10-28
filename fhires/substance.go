@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A homogeneous material with a definite composition.
 //
@@ -115,7 +115,7 @@ func (r Substance) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Substance) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Substance
 		ResourceType string `json:"resourceType"`
 	}{

@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Represents a defined collection of entities that may be discussed or acted upon collectively but which are not expected to act collectively, and are not formally or legally recognized; i.e.
 //
@@ -173,7 +173,7 @@ func (r Group) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Group) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Group
 		ResourceType string `json:"resourceType"`
 	}{

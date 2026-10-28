@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // An action that is or was performed on or for a patient, practitioner, device, organization, or location.
 //
@@ -239,7 +239,7 @@ func (r Procedure) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Procedure) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Procedure
 		ResourceType string `json:"resourceType"`
 	}{

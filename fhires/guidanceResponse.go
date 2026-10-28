@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A guidance response is the formal response to a guidance request, including any output parameters returned by the evaluation, as well as the description of any proposed actions to be taken.
 //
@@ -111,7 +111,7 @@ func (r GuidanceResponse) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r GuidanceResponse) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		GuidanceResponse
 		ResourceType string `json:"resourceType"`
 	}{

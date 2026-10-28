@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A List is a curated collection of resources, for things such as problem lists, allergy lists, facility list, organization list, etc.
 //
@@ -140,7 +140,7 @@ func (r List) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r List) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		List
 		ResourceType string `json:"resourceType"`
 	}{

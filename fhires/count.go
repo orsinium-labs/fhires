@@ -1,6 +1,6 @@
 package fhires
 
-import decimal "github.com/shopspring/decimal"
+import "github.com/shopspring/decimal"
 
 // Count Type: A measured amount (or an amount that can potentially be measured).
 //

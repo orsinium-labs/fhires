@@ -1,6 +1,6 @@
 package fhires
 
-import decimal "github.com/shopspring/decimal"
+import "github.com/shopspring/decimal"
 
 // Distance Type: A length - a value with a unit that is a physical distance.
 //

@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A specific set of Roles/Locations/specialties/services that a practitioner may perform, or has performed at an organization during a period of time.
 //
@@ -117,7 +117,7 @@ func (r PractitionerRole) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r PractitionerRole) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		PractitionerRole
 		ResourceType string `json:"resourceType"`
 	}{

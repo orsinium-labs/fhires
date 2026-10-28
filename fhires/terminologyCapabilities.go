@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A TerminologyCapabilities resource documents a set of capabilities (behaviors) of a FHIR Terminology Server that may be used as a statement of actual server functionality or a statement of required or desired server implementation.
 //
@@ -458,7 +458,7 @@ func (r TerminologyCapabilities) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r TerminologyCapabilities) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		TerminologyCapabilities
 		ResourceType string `json:"resourceType"`
 	}{

@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Defines an affiliation/assotiation/relationship between 2 distinct organizations, that is not a part-of relationship/sub-division relationship.
 //
@@ -97,7 +97,7 @@ func (r OrganizationAffiliation) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r OrganizationAffiliation) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		OrganizationAffiliation
 		ResourceType string `json:"resourceType"`
 	}{

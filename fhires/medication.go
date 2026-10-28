@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // This resource is primarily used for the identification and definition of a medication, including ingredients, for the purposes of prescribing, dispensing, and administering a medication as well as for making statements about medication use.
 //
@@ -153,7 +153,7 @@ func (r Medication) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Medication) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Medication
 		ResourceType string `json:"resourceType"`
 	}{

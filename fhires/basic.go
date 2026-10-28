@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Basic is used for handling concepts not yet defined in FHIR, narrative-only resources that don't map to an existing resource, and custom resources not appropriate for inclusion in the FHIR specification.
 //
@@ -79,7 +79,7 @@ func (r Basic) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Basic) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Basic
 		ResourceType string `json:"resourceType"`
 	}{

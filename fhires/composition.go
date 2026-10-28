@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A set of healthcare-related information that is assembled together into a single logical package that provides a single coherent statement of meaning, establishes its own context and that has clinical attestation with regard to who is making the statement.
 //
@@ -302,7 +302,7 @@ func (r Composition) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Composition) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Composition
 		ResourceType string `json:"resourceType"`
 	}{

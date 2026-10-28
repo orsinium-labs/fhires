@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Information about a person that is involved in a patient's health or the care for a patient, but who is not the target of healthcare, nor has a formal responsibility in the care process.
 //
@@ -132,7 +132,7 @@ func (r RelatedPerson) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r RelatedPerson) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		RelatedPerson
 		ResourceType string `json:"resourceType"`
 	}{

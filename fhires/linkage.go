@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Identifies two or more records (resource instances) that refer to the same real-world "occurrence".
 //
@@ -94,7 +94,7 @@ func (r Linkage) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Linkage) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Linkage
 		ResourceType string `json:"resourceType"`
 	}{

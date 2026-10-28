@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Significant health conditions for a person related to the patient relevant in the context of care for the patient.
 //
@@ -243,7 +243,7 @@ func (r FamilyMemberHistory) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r FamilyMemberHistory) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		FamilyMemberHistory
 		ResourceType string `json:"resourceType"`
 	}{

@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // An order or request for both supply of the medication and the instructions for administration of the medication to a patient.
 //
@@ -307,7 +307,7 @@ func (r MedicationRequest) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r MedicationRequest) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		MedicationRequest
 		ResourceType string `json:"resourceType"`
 	}{

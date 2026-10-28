@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A clinical or business level record of information being transmitted or shared; e.g.
 //
@@ -172,7 +172,7 @@ func (r Communication) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Communication) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Communication
 		ResourceType string `json:"resourceType"`
 	}{

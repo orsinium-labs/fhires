@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Invoice containing collected ChargeItems from an Account with calculated individual and total price for Billing purpose.
 //
@@ -180,7 +180,7 @@ func (r Invoice) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Invoice) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Invoice
 		ResourceType string `json:"resourceType"`
 	}{

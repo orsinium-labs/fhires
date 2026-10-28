@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A record of a request for service such as diagnostic investigations, treatments, or operations to be performed.
 //
@@ -270,7 +270,7 @@ func (r ServiceRequest) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ServiceRequest) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		ServiceRequest
 		ResourceType string `json:"resourceType"`
 	}{

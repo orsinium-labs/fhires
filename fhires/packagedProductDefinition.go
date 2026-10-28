@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A medically related item or items, in a container or package.
 //
@@ -247,7 +247,7 @@ func (r PackagedProductDefinition) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r PackagedProductDefinition) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		PackagedProductDefinition
 		ResourceType string `json:"resourceType"`
 	}{

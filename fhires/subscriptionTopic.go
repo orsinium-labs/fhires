@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Describes a stream of resource state changes identified by trigger criteria and annotated with labels useful to filter projections from this topic.
 //
@@ -387,7 +387,7 @@ func (r SubscriptionTopic) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r SubscriptionTopic) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		SubscriptionTopic
 		ResourceType string `json:"resourceType"`
 	}{

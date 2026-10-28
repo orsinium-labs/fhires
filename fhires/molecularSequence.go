@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Representation of a molecular sequence.
 //
@@ -208,7 +208,7 @@ func (r MolecularSequence) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r MolecularSequence) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		MolecularSequence
 		ResourceType string `json:"resourceType"`
 	}{

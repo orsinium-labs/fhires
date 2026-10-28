@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Regulatory approval, clearance or licencing related to a regulated product, treatment, facility or activity that is cited in a guidance, regulation, rule or legislative act.
 //
@@ -135,7 +135,7 @@ func (r RegulatedAuthorization) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r RegulatedAuthorization) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		RegulatedAuthorization
 		ResourceType string `json:"resourceType"`
 	}{

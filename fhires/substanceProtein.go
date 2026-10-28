@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A SubstanceProtein is defined as a single unit of a linear amino acid sequence, or a combination of subunits that are either covalently linked or have a defined invariant stoichiometric relationship.
 //
@@ -120,7 +120,7 @@ func (r SubstanceProtein) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r SubstanceProtein) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		SubstanceProtein
 		ResourceType string `json:"resourceType"`
 	}{

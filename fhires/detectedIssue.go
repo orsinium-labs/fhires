@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Indicates an actual or potential clinical issue with or between one or more active or proposed clinical actions for a patient; e.g.
 //
@@ -166,7 +166,7 @@ func (r DetectedIssue) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r DetectedIssue) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		DetectedIssue
 		ResourceType string `json:"resourceType"`
 	}{

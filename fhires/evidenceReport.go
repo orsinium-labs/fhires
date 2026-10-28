@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // The EvidenceReport Resource is a specialized container for a collection of resources and codeable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.
 //
@@ -329,7 +329,7 @@ func (r EvidenceReport) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r EvidenceReport) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		EvidenceReport
 		ResourceType string `json:"resourceType"`
 	}{

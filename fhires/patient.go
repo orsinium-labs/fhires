@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Demographics and other administrative information about an individual or animal receiving care or other health-related services.
 //
@@ -240,7 +240,7 @@ func (r Patient) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Patient) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Patient
 		ResourceType string `json:"resourceType"`
 	}{

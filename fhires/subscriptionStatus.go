@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // The SubscriptionStatus resource describes the state of a Subscription during notifications.
 //
@@ -118,7 +118,7 @@ func (r SubscriptionStatus) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r SubscriptionStatus) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		SubscriptionStatus
 		ResourceType string `json:"resourceType"`
 	}{

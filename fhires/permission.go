@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Permission resource holds access rules for a given data and context.
 //
@@ -220,7 +220,7 @@ func (r Permission) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Permission) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Permission
 		ResourceType string `json:"resourceType"`
 	}{

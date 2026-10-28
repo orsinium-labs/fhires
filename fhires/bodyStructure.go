@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Record details about an anatomical structure.
 //
@@ -172,7 +172,7 @@ func (r BodyStructure) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r BodyStructure) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		BodyStructure
 		ResourceType string `json:"resourceType"`
 	}{

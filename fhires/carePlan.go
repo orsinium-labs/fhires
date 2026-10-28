@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Describes the intention of how one or more practitioners intend to deliver care for a particular patient, group or community for a period of time, possibly limited to care for a specific condition or set of conditions.
 //
@@ -188,7 +188,7 @@ func (r CarePlan) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r CarePlan) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		CarePlan
 		ResourceType string `json:"resourceType"`
 	}{

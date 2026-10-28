@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // The MeasureReport resource contains the results of the calculation of a measure; and optionally a reference to the resources involved in that calculation.
 //
@@ -337,7 +337,7 @@ func (r MeasureReport) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r MeasureReport) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		MeasureReport
 		ResourceType string `json:"resourceType"`
 	}{

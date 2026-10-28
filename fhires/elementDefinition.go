@@ -1,6 +1,6 @@
 package fhires
 
-import decimal "github.com/shopspring/decimal"
+import "github.com/shopspring/decimal"
 
 // ElementDefinition Type: Captures constraints on each element within the resource, profile, or extension.
 //

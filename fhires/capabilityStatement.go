@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A Capability Statement documents a set of capabilities (behaviors) of a FHIR Server or Client for a particular version of FHIR that may be used as a statement of actual server functionality or a statement of required or desired server implementation.
 //
@@ -403,23 +403,23 @@ type CapabilityStatementRestResource struct {
 	UpdateCreate *bool `bson:"updateCreate,omitempty" json:"updateCreate,omitempty" xml:"updateCreate,omitempty"`
 	// A flag that indicates that the server supports conditional create.
 	//
-	// Comment: Conditional Create is mainly appropriate for interface engine scripts converting from other formats, such as v2.
+	// Comment: Conditional Create is mainly appropriate for interface engine scripts converting from other formats, such as json.
 	ConditionalCreate *bool `bson:"conditionalCreate,omitempty" json:"conditionalCreate,omitempty" xml:"conditionalCreate,omitempty"`
 	// A code that indicates how the server supports conditional read.
 	//
-	// Comment: Conditional Read is mainly appropriate for interface engine scripts converting from other formats, such as v2.
+	// Comment: Conditional Read is mainly appropriate for interface engine scripts converting from other formats, such as json.
 	ConditionalRead *ConditionalReadStatus `bson:"conditionalRead,omitempty" json:"conditionalRead,omitempty" xml:"conditionalRead,omitempty"`
 	// A flag that indicates that the server supports conditional update.
 	//
-	// Comment: Conditional Update is mainly appropriate for interface engine scripts converting from other formats, such as v2.
+	// Comment: Conditional Update is mainly appropriate for interface engine scripts converting from other formats, such as json.
 	ConditionalUpdate *bool `bson:"conditionalUpdate,omitempty" json:"conditionalUpdate,omitempty" xml:"conditionalUpdate,omitempty"`
 	// A flag that indicates that the server supports conditional patch.
 	//
-	// Comment: Conditional Patch is mainly appropriate for interface engine scripts converting from other formats, such as v2.
+	// Comment: Conditional Patch is mainly appropriate for interface engine scripts converting from other formats, such as json.
 	ConditionalPatch *bool `bson:"conditionalPatch,omitempty" json:"conditionalPatch,omitempty" xml:"conditionalPatch,omitempty"`
 	// A code that indicates how the server supports conditional delete.
 	//
-	// Comment: Conditional Delete is mainly appropriate for interface engine scripts converting from other formats, such as v2.
+	// Comment: Conditional Delete is mainly appropriate for interface engine scripts converting from other formats, such as json.
 	ConditionalDelete *ConditionalDeleteStatus `bson:"conditionalDelete,omitempty" json:"conditionalDelete,omitempty" xml:"conditionalDelete,omitempty"`
 	// A set of flags that defines how references are supported.
 	ReferencePolicy []ReferenceHandlingPolicy `bson:"referencePolicy,omitempty" json:"referencePolicy,omitempty" xml:"referencePolicy,omitempty"`
@@ -703,7 +703,7 @@ func (r CapabilityStatement) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r CapabilityStatement) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		CapabilityStatement
 		ResourceType string `json:"resourceType"`
 	}{

@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Properties of a substance specific to it being a polymer.
 //
@@ -253,7 +253,7 @@ func (r SubstancePolymer) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r SubstancePolymer) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		SubstancePolymer
 		ResourceType string `json:"resourceType"`
 	}{

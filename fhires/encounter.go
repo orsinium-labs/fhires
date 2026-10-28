@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // An interaction between healthcare provider(s), and/or patient(s) for the purpose of providing healthcare service(s) or assessing the health status of patient(s).
 //
@@ -324,7 +324,7 @@ func (r Encounter) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Encounter) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Encounter
 		ResourceType string `json:"resourceType"`
 	}{

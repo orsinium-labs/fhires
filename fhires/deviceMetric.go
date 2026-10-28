@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Describes a measurement, calculation or setting capability of a device.
 //
@@ -126,7 +126,7 @@ func (r DeviceMetric) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r DeviceMetric) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		DeviceMetric
 		ResourceType string `json:"resourceType"`
 	}{

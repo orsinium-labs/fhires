@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A financial tool for tracking value accrued for a particular purpose.
 //
@@ -303,7 +303,7 @@ func (r Account) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Account) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Account
 		ResourceType string `json:"resourceType"`
 	}{

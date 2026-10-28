@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // The resource ChargeItem describes the provision of healthcare provider products for a certain patient, therefore referring not only to the product, but containing in addition details of the provision, like date, time, amounts and participating organizations and persons.
 //
@@ -174,7 +174,7 @@ func (r ChargeItem) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ChargeItem) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		ChargeItem
 		ResourceType string `json:"resourceType"`
 	}{

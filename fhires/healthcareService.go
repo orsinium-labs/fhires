@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // The details of a healthcare service available at a location or in a catalog.
 //
@@ -174,7 +174,7 @@ func (r HealthcareService) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r HealthcareService) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		HealthcareService
 		ResourceType string `json:"resourceType"`
 	}{

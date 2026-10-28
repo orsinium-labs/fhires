@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // The CoverageEligibilityRequest provides patient and insurance coverage information to an insurer for them to respond, in the form of an CoverageEligibilityResponse, with information regarding whether the stated coverage is valid and in-force and optionally to provide the insurance details of the policy.
 //
@@ -261,7 +261,7 @@ func (r CoverageEligibilityRequest) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r CoverageEligibilityRequest) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		CoverageEligibilityRequest
 		ResourceType string `json:"resourceType"`
 	}{

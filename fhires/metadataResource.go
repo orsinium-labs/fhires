@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Common Interface declaration for conformance and knowledge artifact resources.
 //
@@ -202,7 +202,7 @@ func (r MetadataResource) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r MetadataResource) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		MetadataResource
 		ResourceType string `json:"resourceType"`
 	}{

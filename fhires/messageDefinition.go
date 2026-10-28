@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Defines the characteristics of a message that can be shared between systems, including the type of event that initiates the message, the content to be transmitted and what response(s), if any, are permitted.
 //
@@ -241,7 +241,7 @@ func (r MessageDefinition) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r MessageDefinition) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		MessageDefinition
 		ResourceType string `json:"resourceType"`
 	}{

@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A record of a clinical assessment performed to determine what problem(s) may affect the patient and before planning the treatments or management strategies that are best to manage a patient's condition.
 //
@@ -147,7 +147,7 @@ func (r ClinicalImpression) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ClinicalImpression) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		ClinicalImpression
 		ResourceType string `json:"resourceType"`
 	}{

@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Represents a request a device to be provided to a specific patient.
 //
@@ -167,7 +167,7 @@ func (r DeviceRequest) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r DeviceRequest) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		DeviceRequest
 		ResourceType string `json:"resourceType"`
 	}{

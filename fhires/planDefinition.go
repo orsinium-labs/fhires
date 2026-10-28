@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact.
 //
@@ -687,7 +687,7 @@ func (r PlanDefinition) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r PlanDefinition) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		PlanDefinition
 		ResourceType string `json:"resourceType"`
 	}{

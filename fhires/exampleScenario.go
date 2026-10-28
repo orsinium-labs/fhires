@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A walkthrough of a workflow showing the interaction between systems and the instances shared, possibly including the evolution of instances over time.
 //
@@ -445,7 +445,7 @@ func (r ExampleScenario) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ExampleScenario) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		ExampleScenario
 		ResourceType string `json:"resourceType"`
 	}{

@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A scientific study of nature that sometimes includes processes involved in health and disease.
 //
@@ -360,7 +360,7 @@ func (r ResearchStudy) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ResearchStudy) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		ResearchStudy
 		ResourceType string `json:"resourceType"`
 	}{

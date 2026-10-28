@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A reply to an appointment request for a patient and/or practitioner(s), such as a confirmation or rejection.
 //
@@ -103,7 +103,7 @@ func (r AppointmentResponse) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r AppointmentResponse) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		AppointmentResponse
 		ResourceType string `json:"resourceType"`
 	}{

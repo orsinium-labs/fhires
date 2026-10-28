@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // The ChargeItemDefinition resource provides the properties that apply to the (billing) codes necessary to calculate costs and prices.
 //
@@ -256,7 +256,7 @@ func (r ChargeItemDefinition) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ChargeItemDefinition) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		ChargeItemDefinition
 		ResourceType string `json:"resourceType"`
 	}{

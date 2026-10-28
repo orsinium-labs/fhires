@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // The header for a message exchange that is either requesting or responding to an action.
 //
@@ -205,7 +205,7 @@ func (r MessageHeader) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r MessageHeader) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		MessageHeader
 		ResourceType string `json:"resourceType"`
 	}{

@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A reference to a document of any kind for any purpose.
 //
@@ -265,7 +265,7 @@ func (r DocumentReference) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r DocumentReference) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		DocumentReference
 		ResourceType string `json:"resourceType"`
 	}{

@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Risk of harmful or undesirable, physiological response which is unique to an individual and associated with exposure to a substance.
 //
@@ -201,7 +201,7 @@ func (r AllergyIntolerance) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r AllergyIntolerance) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		AllergyIntolerance
 		ResourceType string `json:"resourceType"`
 	}{

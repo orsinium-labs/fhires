@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A sample to be used for analysis.
 //
@@ -248,7 +248,7 @@ func (r Specimen) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Specimen) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Specimen
 		ResourceType string `json:"resourceType"`
 	}{

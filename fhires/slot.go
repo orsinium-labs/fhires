@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A slot of time on a schedule that may be available for booking appointments.
 //
@@ -89,7 +89,7 @@ func (r Slot) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Slot) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Slot
 		ResourceType string `json:"resourceType"`
 	}{

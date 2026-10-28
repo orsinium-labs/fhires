@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A record of an event relevant for purposes such as operations, privacy, security, maintenance, and performance analysis.
 //
@@ -313,7 +313,7 @@ func (r AuditEvent) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r AuditEvent) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		AuditEvent
 		ResourceType string `json:"resourceType"`
 	}{

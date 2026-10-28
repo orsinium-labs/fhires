@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time.
 //
@@ -358,7 +358,7 @@ func (r Appointment) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Appointment) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Appointment
 		ResourceType string `json:"resourceType"`
 	}{

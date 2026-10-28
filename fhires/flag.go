@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Prospective warnings of potential issues when providing care to the patient.
 //
@@ -93,7 +93,7 @@ func (r Flag) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Flag) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Flag
 		ResourceType string `json:"resourceType"`
 	}{

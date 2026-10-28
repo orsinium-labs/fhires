@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A ResearchSubject is a participant or object which is the recipient of investigative activities in a research study.
 //
@@ -124,7 +124,7 @@ func (r ResearchSubject) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ResearchSubject) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		ResearchSubject
 		ResourceType string `json:"resourceType"`
 	}{

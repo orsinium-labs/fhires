@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // A record of a device being used by a patient where the record is the result of a report from the patient or a clinician.
 //
@@ -138,7 +138,7 @@ func (r DeviceUsage) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r DeviceUsage) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		DeviceUsage
 		ResourceType string `json:"resourceType"`
 	}{

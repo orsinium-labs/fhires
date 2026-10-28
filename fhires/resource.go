@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // This is the base resource type for everything.
 //
@@ -36,7 +36,7 @@ func (r Resource) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Resource) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		Resource
 		ResourceType string `json:"resourceType"`
 	}{

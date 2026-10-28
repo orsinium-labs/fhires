@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // This resource provides the insurance enrollment details to the insurer regarding a specified coverage.
 //
@@ -77,7 +77,7 @@ func (r EnrollmentRequest) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r EnrollmentRequest) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		EnrollmentRequest
 		ResourceType string `json:"resourceType"`
 	}{

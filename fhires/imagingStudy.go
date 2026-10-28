@@ -1,6 +1,6 @@
 package fhires
 
-import v2 "encoding/json/v2"
+import "encoding/json/v2"
 
 // Representation of the content produced in a DICOM imaging study.
 //
@@ -250,7 +250,7 @@ func (r ImagingStudy) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ImagingStudy) MarshalJSON() ([]byte, error) {
-	return v2.Marshal(struct {
+	return json.Marshal(struct {
 		ImagingStudy
 		ResourceType string `json:"resourceType"`
 	}{
