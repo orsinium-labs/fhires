@@ -1,7 +1,6 @@
 package fhires
 
 import (
-	jsontext "encoding/json/jsontext"
 	"encoding/json/v2"
 
 	decimal "github.com/shopspring/decimal"
@@ -84,7 +83,7 @@ type Bundle struct {
 	// Captures issues and warnings that relate to the construction of the Bundle and the content within it.
 	//
 	// Comment: Usage notes: These issues and warnings must apply to the Bundle as a whole, not to individual entries.Messages relating to the processing of individual entries (e.g. in a batch or transaction) SHALL be reported in the entry.response.outcome for that entry.  If there are errors that arise in the creation of the Bundle, then that should be handled by an OperationOutcome being returned instead of the Bundle.
-	Issues jsontext.Value `bson:"issues,omitempty" json:"issues,omitempty" xml:"issues,omitempty"`
+	Issues AnyResource `bson:"issues,omitempty" json:"issues,omitempty" xml:"issues,omitempty"`
 }
 
 type BundleLink struct {
@@ -150,7 +149,7 @@ type BundleEntry struct {
 	// The Resource for the entry.
 	//
 	// The purpose/meaning of the resource is determined by the Bundle.type. This is allowed to be a Parameters resource if and only if it is referenced by something else within the Bundle that provides context/meaning.
-	Resource jsontext.Value `bson:"resource,omitempty" json:"resource,omitempty" xml:"resource,omitempty"`
+	Resource AnyResource `bson:"resource,omitempty" json:"resource,omitempty" xml:"resource,omitempty"`
 	// Information about the search process that lead to the creation of this entry.
 	Search *BundleEntrySearch `bson:"search,omitempty" json:"search,omitempty" xml:"search,omitempty"`
 	// Additional information about how this entry should be processed as part of a transaction or batch.
@@ -275,7 +274,7 @@ type BundleEntryResponse struct {
 	// Comment: For a POST/PUT operation, this is the equivalent outcome that would be returned for prefer = operationoutcome - except that the resource is always returned whether or not the outcome is returned.
 	//
 	// This outcome is not used for error responses in batch/transaction, only for hints and warnings. In a batch operation, the error will be in Bundle.entry.response, and for transaction, there will be a single OperationOutcome instead of a bundle in the case of an error.
-	Outcome jsontext.Value `bson:"outcome,omitempty" json:"outcome,omitempty" xml:"outcome,omitempty"`
+	Outcome AnyResource `bson:"outcome,omitempty" json:"outcome,omitempty" xml:"outcome,omitempty"`
 }
 
 func (r Bundle) ResourceType() string {
