@@ -145,11 +145,12 @@ func (r ArtifactAssessment) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ArtifactAssessment) MarshalJSON() ([]byte, error) {
+	type Wrapper ArtifactAssessment
 	return json.Marshal(struct {
-		ArtifactAssessment
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		ArtifactAssessment: r,
-		ResourceType:       r.ResourceType(),
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

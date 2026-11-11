@@ -270,11 +270,12 @@ func (r ServiceRequest) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ServiceRequest) MarshalJSON() ([]byte, error) {
+	type Wrapper ServiceRequest
 	return json.Marshal(struct {
-		ServiceRequest
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		ResourceType:   r.ResourceType(),
-		ServiceRequest: r,
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

@@ -403,23 +403,23 @@ type CapabilityStatementRestResource struct {
 	UpdateCreate *bool `bson:"updateCreate,omitempty" json:"updateCreate,omitempty" xml:"updateCreate,omitempty"`
 	// A flag that indicates that the server supports conditional create.
 	//
-	// Comment: Conditional Create is mainly appropriate for interface engine scripts converting from other formats, such as json.
+	// Comment: Conditional Create is mainly appropriate for interface engine scripts converting from other formats, such as v2.
 	ConditionalCreate *bool `bson:"conditionalCreate,omitempty" json:"conditionalCreate,omitempty" xml:"conditionalCreate,omitempty"`
 	// A code that indicates how the server supports conditional read.
 	//
-	// Comment: Conditional Read is mainly appropriate for interface engine scripts converting from other formats, such as json.
+	// Comment: Conditional Read is mainly appropriate for interface engine scripts converting from other formats, such as v2.
 	ConditionalRead *ConditionalReadStatus `bson:"conditionalRead,omitempty" json:"conditionalRead,omitempty" xml:"conditionalRead,omitempty"`
 	// A flag that indicates that the server supports conditional update.
 	//
-	// Comment: Conditional Update is mainly appropriate for interface engine scripts converting from other formats, such as json.
+	// Comment: Conditional Update is mainly appropriate for interface engine scripts converting from other formats, such as v2.
 	ConditionalUpdate *bool `bson:"conditionalUpdate,omitempty" json:"conditionalUpdate,omitempty" xml:"conditionalUpdate,omitempty"`
 	// A flag that indicates that the server supports conditional patch.
 	//
-	// Comment: Conditional Patch is mainly appropriate for interface engine scripts converting from other formats, such as json.
+	// Comment: Conditional Patch is mainly appropriate for interface engine scripts converting from other formats, such as v2.
 	ConditionalPatch *bool `bson:"conditionalPatch,omitempty" json:"conditionalPatch,omitempty" xml:"conditionalPatch,omitempty"`
 	// A code that indicates how the server supports conditional delete.
 	//
-	// Comment: Conditional Delete is mainly appropriate for interface engine scripts converting from other formats, such as json.
+	// Comment: Conditional Delete is mainly appropriate for interface engine scripts converting from other formats, such as v2.
 	ConditionalDelete *ConditionalDeleteStatus `bson:"conditionalDelete,omitempty" json:"conditionalDelete,omitempty" xml:"conditionalDelete,omitempty"`
 	// A set of flags that defines how references are supported.
 	ReferencePolicy []ReferenceHandlingPolicy `bson:"referencePolicy,omitempty" json:"referencePolicy,omitempty" xml:"referencePolicy,omitempty"`
@@ -703,11 +703,12 @@ func (r CapabilityStatement) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r CapabilityStatement) MarshalJSON() ([]byte, error) {
+	type Wrapper CapabilityStatement
 	return json.Marshal(struct {
-		CapabilityStatement
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		CapabilityStatement: r,
-		ResourceType:        r.ResourceType(),
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

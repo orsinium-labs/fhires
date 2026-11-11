@@ -1,6 +1,6 @@
 package fhires
 
-import "github.com/shopspring/decimal"
+import decimal "github.com/shopspring/decimal"
 
 // Timing Type: Specifies an event that may occur multiple times.
 //

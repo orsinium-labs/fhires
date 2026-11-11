@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	"github.com/shopspring/decimal"
+	decimal "github.com/shopspring/decimal"
 )
 
 // A selection of DICOM SOP instances and/or frames within a single Study and Series.
@@ -273,11 +273,12 @@ func (r ImagingSelection) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ImagingSelection) MarshalJSON() ([]byte, error) {
+	type Wrapper ImagingSelection
 	return json.Marshal(struct {
-		ImagingSelection
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		ImagingSelection: r,
-		ResourceType:     r.ResourceType(),
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

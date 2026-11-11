@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	"github.com/shopspring/decimal"
+	decimal "github.com/shopspring/decimal"
 )
 
 // An authorization for the provision of glasses and/or contact lenses to a patient.
@@ -167,11 +167,12 @@ func (r VisionPrescription) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r VisionPrescription) MarshalJSON() ([]byte, error) {
+	type Wrapper VisionPrescription
 	return json.Marshal(struct {
-		VisionPrescription
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		ResourceType:       r.ResourceType(),
-		VisionPrescription: r,
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	"github.com/shopspring/decimal"
+	decimal "github.com/shopspring/decimal"
 )
 
 // A summary of information based on the results of executing a TestScript.
@@ -362,11 +362,12 @@ func (r TestReport) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r TestReport) MarshalJSON() ([]byte, error) {
+	type Wrapper TestReport
 	return json.Marshal(struct {
-		TestReport
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
 		ResourceType: r.ResourceType(),
-		TestReport:   r,
+		Wrapper:      Wrapper(r),
 	})
 }

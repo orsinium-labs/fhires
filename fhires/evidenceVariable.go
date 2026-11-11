@@ -383,11 +383,12 @@ func (r EvidenceVariable) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r EvidenceVariable) MarshalJSON() ([]byte, error) {
+	type Wrapper EvidenceVariable
 	return json.Marshal(struct {
-		EvidenceVariable
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		EvidenceVariable: r,
-		ResourceType:     r.ResourceType(),
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

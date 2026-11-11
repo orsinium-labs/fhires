@@ -184,11 +184,12 @@ func (r SubstanceNucleicAcid) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r SubstanceNucleicAcid) MarshalJSON() ([]byte, error) {
+	type Wrapper SubstanceNucleicAcid
 	return json.Marshal(struct {
-		SubstanceNucleicAcid
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		ResourceType:         r.ResourceType(),
-		SubstanceNucleicAcid: r,
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

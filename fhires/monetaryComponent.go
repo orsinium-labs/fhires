@@ -1,6 +1,6 @@
 package fhires
 
-import "github.com/shopspring/decimal"
+import decimal "github.com/shopspring/decimal"
 
 // MonetaryComponent Type: Availability data for an {item}.
 //

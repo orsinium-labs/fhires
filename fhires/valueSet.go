@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	"github.com/shopspring/decimal"
+	decimal "github.com/shopspring/decimal"
 )
 
 // A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context.
@@ -688,11 +688,12 @@ func (r ValueSet) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ValueSet) MarshalJSON() ([]byte, error) {
+	type Wrapper ValueSet
 	return json.Marshal(struct {
-		ValueSet
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
 		ResourceType: r.ResourceType(),
-		ValueSet:     r,
+		Wrapper:      Wrapper(r),
 	})
 }

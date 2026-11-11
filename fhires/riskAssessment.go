@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	"github.com/shopspring/decimal"
+	decimal "github.com/shopspring/decimal"
 )
 
 // An assessment of the likely outcome(s) for a patient or other subject as well as the likelihood of each outcome.
@@ -145,11 +145,12 @@ func (r RiskAssessment) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r RiskAssessment) MarshalJSON() ([]byte, error) {
+	type Wrapper RiskAssessment
 	return json.Marshal(struct {
-		RiskAssessment
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		ResourceType:   r.ResourceType(),
-		RiskAssessment: r,
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

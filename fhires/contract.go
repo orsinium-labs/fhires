@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	"github.com/shopspring/decimal"
+	decimal "github.com/shopspring/decimal"
 )
 
 // Legally enforceable, formally recorded unilateral or bilateral directive i.e., a policy or agreement.
@@ -700,11 +700,12 @@ func (r Contract) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Contract) MarshalJSON() ([]byte, error) {
+	type Wrapper Contract
 	return json.Marshal(struct {
-		Contract
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		Contract:     r,
 		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

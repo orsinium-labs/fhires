@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	"github.com/shopspring/decimal"
+	decimal "github.com/shopspring/decimal"
 )
 
 // The Evidence Resource provides a machine-interpretable expression of an evidence concept including the evidence variables (e.g., population, exposures/interventions, comparators, outcomes, measured variables, confounding variables), the statistics, and the certainty of this evidence.
@@ -446,11 +446,12 @@ func (r Evidence) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Evidence) MarshalJSON() ([]byte, error) {
+	type Wrapper Evidence
 	return json.Marshal(struct {
-		Evidence
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		Evidence:     r,
 		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

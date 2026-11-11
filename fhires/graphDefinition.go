@@ -269,11 +269,12 @@ func (r GraphDefinition) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r GraphDefinition) MarshalJSON() ([]byte, error) {
+	type Wrapper GraphDefinition
 	return json.Marshal(struct {
-		GraphDefinition
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		GraphDefinition: r,
-		ResourceType:    r.ResourceType(),
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

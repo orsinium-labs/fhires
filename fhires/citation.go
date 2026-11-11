@@ -838,11 +838,12 @@ func (r Citation) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Citation) MarshalJSON() ([]byte, error) {
+	type Wrapper Citation
 	return json.Marshal(struct {
-		Citation
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		Citation:     r,
 		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

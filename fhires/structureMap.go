@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	"github.com/shopspring/decimal"
+	decimal "github.com/shopspring/decimal"
 )
 
 // A Map of relationships between 2 structures that can be used to transform data.
@@ -472,11 +472,12 @@ func (r StructureMap) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r StructureMap) MarshalJSON() ([]byte, error) {
+	type Wrapper StructureMap
 	return json.Marshal(struct {
-		StructureMap
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
 		ResourceType: r.ResourceType(),
-		StructureMap: r,
+		Wrapper:      Wrapper(r),
 	})
 }

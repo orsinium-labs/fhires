@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	"github.com/shopspring/decimal"
+	decimal "github.com/shopspring/decimal"
 )
 
 // A structured set of questions intended to guide the collection of answers from end-users.
@@ -413,11 +413,12 @@ func (r Questionnaire) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Questionnaire) MarshalJSON() ([]byte, error) {
+	type Wrapper Questionnaire
 	return json.Marshal(struct {
-		Questionnaire
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		Questionnaire: r,
-		ResourceType:  r.ResourceType(),
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

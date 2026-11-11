@@ -1,6 +1,6 @@
 package fhires
 
-import "github.com/shopspring/decimal"
+import decimal "github.com/shopspring/decimal"
 
 // Age Type: A duration of time during which an organism (or a process) has existed.
 //

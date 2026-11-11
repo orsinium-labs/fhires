@@ -4,7 +4,7 @@ import (
 	jsontext "encoding/json/jsontext"
 	"encoding/json/v2"
 
-	"github.com/shopspring/decimal"
+	decimal "github.com/shopspring/decimal"
 )
 
 // A container for a collection of resources.
@@ -284,11 +284,12 @@ func (r Bundle) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Bundle) MarshalJSON() ([]byte, error) {
+	type Wrapper Bundle
 	return json.Marshal(struct {
-		Bundle
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		Bundle:       r,
 		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

@@ -201,11 +201,12 @@ func (r AllergyIntolerance) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r AllergyIntolerance) MarshalJSON() ([]byte, error) {
+	type Wrapper AllergyIntolerance
 	return json.Marshal(struct {
-		AllergyIntolerance
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		AllergyIntolerance: r,
-		ResourceType:       r.ResourceType(),
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

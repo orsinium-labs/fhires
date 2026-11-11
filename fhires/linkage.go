@@ -94,11 +94,12 @@ func (r Linkage) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Linkage) MarshalJSON() ([]byte, error) {
+	type Wrapper Linkage
 	return json.Marshal(struct {
-		Linkage
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		Linkage:      r,
 		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

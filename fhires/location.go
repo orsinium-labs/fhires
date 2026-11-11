@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	"github.com/shopspring/decimal"
+	decimal "github.com/shopspring/decimal"
 )
 
 // Details and position information for a place where services are provided and resources and participants may be stored, found, contained, or accommodated.
@@ -166,11 +166,12 @@ func (r Location) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Location) MarshalJSON() ([]byte, error) {
+	type Wrapper Location
 	return json.Marshal(struct {
-		Location
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		Location:     r,
 		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

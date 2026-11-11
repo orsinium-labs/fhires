@@ -158,11 +158,12 @@ func (r CanonicalResource) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r CanonicalResource) MarshalJSON() ([]byte, error) {
+	type Wrapper CanonicalResource
 	return json.Marshal(struct {
-		CanonicalResource
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		CanonicalResource: r,
-		ResourceType:      r.ResourceType(),
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

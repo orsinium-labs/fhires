@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	"github.com/shopspring/decimal"
+	decimal "github.com/shopspring/decimal"
 )
 
 // Record of transport.
@@ -346,11 +346,12 @@ func (r Transport) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Transport) MarshalJSON() ([]byte, error) {
+	type Wrapper Transport
 	return json.Marshal(struct {
-		Transport
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
 		ResourceType: r.ResourceType(),
-		Transport:    r,
+		Wrapper:      Wrapper(r),
 	})
 }

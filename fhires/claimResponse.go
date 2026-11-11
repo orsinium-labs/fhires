@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	"github.com/shopspring/decimal"
+	decimal "github.com/shopspring/decimal"
 )
 
 // This resource provides the adjudication details from the processing of a Claim resource.
@@ -794,11 +794,12 @@ func (r ClaimResponse) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ClaimResponse) MarshalJSON() ([]byte, error) {
+	type Wrapper ClaimResponse
 	return json.Marshal(struct {
-		ClaimResponse
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		ClaimResponse: r,
-		ResourceType:  r.ResourceType(),
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

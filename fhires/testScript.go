@@ -901,11 +901,12 @@ func (r TestScript) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r TestScript) MarshalJSON() ([]byte, error) {
+	type Wrapper TestScript
 	return json.Marshal(struct {
-		TestScript
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
 		ResourceType: r.ResourceType(),
-		TestScript:   r,
+		Wrapper:      Wrapper(r),
 	})
 }

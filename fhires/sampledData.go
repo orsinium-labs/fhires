@@ -1,6 +1,6 @@
 package fhires
 
-import "github.com/shopspring/decimal"
+import decimal "github.com/shopspring/decimal"
 
 // SampledData Type: A series of measurements taken by a device, with upper and lower limits.
 //

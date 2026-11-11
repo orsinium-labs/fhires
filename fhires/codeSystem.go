@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	"github.com/shopspring/decimal"
+	decimal "github.com/shopspring/decimal"
 )
 
 // The CodeSystem resource is used to declare the existence of and describe a code system or code system supplement and its key properties, and optionally define a part or all of its content.
@@ -423,11 +423,12 @@ func (r CodeSystem) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r CodeSystem) MarshalJSON() ([]byte, error) {
+	type Wrapper CodeSystem
 	return json.Marshal(struct {
-		CodeSystem
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		CodeSystem:   r,
 		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

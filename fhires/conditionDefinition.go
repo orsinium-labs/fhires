@@ -304,11 +304,12 @@ func (r ConditionDefinition) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ConditionDefinition) MarshalJSON() ([]byte, error) {
+	type Wrapper ConditionDefinition
 	return json.Marshal(struct {
-		ConditionDefinition
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		ConditionDefinition: r,
-		ResourceType:        r.ResourceType(),
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

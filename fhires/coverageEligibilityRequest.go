@@ -261,11 +261,12 @@ func (r CoverageEligibilityRequest) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r CoverageEligibilityRequest) MarshalJSON() ([]byte, error) {
+	type Wrapper CoverageEligibilityRequest
 	return json.Marshal(struct {
-		CoverageEligibilityRequest
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		CoverageEligibilityRequest: r,
-		ResourceType:               r.ResourceType(),
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

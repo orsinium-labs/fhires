@@ -308,11 +308,12 @@ func (r ObservationDefinition) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ObservationDefinition) MarshalJSON() ([]byte, error) {
+	type Wrapper ObservationDefinition
 	return json.Marshal(struct {
-		ObservationDefinition
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		ObservationDefinition: r,
-		ResourceType:          r.ResourceType(),
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

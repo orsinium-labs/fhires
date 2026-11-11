@@ -256,11 +256,12 @@ func (r ChargeItemDefinition) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r ChargeItemDefinition) MarshalJSON() ([]byte, error) {
+	type Wrapper ChargeItemDefinition
 	return json.Marshal(struct {
-		ChargeItemDefinition
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		ChargeItemDefinition: r,
-		ResourceType:         r.ResourceType(),
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

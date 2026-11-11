@@ -4,7 +4,7 @@ import (
 	jsontext "encoding/json/jsontext"
 	"encoding/json/v2"
 
-	"github.com/shopspring/decimal"
+	decimal "github.com/shopspring/decimal"
 )
 
 // This resource is used to pass information into and back from an operation (whether invoked directly from REST or within a messaging environment).
@@ -129,11 +129,12 @@ func (r Parameters) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Parameters) MarshalJSON() ([]byte, error) {
+	type Wrapper Parameters
 	return json.Marshal(struct {
-		Parameters
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		Parameters:   r,
 		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

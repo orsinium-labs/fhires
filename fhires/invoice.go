@@ -180,11 +180,12 @@ func (r Invoice) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Invoice) MarshalJSON() ([]byte, error) {
+	type Wrapper Invoice
 	return json.Marshal(struct {
-		Invoice
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		Invoice:      r,
 		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

@@ -302,11 +302,12 @@ func (r Composition) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Composition) MarshalJSON() ([]byte, error) {
+	type Wrapper Composition
 	return json.Marshal(struct {
-		Composition
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		Composition:  r,
 		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

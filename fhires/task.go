@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	"github.com/shopspring/decimal"
+	decimal "github.com/shopspring/decimal"
 )
 
 // A task to be performed.
@@ -389,11 +389,12 @@ func (r Task) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Task) MarshalJSON() ([]byte, error) {
+	type Wrapper Task
 	return json.Marshal(struct {
-		Task
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
 		ResourceType: r.ResourceType(),
-		Task:         r,
+		Wrapper:      Wrapper(r),
 	})
 }

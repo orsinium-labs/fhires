@@ -3,7 +3,7 @@ package fhires
 import (
 	"encoding/json/v2"
 
-	"github.com/shopspring/decimal"
+	decimal "github.com/shopspring/decimal"
 )
 
 // A provider issued list of professional services and products which have been provided, or are to be provided, to a patient which is sent to an insurer for reimbursement.
@@ -759,11 +759,12 @@ func (r Claim) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r Claim) MarshalJSON() ([]byte, error) {
+	type Wrapper Claim
 	return json.Marshal(struct {
-		Claim
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		Claim:        r,
 		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

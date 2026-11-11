@@ -42,7 +42,7 @@ func (code *NamingSystemIdentifierType) UnmarshalJSON(json []byte) error {
 		*code = NamingSystemIdentifierTypeUri
 	case "iri-stem":
 		*code = NamingSystemIdentifierTypeIriStem
-	case "json.smnemonic":
+	case "v2csmnemonic":
 		*code = NamingSystemIdentifierTypeV2csmnemonic
 	case "other":
 		*code = NamingSystemIdentifierTypeOther
@@ -67,7 +67,7 @@ func (code NamingSystemIdentifierType) Code() string {
 	case NamingSystemIdentifierTypeIriStem:
 		return "iri-stem"
 	case NamingSystemIdentifierTypeV2csmnemonic:
-		return "json.smnemonic"
+		return "v2csmnemonic"
 	case NamingSystemIdentifierTypeOther:
 		return "other"
 	}

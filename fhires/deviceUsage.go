@@ -138,11 +138,12 @@ func (r DeviceUsage) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r DeviceUsage) MarshalJSON() ([]byte, error) {
+	type Wrapper DeviceUsage
 	return json.Marshal(struct {
-		DeviceUsage
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		DeviceUsage:  r,
 		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

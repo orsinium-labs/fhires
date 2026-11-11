@@ -245,11 +245,12 @@ func (r SearchParameter) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r SearchParameter) MarshalJSON() ([]byte, error) {
+	type Wrapper SearchParameter
 	return json.Marshal(struct {
-		SearchParameter
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		ResourceType:    r.ResourceType(),
-		SearchParameter: r,
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }

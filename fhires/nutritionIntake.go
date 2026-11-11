@@ -218,11 +218,12 @@ func (r NutritionIntake) ResourceType() string {
 
 // MarshalJSON implements json.Marshaler
 func (r NutritionIntake) MarshalJSON() ([]byte, error) {
+	type Wrapper NutritionIntake
 	return json.Marshal(struct {
-		NutritionIntake
+		Wrapper
 		ResourceType string `json:"resourceType"`
 	}{
-		NutritionIntake: r,
-		ResourceType:    r.ResourceType(),
+		ResourceType: r.ResourceType(),
+		Wrapper:      Wrapper(r),
 	})
 }
