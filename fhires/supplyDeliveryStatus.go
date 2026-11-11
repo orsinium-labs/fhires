@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Status of the supply delivery.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/supplydelivery-status
-type SupplyDeliveryStatus int
+type SupplyDeliveryStatus string
 
 const (
-	SupplyDeliveryStatusInProgress SupplyDeliveryStatus = iota
+	// Supply has been requested, but not delivered.
+	SupplyDeliveryStatusInProgress SupplyDeliveryStatus = "in-progress"
 	// Supply has been delivered ("completed").
-	SupplyDeliveryStatusCompleted
+	SupplyDeliveryStatusCompleted SupplyDeliveryStatus = "completed"
 	// Delivery was not completed.
-	SupplyDeliveryStatusAbandoned
+	SupplyDeliveryStatusAbandoned SupplyDeliveryStatus = "abandoned"
 	// This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "abandoned" rather than "entered-in-error".).
-	SupplyDeliveryStatusEnteredInError
+	SupplyDeliveryStatusEnteredInError SupplyDeliveryStatus = "entered-in-error"
 )
-
-func (code SupplyDeliveryStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *SupplyDeliveryStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "in-progress":
-		*code = SupplyDeliveryStatusInProgress
-	case "completed":
-		*code = SupplyDeliveryStatusCompleted
-	case "abandoned":
-		*code = SupplyDeliveryStatusAbandoned
-	case "entered-in-error":
-		*code = SupplyDeliveryStatusEnteredInError
-	default:
-		return fmt.Errorf("unknown SupplyDeliveryStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code SupplyDeliveryStatus) String() string {
 	return code.Code()
 }
 
 func (code SupplyDeliveryStatus) Code() string {
-	switch code {
-	case SupplyDeliveryStatusInProgress:
-		return "in-progress"
-	case SupplyDeliveryStatusCompleted:
-		return "completed"
-	case SupplyDeliveryStatusAbandoned:
-		return "abandoned"
-	case SupplyDeliveryStatusEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code SupplyDeliveryStatus) Display() string {

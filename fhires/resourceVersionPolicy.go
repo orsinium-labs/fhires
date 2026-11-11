@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // How the system supports versioning for a resource.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/versioning-policy
-type ResourceVersionPolicy int
+type ResourceVersionPolicy string
 
 const (
-	ResourceVersionPolicyNoVersion ResourceVersionPolicy = iota
+	// VersionId meta-property is not supported (server) or used (client).
+	ResourceVersionPolicyNoVersion ResourceVersionPolicy = "no-version"
 	// VersionId meta-property is supported (server) or used (client).
-	ResourceVersionPolicyVersioned
+	ResourceVersionPolicyVersioned ResourceVersionPolicy = "versioned"
 	// Supports version-aware updates (server) or will be specified (If-match header) for updates (client).
-	ResourceVersionPolicyVersionedUpdate
+	ResourceVersionPolicyVersionedUpdate ResourceVersionPolicy = "versioned-update"
 )
-
-func (code ResourceVersionPolicy) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ResourceVersionPolicy) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "no-version":
-		*code = ResourceVersionPolicyNoVersion
-	case "versioned":
-		*code = ResourceVersionPolicyVersioned
-	case "versioned-update":
-		*code = ResourceVersionPolicyVersionedUpdate
-	default:
-		return fmt.Errorf("unknown ResourceVersionPolicy code `%s`", s)
-	}
-	return nil
-}
 
 func (code ResourceVersionPolicy) String() string {
 	return code.Code()
 }
 
 func (code ResourceVersionPolicy) Code() string {
-	switch code {
-	case ResourceVersionPolicyNoVersion:
-		return "no-version"
-	case ResourceVersionPolicyVersioned:
-		return "versioned"
-	case ResourceVersionPolicyVersionedUpdate:
-		return "versioned-update"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ResourceVersionPolicy) Display() string {

@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The type of 2D coordinates describing a 2D image region.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype
-type ImagingSelection2DGraphicType int
+type ImagingSelection2DGraphicType string
 
 const (
-	ImagingSelection2DGraphicTypePoint ImagingSelection2DGraphicType = iota
+	// A single location denoted by a single (x,y) pair.
+	ImagingSelection2DGraphicTypePoint ImagingSelection2DGraphicType = "point"
 	// A series of connected line segments with ordered vertices denoted by (x,y) triplets; the points need not be coplanar.
-	ImagingSelection2DGraphicTypePolyline
+	ImagingSelection2DGraphicTypePolyline ImagingSelection2DGraphicType = "polyline"
 	// An n-tuple list of (x,y) pair end points between which some form of implementation dependent curved lines are to be drawn. The rendered line shall pass through all the specified points.
-	ImagingSelection2DGraphicTypeInterpolated
+	ImagingSelection2DGraphicTypeInterpolated ImagingSelection2DGraphicType = "interpolated"
 	// Two points shall be present; the first point is to be interpreted as the center and the second point as a point on the circumference of a circle, some form of implementation dependent representation of which is to be drawn.
-	ImagingSelection2DGraphicTypeCircle
+	ImagingSelection2DGraphicTypeCircle ImagingSelection2DGraphicType = "circle"
 	// An ellipse defined by four (x,y) pairs, the first two pairs specifying the endpoints of the major axis and the second two pairs specifying the endpoints of the minor axis.
-	ImagingSelection2DGraphicTypeEllipse
+	ImagingSelection2DGraphicTypeEllipse ImagingSelection2DGraphicType = "ellipse"
 )
-
-func (code ImagingSelection2DGraphicType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ImagingSelection2DGraphicType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "point":
-		*code = ImagingSelection2DGraphicTypePoint
-	case "polyline":
-		*code = ImagingSelection2DGraphicTypePolyline
-	case "interpolated":
-		*code = ImagingSelection2DGraphicTypeInterpolated
-	case "circle":
-		*code = ImagingSelection2DGraphicTypeCircle
-	case "ellipse":
-		*code = ImagingSelection2DGraphicTypeEllipse
-	default:
-		return fmt.Errorf("unknown ImagingSelection2DGraphicType code `%s`", s)
-	}
-	return nil
-}
 
 func (code ImagingSelection2DGraphicType) String() string {
 	return code.Code()
 }
 
 func (code ImagingSelection2DGraphicType) Code() string {
-	switch code {
-	case ImagingSelection2DGraphicTypePoint:
-		return "point"
-	case ImagingSelection2DGraphicTypePolyline:
-		return "polyline"
-	case ImagingSelection2DGraphicTypeInterpolated:
-		return "interpolated"
-	case ImagingSelection2DGraphicTypeCircle:
-		return "circle"
-	case ImagingSelection2DGraphicTypeEllipse:
-		return "ellipse"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ImagingSelection2DGraphicType) Display() string {

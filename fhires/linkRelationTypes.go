@@ -1,200 +1,195 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Link Relation Types defined at https://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/iana-link-relations
-type LinkRelationTypes int
+type LinkRelationTypes string
 
 const (
-	LinkRelationTypesAbout LinkRelationTypes = iota
+	// Refers to a resource that is the subject of the link's context.
+	LinkRelationTypesAbout LinkRelationTypes = "about"
 	// Asserts that the link target provides an access control description for the link context.
-	LinkRelationTypesAcl
+	LinkRelationTypesAcl LinkRelationTypes = "acl"
 	// Refers to a substitute for this context
-	LinkRelationTypesAlternate
+	LinkRelationTypesAlternate LinkRelationTypes = "alternate"
 	// Used to reference alternative content that uses the AMP profile of the HTML format.
-	LinkRelationTypesAmphtml
+	LinkRelationTypesAmphtml LinkRelationTypes = "amphtml"
 	// Refers to an appendix.
-	LinkRelationTypesAppendix
+	LinkRelationTypesAppendix LinkRelationTypes = "appendix"
 	// Refers to an icon for the context. Synonym for icon.
-	LinkRelationTypesAppleTouchIcon
+	LinkRelationTypesAppleTouchIcon LinkRelationTypes = "apple-touch-icon"
 	// Refers to a launch screen for the context.
-	LinkRelationTypesAppleTouchStartupImage
+	LinkRelationTypesAppleTouchStartupImage LinkRelationTypes = "apple-touch-startup-image"
 	/*
 	   Refers to a collection of records, documents, or other
 	         materials of historical interest.
 	*/
-	LinkRelationTypesArchives
+	LinkRelationTypesArchives LinkRelationTypes = "archives"
 	// Refers to the context's author.
-	LinkRelationTypesAuthor
+	LinkRelationTypesAuthor LinkRelationTypes = "author"
 	/*
 	   Identifies the entity that blocks access to a resource
 	         following receipt of a legal demand.
 	*/
-	LinkRelationTypesBlockedBy
+	LinkRelationTypesBlockedBy LinkRelationTypes = "blocked-by"
 	// Gives a permanent link to use for bookmarking purposes.
-	LinkRelationTypesBookmark
+	LinkRelationTypesBookmark LinkRelationTypes = "bookmark"
 	// Designates the preferred version of a resource (the IRI and its contents).
-	LinkRelationTypesCanonical
+	LinkRelationTypesCanonical LinkRelationTypes = "canonical"
 	// Refers to a chapter in a collection of resources.
-	LinkRelationTypesChapter
+	LinkRelationTypesChapter LinkRelationTypes = "chapter"
 	// Indicates that the link target is preferred over the link context for the purpose of permanent citation.
-	LinkRelationTypesCiteAs
+	LinkRelationTypesCiteAs LinkRelationTypes = "cite-as"
 	// The target IRI points to a resource which represents the collection resource for the context IRI.
-	LinkRelationTypesCollection
+	LinkRelationTypesCollection LinkRelationTypes = "collection"
 	// Refers to a table of contents.
-	LinkRelationTypesContents
+	LinkRelationTypesContents LinkRelationTypes = "contents"
 	/*
 	   The document linked to was later converted to the
 	         document that contains this link relation.  For example, an RFC can
 	         have a link to the Internet-Draft that became the RFC; in that case,
 	         the link relation would be "convertedFrom".
 	*/
-	LinkRelationTypesConvertedFrom
+	LinkRelationTypesConvertedFrom LinkRelationTypes = "convertedFrom"
 	/*
 	   Refers to a copyright statement that applies to the
 	       link's context.
 	*/
-	LinkRelationTypesCopyright
+	LinkRelationTypesCopyright LinkRelationTypes = "copyright"
 	// The target IRI points to a resource where a submission form can be obtained.
-	LinkRelationTypesCreateForm
+	LinkRelationTypesCreateForm LinkRelationTypes = "create-form"
 	/*
 	   Refers to a resource containing the most recent
 	         item(s) in a collection of resources.
 	*/
-	LinkRelationTypesCurrent
+	LinkRelationTypesCurrent LinkRelationTypes = "current"
 	/*
 	   Refers to a resource providing information about the
 	         link's context.
 	*/
-	LinkRelationTypesDescribedby
+	LinkRelationTypesDescribedby LinkRelationTypes = "describedby"
 	/*
 	   The relationship A 'describes' B asserts that
 	         resource A provides a description of resource B. There are no
 	         constraints on the format or representation of either A or B,
 	         neither are there any further constraints on either resource.
 	*/
-	LinkRelationTypesDescribes
+	LinkRelationTypesDescribes LinkRelationTypes = "describes"
 	/*
 	   Refers to a list of patent disclosures made with respect to
 	         material for which 'disclosure' relation is specified.
 	*/
-	LinkRelationTypesDisclosure
+	LinkRelationTypesDisclosure LinkRelationTypes = "disclosure"
 	/*
 	   Used to indicate an origin that will be used to fetch required
 	         resources for the link context, and that the user agent ought to resolve
 	         as early as possible.
 	*/
-	LinkRelationTypesDnsPrefetch
+	LinkRelationTypesDnsPrefetch LinkRelationTypes = "dns-prefetch"
 	/*
 	   Refers to a resource whose available representations
 	         are byte-for-byte identical with the corresponding representations of
 	         the context IRI.
 	*/
-	LinkRelationTypesDuplicate
+	LinkRelationTypesDuplicate LinkRelationTypes = "duplicate"
 	/*
 	   Refers to a resource that can be used to edit the
 	         link's context.
 	*/
-	LinkRelationTypesEdit
+	LinkRelationTypesEdit LinkRelationTypes = "edit"
 	/*
 	   The target IRI points to a resource where a submission form for
 	         editing associated resource can be obtained.
 	*/
-	LinkRelationTypesEditForm
+	LinkRelationTypesEditForm LinkRelationTypes = "edit-form"
 	/*
 	   Refers to a resource that can be used to edit media
 	         associated with the link's context.
 	*/
-	LinkRelationTypesEditMedia
+	LinkRelationTypesEditMedia LinkRelationTypes = "edit-media"
 	/*
 	   Identifies a related resource that is potentially
 	         large and might require special handling.
 	*/
-	LinkRelationTypesEnclosure
+	LinkRelationTypesEnclosure LinkRelationTypes = "enclosure"
 	// Refers to a resource that is not part of the same site as the current context.
-	LinkRelationTypesExternal
+	LinkRelationTypesExternal LinkRelationTypes = "external"
 	/*
 	   An IRI that refers to the furthest preceding resource
 	       in a series of resources.
 	*/
-	LinkRelationTypesFirst
+	LinkRelationTypesFirst LinkRelationTypes = "first"
 	// Refers to a glossary of terms.
-	LinkRelationTypesGlossary
+	LinkRelationTypesGlossary LinkRelationTypes = "glossary"
 	// Refers to context-sensitive help.
-	LinkRelationTypesHelp
+	LinkRelationTypesHelp LinkRelationTypes = "help"
 	/*
 	   Refers to a resource hosted by the server indicated by
 	         the link context.
 	*/
-	LinkRelationTypesHosts
+	LinkRelationTypesHosts LinkRelationTypes = "hosts"
 	/*
 	   Refers to a hub that enables registration for
 	       notification of updates to the context.
 	*/
-	LinkRelationTypesHub
+	LinkRelationTypesHub LinkRelationTypes = "hub"
 	// Refers to an icon representing the link's context.
-	LinkRelationTypesIcon
+	LinkRelationTypesIcon LinkRelationTypes = "icon"
 	// Refers to an index.
-	LinkRelationTypesIndex
+	LinkRelationTypesIndex LinkRelationTypes = "index"
 	// refers to a resource associated with a time interval that ends before the beginning of the time interval associated with the context resource
-	LinkRelationTypesIntervalAfter
+	LinkRelationTypesIntervalAfter LinkRelationTypes = "intervalAfter"
 	// refers to a resource associated with a time interval that begins after the end of the time interval associated with the context resource
-	LinkRelationTypesIntervalBefore
+	LinkRelationTypesIntervalBefore LinkRelationTypes = "intervalBefore"
 	// refers to a resource associated with a time interval that begins after the beginning of the time interval associated with the context resource, and ends before the end of the time interval associated with the context resource
-	LinkRelationTypesIntervalContains
+	LinkRelationTypesIntervalContains LinkRelationTypes = "intervalContains"
 	// refers to a resource associated with a time interval that begins after the end of the time interval associated with the context resource, or ends before the beginning of the time interval associated with the context resource
-	LinkRelationTypesIntervalDisjoint
+	LinkRelationTypesIntervalDisjoint LinkRelationTypes = "intervalDisjoint"
 	// refers to a resource associated with a time interval that begins before the beginning of the time interval associated with the context resource, and ends after the end of the time interval associated with the context resource
-	LinkRelationTypesIntervalDuring
+	LinkRelationTypesIntervalDuring LinkRelationTypes = "intervalDuring"
 	// refers to a resource associated with a time interval whose beginning coincides with the beginning of the time interval associated with the context resource, and whose end coincides with the end of the time interval associated with the context resource
-	LinkRelationTypesIntervalEquals
+	LinkRelationTypesIntervalEquals LinkRelationTypes = "intervalEquals"
 	// refers to a resource associated with a time interval that begins after the beginning of the time interval associated with the context resource, and whose end coincides with the end of the time interval associated with the context resource
-	LinkRelationTypesIntervalFinishedBy
+	LinkRelationTypesIntervalFinishedBy LinkRelationTypes = "intervalFinishedBy"
 	// refers to a resource associated with a time interval that begins before the beginning of the time interval associated with the context resource, and whose end coincides with the end of the time interval associated with the context resource
-	LinkRelationTypesIntervalFinishes
+	LinkRelationTypesIntervalFinishes LinkRelationTypes = "intervalFinishes"
 	// refers to a resource associated with a time interval that begins before or is coincident with the beginning of the time interval associated with the context resource, and ends after or is coincident with the end of the time interval associated with the context resource
-	LinkRelationTypesIntervalIn
+	LinkRelationTypesIntervalIn LinkRelationTypes = "intervalIn"
 	// refers to a resource associated with a time interval whose beginning coincides with the end of the time interval associated with the context resource
-	LinkRelationTypesIntervalMeets
+	LinkRelationTypesIntervalMeets LinkRelationTypes = "intervalMeets"
 	// refers to a resource associated with a time interval whose end coincides with the beginning of the time interval associated with the context resource
-	LinkRelationTypesIntervalMetBy
+	LinkRelationTypesIntervalMetBy LinkRelationTypes = "intervalMetBy"
 	// refers to a resource associated with a time interval that begins before the beginning of the time interval associated with the context resource, and ends after the beginning of the time interval associated with the context resource
-	LinkRelationTypesIntervalOverlappedBy
+	LinkRelationTypesIntervalOverlappedBy LinkRelationTypes = "intervalOverlappedBy"
 	// refers to a resource associated with a time interval that begins before the end of the time interval associated with the context resource, and ends after the end of the time interval associated with the context resource
-	LinkRelationTypesIntervalOverlaps
+	LinkRelationTypesIntervalOverlaps LinkRelationTypes = "intervalOverlaps"
 	// refers to a resource associated with a time interval whose beginning coincides with the beginning of the time interval associated with the context resource, and ends before the end of the time interval associated with the context resource
-	LinkRelationTypesIntervalStartedBy
+	LinkRelationTypesIntervalStartedBy LinkRelationTypes = "intervalStartedBy"
 	// refers to a resource associated with a time interval whose beginning coincides with the beginning of the time interval associated with the context resource, and ends after the end of the time interval associated with the context resource
-	LinkRelationTypesIntervalStarts
+	LinkRelationTypesIntervalStarts LinkRelationTypes = "intervalStarts"
 	// The target IRI points to a resource that is a member of the collection represented by the context IRI.
-	LinkRelationTypesItem
+	LinkRelationTypesItem LinkRelationTypes = "item"
 	/*
 	   An IRI that refers to the furthest following resource
 	         in a series of resources.
 	*/
-	LinkRelationTypesLast
+	LinkRelationTypesLast LinkRelationTypes = "last"
 	/*
 	   Points to a resource containing the latest (e.g.,
 	         current) version of the context.
 	*/
-	LinkRelationTypesLatestVersion
+	LinkRelationTypesLatestVersion LinkRelationTypes = "latest-version"
 	// Refers to a license associated with this context.
-	LinkRelationTypesLicense
+	LinkRelationTypesLicense LinkRelationTypes = "license"
 	/*
 	   The link target of a link with the "linkset" relation
 	         type provides a set of links, including links in which the link
 	         context of the link participates.
 
 	*/
-	LinkRelationTypesLinkset
+	LinkRelationTypesLinkset LinkRelationTypes = "linkset"
 	/*
 	   Refers to further information about the link's context,
 	         expressed as a LRDD ("Link-based Resource Descriptor Document")
@@ -205,57 +200,57 @@ const (
 	         resources MUST have an "application/xrd+xml" representation, and
 	         MAY have others.
 	*/
-	LinkRelationTypesLrdd
+	LinkRelationTypesLrdd LinkRelationTypes = "lrdd"
 	// Links to a manifest file for the context.
-	LinkRelationTypesManifest
+	LinkRelationTypesManifest LinkRelationTypes = "manifest"
 	// Refers to a mask that can be applied to the icon for the context.
-	LinkRelationTypesMaskIcon
+	LinkRelationTypesMaskIcon LinkRelationTypes = "mask-icon"
 	// Refers to a feed of personalised media recommendations relevant to the link context.
-	LinkRelationTypesMediaFeed
+	LinkRelationTypesMediaFeed LinkRelationTypes = "media-feed"
 	// The Target IRI points to a Memento, a fixed resource that will not change state anymore.
-	LinkRelationTypesMemento
+	LinkRelationTypesMemento LinkRelationTypes = "memento"
 	// Links to the context's Micropub endpoint.
-	LinkRelationTypesMicropub
+	LinkRelationTypesMicropub LinkRelationTypes = "micropub"
 	// Refers to a module that the user agent is to preemptively fetch and store for use in the current context.
-	LinkRelationTypesModulepreload
+	LinkRelationTypesModulepreload LinkRelationTypes = "modulepreload"
 	/*
 	   Refers to a resource that can be used to monitor changes in an HTTP resource.
 
 	*/
-	LinkRelationTypesMonitor
+	LinkRelationTypesMonitor LinkRelationTypes = "monitor"
 	/*
 	   Refers to a resource that can be used to monitor changes in a specified group of HTTP resources.
 
 	*/
-	LinkRelationTypesMonitorGroup
+	LinkRelationTypesMonitorGroup LinkRelationTypes = "monitor-group"
 	/*
 	   Indicates that the link's context is a part of a series, and
 	         that the next in the series is the link target.
 
 	*/
-	LinkRelationTypesNext
+	LinkRelationTypesNext LinkRelationTypes = "next"
 	// Refers to the immediately following archive resource.
-	LinkRelationTypesNextArchive
+	LinkRelationTypesNextArchive LinkRelationTypes = "next-archive"
 	// Indicates that the context’s original author or publisher does not endorse the link target.
-	LinkRelationTypesNofollow
+	LinkRelationTypesNofollow LinkRelationTypes = "nofollow"
 	// Indicates that any newly created top-level browsing context which results from following the link will not be an auxiliary browsing context.
-	LinkRelationTypesNoopener
+	LinkRelationTypesNoopener LinkRelationTypes = "noopener"
 	// Indicates that no referrer information is to be leaked when following the link.
-	LinkRelationTypesNoreferrer
+	LinkRelationTypesNoreferrer LinkRelationTypes = "noreferrer"
 	// Indicates that any newly created top-level browsing context which results from following the link will be an auxiliary browsing context.
-	LinkRelationTypesOpener
+	LinkRelationTypesOpener LinkRelationTypes = "opener"
 	// Refers to an OpenID Authentication server on which the context relies for an assertion that the end user controls an Identifier.
-	LinkRelationTypesOpenid2_Local_id
+	LinkRelationTypesOpenid2_Local_id LinkRelationTypes = "openid2.local_id"
 	// Refers to a resource which accepts OpenID Authentication protocol messages for the context.
-	LinkRelationTypesOpenid2_Provider
+	LinkRelationTypesOpenid2_Provider LinkRelationTypes = "openid2.provider"
 	// The Target IRI points to an Original Resource.
-	LinkRelationTypesOriginal
+	LinkRelationTypesOriginal LinkRelationTypes = "original"
 	// Refers to a P3P privacy policy for the context.
-	LinkRelationTypesP3Pv1
+	LinkRelationTypesP3Pv1 LinkRelationTypes = "P3Pv1"
 	// Indicates a resource where payment is accepted.
-	LinkRelationTypesPayment
+	LinkRelationTypesPayment LinkRelationTypes = "payment"
 	// Gives the address of the pingback resource for the link context.
-	LinkRelationTypesPingback
+	LinkRelationTypesPingback LinkRelationTypes = "pingback"
 	/*
 	   Used to indicate an origin that will be used to fetch required
 	         resources for the link context. Initiating an early connection, which
@@ -263,703 +258,208 @@ const (
 	         allows the user agent to mask the high latency costs of establishing a
 	         connection.
 	*/
-	LinkRelationTypesPreconnect
+	LinkRelationTypesPreconnect LinkRelationTypes = "preconnect"
 	/*
 	   Points to a resource containing the predecessor
 	         version in the version history.
 
 	*/
-	LinkRelationTypesPredecessorVersion
+	LinkRelationTypesPredecessorVersion LinkRelationTypes = "predecessor-version"
 	/*
 	   The prefetch link relation type is used to identify a resource
 	         that might be required by the next navigation from the link context, and
 	         that the user agent ought to fetch, such that the user agent can deliver a
 	         faster response once the resource is requested in the future.
 	*/
-	LinkRelationTypesPrefetch
+	LinkRelationTypesPrefetch LinkRelationTypes = "prefetch"
 	/*
 	   Refers to a resource that should be loaded early in the
 	         processing of the link's context, without blocking rendering.
 	*/
-	LinkRelationTypesPreload
+	LinkRelationTypesPreload LinkRelationTypes = "preload"
 	/*
 	   Used to identify a resource that might be required by the next
 	         navigation from the link context, and that the user agent ought to fetch
 	         and execute, such that the user agent can deliver a faster response once
 	         the resource is requested in the future.
 	*/
-	LinkRelationTypesPrerender
+	LinkRelationTypesPrerender LinkRelationTypes = "prerender"
 	/*
 	   Indicates that the link's context is a part of a series, and
 	         that the previous in the series is the link target.
 
 	*/
-	LinkRelationTypesPrev
+	LinkRelationTypesPrev LinkRelationTypes = "prev"
 	// Refers to a resource that provides a preview of the link's context.
-	LinkRelationTypesPreview
+	LinkRelationTypesPreview LinkRelationTypes = "preview"
 	/*
 	   Refers to the previous resource in an ordered series
 	         of resources.  Synonym for "prev".
 	*/
-	LinkRelationTypesPrevious
+	LinkRelationTypesPrevious LinkRelationTypes = "previous"
 	// Refers to the immediately preceding archive resource.
-	LinkRelationTypesPrevArchive
+	LinkRelationTypesPrevArchive LinkRelationTypes = "prev-archive"
 	// Refers to a privacy policy associated with the link's context.
-	LinkRelationTypesPrivacyPolicy
+	LinkRelationTypesPrivacyPolicy LinkRelationTypes = "privacy-policy"
 	/*
 	   Identifying that a resource representation conforms
 	   to a certain profile, without affecting the non-profile semantics
 	   of the resource representation.
 	*/
-	LinkRelationTypesProfile
+	LinkRelationTypesProfile LinkRelationTypes = "profile"
 	/*
 	   Links to a publication manifest. A manifest represents
 	         structured information about a publication, such as informative metadata,
 	         a list of resources, and a default reading order.
 	*/
-	LinkRelationTypesPublication
+	LinkRelationTypesPublication LinkRelationTypes = "publication"
 	// Identifies a related resource.
-	LinkRelationTypesRelated
+	LinkRelationTypesRelated LinkRelationTypes = "related"
 	/*
 	   Identifies the root of RESTCONF API as configured on this HTTP server.
 	         The "restconf" relation defines the root of the API defined in RFC8040.
 	         Subsequent revisions of RESTCONF will use alternate relation values to support
 	         protocol versioning.
 	*/
-	LinkRelationTypesRestconf
+	LinkRelationTypesRestconf LinkRelationTypes = "restconf"
 	/*
 	   Identifies a resource that is a reply to the context
 	         of the link.
 
 	*/
-	LinkRelationTypesReplies
+	LinkRelationTypesReplies LinkRelationTypes = "replies"
 	/*
 	   The resource identified by the link target provides an input value to an
 	       instance of a rule, where the resource which represents the rule instance is
 	       identified by the link context.
 
 	*/
-	LinkRelationTypesRuleinput
+	LinkRelationTypesRuleinput LinkRelationTypes = "ruleinput"
 	/*
 	   Refers to a resource that can be used to search through
 	         the link's context and related resources.
 	*/
-	LinkRelationTypesSearch
+	LinkRelationTypesSearch LinkRelationTypes = "search"
 	// Refers to a section in a collection of resources.
-	LinkRelationTypesSection
+	LinkRelationTypesSection LinkRelationTypes = "section"
 	/*
 	   Conveys an identifier for the link's context.
 
 	*/
-	LinkRelationTypesSelf
+	LinkRelationTypesSelf LinkRelationTypes = "self"
 	/*
 	   Indicates a URI that can be used to retrieve a
 	         service document.
 	*/
-	LinkRelationTypesService
+	LinkRelationTypesService LinkRelationTypes = "service"
 	/*
 	   Identifies service description for the context that
 	         is primarily intended for consumption by machines.
 	*/
-	LinkRelationTypesServiceDesc
+	LinkRelationTypesServiceDesc LinkRelationTypes = "service-desc"
 	/*
 	   Identifies service documentation for the context that
 	         is primarily intended for human consumption.
 	*/
-	LinkRelationTypesServiceDoc
+	LinkRelationTypesServiceDoc LinkRelationTypes = "service-doc"
 	/*
 	   Identifies general metadata for the context that is
 	         primarily intended for consumption by machines.
 	*/
-	LinkRelationTypesServiceMeta
+	LinkRelationTypesServiceMeta LinkRelationTypes = "service-meta"
 	/*
 	   Refers to a resource that is within a context that is
 	   		sponsored (such as advertising or another compensation agreement).
 	*/
-	LinkRelationTypesSponsored
+	LinkRelationTypesSponsored LinkRelationTypes = "sponsored"
 	/*
 	   Refers to the first resource in a collection of
 	         resources.
 	*/
-	LinkRelationTypesStart
+	LinkRelationTypesStart LinkRelationTypes = "start"
 	/*
 	   Identifies a resource that represents the context's
 	         status.
 	*/
-	LinkRelationTypesStatus
+	LinkRelationTypesStatus LinkRelationTypes = "status"
 	// Refers to a stylesheet.
-	LinkRelationTypesStylesheet
+	LinkRelationTypesStylesheet LinkRelationTypes = "stylesheet"
 	/*
 	   Refers to a resource serving as a subsection in a
 	         collection of resources.
 	*/
-	LinkRelationTypesSubsection
+	LinkRelationTypesSubsection LinkRelationTypes = "subsection"
 	/*
 	   Points to a resource containing the successor version
 	         in the version history.
 
 	*/
-	LinkRelationTypesSuccessorVersion
+	LinkRelationTypesSuccessorVersion LinkRelationTypes = "successor-version"
 	/*
 	   Identifies a resource that provides information about
 	         the context's retirement policy.
 
 	*/
-	LinkRelationTypesSunset
+	LinkRelationTypesSunset LinkRelationTypes = "sunset"
 	/*
 	   Gives a tag (identified by the given address) that applies to
 	         the current document.
 
 	*/
-	LinkRelationTypesTag
+	LinkRelationTypesTag LinkRelationTypes = "tag"
 	// Refers to the terms of service associated with the link's context.
-	LinkRelationTypesTermsOfService
+	LinkRelationTypesTermsOfService LinkRelationTypes = "terms-of-service"
 	// The Target IRI points to a TimeGate for an Original Resource.
-	LinkRelationTypesTimegate
+	LinkRelationTypesTimegate LinkRelationTypes = "timegate"
 	// The Target IRI points to a TimeMap for an Original Resource.
-	LinkRelationTypesTimemap
+	LinkRelationTypesTimemap LinkRelationTypes = "timemap"
 	// Refers to a resource identifying the abstract semantic type of which the link's context is considered to be an instance.
-	LinkRelationTypesType
+	LinkRelationTypesType LinkRelationTypes = "type"
 	/*
 	   Refers to a resource that is within a context that is User Generated Content.
 
 	*/
-	LinkRelationTypesUgc
+	LinkRelationTypesUgc LinkRelationTypes = "ugc"
 	/*
 	   Refers to a parent document in a hierarchy of
 	         documents.
 
 	*/
-	LinkRelationTypesUp
+	LinkRelationTypesUp LinkRelationTypes = "up"
 	/*
 	   Points to a resource containing the version history
 	         for the context.
 
 	*/
-	LinkRelationTypesVersionHistory
+	LinkRelationTypesVersionHistory LinkRelationTypes = "version-history"
 	/*
 	   Identifies a resource that is the source of the
 	         information in the link's context.
 
 	*/
-	LinkRelationTypesVia
+	LinkRelationTypesVia LinkRelationTypes = "via"
 	/*
 	   Identifies a target URI that supports the Webmention protocol.
 	       This allows clients that mention a resource in some form of publishing process
 	       to contact that endpoint and inform it that this resource has been mentioned.
 	*/
-	LinkRelationTypesWebmention
+	LinkRelationTypesWebmention LinkRelationTypes = "webmention"
 	// Points to a working copy for this resource.
-	LinkRelationTypesWorkingCopy
+	LinkRelationTypesWorkingCopy LinkRelationTypes = "working-copy"
 	/*
 	   Points to the versioned resource from which this
 	         working copy was obtained.
 
 	*/
-	LinkRelationTypesWorkingCopyOf
+	LinkRelationTypesWorkingCopyOf LinkRelationTypes = "working-copy-of"
 )
-
-func (code LinkRelationTypes) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *LinkRelationTypes) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "about":
-		*code = LinkRelationTypesAbout
-	case "acl":
-		*code = LinkRelationTypesAcl
-	case "alternate":
-		*code = LinkRelationTypesAlternate
-	case "amphtml":
-		*code = LinkRelationTypesAmphtml
-	case "appendix":
-		*code = LinkRelationTypesAppendix
-	case "apple-touch-icon":
-		*code = LinkRelationTypesAppleTouchIcon
-	case "apple-touch-startup-image":
-		*code = LinkRelationTypesAppleTouchStartupImage
-	case "archives":
-		*code = LinkRelationTypesArchives
-	case "author":
-		*code = LinkRelationTypesAuthor
-	case "blocked-by":
-		*code = LinkRelationTypesBlockedBy
-	case "bookmark":
-		*code = LinkRelationTypesBookmark
-	case "canonical":
-		*code = LinkRelationTypesCanonical
-	case "chapter":
-		*code = LinkRelationTypesChapter
-	case "cite-as":
-		*code = LinkRelationTypesCiteAs
-	case "collection":
-		*code = LinkRelationTypesCollection
-	case "contents":
-		*code = LinkRelationTypesContents
-	case "convertedFrom":
-		*code = LinkRelationTypesConvertedFrom
-	case "copyright":
-		*code = LinkRelationTypesCopyright
-	case "create-form":
-		*code = LinkRelationTypesCreateForm
-	case "current":
-		*code = LinkRelationTypesCurrent
-	case "describedby":
-		*code = LinkRelationTypesDescribedby
-	case "describes":
-		*code = LinkRelationTypesDescribes
-	case "disclosure":
-		*code = LinkRelationTypesDisclosure
-	case "dns-prefetch":
-		*code = LinkRelationTypesDnsPrefetch
-	case "duplicate":
-		*code = LinkRelationTypesDuplicate
-	case "edit":
-		*code = LinkRelationTypesEdit
-	case "edit-form":
-		*code = LinkRelationTypesEditForm
-	case "edit-media":
-		*code = LinkRelationTypesEditMedia
-	case "enclosure":
-		*code = LinkRelationTypesEnclosure
-	case "external":
-		*code = LinkRelationTypesExternal
-	case "first":
-		*code = LinkRelationTypesFirst
-	case "glossary":
-		*code = LinkRelationTypesGlossary
-	case "help":
-		*code = LinkRelationTypesHelp
-	case "hosts":
-		*code = LinkRelationTypesHosts
-	case "hub":
-		*code = LinkRelationTypesHub
-	case "icon":
-		*code = LinkRelationTypesIcon
-	case "index":
-		*code = LinkRelationTypesIndex
-	case "intervalAfter":
-		*code = LinkRelationTypesIntervalAfter
-	case "intervalBefore":
-		*code = LinkRelationTypesIntervalBefore
-	case "intervalContains":
-		*code = LinkRelationTypesIntervalContains
-	case "intervalDisjoint":
-		*code = LinkRelationTypesIntervalDisjoint
-	case "intervalDuring":
-		*code = LinkRelationTypesIntervalDuring
-	case "intervalEquals":
-		*code = LinkRelationTypesIntervalEquals
-	case "intervalFinishedBy":
-		*code = LinkRelationTypesIntervalFinishedBy
-	case "intervalFinishes":
-		*code = LinkRelationTypesIntervalFinishes
-	case "intervalIn":
-		*code = LinkRelationTypesIntervalIn
-	case "intervalMeets":
-		*code = LinkRelationTypesIntervalMeets
-	case "intervalMetBy":
-		*code = LinkRelationTypesIntervalMetBy
-	case "intervalOverlappedBy":
-		*code = LinkRelationTypesIntervalOverlappedBy
-	case "intervalOverlaps":
-		*code = LinkRelationTypesIntervalOverlaps
-	case "intervalStartedBy":
-		*code = LinkRelationTypesIntervalStartedBy
-	case "intervalStarts":
-		*code = LinkRelationTypesIntervalStarts
-	case "item":
-		*code = LinkRelationTypesItem
-	case "last":
-		*code = LinkRelationTypesLast
-	case "latest-version":
-		*code = LinkRelationTypesLatestVersion
-	case "license":
-		*code = LinkRelationTypesLicense
-	case "linkset":
-		*code = LinkRelationTypesLinkset
-	case "lrdd":
-		*code = LinkRelationTypesLrdd
-	case "manifest":
-		*code = LinkRelationTypesManifest
-	case "mask-icon":
-		*code = LinkRelationTypesMaskIcon
-	case "media-feed":
-		*code = LinkRelationTypesMediaFeed
-	case "memento":
-		*code = LinkRelationTypesMemento
-	case "micropub":
-		*code = LinkRelationTypesMicropub
-	case "modulepreload":
-		*code = LinkRelationTypesModulepreload
-	case "monitor":
-		*code = LinkRelationTypesMonitor
-	case "monitor-group":
-		*code = LinkRelationTypesMonitorGroup
-	case "next":
-		*code = LinkRelationTypesNext
-	case "next-archive":
-		*code = LinkRelationTypesNextArchive
-	case "nofollow":
-		*code = LinkRelationTypesNofollow
-	case "noopener":
-		*code = LinkRelationTypesNoopener
-	case "noreferrer":
-		*code = LinkRelationTypesNoreferrer
-	case "opener":
-		*code = LinkRelationTypesOpener
-	case "openid2.local_id":
-		*code = LinkRelationTypesOpenid2_Local_id
-	case "openid2.provider":
-		*code = LinkRelationTypesOpenid2_Provider
-	case "original":
-		*code = LinkRelationTypesOriginal
-	case "P3Pv1":
-		*code = LinkRelationTypesP3Pv1
-	case "payment":
-		*code = LinkRelationTypesPayment
-	case "pingback":
-		*code = LinkRelationTypesPingback
-	case "preconnect":
-		*code = LinkRelationTypesPreconnect
-	case "predecessor-version":
-		*code = LinkRelationTypesPredecessorVersion
-	case "prefetch":
-		*code = LinkRelationTypesPrefetch
-	case "preload":
-		*code = LinkRelationTypesPreload
-	case "prerender":
-		*code = LinkRelationTypesPrerender
-	case "prev":
-		*code = LinkRelationTypesPrev
-	case "preview":
-		*code = LinkRelationTypesPreview
-	case "previous":
-		*code = LinkRelationTypesPrevious
-	case "prev-archive":
-		*code = LinkRelationTypesPrevArchive
-	case "privacy-policy":
-		*code = LinkRelationTypesPrivacyPolicy
-	case "profile":
-		*code = LinkRelationTypesProfile
-	case "publication":
-		*code = LinkRelationTypesPublication
-	case "related":
-		*code = LinkRelationTypesRelated
-	case "restconf":
-		*code = LinkRelationTypesRestconf
-	case "replies":
-		*code = LinkRelationTypesReplies
-	case "ruleinput":
-		*code = LinkRelationTypesRuleinput
-	case "search":
-		*code = LinkRelationTypesSearch
-	case "section":
-		*code = LinkRelationTypesSection
-	case "self":
-		*code = LinkRelationTypesSelf
-	case "service":
-		*code = LinkRelationTypesService
-	case "service-desc":
-		*code = LinkRelationTypesServiceDesc
-	case "service-doc":
-		*code = LinkRelationTypesServiceDoc
-	case "service-meta":
-		*code = LinkRelationTypesServiceMeta
-	case "sponsored":
-		*code = LinkRelationTypesSponsored
-	case "start":
-		*code = LinkRelationTypesStart
-	case "status":
-		*code = LinkRelationTypesStatus
-	case "stylesheet":
-		*code = LinkRelationTypesStylesheet
-	case "subsection":
-		*code = LinkRelationTypesSubsection
-	case "successor-version":
-		*code = LinkRelationTypesSuccessorVersion
-	case "sunset":
-		*code = LinkRelationTypesSunset
-	case "tag":
-		*code = LinkRelationTypesTag
-	case "terms-of-service":
-		*code = LinkRelationTypesTermsOfService
-	case "timegate":
-		*code = LinkRelationTypesTimegate
-	case "timemap":
-		*code = LinkRelationTypesTimemap
-	case "type":
-		*code = LinkRelationTypesType
-	case "ugc":
-		*code = LinkRelationTypesUgc
-	case "up":
-		*code = LinkRelationTypesUp
-	case "version-history":
-		*code = LinkRelationTypesVersionHistory
-	case "via":
-		*code = LinkRelationTypesVia
-	case "webmention":
-		*code = LinkRelationTypesWebmention
-	case "working-copy":
-		*code = LinkRelationTypesWorkingCopy
-	case "working-copy-of":
-		*code = LinkRelationTypesWorkingCopyOf
-	default:
-		return fmt.Errorf("unknown LinkRelationTypes code `%s`", s)
-	}
-	return nil
-}
 
 func (code LinkRelationTypes) String() string {
 	return code.Code()
 }
 
 func (code LinkRelationTypes) Code() string {
-	switch code {
-	case LinkRelationTypesAbout:
-		return "about"
-	case LinkRelationTypesAcl:
-		return "acl"
-	case LinkRelationTypesAlternate:
-		return "alternate"
-	case LinkRelationTypesAmphtml:
-		return "amphtml"
-	case LinkRelationTypesAppendix:
-		return "appendix"
-	case LinkRelationTypesAppleTouchIcon:
-		return "apple-touch-icon"
-	case LinkRelationTypesAppleTouchStartupImage:
-		return "apple-touch-startup-image"
-	case LinkRelationTypesArchives:
-		return "archives"
-	case LinkRelationTypesAuthor:
-		return "author"
-	case LinkRelationTypesBlockedBy:
-		return "blocked-by"
-	case LinkRelationTypesBookmark:
-		return "bookmark"
-	case LinkRelationTypesCanonical:
-		return "canonical"
-	case LinkRelationTypesChapter:
-		return "chapter"
-	case LinkRelationTypesCiteAs:
-		return "cite-as"
-	case LinkRelationTypesCollection:
-		return "collection"
-	case LinkRelationTypesContents:
-		return "contents"
-	case LinkRelationTypesConvertedFrom:
-		return "convertedFrom"
-	case LinkRelationTypesCopyright:
-		return "copyright"
-	case LinkRelationTypesCreateForm:
-		return "create-form"
-	case LinkRelationTypesCurrent:
-		return "current"
-	case LinkRelationTypesDescribedby:
-		return "describedby"
-	case LinkRelationTypesDescribes:
-		return "describes"
-	case LinkRelationTypesDisclosure:
-		return "disclosure"
-	case LinkRelationTypesDnsPrefetch:
-		return "dns-prefetch"
-	case LinkRelationTypesDuplicate:
-		return "duplicate"
-	case LinkRelationTypesEdit:
-		return "edit"
-	case LinkRelationTypesEditForm:
-		return "edit-form"
-	case LinkRelationTypesEditMedia:
-		return "edit-media"
-	case LinkRelationTypesEnclosure:
-		return "enclosure"
-	case LinkRelationTypesExternal:
-		return "external"
-	case LinkRelationTypesFirst:
-		return "first"
-	case LinkRelationTypesGlossary:
-		return "glossary"
-	case LinkRelationTypesHelp:
-		return "help"
-	case LinkRelationTypesHosts:
-		return "hosts"
-	case LinkRelationTypesHub:
-		return "hub"
-	case LinkRelationTypesIcon:
-		return "icon"
-	case LinkRelationTypesIndex:
-		return "index"
-	case LinkRelationTypesIntervalAfter:
-		return "intervalAfter"
-	case LinkRelationTypesIntervalBefore:
-		return "intervalBefore"
-	case LinkRelationTypesIntervalContains:
-		return "intervalContains"
-	case LinkRelationTypesIntervalDisjoint:
-		return "intervalDisjoint"
-	case LinkRelationTypesIntervalDuring:
-		return "intervalDuring"
-	case LinkRelationTypesIntervalEquals:
-		return "intervalEquals"
-	case LinkRelationTypesIntervalFinishedBy:
-		return "intervalFinishedBy"
-	case LinkRelationTypesIntervalFinishes:
-		return "intervalFinishes"
-	case LinkRelationTypesIntervalIn:
-		return "intervalIn"
-	case LinkRelationTypesIntervalMeets:
-		return "intervalMeets"
-	case LinkRelationTypesIntervalMetBy:
-		return "intervalMetBy"
-	case LinkRelationTypesIntervalOverlappedBy:
-		return "intervalOverlappedBy"
-	case LinkRelationTypesIntervalOverlaps:
-		return "intervalOverlaps"
-	case LinkRelationTypesIntervalStartedBy:
-		return "intervalStartedBy"
-	case LinkRelationTypesIntervalStarts:
-		return "intervalStarts"
-	case LinkRelationTypesItem:
-		return "item"
-	case LinkRelationTypesLast:
-		return "last"
-	case LinkRelationTypesLatestVersion:
-		return "latest-version"
-	case LinkRelationTypesLicense:
-		return "license"
-	case LinkRelationTypesLinkset:
-		return "linkset"
-	case LinkRelationTypesLrdd:
-		return "lrdd"
-	case LinkRelationTypesManifest:
-		return "manifest"
-	case LinkRelationTypesMaskIcon:
-		return "mask-icon"
-	case LinkRelationTypesMediaFeed:
-		return "media-feed"
-	case LinkRelationTypesMemento:
-		return "memento"
-	case LinkRelationTypesMicropub:
-		return "micropub"
-	case LinkRelationTypesModulepreload:
-		return "modulepreload"
-	case LinkRelationTypesMonitor:
-		return "monitor"
-	case LinkRelationTypesMonitorGroup:
-		return "monitor-group"
-	case LinkRelationTypesNext:
-		return "next"
-	case LinkRelationTypesNextArchive:
-		return "next-archive"
-	case LinkRelationTypesNofollow:
-		return "nofollow"
-	case LinkRelationTypesNoopener:
-		return "noopener"
-	case LinkRelationTypesNoreferrer:
-		return "noreferrer"
-	case LinkRelationTypesOpener:
-		return "opener"
-	case LinkRelationTypesOpenid2_Local_id:
-		return "openid2.local_id"
-	case LinkRelationTypesOpenid2_Provider:
-		return "openid2.provider"
-	case LinkRelationTypesOriginal:
-		return "original"
-	case LinkRelationTypesP3Pv1:
-		return "P3Pv1"
-	case LinkRelationTypesPayment:
-		return "payment"
-	case LinkRelationTypesPingback:
-		return "pingback"
-	case LinkRelationTypesPreconnect:
-		return "preconnect"
-	case LinkRelationTypesPredecessorVersion:
-		return "predecessor-version"
-	case LinkRelationTypesPrefetch:
-		return "prefetch"
-	case LinkRelationTypesPreload:
-		return "preload"
-	case LinkRelationTypesPrerender:
-		return "prerender"
-	case LinkRelationTypesPrev:
-		return "prev"
-	case LinkRelationTypesPreview:
-		return "preview"
-	case LinkRelationTypesPrevious:
-		return "previous"
-	case LinkRelationTypesPrevArchive:
-		return "prev-archive"
-	case LinkRelationTypesPrivacyPolicy:
-		return "privacy-policy"
-	case LinkRelationTypesProfile:
-		return "profile"
-	case LinkRelationTypesPublication:
-		return "publication"
-	case LinkRelationTypesRelated:
-		return "related"
-	case LinkRelationTypesRestconf:
-		return "restconf"
-	case LinkRelationTypesReplies:
-		return "replies"
-	case LinkRelationTypesRuleinput:
-		return "ruleinput"
-	case LinkRelationTypesSearch:
-		return "search"
-	case LinkRelationTypesSection:
-		return "section"
-	case LinkRelationTypesSelf:
-		return "self"
-	case LinkRelationTypesService:
-		return "service"
-	case LinkRelationTypesServiceDesc:
-		return "service-desc"
-	case LinkRelationTypesServiceDoc:
-		return "service-doc"
-	case LinkRelationTypesServiceMeta:
-		return "service-meta"
-	case LinkRelationTypesSponsored:
-		return "sponsored"
-	case LinkRelationTypesStart:
-		return "start"
-	case LinkRelationTypesStatus:
-		return "status"
-	case LinkRelationTypesStylesheet:
-		return "stylesheet"
-	case LinkRelationTypesSubsection:
-		return "subsection"
-	case LinkRelationTypesSuccessorVersion:
-		return "successor-version"
-	case LinkRelationTypesSunset:
-		return "sunset"
-	case LinkRelationTypesTag:
-		return "tag"
-	case LinkRelationTypesTermsOfService:
-		return "terms-of-service"
-	case LinkRelationTypesTimegate:
-		return "timegate"
-	case LinkRelationTypesTimemap:
-		return "timemap"
-	case LinkRelationTypesType:
-		return "type"
-	case LinkRelationTypesUgc:
-		return "ugc"
-	case LinkRelationTypesUp:
-		return "up"
-	case LinkRelationTypesVersionHistory:
-		return "version-history"
-	case LinkRelationTypesVia:
-		return "via"
-	case LinkRelationTypesWebmention:
-		return "webmention"
-	case LinkRelationTypesWorkingCopy:
-		return "working-copy"
-	case LinkRelationTypesWorkingCopyOf:
-		return "working-copy-of"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code LinkRelationTypes) Display() string {

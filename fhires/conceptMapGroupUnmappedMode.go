@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Defines which action to take if there is no match in the group.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode
-type ConceptMapGroupUnmappedMode int
+type ConceptMapGroupUnmappedMode string
 
 const (
-	ConceptMapGroupUnmappedModeUseSourceCode ConceptMapGroupUnmappedMode = iota
+	// Use the code as provided in the $translate request in one of the following input parameters: sourceCode, sourceCoding, sourceCodeableConcept.
+	ConceptMapGroupUnmappedModeUseSourceCode ConceptMapGroupUnmappedMode = "use-source-code"
 	// Use the code(s) explicitly provided in the group.unmapped 'code' or 'valueSet' element.
-	ConceptMapGroupUnmappedModeFixed
+	ConceptMapGroupUnmappedModeFixed ConceptMapGroupUnmappedMode = "fixed"
 	// Use the map identified by the canonical URL in the url element.
-	ConceptMapGroupUnmappedModeOtherMap
+	ConceptMapGroupUnmappedModeOtherMap ConceptMapGroupUnmappedMode = "other-map"
 )
-
-func (code ConceptMapGroupUnmappedMode) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ConceptMapGroupUnmappedMode) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "use-source-code":
-		*code = ConceptMapGroupUnmappedModeUseSourceCode
-	case "fixed":
-		*code = ConceptMapGroupUnmappedModeFixed
-	case "other-map":
-		*code = ConceptMapGroupUnmappedModeOtherMap
-	default:
-		return fmt.Errorf("unknown ConceptMapGroupUnmappedMode code `%s`", s)
-	}
-	return nil
-}
 
 func (code ConceptMapGroupUnmappedMode) String() string {
 	return code.Code()
 }
 
 func (code ConceptMapGroupUnmappedMode) Code() string {
-	switch code {
-	case ConceptMapGroupUnmappedModeUseSourceCode:
-		return "use-source-code"
-	case ConceptMapGroupUnmappedModeFixed:
-		return "fixed"
-	case ConceptMapGroupUnmappedModeOtherMap:
-		return "other-map"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ConceptMapGroupUnmappedMode) Display() string {

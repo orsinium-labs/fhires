@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The status of the GenomicStudy.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/genomicstudy-status
-type GenomicStudyStatus int
+type GenomicStudyStatus string
 
 const (
-	GenomicStudyStatusRegistered GenomicStudyStatus = iota
+	// The existence of the genomic study is registered, but there is nothing yet available.
+	GenomicStudyStatusRegistered GenomicStudyStatus = "registered"
 	// At least one instance has been associated with this genomic study.
-	GenomicStudyStatusAvailable
+	GenomicStudyStatusAvailable GenomicStudyStatus = "available"
 	// The genomic study is unavailable because the genomic study was not started or not completed (also sometimes called "aborted").
-	GenomicStudyStatusCancelled
+	GenomicStudyStatusCancelled GenomicStudyStatus = "cancelled"
 	// The genomic study has been withdrawn following a previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
-	GenomicStudyStatusEnteredInError
+	GenomicStudyStatusEnteredInError GenomicStudyStatus = "entered-in-error"
 	// The system does not know which of the status values currently applies for this request. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
-	GenomicStudyStatusUnknown
+	GenomicStudyStatusUnknown GenomicStudyStatus = "unknown"
 )
-
-func (code GenomicStudyStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *GenomicStudyStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "registered":
-		*code = GenomicStudyStatusRegistered
-	case "available":
-		*code = GenomicStudyStatusAvailable
-	case "cancelled":
-		*code = GenomicStudyStatusCancelled
-	case "entered-in-error":
-		*code = GenomicStudyStatusEnteredInError
-	case "unknown":
-		*code = GenomicStudyStatusUnknown
-	default:
-		return fmt.Errorf("unknown GenomicStudyStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code GenomicStudyStatus) String() string {
 	return code.Code()
 }
 
 func (code GenomicStudyStatus) Code() string {
-	switch code {
-	case GenomicStudyStatusRegistered:
-		return "registered"
-	case GenomicStudyStatusAvailable:
-		return "available"
-	case GenomicStudyStatusCancelled:
-		return "cancelled"
-	case GenomicStudyStatusEnteredInError:
-		return "entered-in-error"
-	case GenomicStudyStatusUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code GenomicStudyStatus) Display() string {

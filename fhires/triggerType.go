@@ -1,89 +1,37 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The type of trigger.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/trigger-type
-type TriggerType int
+type TriggerType string
 
 const (
-	TriggerTypeNamedEvent TriggerType = iota
+	// The trigger occurs in response to a specific named event, and no other information about the trigger is specified. Named events are completely pre-coordinated, and the formal semantics of the trigger are not provided.
+	TriggerTypeNamedEvent TriggerType = "named-event"
 	// The trigger occurs at a specific time or periodically as described by a timing or schedule. A periodic event cannot have any data elements, but may have a name assigned as a shorthand for the event.
-	TriggerTypePeriodic
+	TriggerTypePeriodic TriggerType = "periodic"
 	// The trigger occurs whenever data of a particular type is changed in any way, either added, modified, or removed.
-	TriggerTypeDataChanged
+	TriggerTypeDataChanged TriggerType = "data-changed"
 	// The trigger occurs whenever data of a particular type is added.
-	TriggerTypeDataAdded
+	TriggerTypeDataAdded TriggerType = "data-added"
 	// The trigger occurs whenever data of a particular type is modified.
-	TriggerTypeDataModified
+	TriggerTypeDataModified TriggerType = "data-modified"
 	// The trigger occurs whenever data of a particular type is removed.
-	TriggerTypeDataRemoved
+	TriggerTypeDataRemoved TriggerType = "data-removed"
 	// The trigger occurs whenever data of a particular type is accessed.
-	TriggerTypeDataAccessed
+	TriggerTypeDataAccessed TriggerType = "data-accessed"
 	// The trigger occurs whenever access to data of a particular type is completed.
-	TriggerTypeDataAccessEnded
+	TriggerTypeDataAccessEnded TriggerType = "data-access-ended"
 )
-
-func (code TriggerType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *TriggerType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "named-event":
-		*code = TriggerTypeNamedEvent
-	case "periodic":
-		*code = TriggerTypePeriodic
-	case "data-changed":
-		*code = TriggerTypeDataChanged
-	case "data-added":
-		*code = TriggerTypeDataAdded
-	case "data-modified":
-		*code = TriggerTypeDataModified
-	case "data-removed":
-		*code = TriggerTypeDataRemoved
-	case "data-accessed":
-		*code = TriggerTypeDataAccessed
-	case "data-access-ended":
-		*code = TriggerTypeDataAccessEnded
-	default:
-		return fmt.Errorf("unknown TriggerType code `%s`", s)
-	}
-	return nil
-}
 
 func (code TriggerType) String() string {
 	return code.Code()
 }
 
 func (code TriggerType) Code() string {
-	switch code {
-	case TriggerTypeNamedEvent:
-		return "named-event"
-	case TriggerTypePeriodic:
-		return "periodic"
-	case TriggerTypeDataChanged:
-		return "data-changed"
-	case TriggerTypeDataAdded:
-		return "data-added"
-	case TriggerTypeDataModified:
-		return "data-modified"
-	case TriggerTypeDataRemoved:
-		return "data-removed"
-	case TriggerTypeDataAccessed:
-		return "data-accessed"
-	case TriggerTypeDataAccessEnded:
-		return "data-access-ended"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code TriggerType) Display() string {

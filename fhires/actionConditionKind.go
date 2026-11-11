@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Defines the kinds of conditions that can appear on actions.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/action-condition-kind
-type ActionConditionKind int
+type ActionConditionKind string
 
 const (
-	ActionConditionKindApplicability ActionConditionKind = iota
+	// The condition describes whether or not a given action is applicable.
+	ActionConditionKindApplicability ActionConditionKind = "applicability"
 	// The condition is a starting condition for the action.
-	ActionConditionKindStart
+	ActionConditionKindStart ActionConditionKind = "start"
 	// The condition is a stop, or exit condition for the action.
-	ActionConditionKindStop
+	ActionConditionKindStop ActionConditionKind = "stop"
 )
-
-func (code ActionConditionKind) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ActionConditionKind) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "applicability":
-		*code = ActionConditionKindApplicability
-	case "start":
-		*code = ActionConditionKindStart
-	case "stop":
-		*code = ActionConditionKindStop
-	default:
-		return fmt.Errorf("unknown ActionConditionKind code `%s`", s)
-	}
-	return nil
-}
 
 func (code ActionConditionKind) String() string {
 	return code.Code()
 }
 
 func (code ActionConditionKind) Code() string {
-	switch code {
-	case ActionConditionKindApplicability:
-		return "applicability"
-	case ActionConditionKindStart:
-		return "start"
-	case ActionConditionKindStop:
-		return "stop"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ActionConditionKind) Display() string {

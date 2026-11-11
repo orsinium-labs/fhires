@@ -1,77 +1,33 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Codes identifying rule combining algorithm.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/permission-rule-combining
-type PermissionRuleCombining int
+type PermissionRuleCombining string
 
 const (
-	PermissionRuleCombiningDenyOverrides PermissionRuleCombining = iota
+	// The deny overrides combining algorithm is intended for those cases where a deny decision should have priority over a permit decision.
+	PermissionRuleCombiningDenyOverrides PermissionRuleCombining = "deny-overrides"
 	// The permit overrides combining algorithm is intended for those cases where a permit decision should have priority over a deny decision.
-	PermissionRuleCombiningPermitOverrides
+	PermissionRuleCombiningPermitOverrides PermissionRuleCombining = "permit-overrides"
 	// The behavior of this algorithm is identical to that of the “Deny-overrides” rule-combining algorithm with one exception.  The order in which the collection of rules is evaluated SHALL match the order as listed in the permission.
-	PermissionRuleCombiningOrderedDenyOverrides
+	PermissionRuleCombiningOrderedDenyOverrides PermissionRuleCombining = "ordered-deny-overrides"
 	// The behavior of this algorithm is identical to that of the “Permit-overrides” rule-combining algorithm with one exception.  The order in which the collection of rules is evaluated SHALL match the order as listed in the permission.
-	PermissionRuleCombiningOrderedPermitOverrides
+	PermissionRuleCombiningOrderedPermitOverrides PermissionRuleCombining = "ordered-permit-overrides"
 	// The “Deny-unless-permit” combining algorithm is intended for those cases where a permit decision should have priority over a deny decision, and an “Indeterminate” or “NotApplicable” must never be the result. It is particularly useful at the top level in a policy structure to ensure that a PDP will always return a definite “Permit” or “Deny” result.
-	PermissionRuleCombiningDenyUnlessPermit
+	PermissionRuleCombiningDenyUnlessPermit PermissionRuleCombining = "deny-unless-permit"
 	// The “Permit-unless-deny” combining algorithm is intended for those cases where a deny decision should have priority over a permit decision, and an “Indeterminate” or “NotApplicable” must never be the result. It is particularly useful at the top level in a policy structure to ensure that a PDP will always return a definite “Permit” or “Deny” result. This algorithm has the following behavior.
-	PermissionRuleCombiningPermitUnlessDeny
+	PermissionRuleCombiningPermitUnlessDeny PermissionRuleCombining = "permit-unless-deny"
 )
-
-func (code PermissionRuleCombining) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *PermissionRuleCombining) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "deny-overrides":
-		*code = PermissionRuleCombiningDenyOverrides
-	case "permit-overrides":
-		*code = PermissionRuleCombiningPermitOverrides
-	case "ordered-deny-overrides":
-		*code = PermissionRuleCombiningOrderedDenyOverrides
-	case "ordered-permit-overrides":
-		*code = PermissionRuleCombiningOrderedPermitOverrides
-	case "deny-unless-permit":
-		*code = PermissionRuleCombiningDenyUnlessPermit
-	case "permit-unless-deny":
-		*code = PermissionRuleCombiningPermitUnlessDeny
-	default:
-		return fmt.Errorf("unknown PermissionRuleCombining code `%s`", s)
-	}
-	return nil
-}
 
 func (code PermissionRuleCombining) String() string {
 	return code.Code()
 }
 
 func (code PermissionRuleCombining) Code() string {
-	switch code {
-	case PermissionRuleCombiningDenyOverrides:
-		return "deny-overrides"
-	case PermissionRuleCombiningPermitOverrides:
-		return "permit-overrides"
-	case PermissionRuleCombiningOrderedDenyOverrides:
-		return "ordered-deny-overrides"
-	case PermissionRuleCombiningOrderedPermitOverrides:
-		return "ordered-permit-overrides"
-	case PermissionRuleCombiningDenyUnlessPermit:
-		return "deny-unless-permit"
-	case PermissionRuleCombiningPermitUnlessDeny:
-		return "permit-unless-deny"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code PermissionRuleCombining) Display() string {

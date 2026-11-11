@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Why an entry is in the result set - whether it's included as a match or because of an _include requirement, or to convey information or warning information about the search process.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/search-entry-mode
-type SearchEntryMode int
+type SearchEntryMode string
 
 const (
-	SearchEntryModeMatch SearchEntryMode = iota
+	// This resource matched the search specification.
+	SearchEntryModeMatch SearchEntryMode = "match"
 	// This resource is returned because it is referred to from another resource in the search set.
-	SearchEntryModeInclude
+	SearchEntryModeInclude SearchEntryMode = "include"
 	// An OperationOutcome that provides additional information about the processing of a search.
-	SearchEntryModeOutcome
+	SearchEntryModeOutcome SearchEntryMode = "outcome"
 )
-
-func (code SearchEntryMode) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *SearchEntryMode) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "match":
-		*code = SearchEntryModeMatch
-	case "include":
-		*code = SearchEntryModeInclude
-	case "outcome":
-		*code = SearchEntryModeOutcome
-	default:
-		return fmt.Errorf("unknown SearchEntryMode code `%s`", s)
-	}
-	return nil
-}
 
 func (code SearchEntryMode) String() string {
 	return code.Code()
 }
 
 func (code SearchEntryMode) Code() string {
-	switch code {
-	case SearchEntryModeMatch:
-		return "match"
-	case SearchEntryModeInclude:
-		return "include"
-	case SearchEntryModeOutcome:
-		return "outcome"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code SearchEntryMode) Display() string {

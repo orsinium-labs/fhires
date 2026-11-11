@@ -1,137 +1,53 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Distinguishes groups from questions and display text and indicates data type for questions.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/item-type
-type QuestionnaireItemType int
+type QuestionnaireItemType string
 
 const (
-	QuestionnaireItemTypeGroup QuestionnaireItemType = iota
+	// An item with no direct answer but should have at least one child item.
+	QuestionnaireItemTypeGroup QuestionnaireItemType = "group"
 	// Text for display that will not capture an answer or have child items.
-	QuestionnaireItemTypeDisplay
+	QuestionnaireItemTypeDisplay QuestionnaireItemType = "display"
 	// An item that defines a specific answer to be captured, and which may have child items. (the answer provided in the QuestionnaireResponse should be of the defined datatype).
-	QuestionnaireItemTypeQuestion
+	QuestionnaireItemTypeQuestion QuestionnaireItemType = "question"
 	// Question with a yes/no answer (valueBoolean).
-	QuestionnaireItemTypeBoolean
+	QuestionnaireItemTypeBoolean QuestionnaireItemType = "boolean"
 	// Question with is a real number answer (valueDecimal).  There is an extension 'http://hl7.org/fhir/StructureDefinition/questionnaire-unit' that can be used to computably convey the unit of measure associated with the answer for use when performing data extraction to an element of type Quantity.
-	QuestionnaireItemTypeDecimal
+	QuestionnaireItemTypeDecimal QuestionnaireItemType = "decimal"
 	// Question with an integer answer (valueInteger).  There is an extension 'http://hl7.org/fhir/StructureDefinition/questionnaire-unit' that can be used to computably convey the unit of measure associated with the answer for use when performing data extraction to an element of type Quantity.
-	QuestionnaireItemTypeInteger
+	QuestionnaireItemTypeInteger QuestionnaireItemType = "integer"
 	// Question with a date answer (valueDate).
-	QuestionnaireItemTypeDate
+	QuestionnaireItemTypeDate QuestionnaireItemType = "date"
 	// Question with a date and time answer (valueDateTime).
-	QuestionnaireItemTypeDateTime
+	QuestionnaireItemTypeDateTime QuestionnaireItemType = "dateTime"
 	// Question with a time (hour:minute:second) answer independent of date. (valueTime).
-	QuestionnaireItemTypeTime
+	QuestionnaireItemTypeTime QuestionnaireItemType = "time"
 	// Question with a short (few words to short sentence) free-text entry answer (valueString).  Strings SHOULD NOT contain carriage return or newline characters.  If multi-line answers are needed, use the 'text' type.
-	QuestionnaireItemTypeString
+	QuestionnaireItemTypeString QuestionnaireItemType = "string"
 	// Question with a long (potentially multi-paragraph) free-text entry answer (valueString).
-	QuestionnaireItemTypeText
+	QuestionnaireItemTypeText QuestionnaireItemType = "text"
 	// Question with a URL (website, FTP site, etc.) answer (valueUri).
-	QuestionnaireItemTypeUrl
+	QuestionnaireItemTypeUrl QuestionnaireItemType = "url"
 	// Question with a Coding - generally drawn from a list of possible answers (valueCoding)
-	QuestionnaireItemTypeCoding
+	QuestionnaireItemTypeCoding QuestionnaireItemType = "coding"
 	// Question with binary content such as an image, PDF, etc. as an answer (valueAttachment).
-	QuestionnaireItemTypeAttachment
+	QuestionnaireItemTypeAttachment QuestionnaireItemType = "attachment"
 	// Question with a reference to another resource (practitioner, organization, etc.) as an answer (valueReference).
-	QuestionnaireItemTypeReference
+	QuestionnaireItemTypeReference QuestionnaireItemType = "reference"
 	// Question with a combination of a numeric value and unit as an answer. (valueSimpleQuantity)  There are two extensions ('http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption' and 'http://hl7.org/fhir/StructureDefinition/questionnaire-unitValueSet')  that can be used to define what unit should be selected for the Quantity.code and Quantity.system.
-	QuestionnaireItemTypeQuantity
+	QuestionnaireItemTypeQuantity QuestionnaireItemType = "quantity"
 )
-
-func (code QuestionnaireItemType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *QuestionnaireItemType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "group":
-		*code = QuestionnaireItemTypeGroup
-	case "display":
-		*code = QuestionnaireItemTypeDisplay
-	case "question":
-		*code = QuestionnaireItemTypeQuestion
-	case "boolean":
-		*code = QuestionnaireItemTypeBoolean
-	case "decimal":
-		*code = QuestionnaireItemTypeDecimal
-	case "integer":
-		*code = QuestionnaireItemTypeInteger
-	case "date":
-		*code = QuestionnaireItemTypeDate
-	case "dateTime":
-		*code = QuestionnaireItemTypeDateTime
-	case "time":
-		*code = QuestionnaireItemTypeTime
-	case "string":
-		*code = QuestionnaireItemTypeString
-	case "text":
-		*code = QuestionnaireItemTypeText
-	case "url":
-		*code = QuestionnaireItemTypeUrl
-	case "coding":
-		*code = QuestionnaireItemTypeCoding
-	case "attachment":
-		*code = QuestionnaireItemTypeAttachment
-	case "reference":
-		*code = QuestionnaireItemTypeReference
-	case "quantity":
-		*code = QuestionnaireItemTypeQuantity
-	default:
-		return fmt.Errorf("unknown QuestionnaireItemType code `%s`", s)
-	}
-	return nil
-}
 
 func (code QuestionnaireItemType) String() string {
 	return code.Code()
 }
 
 func (code QuestionnaireItemType) Code() string {
-	switch code {
-	case QuestionnaireItemTypeGroup:
-		return "group"
-	case QuestionnaireItemTypeDisplay:
-		return "display"
-	case QuestionnaireItemTypeQuestion:
-		return "question"
-	case QuestionnaireItemTypeBoolean:
-		return "boolean"
-	case QuestionnaireItemTypeDecimal:
-		return "decimal"
-	case QuestionnaireItemTypeInteger:
-		return "integer"
-	case QuestionnaireItemTypeDate:
-		return "date"
-	case QuestionnaireItemTypeDateTime:
-		return "dateTime"
-	case QuestionnaireItemTypeTime:
-		return "time"
-	case QuestionnaireItemTypeString:
-		return "string"
-	case QuestionnaireItemTypeText:
-		return "text"
-	case QuestionnaireItemTypeUrl:
-		return "url"
-	case QuestionnaireItemTypeCoding:
-		return "coding"
-	case QuestionnaireItemTypeAttachment:
-		return "attachment"
-	case QuestionnaireItemTypeReference:
-		return "reference"
-	case QuestionnaireItemTypeQuantity:
-		return "quantity"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code QuestionnaireItemType) Display() string {

@@ -1,77 +1,33 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The type of information contained in a component of an artifact assessment.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/artifactassessment-information-type
-type ArtifactAssessmentInformationType int
+type ArtifactAssessmentInformationType string
 
 const (
-	ArtifactAssessmentInformationTypeComment ArtifactAssessmentInformationType = iota
+	// A comment on the artifact
+	ArtifactAssessmentInformationTypeComment ArtifactAssessmentInformationType = "comment"
 	// A classifier of the artifact
-	ArtifactAssessmentInformationTypeClassifier
+	ArtifactAssessmentInformationTypeClassifier ArtifactAssessmentInformationType = "classifier"
 	// A rating of the artifact
-	ArtifactAssessmentInformationTypeRating
+	ArtifactAssessmentInformationTypeRating ArtifactAssessmentInformationType = "rating"
 	// A container for multiple components
-	ArtifactAssessmentInformationTypeContainer
+	ArtifactAssessmentInformationTypeContainer ArtifactAssessmentInformationType = "container"
 	// A response to a comment
-	ArtifactAssessmentInformationTypeResponse
+	ArtifactAssessmentInformationTypeResponse ArtifactAssessmentInformationType = "response"
 	// A change request for the artifact
-	ArtifactAssessmentInformationTypeChangeRequest
+	ArtifactAssessmentInformationTypeChangeRequest ArtifactAssessmentInformationType = "change-request"
 )
-
-func (code ArtifactAssessmentInformationType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ArtifactAssessmentInformationType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "comment":
-		*code = ArtifactAssessmentInformationTypeComment
-	case "classifier":
-		*code = ArtifactAssessmentInformationTypeClassifier
-	case "rating":
-		*code = ArtifactAssessmentInformationTypeRating
-	case "container":
-		*code = ArtifactAssessmentInformationTypeContainer
-	case "response":
-		*code = ArtifactAssessmentInformationTypeResponse
-	case "change-request":
-		*code = ArtifactAssessmentInformationTypeChangeRequest
-	default:
-		return fmt.Errorf("unknown ArtifactAssessmentInformationType code `%s`", s)
-	}
-	return nil
-}
 
 func (code ArtifactAssessmentInformationType) String() string {
 	return code.Code()
 }
 
 func (code ArtifactAssessmentInformationType) Code() string {
-	switch code {
-	case ArtifactAssessmentInformationTypeComment:
-		return "comment"
-	case ArtifactAssessmentInformationTypeClassifier:
-		return "classifier"
-	case ArtifactAssessmentInformationTypeRating:
-		return "rating"
-	case ArtifactAssessmentInformationTypeContainer:
-		return "container"
-	case ArtifactAssessmentInformationTypeResponse:
-		return "response"
-	case ArtifactAssessmentInformationTypeChangeRequest:
-		return "change-request"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ArtifactAssessmentInformationType) Display() string {

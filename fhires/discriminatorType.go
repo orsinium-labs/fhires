@@ -1,77 +1,33 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // How an element value is interpreted when discrimination is evaluated.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/discriminator-type
-type DiscriminatorType int
+type DiscriminatorType string
 
 const (
-	DiscriminatorTypeValue DiscriminatorType = iota
+	// The slices have different values in the nominated element, as determined by the applicable fixed value, pattern, or required ValueSet binding.
+	DiscriminatorTypeValue DiscriminatorType = "value"
 	// The slices are differentiated by the presence or absence of the nominated element. There SHALL be no more than two slices. The slices are differentiated by the fact that one must have a max of 0 and the other must have a min of 1 (or more).  The order in which the slices are declared doesn't matter.
-	DiscriminatorTypeExists
+	DiscriminatorTypeExists DiscriminatorType = "exists"
 	// The slices have different values in the nominated element, as determined by the applicable fixed value, pattern, or required ValueSet binding. This has the same meaning as 'value' and is deprecated.
-	DiscriminatorTypePattern
+	DiscriminatorTypePattern DiscriminatorType = "pattern"
 	// The slices are differentiated by type of the nominated element.
-	DiscriminatorTypeType
+	DiscriminatorTypeType DiscriminatorType = "type"
 	// The slices are differentiated by conformance of the nominated element to a specified profile. Note that if the path specifies .resolve() then the profile is the target profile on the reference. In this case, validation by the possible profiles is required to differentiate the slices.
-	DiscriminatorTypeProfile
+	DiscriminatorTypeProfile DiscriminatorType = "profile"
 	// The slices are differentiated by their index. This is only possible if all but the last slice have min=max cardinality, and the (optional) last slice contains other undifferentiated elements.
-	DiscriminatorTypePosition
+	DiscriminatorTypePosition DiscriminatorType = "position"
 )
-
-func (code DiscriminatorType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *DiscriminatorType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "value":
-		*code = DiscriminatorTypeValue
-	case "exists":
-		*code = DiscriminatorTypeExists
-	case "pattern":
-		*code = DiscriminatorTypePattern
-	case "type":
-		*code = DiscriminatorTypeType
-	case "profile":
-		*code = DiscriminatorTypeProfile
-	case "position":
-		*code = DiscriminatorTypePosition
-	default:
-		return fmt.Errorf("unknown DiscriminatorType code `%s`", s)
-	}
-	return nil
-}
 
 func (code DiscriminatorType) String() string {
 	return code.Code()
 }
 
 func (code DiscriminatorType) Code() string {
-	switch code {
-	case DiscriminatorTypeValue:
-		return "value"
-	case DiscriminatorTypeExists:
-		return "exists"
-	case DiscriminatorTypePattern:
-		return "pattern"
-	case DiscriminatorTypeType:
-		return "type"
-	case DiscriminatorTypeProfile:
-		return "profile"
-	case DiscriminatorTypePosition:
-		return "position"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code DiscriminatorType) Display() string {

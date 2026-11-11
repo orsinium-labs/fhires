@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Identifies the purpose for this identifier, if known .
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/identifier-use
-type IdentifierUse int
+type IdentifierUse string
 
 const (
-	IdentifierUseUsual IdentifierUse = iota
+	// The identifier recommended for display and use in real-world interactions which should be used when such identifier is different from the "official" identifier.
+	IdentifierUseUsual IdentifierUse = "usual"
 	// The identifier considered to be most trusted for the identification of this item. Sometimes also known as "primary" and "main". The determination of "official" is subjective and implementation guides often provide additional guidelines for use.
-	IdentifierUseOfficial
+	IdentifierUseOfficial IdentifierUse = "official"
 	// A temporary identifier.
-	IdentifierUseTemp
+	IdentifierUseTemp IdentifierUse = "temp"
 	// An identifier that was assigned in secondary use - it serves to identify the object in a relative context, but cannot be consistently assigned to the same object again in a different context.
-	IdentifierUseSecondary
+	IdentifierUseSecondary IdentifierUse = "secondary"
 	// The identifier id no longer considered valid, but may be relevant for search purposes.  E.g. Changes to identifier schemes, account merges, etc.
-	IdentifierUseOld
+	IdentifierUseOld IdentifierUse = "old"
 )
-
-func (code IdentifierUse) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *IdentifierUse) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "usual":
-		*code = IdentifierUseUsual
-	case "official":
-		*code = IdentifierUseOfficial
-	case "temp":
-		*code = IdentifierUseTemp
-	case "secondary":
-		*code = IdentifierUseSecondary
-	case "old":
-		*code = IdentifierUseOld
-	default:
-		return fmt.Errorf("unknown IdentifierUse code `%s`", s)
-	}
-	return nil
-}
 
 func (code IdentifierUse) String() string {
 	return code.Code()
 }
 
 func (code IdentifierUse) Code() string {
-	switch code {
-	case IdentifierUseUsual:
-		return "usual"
-	case IdentifierUseOfficial:
-		return "official"
-	case IdentifierUseTemp:
-		return "temp"
-	case IdentifierUseSecondary:
-		return "secondary"
-	case IdentifierUseOld:
-		return "old"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code IdentifierUse) Display() string {

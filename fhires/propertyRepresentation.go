@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // How a property is represented when serialized.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/property-representation
-type PropertyRepresentation int
+type PropertyRepresentation string
 
 const (
-	PropertyRepresentationXmlAttr PropertyRepresentation = iota
+	// In XML, this property is represented as an attribute not an element.
+	PropertyRepresentationXmlAttr PropertyRepresentation = "xmlAttr"
 	// This element is represented using the XML text attribute (primitives only).
-	PropertyRepresentationXmlText
+	PropertyRepresentationXmlText PropertyRepresentation = "xmlText"
 	// The type of this element is indicated using xsi:type.
-	PropertyRepresentationTypeAttr
+	PropertyRepresentationTypeAttr PropertyRepresentation = "typeAttr"
 	// Use CDA narrative instead of XHTML.
-	PropertyRepresentationCdaText
+	PropertyRepresentationCdaText PropertyRepresentation = "cdaText"
 	// The property is represented using XHTML.
-	PropertyRepresentationXhtml
+	PropertyRepresentationXhtml PropertyRepresentation = "xhtml"
 )
-
-func (code PropertyRepresentation) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *PropertyRepresentation) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "xmlAttr":
-		*code = PropertyRepresentationXmlAttr
-	case "xmlText":
-		*code = PropertyRepresentationXmlText
-	case "typeAttr":
-		*code = PropertyRepresentationTypeAttr
-	case "cdaText":
-		*code = PropertyRepresentationCdaText
-	case "xhtml":
-		*code = PropertyRepresentationXhtml
-	default:
-		return fmt.Errorf("unknown PropertyRepresentation code `%s`", s)
-	}
-	return nil
-}
 
 func (code PropertyRepresentation) String() string {
 	return code.Code()
 }
 
 func (code PropertyRepresentation) Code() string {
-	switch code {
-	case PropertyRepresentationXmlAttr:
-		return "xmlAttr"
-	case PropertyRepresentationXmlText:
-		return "xmlText"
-	case PropertyRepresentationTypeAttr:
-		return "typeAttr"
-	case PropertyRepresentationCdaText:
-		return "cdaText"
-	case PropertyRepresentationXhtml:
-		return "xhtml"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code PropertyRepresentation) Display() string {

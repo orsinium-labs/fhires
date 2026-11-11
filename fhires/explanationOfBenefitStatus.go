@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // A code specifying the state of the resource instance.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/explanationofbenefit-status
-type ExplanationOfBenefitStatus int
+type ExplanationOfBenefitStatus string
 
 const (
-	ExplanationOfBenefitStatusActive ExplanationOfBenefitStatus = iota
+	// The resource instance is currently in-force.
+	ExplanationOfBenefitStatusActive ExplanationOfBenefitStatus = "active"
 	// The resource instance is withdrawn, rescinded or reversed.
-	ExplanationOfBenefitStatusCancelled
+	ExplanationOfBenefitStatusCancelled ExplanationOfBenefitStatus = "cancelled"
 	// A new resource instance the contents of which is not complete.
-	ExplanationOfBenefitStatusDraft
+	ExplanationOfBenefitStatusDraft ExplanationOfBenefitStatus = "draft"
 	// The resource instance was entered in error.
-	ExplanationOfBenefitStatusEnteredInError
+	ExplanationOfBenefitStatusEnteredInError ExplanationOfBenefitStatus = "entered-in-error"
 )
-
-func (code ExplanationOfBenefitStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ExplanationOfBenefitStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "active":
-		*code = ExplanationOfBenefitStatusActive
-	case "cancelled":
-		*code = ExplanationOfBenefitStatusCancelled
-	case "draft":
-		*code = ExplanationOfBenefitStatusDraft
-	case "entered-in-error":
-		*code = ExplanationOfBenefitStatusEnteredInError
-	default:
-		return fmt.Errorf("unknown ExplanationOfBenefitStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code ExplanationOfBenefitStatus) String() string {
 	return code.Code()
 }
 
 func (code ExplanationOfBenefitStatus) Code() string {
-	switch code {
-	case ExplanationOfBenefitStatusActive:
-		return "active"
-	case ExplanationOfBenefitStatusCancelled:
-		return "cancelled"
-	case ExplanationOfBenefitStatusDraft:
-		return "draft"
-	case ExplanationOfBenefitStatusEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ExplanationOfBenefitStatus) Display() string {

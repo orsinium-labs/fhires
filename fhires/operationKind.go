@@ -1,53 +1,25 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Whether an operation is a normal operation or a query.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/operation-kind
-type OperationKind int
+type OperationKind string
 
 const (
-	OperationKindOperation OperationKind = iota
+	// This operation is invoked as an operation.
+	OperationKindOperation OperationKind = "operation"
 	// This operation is a named query, invoked using the search mechanism.
-	OperationKindQuery
+	OperationKindQuery OperationKind = "query"
 )
-
-func (code OperationKind) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *OperationKind) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "operation":
-		*code = OperationKindOperation
-	case "query":
-		*code = OperationKindQuery
-	default:
-		return fmt.Errorf("unknown OperationKind code `%s`", s)
-	}
-	return nil
-}
 
 func (code OperationKind) String() string {
 	return code.Code()
 }
 
 func (code OperationKind) Code() string {
-	switch code {
-	case OperationKindOperation:
-		return "operation"
-	case OperationKindQuery:
-		return "query"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code OperationKind) Display() string {

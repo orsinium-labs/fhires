@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Codes that describe the types of constraints possible on a question item that has a list of permitted answers
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/questionnaire-answer-constraint
-type QuestionnaireAnswerConstraint int
+type QuestionnaireAnswerConstraint string
 
 const (
-	QuestionnaireAnswerConstraintOptionsOnly QuestionnaireAnswerConstraint = iota
+	// Only values listed as answerOption or in the expansion of the answerValueSet are permitted
+	QuestionnaireAnswerConstraintOptionsOnly QuestionnaireAnswerConstraint = "optionsOnly"
 	// In addition to the values listed as answerOption or in the expansion of the answerValueSet, any other values that correspond to the specified item.type are permitted
-	QuestionnaireAnswerConstraintOptionsOrType
+	QuestionnaireAnswerConstraintOptionsOrType QuestionnaireAnswerConstraint = "optionsOrType"
 	// In addition to the values listed as answerOption or in the expansion of the answerValueSet, free-text strings are permitted.  Answers will have a type of 'string'.
-	QuestionnaireAnswerConstraintOptionsOrString
+	QuestionnaireAnswerConstraintOptionsOrString QuestionnaireAnswerConstraint = "optionsOrString"
 )
-
-func (code QuestionnaireAnswerConstraint) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *QuestionnaireAnswerConstraint) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "optionsOnly":
-		*code = QuestionnaireAnswerConstraintOptionsOnly
-	case "optionsOrType":
-		*code = QuestionnaireAnswerConstraintOptionsOrType
-	case "optionsOrString":
-		*code = QuestionnaireAnswerConstraintOptionsOrString
-	default:
-		return fmt.Errorf("unknown QuestionnaireAnswerConstraint code `%s`", s)
-	}
-	return nil
-}
 
 func (code QuestionnaireAnswerConstraint) String() string {
 	return code.Code()
 }
 
 func (code QuestionnaireAnswerConstraint) Code() string {
-	switch code {
-	case QuestionnaireAnswerConstraintOptionsOnly:
-		return "optionsOnly"
-	case QuestionnaireAnswerConstraintOptionsOrType:
-		return "optionsOrType"
-	case QuestionnaireAnswerConstraintOptionsOrString:
-		return "optionsOrString"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code QuestionnaireAnswerConstraint) Display() string {

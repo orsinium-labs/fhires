@@ -1,77 +1,33 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Which type a compartment definition describes.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/compartment-type
-type CompartmentType int
+type CompartmentType string
 
 const (
-	CompartmentTypePatient CompartmentType = iota
+	// The compartment definition is for the patient compartment.
+	CompartmentTypePatient CompartmentType = "Patient"
 	// The compartment definition is for the encounter compartment.
-	CompartmentTypeEncounter
+	CompartmentTypeEncounter CompartmentType = "Encounter"
 	// The compartment definition is for the related-person compartment.
-	CompartmentTypeRelatedPerson
+	CompartmentTypeRelatedPerson CompartmentType = "RelatedPerson"
 	// The compartment definition is for the practitioner compartment.
-	CompartmentTypePractitioner
+	CompartmentTypePractitioner CompartmentType = "Practitioner"
 	// The compartment definition is for the device compartment.
-	CompartmentTypeDevice
+	CompartmentTypeDevice CompartmentType = "Device"
 	// The compartment definition is for the episodeofcare compartment.
-	CompartmentTypeEpisodeOfCare
+	CompartmentTypeEpisodeOfCare CompartmentType = "EpisodeOfCare"
 )
-
-func (code CompartmentType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *CompartmentType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "Patient":
-		*code = CompartmentTypePatient
-	case "Encounter":
-		*code = CompartmentTypeEncounter
-	case "RelatedPerson":
-		*code = CompartmentTypeRelatedPerson
-	case "Practitioner":
-		*code = CompartmentTypePractitioner
-	case "Device":
-		*code = CompartmentTypeDevice
-	case "EpisodeOfCare":
-		*code = CompartmentTypeEpisodeOfCare
-	default:
-		return fmt.Errorf("unknown CompartmentType code `%s`", s)
-	}
-	return nil
-}
 
 func (code CompartmentType) String() string {
 	return code.Code()
 }
 
 func (code CompartmentType) Code() string {
-	switch code {
-	case CompartmentTypePatient:
-		return "Patient"
-	case CompartmentTypeEncounter:
-		return "Encounter"
-	case CompartmentTypeRelatedPerson:
-		return "RelatedPerson"
-	case CompartmentTypePractitioner:
-		return "Practitioner"
-	case CompartmentTypeDevice:
-		return "Device"
-	case CompartmentTypeEpisodeOfCare:
-		return "EpisodeOfCare"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code CompartmentType) Display() string {

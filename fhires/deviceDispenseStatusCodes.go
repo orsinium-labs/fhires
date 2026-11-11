@@ -1,95 +1,39 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // DeviceDispense Status Codes
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/devicedispense-status
-type DeviceDispenseStatusCodes int
+type DeviceDispenseStatusCodes string
 
 const (
-	DeviceDispenseStatusCodesPreparation DeviceDispenseStatusCodes = iota
+	// The core event has not started yet, but some staging activities have begun (e.g. initial preparing of the device. Preparation stages may be tracked e.g. for planning, supply or billing purposes.
+	DeviceDispenseStatusCodesPreparation DeviceDispenseStatusCodes = "preparation"
 	// The dispensed product is ready for pickup.
-	DeviceDispenseStatusCodesInProgress
+	DeviceDispenseStatusCodesInProgress DeviceDispenseStatusCodes = "in-progress"
 	// The dispensed product was not and will never be picked up by the patient.
-	DeviceDispenseStatusCodesCancelled
+	DeviceDispenseStatusCodesCancelled DeviceDispenseStatusCodes = "cancelled"
 	// The dispense process is paused while waiting for an external event to reactivate the dispense.  For example, new stock has arrived or the prescriber has called.
-	DeviceDispenseStatusCodesOnHold
+	DeviceDispenseStatusCodesOnHold DeviceDispenseStatusCodes = "on-hold"
 	// The dispensed product has been picked up.
-	DeviceDispenseStatusCodesCompleted
+	DeviceDispenseStatusCodesCompleted DeviceDispenseStatusCodes = "completed"
 	// The dispense was entered in error and therefore nullified.
-	DeviceDispenseStatusCodesEnteredInError
+	DeviceDispenseStatusCodesEnteredInError DeviceDispenseStatusCodes = "entered-in-error"
 	// Actions implied by the dispense have been permanently halted, before all of them occurred.
-	DeviceDispenseStatusCodesStopped
+	DeviceDispenseStatusCodesStopped DeviceDispenseStatusCodes = "stopped"
 	// The dispense was declined and not performed.
-	DeviceDispenseStatusCodesDeclined
+	DeviceDispenseStatusCodesDeclined DeviceDispenseStatusCodes = "declined"
 	// The authoring system does not know which of the status values applies for this dispense.  Note: this concept is not to be used for other - one of the listed statuses is presumed to apply, it's just now known which one.
-	DeviceDispenseStatusCodesUnknown
+	DeviceDispenseStatusCodesUnknown DeviceDispenseStatusCodes = "unknown"
 )
-
-func (code DeviceDispenseStatusCodes) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *DeviceDispenseStatusCodes) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "preparation":
-		*code = DeviceDispenseStatusCodesPreparation
-	case "in-progress":
-		*code = DeviceDispenseStatusCodesInProgress
-	case "cancelled":
-		*code = DeviceDispenseStatusCodesCancelled
-	case "on-hold":
-		*code = DeviceDispenseStatusCodesOnHold
-	case "completed":
-		*code = DeviceDispenseStatusCodesCompleted
-	case "entered-in-error":
-		*code = DeviceDispenseStatusCodesEnteredInError
-	case "stopped":
-		*code = DeviceDispenseStatusCodesStopped
-	case "declined":
-		*code = DeviceDispenseStatusCodesDeclined
-	case "unknown":
-		*code = DeviceDispenseStatusCodesUnknown
-	default:
-		return fmt.Errorf("unknown DeviceDispenseStatusCodes code `%s`", s)
-	}
-	return nil
-}
 
 func (code DeviceDispenseStatusCodes) String() string {
 	return code.Code()
 }
 
 func (code DeviceDispenseStatusCodes) Code() string {
-	switch code {
-	case DeviceDispenseStatusCodesPreparation:
-		return "preparation"
-	case DeviceDispenseStatusCodesInProgress:
-		return "in-progress"
-	case DeviceDispenseStatusCodesCancelled:
-		return "cancelled"
-	case DeviceDispenseStatusCodesOnHold:
-		return "on-hold"
-	case DeviceDispenseStatusCodesCompleted:
-		return "completed"
-	case DeviceDispenseStatusCodesEnteredInError:
-		return "entered-in-error"
-	case DeviceDispenseStatusCodesStopped:
-		return "stopped"
-	case DeviceDispenseStatusCodesDeclined:
-		return "declined"
-	case DeviceDispenseStatusCodesUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code DeviceDispenseStatusCodes) Display() string {

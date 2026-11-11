@@ -1,83 +1,35 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The type of a property value.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/concept-property-type
-type PropertyType int
+type PropertyType string
 
 const (
-	PropertyTypeCode PropertyType = iota
+	// The property value is a code that identifies a concept defined in the code system.
+	PropertyTypeCode PropertyType = "code"
 	// The property  value is a code defined in an external code system. This may be used for translations, but is not the intent.
-	PropertyTypeCoding
+	PropertyTypeCoding PropertyType = "Coding"
 	// The property value is a string.
-	PropertyTypeString
+	PropertyTypeString PropertyType = "string"
 	// The property value is an integer (often used to assign ranking values to concepts for supporting score assessments).
-	PropertyTypeInteger
+	PropertyTypeInteger PropertyType = "integer"
 	// The property value is a boolean true | false.
-	PropertyTypeBoolean
+	PropertyTypeBoolean PropertyType = "boolean"
 	// The property is a date or a date + time.
-	PropertyTypeDateTime
+	PropertyTypeDateTime PropertyType = "dateTime"
 	// The property value is a decimal number.
-	PropertyTypeDecimal
+	PropertyTypeDecimal PropertyType = "decimal"
 )
-
-func (code PropertyType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *PropertyType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "code":
-		*code = PropertyTypeCode
-	case "Coding":
-		*code = PropertyTypeCoding
-	case "string":
-		*code = PropertyTypeString
-	case "integer":
-		*code = PropertyTypeInteger
-	case "boolean":
-		*code = PropertyTypeBoolean
-	case "dateTime":
-		*code = PropertyTypeDateTime
-	case "decimal":
-		*code = PropertyTypeDecimal
-	default:
-		return fmt.Errorf("unknown PropertyType code `%s`", s)
-	}
-	return nil
-}
 
 func (code PropertyType) String() string {
 	return code.Code()
 }
 
 func (code PropertyType) Code() string {
-	switch code {
-	case PropertyTypeCode:
-		return "code"
-	case PropertyTypeCoding:
-		return "Coding"
-	case PropertyTypeString:
-		return "string"
-	case PropertyTypeInteger:
-		return "integer"
-	case PropertyTypeBoolean:
-		return "boolean"
-	case PropertyTypeDateTime:
-		return "dateTime"
-	case PropertyTypeDecimal:
-		return "decimal"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code PropertyType) Display() string {

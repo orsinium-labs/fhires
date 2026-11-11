@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // A coded concept listing the base codes.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/vision-base-codes
-type VisionBase int
+type VisionBase string
 
 const (
-	VisionBaseUp VisionBase = iota
+	// top.
+	VisionBaseUp VisionBase = "up"
 	// bottom.
-	VisionBaseDown
+	VisionBaseDown VisionBase = "down"
 	// inner edge.
-	VisionBaseIn
+	VisionBaseIn VisionBase = "in"
 	// outer edge.
-	VisionBaseOut
+	VisionBaseOut VisionBase = "out"
 )
-
-func (code VisionBase) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *VisionBase) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "up":
-		*code = VisionBaseUp
-	case "down":
-		*code = VisionBaseDown
-	case "in":
-		*code = VisionBaseIn
-	case "out":
-		*code = VisionBaseOut
-	default:
-		return fmt.Errorf("unknown VisionBase code `%s`", s)
-	}
-	return nil
-}
 
 func (code VisionBase) String() string {
 	return code.Code()
 }
 
 func (code VisionBase) Code() string {
-	switch code {
-	case VisionBaseUp:
-		return "up"
-	case VisionBaseDown:
-		return "down"
-	case VisionBaseIn:
-		return "in"
-	case VisionBaseOut:
-		return "out"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code VisionBase) Display() string {

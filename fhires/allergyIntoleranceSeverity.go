@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Clinical assessment of the severity of a reaction event as a whole, potentially considering multiple different manifestations.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/reaction-event-severity
-type AllergyIntoleranceSeverity int
+type AllergyIntoleranceSeverity string
 
 const (
-	AllergyIntoleranceSeverityMild AllergyIntoleranceSeverity = iota
+	// Causes mild physiological effects.
+	AllergyIntoleranceSeverityMild AllergyIntoleranceSeverity = "mild"
 	// Causes moderate physiological effects.
-	AllergyIntoleranceSeverityModerate
+	AllergyIntoleranceSeverityModerate AllergyIntoleranceSeverity = "moderate"
 	// Causes severe physiological effects.
-	AllergyIntoleranceSeveritySevere
+	AllergyIntoleranceSeveritySevere AllergyIntoleranceSeverity = "severe"
 )
-
-func (code AllergyIntoleranceSeverity) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *AllergyIntoleranceSeverity) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "mild":
-		*code = AllergyIntoleranceSeverityMild
-	case "moderate":
-		*code = AllergyIntoleranceSeverityModerate
-	case "severe":
-		*code = AllergyIntoleranceSeveritySevere
-	default:
-		return fmt.Errorf("unknown AllergyIntoleranceSeverity code `%s`", s)
-	}
-	return nil
-}
 
 func (code AllergyIntoleranceSeverity) String() string {
 	return code.Code()
 }
 
 func (code AllergyIntoleranceSeverity) Code() string {
-	switch code {
-	case AllergyIntoleranceSeverityMild:
-		return "mild"
-	case AllergyIntoleranceSeverityModerate:
-		return "moderate"
-	case AllergyIntoleranceSeveritySevere:
-		return "severe"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code AllergyIntoleranceSeverity) Display() string {

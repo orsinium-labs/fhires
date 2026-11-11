@@ -1,53 +1,25 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Type for orientation.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/orientation-type
-type OrientationType int
+type OrientationType string
 
 const (
-	OrientationTypeSense OrientationType = iota
+	// Sense orientation of reference sequence.
+	OrientationTypeSense OrientationType = "sense"
 	// Antisense orientation of reference sequence.
-	OrientationTypeAntisense
+	OrientationTypeAntisense OrientationType = "antisense"
 )
-
-func (code OrientationType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *OrientationType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "sense":
-		*code = OrientationTypeSense
-	case "antisense":
-		*code = OrientationTypeAntisense
-	default:
-		return fmt.Errorf("unknown OrientationType code `%s`", s)
-	}
-	return nil
-}
 
 func (code OrientationType) String() string {
 	return code.Code()
 }
 
 func (code OrientationType) Code() string {
-	switch code {
-	case OrientationTypeSense:
-		return "sense"
-	case OrientationTypeAntisense:
-		return "antisense"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code OrientationType) Display() string {

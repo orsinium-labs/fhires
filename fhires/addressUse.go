@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The use of an address.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/address-use
-type AddressUse int
+type AddressUse string
 
 const (
-	AddressUseHome AddressUse = iota
+	// A communication address at a home.
+	AddressUseHome AddressUse = "home"
 	// An office address. First choice for business related contacts during business hours.
-	AddressUseWork
+	AddressUseWork AddressUse = "work"
 	// A temporary address. The period can provide more detailed information.
-	AddressUseTemp
+	AddressUseTemp AddressUse = "temp"
 	// This address is no longer in use (or was never correct but retained for records).
-	AddressUseOld
+	AddressUseOld AddressUse = "old"
 	// An address to be used to send bills, invoices, receipts etc.
-	AddressUseBilling
+	AddressUseBilling AddressUse = "billing"
 )
-
-func (code AddressUse) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *AddressUse) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "home":
-		*code = AddressUseHome
-	case "work":
-		*code = AddressUseWork
-	case "temp":
-		*code = AddressUseTemp
-	case "old":
-		*code = AddressUseOld
-	case "billing":
-		*code = AddressUseBilling
-	default:
-		return fmt.Errorf("unknown AddressUse code `%s`", s)
-	}
-	return nil
-}
 
 func (code AddressUse) String() string {
 	return code.Code()
 }
 
 func (code AddressUse) Code() string {
-	switch code {
-	case AddressUseHome:
-		return "home"
-	case AddressUseWork:
-		return "work"
-	case AddressUseTemp:
-		return "temp"
-	case AddressUseOld:
-		return "old"
-	case AddressUseBilling:
-		return "billing"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code AddressUse) Display() string {

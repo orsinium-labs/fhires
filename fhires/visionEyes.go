@@ -1,53 +1,25 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // A coded concept listing the eye codes.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/vision-eye-codes
-type VisionEyes int
+type VisionEyes string
 
 const (
-	VisionEyesRight VisionEyes = iota
+	// Right Eye.
+	VisionEyesRight VisionEyes = "right"
 	// Left Eye.
-	VisionEyesLeft
+	VisionEyesLeft VisionEyes = "left"
 )
-
-func (code VisionEyes) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *VisionEyes) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "right":
-		*code = VisionEyesRight
-	case "left":
-		*code = VisionEyesLeft
-	default:
-		return fmt.Errorf("unknown VisionEyes code `%s`", s)
-	}
-	return nil
-}
 
 func (code VisionEyes) String() string {
 	return code.Code()
 }
 
 func (code VisionEyes) Code() string {
-	switch code {
-	case VisionEyesRight:
-		return "right"
-	case VisionEyesLeft:
-		return "left"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code VisionEyes) Display() string {

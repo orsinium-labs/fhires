@@ -1,11 +1,5 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Concepts for how a measure report consumer and receiver coordinate data exchange updates.
 //
 // # The choices are snapshot or incremental updates
@@ -13,43 +7,21 @@ import (
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/submit-data-update-type
-type SubmitDataUpdateType int
+type SubmitDataUpdateType string
 
 const (
-	SubmitDataUpdateTypeIncremental SubmitDataUpdateType = iota
+	// In contrast to the Snapshot Update, the FHIR Parameters resource used in a Submit Data or the Collect Data scenario contains only the new and updated DEQM and QI Core Profiles since the last transaction. If the Consumer supports incremental updates, the contents of the updated payload updates the previous payload data.
+	SubmitDataUpdateTypeIncremental SubmitDataUpdateType = "incremental"
 	// In contrast to the Incremental Update, the FHIR Parameters resource used in a Submit Data or the Collect Data scenario contains all the DEQM and QI Core Profiles for each transaction.  If the Consumer supports snapshot updates, the contents of the updated payload entirely replaces the previous payload
-	SubmitDataUpdateTypeSnapshot
+	SubmitDataUpdateTypeSnapshot SubmitDataUpdateType = "snapshot"
 )
-
-func (code SubmitDataUpdateType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *SubmitDataUpdateType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "incremental":
-		*code = SubmitDataUpdateTypeIncremental
-	case "snapshot":
-		*code = SubmitDataUpdateTypeSnapshot
-	default:
-		return fmt.Errorf("unknown SubmitDataUpdateType code `%s`", s)
-	}
-	return nil
-}
 
 func (code SubmitDataUpdateType) String() string {
 	return code.Code()
 }
 
 func (code SubmitDataUpdateType) Code() string {
-	switch code {
-	case SubmitDataUpdateTypeIncremental:
-		return "incremental"
-	case SubmitDataUpdateTypeSnapshot:
-		return "snapshot"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code SubmitDataUpdateType) Display() string {

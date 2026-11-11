@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Describes the operational status of the DeviceMetric.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/metric-operational-status
-type DeviceMetricOperationalStatus int
+type DeviceMetricOperationalStatus string
 
 const (
-	DeviceMetricOperationalStatusOn DeviceMetricOperationalStatus = iota
+	// The DeviceMetric is operating and will generate Observations.
+	DeviceMetricOperationalStatusOn DeviceMetricOperationalStatus = "on"
 	// The DeviceMetric is not operating.
-	DeviceMetricOperationalStatusOff
+	DeviceMetricOperationalStatusOff DeviceMetricOperationalStatus = "off"
 	// The DeviceMetric is operating, but will not generate any Observations.
-	DeviceMetricOperationalStatusStandby
+	DeviceMetricOperationalStatusStandby DeviceMetricOperationalStatus = "standby"
 	// The DeviceMetric was entered in error.
-	DeviceMetricOperationalStatusEnteredInError
+	DeviceMetricOperationalStatusEnteredInError DeviceMetricOperationalStatus = "entered-in-error"
 )
-
-func (code DeviceMetricOperationalStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *DeviceMetricOperationalStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "on":
-		*code = DeviceMetricOperationalStatusOn
-	case "off":
-		*code = DeviceMetricOperationalStatusOff
-	case "standby":
-		*code = DeviceMetricOperationalStatusStandby
-	case "entered-in-error":
-		*code = DeviceMetricOperationalStatusEnteredInError
-	default:
-		return fmt.Errorf("unknown DeviceMetricOperationalStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code DeviceMetricOperationalStatus) String() string {
 	return code.Code()
 }
 
 func (code DeviceMetricOperationalStatus) Code() string {
-	switch code {
-	case DeviceMetricOperationalStatusOn:
-		return "on"
-	case DeviceMetricOperationalStatusOff:
-		return "off"
-	case DeviceMetricOperationalStatusStandby:
-		return "standby"
-	case DeviceMetricOperationalStatusEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code DeviceMetricOperationalStatus) Display() string {

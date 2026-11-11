@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Identifies the level of importance to be assigned to actioning the request.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/request-priority
-type RequestPriority int
+type RequestPriority string
 
 const (
-	RequestPriorityRoutine RequestPriority = iota
+	// The request has normal priority.
+	RequestPriorityRoutine RequestPriority = "routine"
 	// The request should be actioned promptly - higher priority than routine.
-	RequestPriorityUrgent
+	RequestPriorityUrgent RequestPriority = "urgent"
 	// The request should be actioned as soon as possible - higher priority than urgent.
-	RequestPriorityAsap
+	RequestPriorityAsap RequestPriority = "asap"
 	// The request should be actioned immediately - highest possible priority.  E.g. an emergency.
-	RequestPriorityStat
+	RequestPriorityStat RequestPriority = "stat"
 )
-
-func (code RequestPriority) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *RequestPriority) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "routine":
-		*code = RequestPriorityRoutine
-	case "urgent":
-		*code = RequestPriorityUrgent
-	case "asap":
-		*code = RequestPriorityAsap
-	case "stat":
-		*code = RequestPriorityStat
-	default:
-		return fmt.Errorf("unknown RequestPriority code `%s`", s)
-	}
-	return nil
-}
 
 func (code RequestPriority) String() string {
 	return code.Code()
 }
 
 func (code RequestPriority) Code() string {
-	switch code {
-	case RequestPriorityRoutine:
-		return "routine"
-	case RequestPriorityUrgent:
-		return "urgent"
-	case RequestPriorityAsap:
-		return "asap"
-	case RequestPriorityStat:
-		return "stat"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code RequestPriority) Display() string {

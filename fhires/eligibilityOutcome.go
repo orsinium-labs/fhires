@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The outcome of the processing.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/eligibility-outcome
-type EligibilityOutcome int
+type EligibilityOutcome string
 
 const (
-	EligibilityOutcomeQueued EligibilityOutcome = iota
+	// The Claim/Pre-authorization/Pre-determination has been received but processing has not begun.
+	EligibilityOutcomeQueued EligibilityOutcome = "queued"
 	// The processing has completed without errors
-	EligibilityOutcomeComplete
+	EligibilityOutcomeComplete EligibilityOutcome = "complete"
 	// One or more errors have been detected in the Claim
-	EligibilityOutcomeError
+	EligibilityOutcomeError EligibilityOutcome = "error"
 	// No errors have been detected in the Claim and some of the adjudication has been performed.
-	EligibilityOutcomePartial
+	EligibilityOutcomePartial EligibilityOutcome = "partial"
 )
-
-func (code EligibilityOutcome) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *EligibilityOutcome) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "queued":
-		*code = EligibilityOutcomeQueued
-	case "complete":
-		*code = EligibilityOutcomeComplete
-	case "error":
-		*code = EligibilityOutcomeError
-	case "partial":
-		*code = EligibilityOutcomePartial
-	default:
-		return fmt.Errorf("unknown EligibilityOutcome code `%s`", s)
-	}
-	return nil
-}
 
 func (code EligibilityOutcome) String() string {
 	return code.Code()
 }
 
 func (code EligibilityOutcome) Code() string {
-	switch code {
-	case EligibilityOutcomeQueued:
-		return "queued"
-	case EligibilityOutcomeComplete:
-		return "complete"
-	case EligibilityOutcomeError:
-		return "error"
-	case EligibilityOutcomePartial:
-		return "partial"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code EligibilityOutcome) Display() string {

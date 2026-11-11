@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The meaning of the hierarchy of concepts in a code system.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/codesystem-hierarchy-meaning
-type CodeSystemHierarchyMeaning int
+type CodeSystemHierarchyMeaning string
 
 const (
-	CodeSystemHierarchyMeaningGroupedBy CodeSystemHierarchyMeaning = iota
+	// No particular relationship between the concepts can be assumed, except what can be determined by inspection of the definitions of the elements (possible reasons to use this: importing from a source where this is not defined, or where various parts of the hierarchy have different meanings).
+	CodeSystemHierarchyMeaningGroupedBy CodeSystemHierarchyMeaning = "grouped-by"
 	// A hierarchy where the child concepts have an IS-A relationship with the parents - that is, all the properties of the parent are also true for its child concepts. Not that is-a is a property of the concepts, so additional subsumption relationships may be defined using properties.
-	CodeSystemHierarchyMeaningIsA
+	CodeSystemHierarchyMeaningIsA CodeSystemHierarchyMeaning = "is-a"
 	// Child elements list the individual parts of a composite whole (e.g. body site).
-	CodeSystemHierarchyMeaningPartOf
+	CodeSystemHierarchyMeaningPartOf CodeSystemHierarchyMeaning = "part-of"
 	// Child concepts in the hierarchy may have only one parent, and there is a presumption that the code system is a "closed world" meaning all things must be in the hierarchy. This results in concepts such as "not otherwise classified.".
-	CodeSystemHierarchyMeaningClassifiedWith
+	CodeSystemHierarchyMeaningClassifiedWith CodeSystemHierarchyMeaning = "classified-with"
 )
-
-func (code CodeSystemHierarchyMeaning) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *CodeSystemHierarchyMeaning) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "grouped-by":
-		*code = CodeSystemHierarchyMeaningGroupedBy
-	case "is-a":
-		*code = CodeSystemHierarchyMeaningIsA
-	case "part-of":
-		*code = CodeSystemHierarchyMeaningPartOf
-	case "classified-with":
-		*code = CodeSystemHierarchyMeaningClassifiedWith
-	default:
-		return fmt.Errorf("unknown CodeSystemHierarchyMeaning code `%s`", s)
-	}
-	return nil
-}
 
 func (code CodeSystemHierarchyMeaning) String() string {
 	return code.Code()
 }
 
 func (code CodeSystemHierarchyMeaning) Code() string {
-	switch code {
-	case CodeSystemHierarchyMeaningGroupedBy:
-		return "grouped-by"
-	case CodeSystemHierarchyMeaningIsA:
-		return "is-a"
-	case CodeSystemHierarchyMeaningPartOf:
-		return "part-of"
-	case CodeSystemHierarchyMeaningClassifiedWith:
-		return "classified-with"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code CodeSystemHierarchyMeaning) Display() string {

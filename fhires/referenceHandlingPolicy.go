@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // A set of flags that defines how references are supported.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/reference-handling-policy
-type ReferenceHandlingPolicy int
+type ReferenceHandlingPolicy string
 
 const (
-	ReferenceHandlingPolicyLiteral ReferenceHandlingPolicy = iota
+	// The server supports and populates Literal references (i.e. using Reference.reference) where they are known (this code does not guarantee that all references are literal; see 'enforced').
+	ReferenceHandlingPolicyLiteral ReferenceHandlingPolicy = "literal"
 	// The server allows logical references (i.e. using Reference.identifier).
-	ReferenceHandlingPolicyLogical
+	ReferenceHandlingPolicyLogical ReferenceHandlingPolicy = "logical"
 	// The server will attempt to resolve logical references to literal references - i.e. converting Reference.identifier to Reference.reference (if resolution fails, the server may still accept resources; see logical).
-	ReferenceHandlingPolicyResolves
+	ReferenceHandlingPolicyResolves ReferenceHandlingPolicy = "resolves"
 	// The server enforces that references have integrity - e.g. it ensures that references can always be resolved. This is typically the case for clinical record systems, but often not the case for middleware/proxy systems.
-	ReferenceHandlingPolicyEnforced
+	ReferenceHandlingPolicyEnforced ReferenceHandlingPolicy = "enforced"
 	// The server does not support references that point to other servers.
-	ReferenceHandlingPolicyLocal
+	ReferenceHandlingPolicyLocal ReferenceHandlingPolicy = "local"
 )
-
-func (code ReferenceHandlingPolicy) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ReferenceHandlingPolicy) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "literal":
-		*code = ReferenceHandlingPolicyLiteral
-	case "logical":
-		*code = ReferenceHandlingPolicyLogical
-	case "resolves":
-		*code = ReferenceHandlingPolicyResolves
-	case "enforced":
-		*code = ReferenceHandlingPolicyEnforced
-	case "local":
-		*code = ReferenceHandlingPolicyLocal
-	default:
-		return fmt.Errorf("unknown ReferenceHandlingPolicy code `%s`", s)
-	}
-	return nil
-}
 
 func (code ReferenceHandlingPolicy) String() string {
 	return code.Code()
 }
 
 func (code ReferenceHandlingPolicy) Code() string {
-	switch code {
-	case ReferenceHandlingPolicyLiteral:
-		return "literal"
-	case ReferenceHandlingPolicyLogical:
-		return "logical"
-	case ReferenceHandlingPolicyResolves:
-		return "resolves"
-	case ReferenceHandlingPolicyEnforced:
-		return "enforced"
-	case ReferenceHandlingPolicyLocal:
-		return "local"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ReferenceHandlingPolicy) Display() string {

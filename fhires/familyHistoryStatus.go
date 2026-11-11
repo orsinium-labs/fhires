@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // A code that identifies the status of the family history record.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/history-status
-type FamilyHistoryStatus int
+type FamilyHistoryStatus string
 
 const (
-	FamilyHistoryStatusPartial FamilyHistoryStatus = iota
+	// Some health information is known and captured, but not complete - see notes for details.
+	FamilyHistoryStatusPartial FamilyHistoryStatus = "partial"
 	// All available related health information is captured as of the date (and possibly time) when the family member history was taken.
-	FamilyHistoryStatusCompleted
+	FamilyHistoryStatusCompleted FamilyHistoryStatus = "completed"
 	// This instance should not have been part of this patient's medical record.
-	FamilyHistoryStatusEnteredInError
+	FamilyHistoryStatusEnteredInError FamilyHistoryStatus = "entered-in-error"
 	// Health information for this family member is unavailable/unknown.
-	FamilyHistoryStatusHealthUnknown
+	FamilyHistoryStatusHealthUnknown FamilyHistoryStatus = "health-unknown"
 )
-
-func (code FamilyHistoryStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *FamilyHistoryStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "partial":
-		*code = FamilyHistoryStatusPartial
-	case "completed":
-		*code = FamilyHistoryStatusCompleted
-	case "entered-in-error":
-		*code = FamilyHistoryStatusEnteredInError
-	case "health-unknown":
-		*code = FamilyHistoryStatusHealthUnknown
-	default:
-		return fmt.Errorf("unknown FamilyHistoryStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code FamilyHistoryStatus) String() string {
 	return code.Code()
 }
 
 func (code FamilyHistoryStatus) Code() string {
-	switch code {
-	case FamilyHistoryStatusPartial:
-		return "partial"
-	case FamilyHistoryStatusCompleted:
-		return "completed"
-	case FamilyHistoryStatusEnteredInError:
-		return "entered-in-error"
-	case FamilyHistoryStatusHealthUnknown:
-		return "health-unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code FamilyHistoryStatus) Display() string {

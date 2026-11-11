@@ -1,95 +1,39 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Codes indicating the degree of authority/intentionality associated with a care plan.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/care-plan-intent
-type CarePlanIntent int
+type CarePlanIntent string
 
 const (
-	CarePlanIntentProposal CarePlanIntent = iota
+	// The request is a suggestion made by someone/something that does not have an intention to ensure it occurs and without providing an authorization to act.
+	CarePlanIntentProposal CarePlanIntent = "proposal"
 	// The request represents an intention to ensure something occurs without providing an authorization for others to act.
-	CarePlanIntentPlan
+	CarePlanIntentPlan CarePlanIntent = "plan"
 	// The request represents a legally binding instruction authored by a Patient or RelatedPerson.
-	CarePlanIntentDirective
+	CarePlanIntentDirective CarePlanIntent = "directive"
 	// The request represents a request/demand and authorization for action by the requestor.
-	CarePlanIntentOrder
+	CarePlanIntentOrder CarePlanIntent = "order"
 	// The request represents an original authorization for action.
-	CarePlanIntentOriginalOrder
+	CarePlanIntentOriginalOrder CarePlanIntent = "original-order"
 	// The request represents an automatically generated supplemental authorization for action based on a parent authorization together with initial results of the action taken against that parent authorization.
-	CarePlanIntentReflexOrder
+	CarePlanIntentReflexOrder CarePlanIntent = "reflex-order"
 	// The request represents the view of an authorization instantiated by a fulfilling system representing the details of the fulfiller's intention to act upon a submitted order.
-	CarePlanIntentFillerOrder
+	CarePlanIntentFillerOrder CarePlanIntent = "filler-order"
 	// An order created in fulfillment of a broader order that represents the authorization for a single activity occurrence.  E.g. The administration of a single dose of a drug.
-	CarePlanIntentInstanceOrder
+	CarePlanIntentInstanceOrder CarePlanIntent = "instance-order"
 	// The request represents a component or option for a RequestOrchestration that establishes timing, conditionality and/or other constraints among a set of requests.  Refer to [[[RequestOrchestration]]] for additional information on how this status is used.
-	CarePlanIntentOption
+	CarePlanIntentOption CarePlanIntent = "option"
 )
-
-func (code CarePlanIntent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *CarePlanIntent) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "proposal":
-		*code = CarePlanIntentProposal
-	case "plan":
-		*code = CarePlanIntentPlan
-	case "directive":
-		*code = CarePlanIntentDirective
-	case "order":
-		*code = CarePlanIntentOrder
-	case "original-order":
-		*code = CarePlanIntentOriginalOrder
-	case "reflex-order":
-		*code = CarePlanIntentReflexOrder
-	case "filler-order":
-		*code = CarePlanIntentFillerOrder
-	case "instance-order":
-		*code = CarePlanIntentInstanceOrder
-	case "option":
-		*code = CarePlanIntentOption
-	default:
-		return fmt.Errorf("unknown CarePlanIntent code `%s`", s)
-	}
-	return nil
-}
 
 func (code CarePlanIntent) String() string {
 	return code.Code()
 }
 
 func (code CarePlanIntent) Code() string {
-	switch code {
-	case CarePlanIntentProposal:
-		return "proposal"
-	case CarePlanIntentPlan:
-		return "plan"
-	case CarePlanIntentDirective:
-		return "directive"
-	case CarePlanIntentOrder:
-		return "order"
-	case CarePlanIntentOriginalOrder:
-		return "original-order"
-	case CarePlanIntentReflexOrder:
-		return "reflex-order"
-	case CarePlanIntentFillerOrder:
-		return "filler-order"
-	case CarePlanIntentInstanceOrder:
-		return "instance-order"
-	case CarePlanIntentOption:
-		return "option"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code CarePlanIntent) Display() string {

@@ -1,77 +1,33 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The status of a guidance response.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/guidance-response-status
-type GuidanceResponseStatus int
+type GuidanceResponseStatus string
 
 const (
-	GuidanceResponseStatusSuccess GuidanceResponseStatus = iota
+	// The request was processed successfully.
+	GuidanceResponseStatusSuccess GuidanceResponseStatus = "success"
 	// The request was processed successfully, but more data may result in a more complete evaluation.
-	GuidanceResponseStatusDataRequested
+	GuidanceResponseStatusDataRequested GuidanceResponseStatus = "data-requested"
 	// The request was processed, but more data is required to complete the evaluation.
-	GuidanceResponseStatusDataRequired
+	GuidanceResponseStatusDataRequired GuidanceResponseStatus = "data-required"
 	// The request is currently being processed.
-	GuidanceResponseStatusInProgress
+	GuidanceResponseStatusInProgress GuidanceResponseStatus = "in-progress"
 	// The request was not processed successfully.
-	GuidanceResponseStatusFailure
+	GuidanceResponseStatusFailure GuidanceResponseStatus = "failure"
 	// The response was entered in error.
-	GuidanceResponseStatusEnteredInError
+	GuidanceResponseStatusEnteredInError GuidanceResponseStatus = "entered-in-error"
 )
-
-func (code GuidanceResponseStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *GuidanceResponseStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "success":
-		*code = GuidanceResponseStatusSuccess
-	case "data-requested":
-		*code = GuidanceResponseStatusDataRequested
-	case "data-required":
-		*code = GuidanceResponseStatusDataRequired
-	case "in-progress":
-		*code = GuidanceResponseStatusInProgress
-	case "failure":
-		*code = GuidanceResponseStatusFailure
-	case "entered-in-error":
-		*code = GuidanceResponseStatusEnteredInError
-	default:
-		return fmt.Errorf("unknown GuidanceResponseStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code GuidanceResponseStatus) String() string {
 	return code.Code()
 }
 
 func (code GuidanceResponseStatus) Code() string {
-	switch code {
-	case GuidanceResponseStatusSuccess:
-		return "success"
-	case GuidanceResponseStatusDataRequested:
-		return "data-requested"
-	case GuidanceResponseStatusDataRequired:
-		return "data-required"
-	case GuidanceResponseStatusInProgress:
-		return "in-progress"
-	case GuidanceResponseStatusFailure:
-		return "failure"
-	case GuidanceResponseStatusEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code GuidanceResponseStatus) Display() string {

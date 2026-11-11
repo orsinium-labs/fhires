@@ -1,11 +1,5 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // HTTP verbs (in the HTTP command line).
 //
 // See [HTTP rfc](https://tools.ietf.org/html/rfc7231) for details.
@@ -13,67 +7,29 @@ import (
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/http-verb
-type HTTPVerb int
+type HTTPVerb string
 
 const (
-	HTTPVerbGET HTTPVerb = iota
+	// HTTP GET Command.
+	HTTPVerbGET HTTPVerb = "GET"
 	// HTTP HEAD Command.
-	HTTPVerbHEAD
+	HTTPVerbHEAD HTTPVerb = "HEAD"
 	// HTTP POST Command.
-	HTTPVerbPOST
+	HTTPVerbPOST HTTPVerb = "POST"
 	// HTTP PUT Command.
-	HTTPVerbPUT
+	HTTPVerbPUT HTTPVerb = "PUT"
 	// HTTP DELETE Command.
-	HTTPVerbDELETE
+	HTTPVerbDELETE HTTPVerb = "DELETE"
 	// HTTP PATCH Command.
-	HTTPVerbPATCH
+	HTTPVerbPATCH HTTPVerb = "PATCH"
 )
-
-func (code HTTPVerb) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *HTTPVerb) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "GET":
-		*code = HTTPVerbGET
-	case "HEAD":
-		*code = HTTPVerbHEAD
-	case "POST":
-		*code = HTTPVerbPOST
-	case "PUT":
-		*code = HTTPVerbPUT
-	case "DELETE":
-		*code = HTTPVerbDELETE
-	case "PATCH":
-		*code = HTTPVerbPATCH
-	default:
-		return fmt.Errorf("unknown HTTPVerb code `%s`", s)
-	}
-	return nil
-}
 
 func (code HTTPVerb) String() string {
 	return code.Code()
 }
 
 func (code HTTPVerb) Code() string {
-	switch code {
-	case HTTPVerbGET:
-		return "GET"
-	case HTTPVerbHEAD:
-		return "HEAD"
-	case HTTPVerbPOST:
-		return "POST"
-	case HTTPVerbPUT:
-		return "PUT"
-	case HTTPVerbDELETE:
-		return "DELETE"
-	case HTTPVerbPATCH:
-		return "PATCH"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code HTTPVerb) Display() string {

@@ -1,83 +1,35 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The days of the week.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/days-of-week
-type DaysOfWeek int
+type DaysOfWeek string
 
 const (
-	DaysOfWeekMon DaysOfWeek = iota
+	// Monday.
+	DaysOfWeekMon DaysOfWeek = "mon"
 	// Tuesday.
-	DaysOfWeekTue
+	DaysOfWeekTue DaysOfWeek = "tue"
 	// Wednesday.
-	DaysOfWeekWed
+	DaysOfWeekWed DaysOfWeek = "wed"
 	// Thursday.
-	DaysOfWeekThu
+	DaysOfWeekThu DaysOfWeek = "thu"
 	// Friday.
-	DaysOfWeekFri
+	DaysOfWeekFri DaysOfWeek = "fri"
 	// Saturday.
-	DaysOfWeekSat
+	DaysOfWeekSat DaysOfWeek = "sat"
 	// Sunday.
-	DaysOfWeekSun
+	DaysOfWeekSun DaysOfWeek = "sun"
 )
-
-func (code DaysOfWeek) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *DaysOfWeek) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "mon":
-		*code = DaysOfWeekMon
-	case "tue":
-		*code = DaysOfWeekTue
-	case "wed":
-		*code = DaysOfWeekWed
-	case "thu":
-		*code = DaysOfWeekThu
-	case "fri":
-		*code = DaysOfWeekFri
-	case "sat":
-		*code = DaysOfWeekSat
-	case "sun":
-		*code = DaysOfWeekSun
-	default:
-		return fmt.Errorf("unknown DaysOfWeek code `%s`", s)
-	}
-	return nil
-}
 
 func (code DaysOfWeek) String() string {
 	return code.Code()
 }
 
 func (code DaysOfWeek) Code() string {
-	switch code {
-	case DaysOfWeekMon:
-		return "mon"
-	case DaysOfWeekTue:
-		return "tue"
-	case DaysOfWeekWed:
-		return "wed"
-	case DaysOfWeekThu:
-		return "thu"
-	case DaysOfWeekFri:
-		return "fri"
-	case DaysOfWeekSat:
-		return "sat"
-	case DaysOfWeekSun:
-		return "sun"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code DaysOfWeek) Display() string {

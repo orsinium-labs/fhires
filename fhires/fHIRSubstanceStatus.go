@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // A code to indicate if the substance is actively used.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/substance-status
-type FHIRSubstanceStatus int
+type FHIRSubstanceStatus string
 
 const (
-	FHIRSubstanceStatusActive FHIRSubstanceStatus = iota
+	// The substance is considered for use or reference.
+	FHIRSubstanceStatusActive FHIRSubstanceStatus = "active"
 	// The substance is considered for reference, but not for use.
-	FHIRSubstanceStatusInactive
+	FHIRSubstanceStatusInactive FHIRSubstanceStatus = "inactive"
 	// The substance was entered in error.
-	FHIRSubstanceStatusEnteredInError
+	FHIRSubstanceStatusEnteredInError FHIRSubstanceStatus = "entered-in-error"
 )
-
-func (code FHIRSubstanceStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *FHIRSubstanceStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "active":
-		*code = FHIRSubstanceStatusActive
-	case "inactive":
-		*code = FHIRSubstanceStatusInactive
-	case "entered-in-error":
-		*code = FHIRSubstanceStatusEnteredInError
-	default:
-		return fmt.Errorf("unknown FHIRSubstanceStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code FHIRSubstanceStatus) String() string {
 	return code.Code()
 }
 
 func (code FHIRSubstanceStatus) Code() string {
-	switch code {
-	case FHIRSubstanceStatusActive:
-		return "active"
-	case FHIRSubstanceStatusInactive:
-		return "inactive"
-	case FHIRSubstanceStatusEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code FHIRSubstanceStatus) Display() string {

@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The current status of the test report.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/report-status-codes
-type TestReportStatus int
+type TestReportStatus string
 
 const (
-	TestReportStatusCompleted TestReportStatus = iota
+	// All test operations have completed.
+	TestReportStatusCompleted TestReportStatus = "completed"
 	// A test operations is currently executing.
-	TestReportStatusInProgress
+	TestReportStatusInProgress TestReportStatus = "in-progress"
 	// A test operation is waiting for an external client request.
-	TestReportStatusWaiting
+	TestReportStatusWaiting TestReportStatus = "waiting"
 	// The test script execution was manually stopped.
-	TestReportStatusStopped
+	TestReportStatusStopped TestReportStatus = "stopped"
 	// This test report was entered or created in error.
-	TestReportStatusEnteredInError
+	TestReportStatusEnteredInError TestReportStatus = "entered-in-error"
 )
-
-func (code TestReportStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *TestReportStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "completed":
-		*code = TestReportStatusCompleted
-	case "in-progress":
-		*code = TestReportStatusInProgress
-	case "waiting":
-		*code = TestReportStatusWaiting
-	case "stopped":
-		*code = TestReportStatusStopped
-	case "entered-in-error":
-		*code = TestReportStatusEnteredInError
-	default:
-		return fmt.Errorf("unknown TestReportStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code TestReportStatus) String() string {
 	return code.Code()
 }
 
 func (code TestReportStatus) Code() string {
-	switch code {
-	case TestReportStatusCompleted:
-		return "completed"
-	case TestReportStatusInProgress:
-		return "in-progress"
-	case TestReportStatusWaiting:
-		return "waiting"
-	case TestReportStatusStopped:
-		return "stopped"
-	case TestReportStatusEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code TestReportStatus) Display() string {

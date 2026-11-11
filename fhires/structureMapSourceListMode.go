@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // If field is a list, how to manage the source.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/map-source-list-mode
-type StructureMapSourceListMode int
+type StructureMapSourceListMode string
 
 const (
-	StructureMapSourceListModeFirst StructureMapSourceListMode = iota
+	// Only process this rule for the first in the list.
+	StructureMapSourceListModeFirst StructureMapSourceListMode = "first"
 	// Process this rule for all but the first.
-	StructureMapSourceListModeNot_first
+	StructureMapSourceListModeNot_first StructureMapSourceListMode = "not_first"
 	// Only process this rule for the last in the list.
-	StructureMapSourceListModeLast
+	StructureMapSourceListModeLast StructureMapSourceListMode = "last"
 	// Process this rule for all but the last.
-	StructureMapSourceListModeNot_last
+	StructureMapSourceListModeNot_last StructureMapSourceListMode = "not_last"
 	// Only process this rule is there is only item.
-	StructureMapSourceListModeOnly_one
+	StructureMapSourceListModeOnly_one StructureMapSourceListMode = "only_one"
 )
-
-func (code StructureMapSourceListMode) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *StructureMapSourceListMode) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "first":
-		*code = StructureMapSourceListModeFirst
-	case "not_first":
-		*code = StructureMapSourceListModeNot_first
-	case "last":
-		*code = StructureMapSourceListModeLast
-	case "not_last":
-		*code = StructureMapSourceListModeNot_last
-	case "only_one":
-		*code = StructureMapSourceListModeOnly_one
-	default:
-		return fmt.Errorf("unknown StructureMapSourceListMode code `%s`", s)
-	}
-	return nil
-}
 
 func (code StructureMapSourceListMode) String() string {
 	return code.Code()
 }
 
 func (code StructureMapSourceListMode) Code() string {
-	switch code {
-	case StructureMapSourceListModeFirst:
-		return "first"
-	case StructureMapSourceListModeNot_first:
-		return "not_first"
-	case StructureMapSourceListModeLast:
-		return "last"
-	case StructureMapSourceListModeNot_last:
-		return "not_last"
-	case StructureMapSourceListModeOnly_one:
-		return "only_one"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code StructureMapSourceListMode) Display() string {

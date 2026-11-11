@@ -1,101 +1,41 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The type of participant for the action.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/action-participant-type
-type ActionParticipantType int
+type ActionParticipantType string
 
 const (
-	ActionParticipantTypeCareteam ActionParticipantType = iota
+	// The participant is a care team caring for the patient under evaluation.
+	ActionParticipantTypeCareteam ActionParticipantType = "careteam"
 	// The participant is a system or device used in the care of the patient.
-	ActionParticipantTypeDevice
+	ActionParticipantTypeDevice ActionParticipantType = "device"
 	// The participant is a group of participants involved in the care of the patient.
-	ActionParticipantTypeGroup
+	ActionParticipantTypeGroup ActionParticipantType = "group"
 	// The participant is an institution that can provide the given healthcare service used in the care of the patient.
-	ActionParticipantTypeHealthcareservice
+	ActionParticipantTypeHealthcareservice ActionParticipantType = "healthcareservice"
 	// The participant is a location involved in the care of the patient.
-	ActionParticipantTypeLocation
+	ActionParticipantTypeLocation ActionParticipantType = "location"
 	// The participant is an organization involved in the care of the patient.
-	ActionParticipantTypeOrganization
+	ActionParticipantTypeOrganization ActionParticipantType = "organization"
 	// The participant is the patient under evaluation.
-	ActionParticipantTypePatient
+	ActionParticipantTypePatient ActionParticipantType = "patient"
 	// The participant is a practitioner involved in the patient's care.
-	ActionParticipantTypePractitioner
+	ActionParticipantTypePractitioner ActionParticipantType = "practitioner"
 	// The participant is a particular practitioner role involved in the patient's care.
-	ActionParticipantTypePractitionerrole
+	ActionParticipantTypePractitionerrole ActionParticipantType = "practitionerrole"
 	// The participant is a person related to the patient.
-	ActionParticipantTypeRelatedperson
+	ActionParticipantTypeRelatedperson ActionParticipantType = "relatedperson"
 )
-
-func (code ActionParticipantType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ActionParticipantType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "careteam":
-		*code = ActionParticipantTypeCareteam
-	case "device":
-		*code = ActionParticipantTypeDevice
-	case "group":
-		*code = ActionParticipantTypeGroup
-	case "healthcareservice":
-		*code = ActionParticipantTypeHealthcareservice
-	case "location":
-		*code = ActionParticipantTypeLocation
-	case "organization":
-		*code = ActionParticipantTypeOrganization
-	case "patient":
-		*code = ActionParticipantTypePatient
-	case "practitioner":
-		*code = ActionParticipantTypePractitioner
-	case "practitionerrole":
-		*code = ActionParticipantTypePractitionerrole
-	case "relatedperson":
-		*code = ActionParticipantTypeRelatedperson
-	default:
-		return fmt.Errorf("unknown ActionParticipantType code `%s`", s)
-	}
-	return nil
-}
 
 func (code ActionParticipantType) String() string {
 	return code.Code()
 }
 
 func (code ActionParticipantType) Code() string {
-	switch code {
-	case ActionParticipantTypeCareteam:
-		return "careteam"
-	case ActionParticipantTypeDevice:
-		return "device"
-	case ActionParticipantTypeGroup:
-		return "group"
-	case ActionParticipantTypeHealthcareservice:
-		return "healthcareservice"
-	case ActionParticipantTypeLocation:
-		return "location"
-	case ActionParticipantTypeOrganization:
-		return "organization"
-	case ActionParticipantTypePatient:
-		return "patient"
-	case ActionParticipantTypePractitioner:
-		return "practitioner"
-	case ActionParticipantTypePractitionerrole:
-		return "practitionerrole"
-	case ActionParticipantTypeRelatedperson:
-		return "relatedperson"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ActionParticipantType) Display() string {

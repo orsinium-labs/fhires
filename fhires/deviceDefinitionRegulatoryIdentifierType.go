@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Regulatory Identifier type
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type
-type DeviceDefinitionRegulatoryIdentifierType int
+type DeviceDefinitionRegulatoryIdentifierType string
 
 const (
-	DeviceDefinitionRegulatoryIdentifierTypeBasic DeviceDefinitionRegulatoryIdentifierType = iota
+	// EUDAMED's basic UDI-DI identifier.
+	DeviceDefinitionRegulatoryIdentifierTypeBasic DeviceDefinitionRegulatoryIdentifierType = "basic"
 	// EUDAMED's master UDI-DI identifier.
-	DeviceDefinitionRegulatoryIdentifierTypeMaster
+	DeviceDefinitionRegulatoryIdentifierTypeMaster DeviceDefinitionRegulatoryIdentifierType = "master"
 	// The identifier is a license number.
-	DeviceDefinitionRegulatoryIdentifierTypeLicense
+	DeviceDefinitionRegulatoryIdentifierTypeLicense DeviceDefinitionRegulatoryIdentifierType = "license"
 )
-
-func (code DeviceDefinitionRegulatoryIdentifierType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *DeviceDefinitionRegulatoryIdentifierType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "basic":
-		*code = DeviceDefinitionRegulatoryIdentifierTypeBasic
-	case "master":
-		*code = DeviceDefinitionRegulatoryIdentifierTypeMaster
-	case "license":
-		*code = DeviceDefinitionRegulatoryIdentifierTypeLicense
-	default:
-		return fmt.Errorf("unknown DeviceDefinitionRegulatoryIdentifierType code `%s`", s)
-	}
-	return nil
-}
 
 func (code DeviceDefinitionRegulatoryIdentifierType) String() string {
 	return code.Code()
 }
 
 func (code DeviceDefinitionRegulatoryIdentifierType) Code() string {
-	switch code {
-	case DeviceDefinitionRegulatoryIdentifierTypeBasic:
-		return "basic"
-	case DeviceDefinitionRegulatoryIdentifierTypeMaster:
-		return "master"
-	case DeviceDefinitionRegulatoryIdentifierTypeLicense:
-		return "license"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code DeviceDefinitionRegulatoryIdentifierType) Display() string {

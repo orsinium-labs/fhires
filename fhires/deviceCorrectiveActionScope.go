@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Device - Corrective action scope
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/device-correctiveactionscope
-type DeviceCorrectiveActionScope int
+type DeviceCorrectiveActionScope string
 
 const (
-	DeviceCorrectiveActionScopeModel DeviceCorrectiveActionScope = iota
+	// The corrective action was intended for all units of the same model.
+	DeviceCorrectiveActionScopeModel DeviceCorrectiveActionScope = "model"
 	// The corrective action was intended for a specific batch of units identified by a lot number.
-	DeviceCorrectiveActionScopeLotNumbers
+	DeviceCorrectiveActionScopeLotNumbers DeviceCorrectiveActionScope = "lot-numbers"
 	// The corrective action was intended for an individual unit (or a set of units) individually identified by serial number.
-	DeviceCorrectiveActionScopeSerialNumbers
+	DeviceCorrectiveActionScopeSerialNumbers DeviceCorrectiveActionScope = "serial-numbers"
 )
-
-func (code DeviceCorrectiveActionScope) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *DeviceCorrectiveActionScope) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "model":
-		*code = DeviceCorrectiveActionScopeModel
-	case "lot-numbers":
-		*code = DeviceCorrectiveActionScopeLotNumbers
-	case "serial-numbers":
-		*code = DeviceCorrectiveActionScopeSerialNumbers
-	default:
-		return fmt.Errorf("unknown DeviceCorrectiveActionScope code `%s`", s)
-	}
-	return nil
-}
 
 func (code DeviceCorrectiveActionScope) String() string {
 	return code.Code()
 }
 
 func (code DeviceCorrectiveActionScope) Code() string {
-	switch code {
-	case DeviceCorrectiveActionScopeModel:
-		return "model"
-	case DeviceCorrectiveActionScopeLotNumbers:
-		return "lot-numbers"
-	case DeviceCorrectiveActionScopeSerialNumbers:
-		return "serial-numbers"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code DeviceCorrectiveActionScope) Display() string {

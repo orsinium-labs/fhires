@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Codes to represent how much resource content to send in the notification payload.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/subscription-payload-content
-type SubscriptionPayloadContent int
+type SubscriptionPayloadContent string
 
 const (
-	SubscriptionPayloadContentEmpty SubscriptionPayloadContent = iota
+	// No resource content is transacted in the notification payload.
+	SubscriptionPayloadContentEmpty SubscriptionPayloadContent = "empty"
 	// Only the resource id is transacted in the notification payload.
-	SubscriptionPayloadContentIdOnly
+	SubscriptionPayloadContentIdOnly SubscriptionPayloadContent = "id-only"
 	// The entire resource is transacted in the notification payload.
-	SubscriptionPayloadContentFullResource
+	SubscriptionPayloadContentFullResource SubscriptionPayloadContent = "full-resource"
 )
-
-func (code SubscriptionPayloadContent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *SubscriptionPayloadContent) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "empty":
-		*code = SubscriptionPayloadContentEmpty
-	case "id-only":
-		*code = SubscriptionPayloadContentIdOnly
-	case "full-resource":
-		*code = SubscriptionPayloadContentFullResource
-	default:
-		return fmt.Errorf("unknown SubscriptionPayloadContent code `%s`", s)
-	}
-	return nil
-}
 
 func (code SubscriptionPayloadContent) String() string {
 	return code.Code()
 }
 
 func (code SubscriptionPayloadContent) Code() string {
-	switch code {
-	case SubscriptionPayloadContentEmpty:
-		return "empty"
-	case SubscriptionPayloadContentIdOnly:
-		return "id-only"
-	case SubscriptionPayloadContentFullResource:
-		return "full-resource"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code SubscriptionPayloadContent) Display() string {

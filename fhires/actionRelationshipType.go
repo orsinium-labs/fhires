@@ -1,95 +1,39 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Defines the types of relationships between actions.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/action-relationship-type
-type ActionRelationshipType int
+type ActionRelationshipType string
 
 const (
-	ActionRelationshipTypeBefore ActionRelationshipType = iota
+	// The action must be performed before the related action.
+	ActionRelationshipTypeBefore ActionRelationshipType = "before"
 	// The action must be performed before the start of the related action.
-	ActionRelationshipTypeBeforeStart
+	ActionRelationshipTypeBeforeStart ActionRelationshipType = "before-start"
 	// The action must be performed before the end of the related action.
-	ActionRelationshipTypeBeforeEnd
+	ActionRelationshipTypeBeforeEnd ActionRelationshipType = "before-end"
 	// The action must be performed concurrent with the related action.
-	ActionRelationshipTypeConcurrent
+	ActionRelationshipTypeConcurrent ActionRelationshipType = "concurrent"
 	// The action must be performed concurrent with the start of the related action.
-	ActionRelationshipTypeConcurrentWithStart
+	ActionRelationshipTypeConcurrentWithStart ActionRelationshipType = "concurrent-with-start"
 	// The action must be performed concurrent with the end of the related action.
-	ActionRelationshipTypeConcurrentWithEnd
+	ActionRelationshipTypeConcurrentWithEnd ActionRelationshipType = "concurrent-with-end"
 	// The action must be performed after the related action.
-	ActionRelationshipTypeAfter
+	ActionRelationshipTypeAfter ActionRelationshipType = "after"
 	// The action must be performed after the start of the related action.
-	ActionRelationshipTypeAfterStart
+	ActionRelationshipTypeAfterStart ActionRelationshipType = "after-start"
 	// The action must be performed after the end of the related action.
-	ActionRelationshipTypeAfterEnd
+	ActionRelationshipTypeAfterEnd ActionRelationshipType = "after-end"
 )
-
-func (code ActionRelationshipType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ActionRelationshipType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "before":
-		*code = ActionRelationshipTypeBefore
-	case "before-start":
-		*code = ActionRelationshipTypeBeforeStart
-	case "before-end":
-		*code = ActionRelationshipTypeBeforeEnd
-	case "concurrent":
-		*code = ActionRelationshipTypeConcurrent
-	case "concurrent-with-start":
-		*code = ActionRelationshipTypeConcurrentWithStart
-	case "concurrent-with-end":
-		*code = ActionRelationshipTypeConcurrentWithEnd
-	case "after":
-		*code = ActionRelationshipTypeAfter
-	case "after-start":
-		*code = ActionRelationshipTypeAfterStart
-	case "after-end":
-		*code = ActionRelationshipTypeAfterEnd
-	default:
-		return fmt.Errorf("unknown ActionRelationshipType code `%s`", s)
-	}
-	return nil
-}
 
 func (code ActionRelationshipType) String() string {
 	return code.Code()
 }
 
 func (code ActionRelationshipType) Code() string {
-	switch code {
-	case ActionRelationshipTypeBefore:
-		return "before"
-	case ActionRelationshipTypeBeforeStart:
-		return "before-start"
-	case ActionRelationshipTypeBeforeEnd:
-		return "before-end"
-	case ActionRelationshipTypeConcurrent:
-		return "concurrent"
-	case ActionRelationshipTypeConcurrentWithStart:
-		return "concurrent-with-start"
-	case ActionRelationshipTypeConcurrentWithEnd:
-		return "concurrent-with-end"
-	case ActionRelationshipTypeAfter:
-		return "after"
-	case ActionRelationshipTypeAfterStart:
-		return "after-start"
-	case ActionRelationshipTypeAfterEnd:
-		return "after-end"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ActionRelationshipType) Display() string {

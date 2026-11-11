@@ -1,11 +1,5 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Overall nature of the adverse event, e.g.
 //
 // real or potential.
@@ -13,43 +7,21 @@ import (
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/adverse-event-actuality
-type AdverseEventActuality int
+type AdverseEventActuality string
 
 const (
-	AdverseEventActualityActual AdverseEventActuality = iota
+	// The adverse event actually happened regardless of whether anyone was affected or harmed.
+	AdverseEventActualityActual AdverseEventActuality = "actual"
 	// A potential adverse event.
-	AdverseEventActualityPotential
+	AdverseEventActualityPotential AdverseEventActuality = "potential"
 )
-
-func (code AdverseEventActuality) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *AdverseEventActuality) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "actual":
-		*code = AdverseEventActualityActual
-	case "potential":
-		*code = AdverseEventActualityPotential
-	default:
-		return fmt.Errorf("unknown AdverseEventActuality code `%s`", s)
-	}
-	return nil
-}
 
 func (code AdverseEventActuality) String() string {
 	return code.Code()
 }
 
 func (code AdverseEventActuality) Code() string {
-	switch code {
-	case AdverseEventActualityActual:
-		return "actual"
-	case AdverseEventActualityPotential:
-		return "potential"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code AdverseEventActuality) Display() string {

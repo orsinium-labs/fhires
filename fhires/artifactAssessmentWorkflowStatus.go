@@ -1,101 +1,41 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Possible values for the workflow status of the comment or assessment, typically used to coordinate workflow around the process of accepting and rejecting changes and comments on the artifact.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status
-type ArtifactAssessmentWorkflowStatus int
+type ArtifactAssessmentWorkflowStatus string
 
 const (
-	ArtifactAssessmentWorkflowStatusSubmitted ArtifactAssessmentWorkflowStatus = iota
+	// The comment has been submitted, but the responsible party has not yet been determined, or the responsible party has not yet determined the next steps to be taken.
+	ArtifactAssessmentWorkflowStatusSubmitted ArtifactAssessmentWorkflowStatus = "submitted"
 	// The comment has been triaged, meaning the responsible party has been determined and next steps have been identified to address the comment.
-	ArtifactAssessmentWorkflowStatusTriaged
+	ArtifactAssessmentWorkflowStatusTriaged ArtifactAssessmentWorkflowStatus = "triaged"
 	// The comment is waiting for input from a specific party before next steps can be taken.
-	ArtifactAssessmentWorkflowStatusWaitingForInput
+	ArtifactAssessmentWorkflowStatusWaitingForInput ArtifactAssessmentWorkflowStatus = "waiting-for-input"
 	// The comment has been resolved and no changes resulted from the resolution
-	ArtifactAssessmentWorkflowStatusResolvedNoChange
+	ArtifactAssessmentWorkflowStatusResolvedNoChange ArtifactAssessmentWorkflowStatus = "resolved-no-change"
 	// The comment has been resolved and changes are required to address the comment
-	ArtifactAssessmentWorkflowStatusResolvedChangeRequired
+	ArtifactAssessmentWorkflowStatusResolvedChangeRequired ArtifactAssessmentWorkflowStatus = "resolved-change-required"
 	// The comment is acceptable, but resolution of the comment and application of any associated changes have been deferred
-	ArtifactAssessmentWorkflowStatusDeferred
+	ArtifactAssessmentWorkflowStatusDeferred ArtifactAssessmentWorkflowStatus = "deferred"
 	// The comment is a duplicate of another comment already received
-	ArtifactAssessmentWorkflowStatusDuplicate
+	ArtifactAssessmentWorkflowStatusDuplicate ArtifactAssessmentWorkflowStatus = "duplicate"
 	// The comment is resolved and any necessary changes have been applied
-	ArtifactAssessmentWorkflowStatusApplied
+	ArtifactAssessmentWorkflowStatusApplied ArtifactAssessmentWorkflowStatus = "applied"
 	// The necessary changes to the artifact have been published in a new version of the artifact
-	ArtifactAssessmentWorkflowStatusPublished
+	ArtifactAssessmentWorkflowStatusPublished ArtifactAssessmentWorkflowStatus = "published"
 	// The assessment was entered in error
-	ArtifactAssessmentWorkflowStatusEnteredInError
+	ArtifactAssessmentWorkflowStatusEnteredInError ArtifactAssessmentWorkflowStatus = "entered-in-error"
 )
-
-func (code ArtifactAssessmentWorkflowStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ArtifactAssessmentWorkflowStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "submitted":
-		*code = ArtifactAssessmentWorkflowStatusSubmitted
-	case "triaged":
-		*code = ArtifactAssessmentWorkflowStatusTriaged
-	case "waiting-for-input":
-		*code = ArtifactAssessmentWorkflowStatusWaitingForInput
-	case "resolved-no-change":
-		*code = ArtifactAssessmentWorkflowStatusResolvedNoChange
-	case "resolved-change-required":
-		*code = ArtifactAssessmentWorkflowStatusResolvedChangeRequired
-	case "deferred":
-		*code = ArtifactAssessmentWorkflowStatusDeferred
-	case "duplicate":
-		*code = ArtifactAssessmentWorkflowStatusDuplicate
-	case "applied":
-		*code = ArtifactAssessmentWorkflowStatusApplied
-	case "published":
-		*code = ArtifactAssessmentWorkflowStatusPublished
-	case "entered-in-error":
-		*code = ArtifactAssessmentWorkflowStatusEnteredInError
-	default:
-		return fmt.Errorf("unknown ArtifactAssessmentWorkflowStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code ArtifactAssessmentWorkflowStatus) String() string {
 	return code.Code()
 }
 
 func (code ArtifactAssessmentWorkflowStatus) Code() string {
-	switch code {
-	case ArtifactAssessmentWorkflowStatusSubmitted:
-		return "submitted"
-	case ArtifactAssessmentWorkflowStatusTriaged:
-		return "triaged"
-	case ArtifactAssessmentWorkflowStatusWaitingForInput:
-		return "waiting-for-input"
-	case ArtifactAssessmentWorkflowStatusResolvedNoChange:
-		return "resolved-no-change"
-	case ArtifactAssessmentWorkflowStatusResolvedChangeRequired:
-		return "resolved-change-required"
-	case ArtifactAssessmentWorkflowStatusDeferred:
-		return "deferred"
-	case ArtifactAssessmentWorkflowStatusDuplicate:
-		return "duplicate"
-	case ArtifactAssessmentWorkflowStatusApplied:
-		return "applied"
-	case ArtifactAssessmentWorkflowStatusPublished:
-		return "published"
-	case ArtifactAssessmentWorkflowStatusEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ArtifactAssessmentWorkflowStatus) Display() string {

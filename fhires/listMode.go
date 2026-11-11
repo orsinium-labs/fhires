@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The processing mode that applies to this list.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/list-mode
-type ListMode int
+type ListMode string
 
 const (
-	ListModeWorking ListMode = iota
+	// This list is the master list, maintained in an ongoing fashion with regular updates as the real-world list it is tracking changes.
+	ListModeWorking ListMode = "working"
 	// This list was prepared as a snapshot. It should not be assumed to be current.
-	ListModeSnapshot
+	ListModeSnapshot ListMode = "snapshot"
 	// A point-in-time list that shows what changes have been made or recommended.  E.g. a discharge medication list showing what was added and removed during an encounter.
-	ListModeChanges
+	ListModeChanges ListMode = "changes"
 )
-
-func (code ListMode) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ListMode) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "working":
-		*code = ListModeWorking
-	case "snapshot":
-		*code = ListModeSnapshot
-	case "changes":
-		*code = ListModeChanges
-	default:
-		return fmt.Errorf("unknown ListMode code `%s`", s)
-	}
-	return nil
-}
 
 func (code ListMode) String() string {
 	return code.Code()
 }
 
 func (code ListMode) Code() string {
-	switch code {
-	case ListModeWorking:
-		return "working"
-	case ListModeSnapshot:
-		return "snapshot"
-	case ListModeChanges:
-		return "changes"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ListMode) Display() string {

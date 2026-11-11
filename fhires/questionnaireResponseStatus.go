@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Lifecycle status of the questionnaire response.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/questionnaire-answers-status
-type QuestionnaireResponseStatus int
+type QuestionnaireResponseStatus string
 
 const (
-	QuestionnaireResponseStatusInProgress QuestionnaireResponseStatus = iota
+	// This QuestionnaireResponse has been partially filled out with answers but changes or additions are still expected to be made to it.
+	QuestionnaireResponseStatusInProgress QuestionnaireResponseStatus = "in-progress"
 	// This QuestionnaireResponse has been filled out with answers and the current content is regarded as definitive.
-	QuestionnaireResponseStatusCompleted
+	QuestionnaireResponseStatusCompleted QuestionnaireResponseStatus = "completed"
 	// This QuestionnaireResponse has been filled out with answers, then marked as complete, yet changes or additions have been made to it afterwards.
-	QuestionnaireResponseStatusAmended
+	QuestionnaireResponseStatusAmended QuestionnaireResponseStatus = "amended"
 	// This QuestionnaireResponse was entered in error and voided.
-	QuestionnaireResponseStatusEnteredInError
+	QuestionnaireResponseStatusEnteredInError QuestionnaireResponseStatus = "entered-in-error"
 	// This QuestionnaireResponse has been partially filled out with answers but has been abandoned. No subsequent changes can be made.
-	QuestionnaireResponseStatusStopped
+	QuestionnaireResponseStatusStopped QuestionnaireResponseStatus = "stopped"
 )
-
-func (code QuestionnaireResponseStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *QuestionnaireResponseStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "in-progress":
-		*code = QuestionnaireResponseStatusInProgress
-	case "completed":
-		*code = QuestionnaireResponseStatusCompleted
-	case "amended":
-		*code = QuestionnaireResponseStatusAmended
-	case "entered-in-error":
-		*code = QuestionnaireResponseStatusEnteredInError
-	case "stopped":
-		*code = QuestionnaireResponseStatusStopped
-	default:
-		return fmt.Errorf("unknown QuestionnaireResponseStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code QuestionnaireResponseStatus) String() string {
 	return code.Code()
 }
 
 func (code QuestionnaireResponseStatus) Code() string {
-	switch code {
-	case QuestionnaireResponseStatusInProgress:
-		return "in-progress"
-	case QuestionnaireResponseStatusCompleted:
-		return "completed"
-	case QuestionnaireResponseStatusAmended:
-		return "amended"
-	case QuestionnaireResponseStatusEnteredInError:
-		return "entered-in-error"
-	case QuestionnaireResponseStatusStopped:
-		return "stopped"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code QuestionnaireResponseStatus) Display() string {

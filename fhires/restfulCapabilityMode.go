@@ -1,53 +1,25 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The mode of a RESTful capability statement.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/restful-capability-mode
-type RestfulCapabilityMode int
+type RestfulCapabilityMode string
 
 const (
-	RestfulCapabilityModeClient RestfulCapabilityMode = iota
+	// The application acts as a client for this resource.
+	RestfulCapabilityModeClient RestfulCapabilityMode = "client"
 	// The application acts as a server for this resource.
-	RestfulCapabilityModeServer
+	RestfulCapabilityModeServer RestfulCapabilityMode = "server"
 )
-
-func (code RestfulCapabilityMode) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *RestfulCapabilityMode) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "client":
-		*code = RestfulCapabilityModeClient
-	case "server":
-		*code = RestfulCapabilityModeServer
-	default:
-		return fmt.Errorf("unknown RestfulCapabilityMode code `%s`", s)
-	}
-	return nil
-}
 
 func (code RestfulCapabilityMode) String() string {
 	return code.Code()
 }
 
 func (code RestfulCapabilityMode) Code() string {
-	switch code {
-	case RestfulCapabilityModeClient:
-		return "client"
-	case RestfulCapabilityModeServer:
-		return "server"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code RestfulCapabilityMode) Display() string {

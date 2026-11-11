@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Codes providing the status/availability of a specimen.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/specimen-status
-type SpecimenStatus int
+type SpecimenStatus string
 
 const (
-	SpecimenStatusAvailable SpecimenStatus = iota
+	// The physical specimen is present and in good condition.
+	SpecimenStatusAvailable SpecimenStatus = "available"
 	// There is no physical specimen because it is either lost, destroyed or consumed.
-	SpecimenStatusUnavailable
+	SpecimenStatusUnavailable SpecimenStatus = "unavailable"
 	// The specimen cannot be used because of a quality issue such as a broken container, contamination, or too old.
-	SpecimenStatusUnsatisfactory
+	SpecimenStatusUnsatisfactory SpecimenStatus = "unsatisfactory"
 	// The specimen was entered in error and therefore nullified.
-	SpecimenStatusEnteredInError
+	SpecimenStatusEnteredInError SpecimenStatus = "entered-in-error"
 )
-
-func (code SpecimenStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *SpecimenStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "available":
-		*code = SpecimenStatusAvailable
-	case "unavailable":
-		*code = SpecimenStatusUnavailable
-	case "unsatisfactory":
-		*code = SpecimenStatusUnsatisfactory
-	case "entered-in-error":
-		*code = SpecimenStatusEnteredInError
-	default:
-		return fmt.Errorf("unknown SpecimenStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code SpecimenStatus) String() string {
 	return code.Code()
 }
 
 func (code SpecimenStatus) Code() string {
-	switch code {
-	case SpecimenStatusAvailable:
-		return "available"
-	case SpecimenStatusUnavailable:
-		return "unavailable"
-	case SpecimenStatusUnsatisfactory:
-		return "unsatisfactory"
-	case SpecimenStatusEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code SpecimenStatus) Display() string {

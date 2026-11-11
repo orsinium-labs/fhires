@@ -1,89 +1,37 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The value set to instantiate this attribute should be drawn from a terminologically robust code system that consists of or contains concepts to support describing the current status of the administered dose of vaccine.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/immunization-status
-type ImmunizationStatusCodes int
+type ImmunizationStatusCodes string
 
 const (
-	ImmunizationStatusCodesPreparation ImmunizationStatusCodes = iota
+	// The core event has not started yet, but some staging activities have begun (e.g. surgical suite preparation).  Preparation stages may be tracked for billing purposes.
+	ImmunizationStatusCodesPreparation ImmunizationStatusCodes = "preparation"
 	// The event is currently occurring.
-	ImmunizationStatusCodesInProgress
+	ImmunizationStatusCodesInProgress ImmunizationStatusCodes = "in-progress"
 	// The event was terminated prior to any activity beyond preparation.  I.e. The 'main' activity has not yet begun.  The boundary between preparatory and the 'main' activity is context-specific.
-	ImmunizationStatusCodesNotDone
+	ImmunizationStatusCodesNotDone ImmunizationStatusCodes = "not-done"
 	// The event has been temporarily stopped but is expected to resume in the future.
-	ImmunizationStatusCodesOnHold
+	ImmunizationStatusCodesOnHold ImmunizationStatusCodes = "on-hold"
 	// The event was terminated prior to the full completion of the intended activity but after at least some of the 'main' activity (beyond preparation) has occurred.
-	ImmunizationStatusCodesStopped
+	ImmunizationStatusCodesStopped ImmunizationStatusCodes = "stopped"
 	// The event has now concluded.
-	ImmunizationStatusCodesCompleted
+	ImmunizationStatusCodesCompleted ImmunizationStatusCodes = "completed"
 	// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "stopped" rather than "entered-in-error".).
-	ImmunizationStatusCodesEnteredInError
+	ImmunizationStatusCodesEnteredInError ImmunizationStatusCodes = "entered-in-error"
 	// The authoring/source system does not know which of the status values currently applies for this event.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
-	ImmunizationStatusCodesUnknown
+	ImmunizationStatusCodesUnknown ImmunizationStatusCodes = "unknown"
 )
-
-func (code ImmunizationStatusCodes) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ImmunizationStatusCodes) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "preparation":
-		*code = ImmunizationStatusCodesPreparation
-	case "in-progress":
-		*code = ImmunizationStatusCodesInProgress
-	case "not-done":
-		*code = ImmunizationStatusCodesNotDone
-	case "on-hold":
-		*code = ImmunizationStatusCodesOnHold
-	case "stopped":
-		*code = ImmunizationStatusCodesStopped
-	case "completed":
-		*code = ImmunizationStatusCodesCompleted
-	case "entered-in-error":
-		*code = ImmunizationStatusCodesEnteredInError
-	case "unknown":
-		*code = ImmunizationStatusCodesUnknown
-	default:
-		return fmt.Errorf("unknown ImmunizationStatusCodes code `%s`", s)
-	}
-	return nil
-}
 
 func (code ImmunizationStatusCodes) String() string {
 	return code.Code()
 }
 
 func (code ImmunizationStatusCodes) Code() string {
-	switch code {
-	case ImmunizationStatusCodesPreparation:
-		return "preparation"
-	case ImmunizationStatusCodesInProgress:
-		return "in-progress"
-	case ImmunizationStatusCodesNotDone:
-		return "not-done"
-	case ImmunizationStatusCodesOnHold:
-		return "on-hold"
-	case ImmunizationStatusCodesStopped:
-		return "stopped"
-	case ImmunizationStatusCodesCompleted:
-		return "completed"
-	case ImmunizationStatusCodesEnteredInError:
-		return "entered-in-error"
-	case ImmunizationStatusCodesUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ImmunizationStatusCodes) Display() string {

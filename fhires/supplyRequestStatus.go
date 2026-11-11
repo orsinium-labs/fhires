@@ -1,83 +1,35 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Status of the supply request.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/supplyrequest-status
-type SupplyRequestStatus int
+type SupplyRequestStatus string
 
 const (
-	SupplyRequestStatusDraft SupplyRequestStatus = iota
+	// The request has been created but is not yet complete or ready for action.
+	SupplyRequestStatusDraft SupplyRequestStatus = "draft"
 	// The request is ready to be acted upon.
-	SupplyRequestStatusActive
+	SupplyRequestStatusActive SupplyRequestStatus = "active"
 	// The authorization/request to act has been temporarily withdrawn but is expected to resume in the future.
-	SupplyRequestStatusSuspended
+	SupplyRequestStatusSuspended SupplyRequestStatus = "suspended"
 	// The authorization/request to act has been terminated prior to the full completion of the intended actions.  No further activity should occur.
-	SupplyRequestStatusCancelled
+	SupplyRequestStatusCancelled SupplyRequestStatus = "cancelled"
 	// Activity against the request has been sufficiently completed to the satisfaction of the requester.
-	SupplyRequestStatusCompleted
+	SupplyRequestStatusCompleted SupplyRequestStatus = "completed"
 	// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
-	SupplyRequestStatusEnteredInError
+	SupplyRequestStatusEnteredInError SupplyRequestStatus = "entered-in-error"
 	// The authoring/source system does not know which of the status values currently applies for this observation. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, but the authoring/source system does not know which.
-	SupplyRequestStatusUnknown
+	SupplyRequestStatusUnknown SupplyRequestStatus = "unknown"
 )
-
-func (code SupplyRequestStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *SupplyRequestStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "draft":
-		*code = SupplyRequestStatusDraft
-	case "active":
-		*code = SupplyRequestStatusActive
-	case "suspended":
-		*code = SupplyRequestStatusSuspended
-	case "cancelled":
-		*code = SupplyRequestStatusCancelled
-	case "completed":
-		*code = SupplyRequestStatusCompleted
-	case "entered-in-error":
-		*code = SupplyRequestStatusEnteredInError
-	case "unknown":
-		*code = SupplyRequestStatusUnknown
-	default:
-		return fmt.Errorf("unknown SupplyRequestStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code SupplyRequestStatus) String() string {
 	return code.Code()
 }
 
 func (code SupplyRequestStatus) Code() string {
-	switch code {
-	case SupplyRequestStatusDraft:
-		return "draft"
-	case SupplyRequestStatusActive:
-		return "active"
-	case SupplyRequestStatusSuspended:
-		return "suspended"
-	case SupplyRequestStatusCancelled:
-		return "cancelled"
-	case SupplyRequestStatusCompleted:
-		return "completed"
-	case SupplyRequestStatusEnteredInError:
-		return "entered-in-error"
-	case SupplyRequestStatusUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code SupplyRequestStatus) Display() string {

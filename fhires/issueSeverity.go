@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // How the issue affects the success of the action.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/issue-severity
-type IssueSeverity int
+type IssueSeverity string
 
 const (
-	IssueSeverityFatal IssueSeverity = iota
+	// The issue caused the action to fail and no further checking could be performed.
+	IssueSeverityFatal IssueSeverity = "fatal"
 	// The issue is sufficiently important to cause the action to fail.
-	IssueSeverityError
+	IssueSeverityError IssueSeverity = "error"
 	// The issue is not important enough to cause the action to fail but may cause it to be performed suboptimally or in a way that is not as desired.
-	IssueSeverityWarning
+	IssueSeverityWarning IssueSeverity = "warning"
 	// The issue has no relation to the degree of success of the action.
-	IssueSeverityInformation
+	IssueSeverityInformation IssueSeverity = "information"
 	// The operation completed successfully.
-	IssueSeveritySuccess
+	IssueSeveritySuccess IssueSeverity = "success"
 )
-
-func (code IssueSeverity) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *IssueSeverity) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "fatal":
-		*code = IssueSeverityFatal
-	case "error":
-		*code = IssueSeverityError
-	case "warning":
-		*code = IssueSeverityWarning
-	case "information":
-		*code = IssueSeverityInformation
-	case "success":
-		*code = IssueSeveritySuccess
-	default:
-		return fmt.Errorf("unknown IssueSeverity code `%s`", s)
-	}
-	return nil
-}
 
 func (code IssueSeverity) String() string {
 	return code.Code()
 }
 
 func (code IssueSeverity) Code() string {
-	switch code {
-	case IssueSeverityFatal:
-		return "fatal"
-	case IssueSeverityError:
-		return "error"
-	case IssueSeverityWarning:
-		return "warning"
-	case IssueSeverityInformation:
-		return "information"
-	case IssueSeveritySuccess:
-		return "success"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code IssueSeverity) Display() string {

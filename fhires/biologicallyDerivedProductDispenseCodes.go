@@ -1,89 +1,37 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // BiologicallyDerivedProductDispense Status Codes
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/biologicallyderivedproductdispense-status
-type BiologicallyDerivedProductDispenseCodes int
+type BiologicallyDerivedProductDispenseCodes string
 
 const (
-	BiologicallyDerivedProductDispenseCodesPreparation BiologicallyDerivedProductDispenseCodes = iota
+	// The dispense process has started but not yet completed.
+	BiologicallyDerivedProductDispenseCodesPreparation BiologicallyDerivedProductDispenseCodes = "preparation"
 	// The dispense process is in progress.
-	BiologicallyDerivedProductDispenseCodesInProgress
+	BiologicallyDerivedProductDispenseCodesInProgress BiologicallyDerivedProductDispenseCodes = "in-progress"
 	// The requested product has been allocated and is ready for transport.
-	BiologicallyDerivedProductDispenseCodesAllocated
+	BiologicallyDerivedProductDispenseCodesAllocated BiologicallyDerivedProductDispenseCodes = "allocated"
 	// The dispensed product has been picked up.
-	BiologicallyDerivedProductDispenseCodesIssued
+	BiologicallyDerivedProductDispenseCodesIssued BiologicallyDerivedProductDispenseCodes = "issued"
 	// The dispense could not be completed.
-	BiologicallyDerivedProductDispenseCodesUnfulfilled
+	BiologicallyDerivedProductDispenseCodesUnfulfilled BiologicallyDerivedProductDispenseCodes = "unfulfilled"
 	// The dispensed product was returned.
-	BiologicallyDerivedProductDispenseCodesReturned
+	BiologicallyDerivedProductDispenseCodesReturned BiologicallyDerivedProductDispenseCodes = "returned"
 	// The dispense was entered in error and therefore nullified.
-	BiologicallyDerivedProductDispenseCodesEnteredInError
+	BiologicallyDerivedProductDispenseCodesEnteredInError BiologicallyDerivedProductDispenseCodes = "entered-in-error"
 	// The authoring system does not know which of the status values applies for this dispense. Note: this concept is not to be used for other - one of the listed statuses is presumed to apply, it's just not known which one.
-	BiologicallyDerivedProductDispenseCodesUnknown
+	BiologicallyDerivedProductDispenseCodesUnknown BiologicallyDerivedProductDispenseCodes = "unknown"
 )
-
-func (code BiologicallyDerivedProductDispenseCodes) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *BiologicallyDerivedProductDispenseCodes) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "preparation":
-		*code = BiologicallyDerivedProductDispenseCodesPreparation
-	case "in-progress":
-		*code = BiologicallyDerivedProductDispenseCodesInProgress
-	case "allocated":
-		*code = BiologicallyDerivedProductDispenseCodesAllocated
-	case "issued":
-		*code = BiologicallyDerivedProductDispenseCodesIssued
-	case "unfulfilled":
-		*code = BiologicallyDerivedProductDispenseCodesUnfulfilled
-	case "returned":
-		*code = BiologicallyDerivedProductDispenseCodesReturned
-	case "entered-in-error":
-		*code = BiologicallyDerivedProductDispenseCodesEnteredInError
-	case "unknown":
-		*code = BiologicallyDerivedProductDispenseCodesUnknown
-	default:
-		return fmt.Errorf("unknown BiologicallyDerivedProductDispenseCodes code `%s`", s)
-	}
-	return nil
-}
 
 func (code BiologicallyDerivedProductDispenseCodes) String() string {
 	return code.Code()
 }
 
 func (code BiologicallyDerivedProductDispenseCodes) Code() string {
-	switch code {
-	case BiologicallyDerivedProductDispenseCodesPreparation:
-		return "preparation"
-	case BiologicallyDerivedProductDispenseCodesInProgress:
-		return "in-progress"
-	case BiologicallyDerivedProductDispenseCodesAllocated:
-		return "allocated"
-	case BiologicallyDerivedProductDispenseCodesIssued:
-		return "issued"
-	case BiologicallyDerivedProductDispenseCodesUnfulfilled:
-		return "unfulfilled"
-	case BiologicallyDerivedProductDispenseCodesReturned:
-		return "returned"
-	case BiologicallyDerivedProductDispenseCodesEnteredInError:
-		return "entered-in-error"
-	case BiologicallyDerivedProductDispenseCodesUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code BiologicallyDerivedProductDispenseCodes) Display() string {

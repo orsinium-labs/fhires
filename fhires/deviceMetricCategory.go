@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Describes the category of the metric.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/metric-category
-type DeviceMetricCategory int
+type DeviceMetricCategory string
 
 const (
-	DeviceMetricCategoryMeasurement DeviceMetricCategory = iota
+	// Observations generated for this DeviceMetric are measured.
+	DeviceMetricCategoryMeasurement DeviceMetricCategory = "measurement"
 	// Observations generated for this DeviceMetric is a setting that will influence the behavior of the Device.
-	DeviceMetricCategorySetting
+	DeviceMetricCategorySetting DeviceMetricCategory = "setting"
 	// Observations generated for this DeviceMetric are calculated.
-	DeviceMetricCategoryCalculation
+	DeviceMetricCategoryCalculation DeviceMetricCategory = "calculation"
 	// The category of this DeviceMetric is unspecified.
-	DeviceMetricCategoryUnspecified
+	DeviceMetricCategoryUnspecified DeviceMetricCategory = "unspecified"
 )
-
-func (code DeviceMetricCategory) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *DeviceMetricCategory) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "measurement":
-		*code = DeviceMetricCategoryMeasurement
-	case "setting":
-		*code = DeviceMetricCategorySetting
-	case "calculation":
-		*code = DeviceMetricCategoryCalculation
-	case "unspecified":
-		*code = DeviceMetricCategoryUnspecified
-	default:
-		return fmt.Errorf("unknown DeviceMetricCategory code `%s`", s)
-	}
-	return nil
-}
 
 func (code DeviceMetricCategory) String() string {
 	return code.Code()
 }
 
 func (code DeviceMetricCategory) Code() string {
-	switch code {
-	case DeviceMetricCategoryMeasurement:
-		return "measurement"
-	case DeviceMetricCategorySetting:
-		return "setting"
-	case DeviceMetricCategoryCalculation:
-		return "calculation"
-	case DeviceMetricCategoryUnspecified:
-		return "unspecified"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code DeviceMetricCategory) Display() string {

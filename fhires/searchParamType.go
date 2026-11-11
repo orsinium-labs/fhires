@@ -1,95 +1,39 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Data types allowed to be used for search parameters.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/search-param-type
-type SearchParamType int
+type SearchParamType string
 
 const (
-	SearchParamTypeNumber SearchParamType = iota
+	// Search parameter SHALL be a number (a whole number, or a decimal).
+	SearchParamTypeNumber SearchParamType = "number"
 	// Search parameter is on a date/time. The date format is the standard XML format, though other formats may be supported.
-	SearchParamTypeDate
+	SearchParamTypeDate SearchParamType = "date"
 	// Search parameter is a simple string, like a name part. Search is case-insensitive and accent-insensitive. May match just the start of a string. String parameters may contain spaces.
-	SearchParamTypeString
+	SearchParamTypeString SearchParamType = "string"
 	// Search parameter on a coded element or identifier. May be used to search through the text, display, code and code/codesystem (for codes) and label, system and key (for identifier). Its value is either a string or a pair of namespace and value, separated by a "|", depending on the modifier used.
-	SearchParamTypeToken
+	SearchParamTypeToken SearchParamType = "token"
 	// A reference to another resource (Reference or canonical).
-	SearchParamTypeReference
+	SearchParamTypeReference SearchParamType = "reference"
 	// A composite search parameter that combines a search on two values together.
-	SearchParamTypeComposite
+	SearchParamTypeComposite SearchParamType = "composite"
 	// A search parameter that searches on a quantity.
-	SearchParamTypeQuantity
+	SearchParamTypeQuantity SearchParamType = "quantity"
 	// A search parameter that searches on a URI (RFC 3986).
-	SearchParamTypeUri
+	SearchParamTypeUri SearchParamType = "uri"
 	// Special logic applies to this parameter per the description of the search parameter.
-	SearchParamTypeSpecial
+	SearchParamTypeSpecial SearchParamType = "special"
 )
-
-func (code SearchParamType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *SearchParamType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "number":
-		*code = SearchParamTypeNumber
-	case "date":
-		*code = SearchParamTypeDate
-	case "string":
-		*code = SearchParamTypeString
-	case "token":
-		*code = SearchParamTypeToken
-	case "reference":
-		*code = SearchParamTypeReference
-	case "composite":
-		*code = SearchParamTypeComposite
-	case "quantity":
-		*code = SearchParamTypeQuantity
-	case "uri":
-		*code = SearchParamTypeUri
-	case "special":
-		*code = SearchParamTypeSpecial
-	default:
-		return fmt.Errorf("unknown SearchParamType code `%s`", s)
-	}
-	return nil
-}
 
 func (code SearchParamType) String() string {
 	return code.Code()
 }
 
 func (code SearchParamType) Code() string {
-	switch code {
-	case SearchParamTypeNumber:
-		return "number"
-	case SearchParamTypeDate:
-		return "date"
-	case SearchParamTypeString:
-		return "string"
-	case SearchParamTypeToken:
-		return "token"
-	case SearchParamTypeReference:
-		return "reference"
-	case SearchParamTypeComposite:
-		return "composite"
-	case SearchParamTypeQuantity:
-		return "quantity"
-	case SearchParamTypeUri:
-		return "uri"
-	case SearchParamTypeSpecial:
-		return "special"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code SearchParamType) Display() string {

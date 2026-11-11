@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The level of confidence that this link represents the same actual person, based on NIST Authentication Levels.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/identity-assuranceLevel
-type IdentityAssuranceLevel int
+type IdentityAssuranceLevel string
 
 const (
-	IdentityAssuranceLevelLevel1 IdentityAssuranceLevel = iota
+	// Little or no confidence in the asserted identity's accuracy.
+	IdentityAssuranceLevelLevel1 IdentityAssuranceLevel = "level1"
 	// Some confidence in the asserted identity's accuracy.
-	IdentityAssuranceLevelLevel2
+	IdentityAssuranceLevelLevel2 IdentityAssuranceLevel = "level2"
 	// High confidence in the asserted identity's accuracy.
-	IdentityAssuranceLevelLevel3
+	IdentityAssuranceLevelLevel3 IdentityAssuranceLevel = "level3"
 	// Very high confidence in the asserted identity's accuracy.
-	IdentityAssuranceLevelLevel4
+	IdentityAssuranceLevelLevel4 IdentityAssuranceLevel = "level4"
 )
-
-func (code IdentityAssuranceLevel) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *IdentityAssuranceLevel) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "level1":
-		*code = IdentityAssuranceLevelLevel1
-	case "level2":
-		*code = IdentityAssuranceLevelLevel2
-	case "level3":
-		*code = IdentityAssuranceLevelLevel3
-	case "level4":
-		*code = IdentityAssuranceLevelLevel4
-	default:
-		return fmt.Errorf("unknown IdentityAssuranceLevel code `%s`", s)
-	}
-	return nil
-}
 
 func (code IdentityAssuranceLevel) String() string {
 	return code.Code()
 }
 
 func (code IdentityAssuranceLevel) Code() string {
-	switch code {
-	case IdentityAssuranceLevelLevel1:
-		return "level1"
-	case IdentityAssuranceLevelLevel2:
-		return "level2"
-	case IdentityAssuranceLevelLevel3:
-		return "level3"
-	case IdentityAssuranceLevelLevel4:
-		return "level4"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code IdentityAssuranceLevel) Display() string {

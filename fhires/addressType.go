@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The type of an address (physical / postal).
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/address-type
-type AddressType int
+type AddressType string
 
 const (
-	AddressTypePostal AddressType = iota
+	// Mailing addresses - PO Boxes and care-of addresses.
+	AddressTypePostal AddressType = "postal"
 	// A physical address that can be visited.
-	AddressTypePhysical
+	AddressTypePhysical AddressType = "physical"
 	// An address that is both physical and postal.
-	AddressTypeBoth
+	AddressTypeBoth AddressType = "both"
 )
-
-func (code AddressType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *AddressType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "postal":
-		*code = AddressTypePostal
-	case "physical":
-		*code = AddressTypePhysical
-	case "both":
-		*code = AddressTypeBoth
-	default:
-		return fmt.Errorf("unknown AddressType code `%s`", s)
-	}
-	return nil
-}
 
 func (code AddressType) String() string {
 	return code.Code()
 }
 
 func (code AddressType) Code() string {
-	switch code {
-	case AddressTypePostal:
-		return "postal"
-	case AddressTypePhysical:
-		return "physical"
-	case AddressTypeBoth:
-		return "both"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code AddressType) Display() string {

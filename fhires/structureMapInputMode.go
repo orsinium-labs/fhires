@@ -1,53 +1,25 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Mode for this instance of data.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/map-input-mode
-type StructureMapInputMode int
+type StructureMapInputMode string
 
 const (
-	StructureMapInputModeSource StructureMapInputMode = iota
+	// Names an input instance used a source for mapping.
+	StructureMapInputModeSource StructureMapInputMode = "source"
 	// Names an instance that is being populated.
-	StructureMapInputModeTarget
+	StructureMapInputModeTarget StructureMapInputMode = "target"
 )
-
-func (code StructureMapInputMode) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *StructureMapInputMode) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "source":
-		*code = StructureMapInputModeSource
-	case "target":
-		*code = StructureMapInputModeTarget
-	default:
-		return fmt.Errorf("unknown StructureMapInputMode code `%s`", s)
-	}
-	return nil
-}
 
 func (code StructureMapInputMode) String() string {
 	return code.Code()
 }
 
 func (code StructureMapInputMode) Code() string {
-	switch code {
-	case StructureMapInputModeSource:
-		return "source"
-	case StructureMapInputModeTarget:
-		return "target"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code StructureMapInputMode) Display() string {

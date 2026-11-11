@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The current state of the list.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/list-status
-type ListStatus int
+type ListStatus string
 
 const (
-	ListStatusCurrent ListStatus = iota
+	// The list is considered to be an active part of the patient's record.
+	ListStatusCurrent ListStatus = "current"
 	// The list is "old" and should no longer be considered accurate or relevant.
-	ListStatusRetired
+	ListStatusRetired ListStatus = "retired"
 	// The list was never accurate.  It is retained for medico-legal purposes only.
-	ListStatusEnteredInError
+	ListStatusEnteredInError ListStatus = "entered-in-error"
 )
-
-func (code ListStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ListStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "current":
-		*code = ListStatusCurrent
-	case "retired":
-		*code = ListStatusRetired
-	case "entered-in-error":
-		*code = ListStatusEnteredInError
-	default:
-		return fmt.Errorf("unknown ListStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code ListStatus) String() string {
 	return code.Code()
 }
 
 func (code ListStatus) Code() string {
-	switch code {
-	case ListStatusCurrent:
-		return "current"
-	case ListStatusRetired:
-		return "retired"
-	case ListStatusEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ListStatus) Display() string {

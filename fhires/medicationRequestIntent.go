@@ -1,89 +1,37 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // MedicationRequest Intent Codes
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/medicationrequest-intent
-type MedicationRequestIntent int
+type MedicationRequestIntent string
 
 const (
-	MedicationRequestIntentProposal MedicationRequestIntent = iota
+	// The request is a suggestion made by someone/something that doesn't have an intention to ensure it occurs and without providing an authorization to act
+	MedicationRequestIntentProposal MedicationRequestIntent = "proposal"
 	// The request represents an intention to ensure something occurs without providing an authorization for others to act.
-	MedicationRequestIntentPlan
+	MedicationRequestIntentPlan MedicationRequestIntent = "plan"
 	// The request represents a request/demand and authorization for action
-	MedicationRequestIntentOrder
+	MedicationRequestIntentOrder MedicationRequestIntent = "order"
 	// The request represents the original authorization for the medication request.
-	MedicationRequestIntentOriginalOrder
+	MedicationRequestIntentOriginalOrder MedicationRequestIntent = "original-order"
 	// The request represents an automatically generated supplemental authorization for action based on a parent authorization together with initial results of the action taken against that parent authorization..
-	MedicationRequestIntentReflexOrder
+	MedicationRequestIntentReflexOrder MedicationRequestIntent = "reflex-order"
 	// The request represents the view of an authorization instantiated by a fulfilling system representing the details of the fulfiller's intention to act upon a submitted order.
-	MedicationRequestIntentFillerOrder
+	MedicationRequestIntentFillerOrder MedicationRequestIntent = "filler-order"
 	// The request represents an instance for the particular order and is used to generate a schedule of requests on a medication administration record (MAR).
-	MedicationRequestIntentInstanceOrder
+	MedicationRequestIntentInstanceOrder MedicationRequestIntent = "instance-order"
 	// The request represents a component or option for a RequestOrchestration that establishes timing, conditionality and/or  other constraints among a set of requests.
-	MedicationRequestIntentOption
+	MedicationRequestIntentOption MedicationRequestIntent = "option"
 )
-
-func (code MedicationRequestIntent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *MedicationRequestIntent) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "proposal":
-		*code = MedicationRequestIntentProposal
-	case "plan":
-		*code = MedicationRequestIntentPlan
-	case "order":
-		*code = MedicationRequestIntentOrder
-	case "original-order":
-		*code = MedicationRequestIntentOriginalOrder
-	case "reflex-order":
-		*code = MedicationRequestIntentReflexOrder
-	case "filler-order":
-		*code = MedicationRequestIntentFillerOrder
-	case "instance-order":
-		*code = MedicationRequestIntentInstanceOrder
-	case "option":
-		*code = MedicationRequestIntentOption
-	default:
-		return fmt.Errorf("unknown MedicationRequestIntent code `%s`", s)
-	}
-	return nil
-}
 
 func (code MedicationRequestIntent) String() string {
 	return code.Code()
 }
 
 func (code MedicationRequestIntent) Code() string {
-	switch code {
-	case MedicationRequestIntentProposal:
-		return "proposal"
-	case MedicationRequestIntentPlan:
-		return "plan"
-	case MedicationRequestIntentOrder:
-		return "order"
-	case MedicationRequestIntentOriginalOrder:
-		return "original-order"
-	case MedicationRequestIntentReflexOrder:
-		return "reflex-order"
-	case MedicationRequestIntentFillerOrder:
-		return "filler-order"
-	case MedicationRequestIntentInstanceOrder:
-		return "instance-order"
-	case MedicationRequestIntentOption:
-		return "option"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code MedicationRequestIntent) Display() string {

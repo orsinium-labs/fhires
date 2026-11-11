@@ -1,83 +1,35 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The allowable request method or HTTP operation codes.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/http-operations
-type TestScriptRequestMethodCode int
+type TestScriptRequestMethodCode string
 
 const (
-	TestScriptRequestMethodCodeDelete TestScriptRequestMethodCode = iota
+	// HTTP DELETE operation.
+	TestScriptRequestMethodCodeDelete TestScriptRequestMethodCode = "delete"
 	// HTTP GET operation.
-	TestScriptRequestMethodCodeGet
+	TestScriptRequestMethodCodeGet TestScriptRequestMethodCode = "get"
 	// HTTP OPTIONS operation.
-	TestScriptRequestMethodCodeOptions
+	TestScriptRequestMethodCodeOptions TestScriptRequestMethodCode = "options"
 	// HTTP PATCH operation.
-	TestScriptRequestMethodCodePatch
+	TestScriptRequestMethodCodePatch TestScriptRequestMethodCode = "patch"
 	// HTTP POST operation.
-	TestScriptRequestMethodCodePost
+	TestScriptRequestMethodCodePost TestScriptRequestMethodCode = "post"
 	// HTTP PUT operation.
-	TestScriptRequestMethodCodePut
+	TestScriptRequestMethodCodePut TestScriptRequestMethodCode = "put"
 	// HTTP HEAD operation.
-	TestScriptRequestMethodCodeHead
+	TestScriptRequestMethodCodeHead TestScriptRequestMethodCode = "head"
 )
-
-func (code TestScriptRequestMethodCode) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *TestScriptRequestMethodCode) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "delete":
-		*code = TestScriptRequestMethodCodeDelete
-	case "get":
-		*code = TestScriptRequestMethodCodeGet
-	case "options":
-		*code = TestScriptRequestMethodCodeOptions
-	case "patch":
-		*code = TestScriptRequestMethodCodePatch
-	case "post":
-		*code = TestScriptRequestMethodCodePost
-	case "put":
-		*code = TestScriptRequestMethodCodePut
-	case "head":
-		*code = TestScriptRequestMethodCodeHead
-	default:
-		return fmt.Errorf("unknown TestScriptRequestMethodCode code `%s`", s)
-	}
-	return nil
-}
 
 func (code TestScriptRequestMethodCode) String() string {
 	return code.Code()
 }
 
 func (code TestScriptRequestMethodCode) Code() string {
-	switch code {
-	case TestScriptRequestMethodCodeDelete:
-		return "delete"
-	case TestScriptRequestMethodCodeGet:
-		return "get"
-	case TestScriptRequestMethodCodeOptions:
-		return "options"
-	case TestScriptRequestMethodCodePatch:
-		return "patch"
-	case TestScriptRequestMethodCodePost:
-		return "post"
-	case TestScriptRequestMethodCodePut:
-		return "put"
-	case TestScriptRequestMethodCodeHead:
-		return "head"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code TestScriptRequestMethodCode) Display() string {

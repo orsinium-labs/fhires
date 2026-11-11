@@ -1,11 +1,5 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The license that applies to an Implementation Guide (using an SPDX license Identifiers, or 'not-open-source').
 //
 // The binding is required but new SPDX license Identifiers are allowed to be used (https://spdx.org/licenses/).
@@ -13,2107 +7,709 @@ import (
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/spdx-license
-type SPDXLicense int
+type SPDXLicense string
 
 const (
-	SPDXLicenseNotOpenSource SPDXLicense = iota
+	// Not an open source license.
+	SPDXLicenseNotOpenSource SPDXLicense = "not-open-source"
 	// BSD Zero Clause License.
-	SPDXLicense0BSD
+	SPDXLicense0BSD SPDXLicense = "0BSD"
 	// Attribution Assurance License.
-	SPDXLicenseAAL
+	SPDXLicenseAAL SPDXLicense = "AAL"
 	// Abstyles License.
-	SPDXLicenseAbstyles
+	SPDXLicenseAbstyles SPDXLicense = "Abstyles"
 	// Adobe Systems Incorporated Source Code License Agreement.
-	SPDXLicenseAdobe2006
+	SPDXLicenseAdobe2006 SPDXLicense = "Adobe-2006"
 	// Adobe Glyph List License.
-	SPDXLicenseAdobeGlyph
+	SPDXLicenseAdobeGlyph SPDXLicense = "Adobe-Glyph"
 	// Amazon Digital Services License.
-	SPDXLicenseADSL
+	SPDXLicenseADSL SPDXLicense = "ADSL"
 	// Academic Free License v1.1.
-	SPDXLicenseAFL1_1
+	SPDXLicenseAFL1_1 SPDXLicense = "AFL-1.1"
 	// Academic Free License v1.2.
-	SPDXLicenseAFL1_2
+	SPDXLicenseAFL1_2 SPDXLicense = "AFL-1.2"
 	// Academic Free License v2.0.
-	SPDXLicenseAFL2_0
+	SPDXLicenseAFL2_0 SPDXLicense = "AFL-2.0"
 	// Academic Free License v2.1.
-	SPDXLicenseAFL2_1
+	SPDXLicenseAFL2_1 SPDXLicense = "AFL-2.1"
 	// Academic Free License v3.0.
-	SPDXLicenseAFL3_0
+	SPDXLicenseAFL3_0 SPDXLicense = "AFL-3.0"
 	// Afmparse License.
-	SPDXLicenseAfmparse
+	SPDXLicenseAfmparse SPDXLicense = "Afmparse"
 	// Affero General Public License v1.0 only.
-	SPDXLicenseAGPL1_0Only
+	SPDXLicenseAGPL1_0Only SPDXLicense = "AGPL-1.0-only"
 	// Affero General Public License v1.0 or later.
-	SPDXLicenseAGPL1_0OrLater
+	SPDXLicenseAGPL1_0OrLater SPDXLicense = "AGPL-1.0-or-later"
 	// GNU Affero General Public License v3.0 only.
-	SPDXLicenseAGPL3_0Only
+	SPDXLicenseAGPL3_0Only SPDXLicense = "AGPL-3.0-only"
 	// GNU Affero General Public License v3.0 or later.
-	SPDXLicenseAGPL3_0OrLater
+	SPDXLicenseAGPL3_0OrLater SPDXLicense = "AGPL-3.0-or-later"
 	// Aladdin Free Public License.
-	SPDXLicenseAladdin
+	SPDXLicenseAladdin SPDXLicense = "Aladdin"
 	// AMD's plpa_map.c License.
-	SPDXLicenseAMDPLPA
+	SPDXLicenseAMDPLPA SPDXLicense = "AMDPLPA"
 	// Apple MIT License.
-	SPDXLicenseAML
+	SPDXLicenseAML SPDXLicense = "AML"
 	// Academy of Motion Picture Arts and Sciences BSD.
-	SPDXLicenseAMPAS
+	SPDXLicenseAMPAS SPDXLicense = "AMPAS"
 	// ANTLR Software Rights Notice.
-	SPDXLicenseANTLRPD
+	SPDXLicenseANTLRPD SPDXLicense = "ANTLR-PD"
 	// Apache License 1.0.
-	SPDXLicenseApache1_0
+	SPDXLicenseApache1_0 SPDXLicense = "Apache-1.0"
 	// Apache License 1.1.
-	SPDXLicenseApache1_1
+	SPDXLicenseApache1_1 SPDXLicense = "Apache-1.1"
 	// Apache License 2.0.
-	SPDXLicenseApache2_0
+	SPDXLicenseApache2_0 SPDXLicense = "Apache-2.0"
 	// Adobe Postscript AFM License.
-	SPDXLicenseAPAFML
+	SPDXLicenseAPAFML SPDXLicense = "APAFML"
 	// Adaptive Public License 1.0.
-	SPDXLicenseAPL1_0
+	SPDXLicenseAPL1_0 SPDXLicense = "APL-1.0"
 	// Apple Public Source License 1.0.
-	SPDXLicenseAPSL1_0
+	SPDXLicenseAPSL1_0 SPDXLicense = "APSL-1.0"
 	// Apple Public Source License 1.1.
-	SPDXLicenseAPSL1_1
+	SPDXLicenseAPSL1_1 SPDXLicense = "APSL-1.1"
 	// Apple Public Source License 1.2.
-	SPDXLicenseAPSL1_2
+	SPDXLicenseAPSL1_2 SPDXLicense = "APSL-1.2"
 	// Apple Public Source License 2.0.
-	SPDXLicenseAPSL2_0
+	SPDXLicenseAPSL2_0 SPDXLicense = "APSL-2.0"
 	// Artistic License 1.0 w/clause 8.
-	SPDXLicenseArtistic1_0Cl8
+	SPDXLicenseArtistic1_0Cl8 SPDXLicense = "Artistic-1.0-cl8"
 	// Artistic License 1.0 (Perl).
-	SPDXLicenseArtistic1_0Perl
+	SPDXLicenseArtistic1_0Perl SPDXLicense = "Artistic-1.0-Perl"
 	// Artistic License 1.0.
-	SPDXLicenseArtistic1_0
+	SPDXLicenseArtistic1_0 SPDXLicense = "Artistic-1.0"
 	// Artistic License 2.0.
-	SPDXLicenseArtistic2_0
+	SPDXLicenseArtistic2_0 SPDXLicense = "Artistic-2.0"
 	// Bahyph License.
-	SPDXLicenseBahyph
+	SPDXLicenseBahyph SPDXLicense = "Bahyph"
 	// Barr License.
-	SPDXLicenseBarr
+	SPDXLicenseBarr SPDXLicense = "Barr"
 	// Beerware License.
-	SPDXLicenseBeerware
+	SPDXLicenseBeerware SPDXLicense = "Beerware"
 	// BitTorrent Open Source License v1.0.
-	SPDXLicenseBitTorrent1_0
+	SPDXLicenseBitTorrent1_0 SPDXLicense = "BitTorrent-1.0"
 	// BitTorrent Open Source License v1.1.
-	SPDXLicenseBitTorrent1_1
+	SPDXLicenseBitTorrent1_1 SPDXLicense = "BitTorrent-1.1"
 	// Borceux license.
-	SPDXLicenseBorceux
+	SPDXLicenseBorceux SPDXLicense = "Borceux"
 	// BSD 1-Clause License.
-	SPDXLicenseBSD1Clause
+	SPDXLicenseBSD1Clause SPDXLicense = "BSD-1-Clause"
 	// BSD 2-Clause FreeBSD License.
-	SPDXLicenseBSD2ClauseFreeBSD
+	SPDXLicenseBSD2ClauseFreeBSD SPDXLicense = "BSD-2-Clause-FreeBSD"
 	// BSD 2-Clause NetBSD License.
-	SPDXLicenseBSD2ClauseNetBSD
+	SPDXLicenseBSD2ClauseNetBSD SPDXLicense = "BSD-2-Clause-NetBSD"
 	// BSD-2-Clause Plus Patent License.
-	SPDXLicenseBSD2ClausePatent
+	SPDXLicenseBSD2ClausePatent SPDXLicense = "BSD-2-Clause-Patent"
 	// BSD 2-Clause "Simplified" License.
-	SPDXLicenseBSD2Clause
+	SPDXLicenseBSD2Clause SPDXLicense = "BSD-2-Clause"
 	// BSD with attribution.
-	SPDXLicenseBSD3ClauseAttribution
+	SPDXLicenseBSD3ClauseAttribution SPDXLicense = "BSD-3-Clause-Attribution"
 	// BSD 3-Clause Clear License.
-	SPDXLicenseBSD3ClauseClear
+	SPDXLicenseBSD3ClauseClear SPDXLicense = "BSD-3-Clause-Clear"
 	// Lawrence Berkeley National Labs BSD variant license.
-	SPDXLicenseBSD3ClauseLBNL
+	SPDXLicenseBSD3ClauseLBNL SPDXLicense = "BSD-3-Clause-LBNL"
 	// BSD 3-Clause No Nuclear License 2014.
-	SPDXLicenseBSD3ClauseNoNuclearLicense2014
+	SPDXLicenseBSD3ClauseNoNuclearLicense2014 SPDXLicense = "BSD-3-Clause-No-Nuclear-License-2014"
 	// BSD 3-Clause No Nuclear License.
-	SPDXLicenseBSD3ClauseNoNuclearLicense
+	SPDXLicenseBSD3ClauseNoNuclearLicense SPDXLicense = "BSD-3-Clause-No-Nuclear-License"
 	// BSD 3-Clause No Nuclear Warranty.
-	SPDXLicenseBSD3ClauseNoNuclearWarranty
+	SPDXLicenseBSD3ClauseNoNuclearWarranty SPDXLicense = "BSD-3-Clause-No-Nuclear-Warranty"
 	// BSD 3-Clause "New" or "Revised" License.
-	SPDXLicenseBSD3Clause
+	SPDXLicenseBSD3Clause SPDXLicense = "BSD-3-Clause"
 	// BSD-4-Clause (University of California-Specific).
-	SPDXLicenseBSD4ClauseUC
+	SPDXLicenseBSD4ClauseUC SPDXLicense = "BSD-4-Clause-UC"
 	// BSD 4-Clause "Original" or "Old" License.
-	SPDXLicenseBSD4Clause
+	SPDXLicenseBSD4Clause SPDXLicense = "BSD-4-Clause"
 	// BSD Protection License.
-	SPDXLicenseBSDProtection
+	SPDXLicenseBSDProtection SPDXLicense = "BSD-Protection"
 	// BSD Source Code Attribution.
-	SPDXLicenseBSDSourceCode
+	SPDXLicenseBSDSourceCode SPDXLicense = "BSD-Source-Code"
 	// Boost Software License 1.0.
-	SPDXLicenseBSL1_0
+	SPDXLicenseBSL1_0 SPDXLicense = "BSL-1.0"
 	// bzip2 and libbzip2 License v1.0.5.
-	SPDXLicenseBzip21_0_5
+	SPDXLicenseBzip21_0_5 SPDXLicense = "bzip2-1.0.5"
 	// bzip2 and libbzip2 License v1.0.6.
-	SPDXLicenseBzip21_0_6
+	SPDXLicenseBzip21_0_6 SPDXLicense = "bzip2-1.0.6"
 	// Caldera License.
-	SPDXLicenseCaldera
+	SPDXLicenseCaldera SPDXLicense = "Caldera"
 	// Computer Associates Trusted Open Source License 1.1.
-	SPDXLicenseCATOSL1_1
+	SPDXLicenseCATOSL1_1 SPDXLicense = "CATOSL-1.1"
 	// Creative Commons Attribution 1.0 Generic.
-	SPDXLicenseCCBY1_0
+	SPDXLicenseCCBY1_0 SPDXLicense = "CC-BY-1.0"
 	// Creative Commons Attribution 2.0 Generic.
-	SPDXLicenseCCBY2_0
+	SPDXLicenseCCBY2_0 SPDXLicense = "CC-BY-2.0"
 	// Creative Commons Attribution 2.5 Generic.
-	SPDXLicenseCCBY2_5
+	SPDXLicenseCCBY2_5 SPDXLicense = "CC-BY-2.5"
 	// Creative Commons Attribution 3.0 Unported.
-	SPDXLicenseCCBY3_0
+	SPDXLicenseCCBY3_0 SPDXLicense = "CC-BY-3.0"
 	// Creative Commons Attribution 4.0 International.
-	SPDXLicenseCCBY4_0
+	SPDXLicenseCCBY4_0 SPDXLicense = "CC-BY-4.0"
 	// Creative Commons Attribution Non Commercial 1.0 Generic.
-	SPDXLicenseCCBYNC1_0
+	SPDXLicenseCCBYNC1_0 SPDXLicense = "CC-BY-NC-1.0"
 	// Creative Commons Attribution Non Commercial 2.0 Generic.
-	SPDXLicenseCCBYNC2_0
+	SPDXLicenseCCBYNC2_0 SPDXLicense = "CC-BY-NC-2.0"
 	// Creative Commons Attribution Non Commercial 2.5 Generic.
-	SPDXLicenseCCBYNC2_5
+	SPDXLicenseCCBYNC2_5 SPDXLicense = "CC-BY-NC-2.5"
 	// Creative Commons Attribution Non Commercial 3.0 Unported.
-	SPDXLicenseCCBYNC3_0
+	SPDXLicenseCCBYNC3_0 SPDXLicense = "CC-BY-NC-3.0"
 	// Creative Commons Attribution Non Commercial 4.0 International.
-	SPDXLicenseCCBYNC4_0
+	SPDXLicenseCCBYNC4_0 SPDXLicense = "CC-BY-NC-4.0"
 	// Creative Commons Attribution Non Commercial No Derivatives 1.0 Generic.
-	SPDXLicenseCCBYNCND1_0
+	SPDXLicenseCCBYNCND1_0 SPDXLicense = "CC-BY-NC-ND-1.0"
 	// Creative Commons Attribution Non Commercial No Derivatives 2.0 Generic.
-	SPDXLicenseCCBYNCND2_0
+	SPDXLicenseCCBYNCND2_0 SPDXLicense = "CC-BY-NC-ND-2.0"
 	// Creative Commons Attribution Non Commercial No Derivatives 2.5 Generic.
-	SPDXLicenseCCBYNCND2_5
+	SPDXLicenseCCBYNCND2_5 SPDXLicense = "CC-BY-NC-ND-2.5"
 	// Creative Commons Attribution Non Commercial No Derivatives 3.0 Unported.
-	SPDXLicenseCCBYNCND3_0
+	SPDXLicenseCCBYNCND3_0 SPDXLicense = "CC-BY-NC-ND-3.0"
 	// Creative Commons Attribution Non Commercial No Derivatives 4.0 International.
-	SPDXLicenseCCBYNCND4_0
+	SPDXLicenseCCBYNCND4_0 SPDXLicense = "CC-BY-NC-ND-4.0"
 	// Creative Commons Attribution Non Commercial Share Alike 1.0 Generic.
-	SPDXLicenseCCBYNCSA1_0
+	SPDXLicenseCCBYNCSA1_0 SPDXLicense = "CC-BY-NC-SA-1.0"
 	// Creative Commons Attribution Non Commercial Share Alike 2.0 Generic.
-	SPDXLicenseCCBYNCSA2_0
+	SPDXLicenseCCBYNCSA2_0 SPDXLicense = "CC-BY-NC-SA-2.0"
 	// Creative Commons Attribution Non Commercial Share Alike 2.5 Generic.
-	SPDXLicenseCCBYNCSA2_5
+	SPDXLicenseCCBYNCSA2_5 SPDXLicense = "CC-BY-NC-SA-2.5"
 	// Creative Commons Attribution Non Commercial Share Alike 3.0 Unported.
-	SPDXLicenseCCBYNCSA3_0
+	SPDXLicenseCCBYNCSA3_0 SPDXLicense = "CC-BY-NC-SA-3.0"
 	// Creative Commons Attribution Non Commercial Share Alike 4.0 International.
-	SPDXLicenseCCBYNCSA4_0
+	SPDXLicenseCCBYNCSA4_0 SPDXLicense = "CC-BY-NC-SA-4.0"
 	// Creative Commons Attribution No Derivatives 1.0 Generic.
-	SPDXLicenseCCBYND1_0
+	SPDXLicenseCCBYND1_0 SPDXLicense = "CC-BY-ND-1.0"
 	// Creative Commons Attribution No Derivatives 2.0 Generic.
-	SPDXLicenseCCBYND2_0
+	SPDXLicenseCCBYND2_0 SPDXLicense = "CC-BY-ND-2.0"
 	// Creative Commons Attribution No Derivatives 2.5 Generic.
-	SPDXLicenseCCBYND2_5
+	SPDXLicenseCCBYND2_5 SPDXLicense = "CC-BY-ND-2.5"
 	// Creative Commons Attribution No Derivatives 3.0 Unported.
-	SPDXLicenseCCBYND3_0
+	SPDXLicenseCCBYND3_0 SPDXLicense = "CC-BY-ND-3.0"
 	// Creative Commons Attribution No Derivatives 4.0 International.
-	SPDXLicenseCCBYND4_0
+	SPDXLicenseCCBYND4_0 SPDXLicense = "CC-BY-ND-4.0"
 	// Creative Commons Attribution Share Alike 1.0 Generic.
-	SPDXLicenseCCBYSA1_0
+	SPDXLicenseCCBYSA1_0 SPDXLicense = "CC-BY-SA-1.0"
 	// Creative Commons Attribution Share Alike 2.0 Generic.
-	SPDXLicenseCCBYSA2_0
+	SPDXLicenseCCBYSA2_0 SPDXLicense = "CC-BY-SA-2.0"
 	// Creative Commons Attribution Share Alike 2.5 Generic.
-	SPDXLicenseCCBYSA2_5
+	SPDXLicenseCCBYSA2_5 SPDXLicense = "CC-BY-SA-2.5"
 	// Creative Commons Attribution Share Alike 3.0 Unported.
-	SPDXLicenseCCBYSA3_0
+	SPDXLicenseCCBYSA3_0 SPDXLicense = "CC-BY-SA-3.0"
 	// Creative Commons Attribution Share Alike 4.0 International.
-	SPDXLicenseCCBYSA4_0
+	SPDXLicenseCCBYSA4_0 SPDXLicense = "CC-BY-SA-4.0"
 	// Creative Commons Zero v1.0 Universal.
-	SPDXLicenseCC01_0
+	SPDXLicenseCC01_0 SPDXLicense = "CC0-1.0"
 	// Common Development and Distribution License 1.0.
-	SPDXLicenseCDDL1_0
+	SPDXLicenseCDDL1_0 SPDXLicense = "CDDL-1.0"
 	// Common Development and Distribution License 1.1.
-	SPDXLicenseCDDL1_1
+	SPDXLicenseCDDL1_1 SPDXLicense = "CDDL-1.1"
 	// Community Data License Agreement Permissive 1.0.
-	SPDXLicenseCDLAPermissive1_0
+	SPDXLicenseCDLAPermissive1_0 SPDXLicense = "CDLA-Permissive-1.0"
 	// Community Data License Agreement Sharing 1.0.
-	SPDXLicenseCDLASharing1_0
+	SPDXLicenseCDLASharing1_0 SPDXLicense = "CDLA-Sharing-1.0"
 	// CeCILL Free Software License Agreement v1.0.
-	SPDXLicenseCECILL1_0
+	SPDXLicenseCECILL1_0 SPDXLicense = "CECILL-1.0"
 	// CeCILL Free Software License Agreement v1.1.
-	SPDXLicenseCECILL1_1
+	SPDXLicenseCECILL1_1 SPDXLicense = "CECILL-1.1"
 	// CeCILL Free Software License Agreement v2.0.
-	SPDXLicenseCECILL2_0
+	SPDXLicenseCECILL2_0 SPDXLicense = "CECILL-2.0"
 	// CeCILL Free Software License Agreement v2.1.
-	SPDXLicenseCECILL2_1
+	SPDXLicenseCECILL2_1 SPDXLicense = "CECILL-2.1"
 	// CeCILL-B Free Software License Agreement.
-	SPDXLicenseCECILLB
+	SPDXLicenseCECILLB SPDXLicense = "CECILL-B"
 	// CeCILL-C Free Software License Agreement.
-	SPDXLicenseCECILLC
+	SPDXLicenseCECILLC SPDXLicense = "CECILL-C"
 	// Clarified Artistic License.
-	SPDXLicenseClArtistic
+	SPDXLicenseClArtistic SPDXLicense = "ClArtistic"
 	// CNRI Jython License.
-	SPDXLicenseCNRIJython
+	SPDXLicenseCNRIJython SPDXLicense = "CNRI-Jython"
 	// CNRI Python Open Source GPL Compatible License Agreement.
-	SPDXLicenseCNRIPythonGPLCompatible
+	SPDXLicenseCNRIPythonGPLCompatible SPDXLicense = "CNRI-Python-GPL-Compatible"
 	// CNRI Python License.
-	SPDXLicenseCNRIPython
+	SPDXLicenseCNRIPython SPDXLicense = "CNRI-Python"
 	// Condor Public License v1.1.
-	SPDXLicenseCondor1_1
+	SPDXLicenseCondor1_1 SPDXLicense = "Condor-1.1"
 	// Common Public Attribution License 1.0.
-	SPDXLicenseCPAL1_0
+	SPDXLicenseCPAL1_0 SPDXLicense = "CPAL-1.0"
 	// Common Public License 1.0.
-	SPDXLicenseCPL1_0
+	SPDXLicenseCPL1_0 SPDXLicense = "CPL-1.0"
 	// Code Project Open License 1.02.
-	SPDXLicenseCPOL1_02
+	SPDXLicenseCPOL1_02 SPDXLicense = "CPOL-1.02"
 	// Crossword License.
-	SPDXLicenseCrossword
+	SPDXLicenseCrossword SPDXLicense = "Crossword"
 	// CrystalStacker License.
-	SPDXLicenseCrystalStacker
+	SPDXLicenseCrystalStacker SPDXLicense = "CrystalStacker"
 	// CUA Office Public License v1.0.
-	SPDXLicenseCUAOPL1_0
+	SPDXLicenseCUAOPL1_0 SPDXLicense = "CUA-OPL-1.0"
 	// Cube License.
-	SPDXLicenseCube
+	SPDXLicenseCube SPDXLicense = "Cube"
 	// curl License.
-	SPDXLicenseCurl
+	SPDXLicenseCurl SPDXLicense = "curl"
 	// Deutsche Freie Software Lizenz.
-	SPDXLicenseDFSL1_0
+	SPDXLicenseDFSL1_0 SPDXLicense = "D-FSL-1.0"
 	// diffmark license.
-	SPDXLicenseDiffmark
+	SPDXLicenseDiffmark SPDXLicense = "diffmark"
 	// DOC License.
-	SPDXLicenseDOC
+	SPDXLicenseDOC SPDXLicense = "DOC"
 	// Dotseqn License.
-	SPDXLicenseDotseqn
+	SPDXLicenseDotseqn SPDXLicense = "Dotseqn"
 	// DSDP License.
-	SPDXLicenseDSDP
+	SPDXLicenseDSDP SPDXLicense = "DSDP"
 	// dvipdfm License.
-	SPDXLicenseDvipdfm
+	SPDXLicenseDvipdfm SPDXLicense = "dvipdfm"
 	// Educational Community License v1.0.
-	SPDXLicenseECL1_0
+	SPDXLicenseECL1_0 SPDXLicense = "ECL-1.0"
 	// Educational Community License v2.0.
-	SPDXLicenseECL2_0
+	SPDXLicenseECL2_0 SPDXLicense = "ECL-2.0"
 	// Eiffel Forum License v1.0.
-	SPDXLicenseEFL1_0
+	SPDXLicenseEFL1_0 SPDXLicense = "EFL-1.0"
 	// Eiffel Forum License v2.0.
-	SPDXLicenseEFL2_0
+	SPDXLicenseEFL2_0 SPDXLicense = "EFL-2.0"
 	// eGenix.com Public License 1.1.0.
-	SPDXLicenseEGenix
+	SPDXLicenseEGenix SPDXLicense = "eGenix"
 	// Entessa Public License v1.0.
-	SPDXLicenseEntessa
+	SPDXLicenseEntessa SPDXLicense = "Entessa"
 	// Eclipse Public License 1.0.
-	SPDXLicenseEPL1_0
+	SPDXLicenseEPL1_0 SPDXLicense = "EPL-1.0"
 	// Eclipse Public License 2.0.
-	SPDXLicenseEPL2_0
+	SPDXLicenseEPL2_0 SPDXLicense = "EPL-2.0"
 	// Erlang Public License v1.1.
-	SPDXLicenseErlPL1_1
+	SPDXLicenseErlPL1_1 SPDXLicense = "ErlPL-1.1"
 	// EU DataGrid Software License.
-	SPDXLicenseEUDatagrid
+	SPDXLicenseEUDatagrid SPDXLicense = "EUDatagrid"
 	// European Union Public License 1.0.
-	SPDXLicenseEUPL1_0
+	SPDXLicenseEUPL1_0 SPDXLicense = "EUPL-1.0"
 	// European Union Public License 1.1.
-	SPDXLicenseEUPL1_1
+	SPDXLicenseEUPL1_1 SPDXLicense = "EUPL-1.1"
 	// European Union Public License 1.2.
-	SPDXLicenseEUPL1_2
+	SPDXLicenseEUPL1_2 SPDXLicense = "EUPL-1.2"
 	// Eurosym License.
-	SPDXLicenseEurosym
+	SPDXLicenseEurosym SPDXLicense = "Eurosym"
 	// Fair License.
-	SPDXLicenseFair
+	SPDXLicenseFair SPDXLicense = "Fair"
 	// Frameworx Open License 1.0.
-	SPDXLicenseFrameworx1_0
+	SPDXLicenseFrameworx1_0 SPDXLicense = "Frameworx-1.0"
 	// FreeImage Public License v1.0.
-	SPDXLicenseFreeImage
+	SPDXLicenseFreeImage SPDXLicense = "FreeImage"
 	// FSF All Permissive License.
-	SPDXLicenseFSFAP
+	SPDXLicenseFSFAP SPDXLicense = "FSFAP"
 	// FSF Unlimited License.
-	SPDXLicenseFSFUL
+	SPDXLicenseFSFUL SPDXLicense = "FSFUL"
 	// FSF Unlimited License (with License Retention).
-	SPDXLicenseFSFULLR
+	SPDXLicenseFSFULLR SPDXLicense = "FSFULLR"
 	// Freetype Project License.
-	SPDXLicenseFTL
+	SPDXLicenseFTL SPDXLicense = "FTL"
 	// GNU Free Documentation License v1.1 only.
-	SPDXLicenseGFDL1_1Only
+	SPDXLicenseGFDL1_1Only SPDXLicense = "GFDL-1.1-only"
 	// GNU Free Documentation License v1.1 or later.
-	SPDXLicenseGFDL1_1OrLater
+	SPDXLicenseGFDL1_1OrLater SPDXLicense = "GFDL-1.1-or-later"
 	// GNU Free Documentation License v1.2 only.
-	SPDXLicenseGFDL1_2Only
+	SPDXLicenseGFDL1_2Only SPDXLicense = "GFDL-1.2-only"
 	// GNU Free Documentation License v1.2 or later.
-	SPDXLicenseGFDL1_2OrLater
+	SPDXLicenseGFDL1_2OrLater SPDXLicense = "GFDL-1.2-or-later"
 	// GNU Free Documentation License v1.3 only.
-	SPDXLicenseGFDL1_3Only
+	SPDXLicenseGFDL1_3Only SPDXLicense = "GFDL-1.3-only"
 	// GNU Free Documentation License v1.3 or later.
-	SPDXLicenseGFDL1_3OrLater
+	SPDXLicenseGFDL1_3OrLater SPDXLicense = "GFDL-1.3-or-later"
 	// Giftware License.
-	SPDXLicenseGiftware
+	SPDXLicenseGiftware SPDXLicense = "Giftware"
 	// GL2PS License.
-	SPDXLicenseGL2PS
+	SPDXLicenseGL2PS SPDXLicense = "GL2PS"
 	// 3dfx Glide License.
-	SPDXLicenseGlide
+	SPDXLicenseGlide SPDXLicense = "Glide"
 	// Glulxe License.
-	SPDXLicenseGlulxe
+	SPDXLicenseGlulxe SPDXLicense = "Glulxe"
 	// gnuplot License.
-	SPDXLicenseGnuplot
+	SPDXLicenseGnuplot SPDXLicense = "gnuplot"
 	// GNU General Public License v1.0 only.
-	SPDXLicenseGPL1_0Only
+	SPDXLicenseGPL1_0Only SPDXLicense = "GPL-1.0-only"
 	// GNU General Public License v1.0 or later.
-	SPDXLicenseGPL1_0OrLater
+	SPDXLicenseGPL1_0OrLater SPDXLicense = "GPL-1.0-or-later"
 	// GNU General Public License v2.0 only.
-	SPDXLicenseGPL2_0Only
+	SPDXLicenseGPL2_0Only SPDXLicense = "GPL-2.0-only"
 	// GNU General Public License v2.0 or later.
-	SPDXLicenseGPL2_0OrLater
+	SPDXLicenseGPL2_0OrLater SPDXLicense = "GPL-2.0-or-later"
 	// GNU General Public License v3.0 only.
-	SPDXLicenseGPL3_0Only
+	SPDXLicenseGPL3_0Only SPDXLicense = "GPL-3.0-only"
 	// GNU General Public License v3.0 or later.
-	SPDXLicenseGPL3_0OrLater
+	SPDXLicenseGPL3_0OrLater SPDXLicense = "GPL-3.0-or-later"
 	// gSOAP Public License v1.3b.
-	SPDXLicenseGSOAP1_3b
+	SPDXLicenseGSOAP1_3b SPDXLicense = "gSOAP-1.3b"
 	// Haskell Language Report License.
-	SPDXLicenseHaskellReport
+	SPDXLicenseHaskellReport SPDXLicense = "HaskellReport"
 	// Historical Permission Notice and Disclaimer.
-	SPDXLicenseHPND
+	SPDXLicenseHPND SPDXLicense = "HPND"
 	// IBM PowerPC Initialization and Boot Software.
-	SPDXLicenseIBMPibs
+	SPDXLicenseIBMPibs SPDXLicense = "IBM-pibs"
 	// ICU License.
-	SPDXLicenseICU
+	SPDXLicenseICU SPDXLicense = "ICU"
 	// Independent JPEG Group License.
-	SPDXLicenseIJG
+	SPDXLicenseIJG SPDXLicense = "IJG"
 	// ImageMagick License.
-	SPDXLicenseImageMagick
+	SPDXLicenseImageMagick SPDXLicense = "ImageMagick"
 	// iMatix Standard Function Library Agreement.
-	SPDXLicenseIMatix
+	SPDXLicenseIMatix SPDXLicense = "iMatix"
 	// Imlib2 License.
-	SPDXLicenseImlib2
+	SPDXLicenseImlib2 SPDXLicense = "Imlib2"
 	// Info-ZIP License.
-	SPDXLicenseInfoZIP
+	SPDXLicenseInfoZIP SPDXLicense = "Info-ZIP"
 	// Intel ACPI Software License Agreement.
-	SPDXLicenseIntelACPI
+	SPDXLicenseIntelACPI SPDXLicense = "Intel-ACPI"
 	// Intel Open Source License.
-	SPDXLicenseIntel
+	SPDXLicenseIntel SPDXLicense = "Intel"
 	// Interbase Public License v1.0.
-	SPDXLicenseInterbase1_0
+	SPDXLicenseInterbase1_0 SPDXLicense = "Interbase-1.0"
 	// IPA Font License.
-	SPDXLicenseIPA
+	SPDXLicenseIPA SPDXLicense = "IPA"
 	// IBM Public License v1.0.
-	SPDXLicenseIPL1_0
+	SPDXLicenseIPL1_0 SPDXLicense = "IPL-1.0"
 	// ISC License.
-	SPDXLicenseISC
+	SPDXLicenseISC SPDXLicense = "ISC"
 	// JasPer License.
-	SPDXLicenseJasPer2_0
+	SPDXLicenseJasPer2_0 SPDXLicense = "JasPer-2.0"
 	// JSON License.
-	SPDXLicenseJSON
+	SPDXLicenseJSON SPDXLicense = "JSON"
 	// Licence Art Libre 1.2.
-	SPDXLicenseLAL1_2
+	SPDXLicenseLAL1_2 SPDXLicense = "LAL-1.2"
 	// Licence Art Libre 1.3.
-	SPDXLicenseLAL1_3
+	SPDXLicenseLAL1_3 SPDXLicense = "LAL-1.3"
 	// Latex2e License.
-	SPDXLicenseLatex2e
+	SPDXLicenseLatex2e SPDXLicense = "Latex2e"
 	// Leptonica License.
-	SPDXLicenseLeptonica
+	SPDXLicenseLeptonica SPDXLicense = "Leptonica"
 	// GNU Library General Public License v2 only.
-	SPDXLicenseLGPL2_0Only
+	SPDXLicenseLGPL2_0Only SPDXLicense = "LGPL-2.0-only"
 	// GNU Library General Public License v2 or later.
-	SPDXLicenseLGPL2_0OrLater
+	SPDXLicenseLGPL2_0OrLater SPDXLicense = "LGPL-2.0-or-later"
 	// GNU Lesser General Public License v2.1 only.
-	SPDXLicenseLGPL2_1Only
+	SPDXLicenseLGPL2_1Only SPDXLicense = "LGPL-2.1-only"
 	// GNU Lesser General Public License v2.1 or later.
-	SPDXLicenseLGPL2_1OrLater
+	SPDXLicenseLGPL2_1OrLater SPDXLicense = "LGPL-2.1-or-later"
 	// GNU Lesser General Public License v3.0 only.
-	SPDXLicenseLGPL3_0Only
+	SPDXLicenseLGPL3_0Only SPDXLicense = "LGPL-3.0-only"
 	// GNU Lesser General Public License v3.0 or later.
-	SPDXLicenseLGPL3_0OrLater
+	SPDXLicenseLGPL3_0OrLater SPDXLicense = "LGPL-3.0-or-later"
 	// Lesser General Public License For Linguistic Resources.
-	SPDXLicenseLGPLLR
+	SPDXLicenseLGPLLR SPDXLicense = "LGPLLR"
 	// libpng License.
-	SPDXLicenseLibpng
+	SPDXLicenseLibpng SPDXLicense = "Libpng"
 	// libtiff License.
-	SPDXLicenseLibtiff
+	SPDXLicenseLibtiff SPDXLicense = "libtiff"
 	// Licence Libre du Québec – Permissive version 1.1.
-	SPDXLicenseLiLiQP1_1
+	SPDXLicenseLiLiQP1_1 SPDXLicense = "LiLiQ-P-1.1"
 	// Licence Libre du Québec – Réciprocité version 1.1.
-	SPDXLicenseLiLiQR1_1
+	SPDXLicenseLiLiQR1_1 SPDXLicense = "LiLiQ-R-1.1"
 	// Licence Libre du Québec – Réciprocité forte version 1.1.
-	SPDXLicenseLiLiQRplus1_1
+	SPDXLicenseLiLiQRplus1_1 SPDXLicense = "LiLiQ-Rplus-1.1"
 	// Linux Kernel Variant of OpenIB.org license.
-	SPDXLicenseLinuxOpenIB
+	SPDXLicenseLinuxOpenIB SPDXLicense = "Linux-OpenIB"
 	// Lucent Public License Version 1.0.
-	SPDXLicenseLPL1_0
+	SPDXLicenseLPL1_0 SPDXLicense = "LPL-1.0"
 	// Lucent Public License v1.02.
-	SPDXLicenseLPL1_02
+	SPDXLicenseLPL1_02 SPDXLicense = "LPL-1.02"
 	// LaTeX Project Public License v1.0.
-	SPDXLicenseLPPL1_0
+	SPDXLicenseLPPL1_0 SPDXLicense = "LPPL-1.0"
 	// LaTeX Project Public License v1.1.
-	SPDXLicenseLPPL1_1
+	SPDXLicenseLPPL1_1 SPDXLicense = "LPPL-1.1"
 	// LaTeX Project Public License v1.2.
-	SPDXLicenseLPPL1_2
+	SPDXLicenseLPPL1_2 SPDXLicense = "LPPL-1.2"
 	// LaTeX Project Public License v1.3a.
-	SPDXLicenseLPPL1_3a
+	SPDXLicenseLPPL1_3a SPDXLicense = "LPPL-1.3a"
 	// LaTeX Project Public License v1.3c.
-	SPDXLicenseLPPL1_3c
+	SPDXLicenseLPPL1_3c SPDXLicense = "LPPL-1.3c"
 	// MakeIndex License.
-	SPDXLicenseMakeIndex
+	SPDXLicenseMakeIndex SPDXLicense = "MakeIndex"
 	// MirOS License.
-	SPDXLicenseMirOS
+	SPDXLicenseMirOS SPDXLicense = "MirOS"
 	// MIT No Attribution.
-	SPDXLicenseMIT0
+	SPDXLicenseMIT0 SPDXLicense = "MIT-0"
 	// Enlightenment License (e16).
-	SPDXLicenseMITAdvertising
+	SPDXLicenseMITAdvertising SPDXLicense = "MIT-advertising"
 	// CMU License.
-	SPDXLicenseMITCMU
+	SPDXLicenseMITCMU SPDXLicense = "MIT-CMU"
 	// enna License.
-	SPDXLicenseMITEnna
+	SPDXLicenseMITEnna SPDXLicense = "MIT-enna"
 	// feh License.
-	SPDXLicenseMITFeh
+	SPDXLicenseMITFeh SPDXLicense = "MIT-feh"
 	// MIT License.
-	SPDXLicenseMIT
+	SPDXLicenseMIT SPDXLicense = "MIT"
 	// MIT +no-false-attribs license.
-	SPDXLicenseMITNFA
+	SPDXLicenseMITNFA SPDXLicense = "MITNFA"
 	// Motosoto License.
-	SPDXLicenseMotosoto
+	SPDXLicenseMotosoto SPDXLicense = "Motosoto"
 	// mpich2 License.
-	SPDXLicenseMpich2
+	SPDXLicenseMpich2 SPDXLicense = "mpich2"
 	// Mozilla Public License 1.0.
-	SPDXLicenseMPL1_0
+	SPDXLicenseMPL1_0 SPDXLicense = "MPL-1.0"
 	// Mozilla Public License 1.1.
-	SPDXLicenseMPL1_1
+	SPDXLicenseMPL1_1 SPDXLicense = "MPL-1.1"
 	// Mozilla Public License 2.0 (no copyleft exception).
-	SPDXLicenseMPL2_0NoCopyleftException
+	SPDXLicenseMPL2_0NoCopyleftException SPDXLicense = "MPL-2.0-no-copyleft-exception"
 	// Mozilla Public License 2.0.
-	SPDXLicenseMPL2_0
+	SPDXLicenseMPL2_0 SPDXLicense = "MPL-2.0"
 	// Microsoft Public License.
-	SPDXLicenseMSPL
+	SPDXLicenseMSPL SPDXLicense = "MS-PL"
 	// Microsoft Reciprocal License.
-	SPDXLicenseMSRL
+	SPDXLicenseMSRL SPDXLicense = "MS-RL"
 	// Matrix Template Library License.
-	SPDXLicenseMTLL
+	SPDXLicenseMTLL SPDXLicense = "MTLL"
 	// Multics License.
-	SPDXLicenseMultics
+	SPDXLicenseMultics SPDXLicense = "Multics"
 	// Mup License.
-	SPDXLicenseMup
+	SPDXLicenseMup SPDXLicense = "Mup"
 	// NASA Open Source Agreement 1.3.
-	SPDXLicenseNASA1_3
+	SPDXLicenseNASA1_3 SPDXLicense = "NASA-1.3"
 	// Naumen Public License.
-	SPDXLicenseNaumen
+	SPDXLicenseNaumen SPDXLicense = "Naumen"
 	// Net Boolean Public License v1.
-	SPDXLicenseNBPL1_0
+	SPDXLicenseNBPL1_0 SPDXLicense = "NBPL-1.0"
 	// University of Illinois/NCSA Open Source License.
-	SPDXLicenseNCSA
+	SPDXLicenseNCSA SPDXLicense = "NCSA"
 	// Net-SNMP License.
-	SPDXLicenseNetSNMP
+	SPDXLicenseNetSNMP SPDXLicense = "Net-SNMP"
 	// NetCDF license.
-	SPDXLicenseNetCDF
+	SPDXLicenseNetCDF SPDXLicense = "NetCDF"
 	// Newsletr License.
-	SPDXLicenseNewsletr
+	SPDXLicenseNewsletr SPDXLicense = "Newsletr"
 	// Nethack General Public License.
-	SPDXLicenseNGPL
+	SPDXLicenseNGPL SPDXLicense = "NGPL"
 	// Norwegian Licence for Open Government Data.
-	SPDXLicenseNLOD1_0
+	SPDXLicenseNLOD1_0 SPDXLicense = "NLOD-1.0"
 	// No Limit Public License.
-	SPDXLicenseNLPL
+	SPDXLicenseNLPL SPDXLicense = "NLPL"
 	// Nokia Open Source License.
-	SPDXLicenseNokia
+	SPDXLicenseNokia SPDXLicense = "Nokia"
 	// Netizen Open Source License.
-	SPDXLicenseNOSL
+	SPDXLicenseNOSL SPDXLicense = "NOSL"
 	// Noweb License.
-	SPDXLicenseNoweb
+	SPDXLicenseNoweb SPDXLicense = "Noweb"
 	// Netscape Public License v1.0.
-	SPDXLicenseNPL1_0
+	SPDXLicenseNPL1_0 SPDXLicense = "NPL-1.0"
 	// Netscape Public License v1.1.
-	SPDXLicenseNPL1_1
+	SPDXLicenseNPL1_1 SPDXLicense = "NPL-1.1"
 	// Non-Profit Open Software License 3.0.
-	SPDXLicenseNPOSL3_0
+	SPDXLicenseNPOSL3_0 SPDXLicense = "NPOSL-3.0"
 	// NRL License.
-	SPDXLicenseNRL
+	SPDXLicenseNRL SPDXLicense = "NRL"
 	// NTP License.
-	SPDXLicenseNTP
+	SPDXLicenseNTP SPDXLicense = "NTP"
 	// Open CASCADE Technology Public License.
-	SPDXLicenseOCCTPL
+	SPDXLicenseOCCTPL SPDXLicense = "OCCT-PL"
 	// OCLC Research Public License 2.0.
-	SPDXLicenseOCLC2_0
+	SPDXLicenseOCLC2_0 SPDXLicense = "OCLC-2.0"
 	// ODC Open Database License v1.0.
-	SPDXLicenseODbL1_0
+	SPDXLicenseODbL1_0 SPDXLicense = "ODbL-1.0"
 	// SIL Open Font License 1.0.
-	SPDXLicenseOFL1_0
+	SPDXLicenseOFL1_0 SPDXLicense = "OFL-1.0"
 	// SIL Open Font License 1.1.
-	SPDXLicenseOFL1_1
+	SPDXLicenseOFL1_1 SPDXLicense = "OFL-1.1"
 	// Open Group Test Suite License.
-	SPDXLicenseOGTSL
+	SPDXLicenseOGTSL SPDXLicense = "OGTSL"
 	// Open LDAP Public License v1.1.
-	SPDXLicenseOLDAP1_1
+	SPDXLicenseOLDAP1_1 SPDXLicense = "OLDAP-1.1"
 	// Open LDAP Public License v1.2.
-	SPDXLicenseOLDAP1_2
+	SPDXLicenseOLDAP1_2 SPDXLicense = "OLDAP-1.2"
 	// Open LDAP Public License v1.3.
-	SPDXLicenseOLDAP1_3
+	SPDXLicenseOLDAP1_3 SPDXLicense = "OLDAP-1.3"
 	// Open LDAP Public License v1.4.
-	SPDXLicenseOLDAP1_4
+	SPDXLicenseOLDAP1_4 SPDXLicense = "OLDAP-1.4"
 	// Open LDAP Public License v2.0.1.
-	SPDXLicenseOLDAP2_0_1
+	SPDXLicenseOLDAP2_0_1 SPDXLicense = "OLDAP-2.0.1"
 	// Open LDAP Public License v2.0 (or possibly 2.0A and 2.0B).
-	SPDXLicenseOLDAP2_0
+	SPDXLicenseOLDAP2_0 SPDXLicense = "OLDAP-2.0"
 	// Open LDAP Public License v2.1.
-	SPDXLicenseOLDAP2_1
+	SPDXLicenseOLDAP2_1 SPDXLicense = "OLDAP-2.1"
 	// Open LDAP Public License v2.2.1.
-	SPDXLicenseOLDAP2_2_1
+	SPDXLicenseOLDAP2_2_1 SPDXLicense = "OLDAP-2.2.1"
 	// Open LDAP Public License 2.2.2.
-	SPDXLicenseOLDAP2_2_2
+	SPDXLicenseOLDAP2_2_2 SPDXLicense = "OLDAP-2.2.2"
 	// Open LDAP Public License v2.2.
-	SPDXLicenseOLDAP2_2
+	SPDXLicenseOLDAP2_2 SPDXLicense = "OLDAP-2.2"
 	// Open LDAP Public License v2.3.
-	SPDXLicenseOLDAP2_3
+	SPDXLicenseOLDAP2_3 SPDXLicense = "OLDAP-2.3"
 	// Open LDAP Public License v2.4.
-	SPDXLicenseOLDAP2_4
+	SPDXLicenseOLDAP2_4 SPDXLicense = "OLDAP-2.4"
 	// Open LDAP Public License v2.5.
-	SPDXLicenseOLDAP2_5
+	SPDXLicenseOLDAP2_5 SPDXLicense = "OLDAP-2.5"
 	// Open LDAP Public License v2.6.
-	SPDXLicenseOLDAP2_6
+	SPDXLicenseOLDAP2_6 SPDXLicense = "OLDAP-2.6"
 	// Open LDAP Public License v2.7.
-	SPDXLicenseOLDAP2_7
+	SPDXLicenseOLDAP2_7 SPDXLicense = "OLDAP-2.7"
 	// Open LDAP Public License v2.8.
-	SPDXLicenseOLDAP2_8
+	SPDXLicenseOLDAP2_8 SPDXLicense = "OLDAP-2.8"
 	// Open Market License.
-	SPDXLicenseOML
+	SPDXLicenseOML SPDXLicense = "OML"
 	// OpenSSL License.
-	SPDXLicenseOpenSSL
+	SPDXLicenseOpenSSL SPDXLicense = "OpenSSL"
 	// Open Public License v1.0.
-	SPDXLicenseOPL1_0
+	SPDXLicenseOPL1_0 SPDXLicense = "OPL-1.0"
 	// OSET Public License version 2.1.
-	SPDXLicenseOSETPL2_1
+	SPDXLicenseOSETPL2_1 SPDXLicense = "OSET-PL-2.1"
 	// Open Software License 1.0.
-	SPDXLicenseOSL1_0
+	SPDXLicenseOSL1_0 SPDXLicense = "OSL-1.0"
 	// Open Software License 1.1.
-	SPDXLicenseOSL1_1
+	SPDXLicenseOSL1_1 SPDXLicense = "OSL-1.1"
 	// Open Software License 2.0.
-	SPDXLicenseOSL2_0
+	SPDXLicenseOSL2_0 SPDXLicense = "OSL-2.0"
 	// Open Software License 2.1.
-	SPDXLicenseOSL2_1
+	SPDXLicenseOSL2_1 SPDXLicense = "OSL-2.1"
 	// Open Software License 3.0.
-	SPDXLicenseOSL3_0
+	SPDXLicenseOSL3_0 SPDXLicense = "OSL-3.0"
 	// ODC Public Domain Dedication & License 1.0.
-	SPDXLicensePDDL1_0
+	SPDXLicensePDDL1_0 SPDXLicense = "PDDL-1.0"
 	// PHP License v3.0.
-	SPDXLicensePHP3_0
+	SPDXLicensePHP3_0 SPDXLicense = "PHP-3.0"
 	// PHP License v3.01.
-	SPDXLicensePHP3_01
+	SPDXLicensePHP3_01 SPDXLicense = "PHP-3.01"
 	// Plexus Classworlds License.
-	SPDXLicensePlexus
+	SPDXLicensePlexus SPDXLicense = "Plexus"
 	// PostgreSQL License.
-	SPDXLicensePostgreSQL
+	SPDXLicensePostgreSQL SPDXLicense = "PostgreSQL"
 	// psfrag License.
-	SPDXLicensePsfrag
+	SPDXLicensePsfrag SPDXLicense = "psfrag"
 	// psutils License.
-	SPDXLicensePsutils
+	SPDXLicensePsutils SPDXLicense = "psutils"
 	// Python License 2.0.
-	SPDXLicensePython2_0
+	SPDXLicensePython2_0 SPDXLicense = "Python-2.0"
 	// Qhull License.
-	SPDXLicenseQhull
+	SPDXLicenseQhull SPDXLicense = "Qhull"
 	// Q Public License 1.0.
-	SPDXLicenseQPL1_0
+	SPDXLicenseQPL1_0 SPDXLicense = "QPL-1.0"
 	// Rdisc License.
-	SPDXLicenseRdisc
+	SPDXLicenseRdisc SPDXLicense = "Rdisc"
 	// Red Hat eCos Public License v1.1.
-	SPDXLicenseRHeCos1_1
+	SPDXLicenseRHeCos1_1 SPDXLicense = "RHeCos-1.1"
 	// Reciprocal Public License 1.1.
-	SPDXLicenseRPL1_1
+	SPDXLicenseRPL1_1 SPDXLicense = "RPL-1.1"
 	// Reciprocal Public License 1.5.
-	SPDXLicenseRPL1_5
+	SPDXLicenseRPL1_5 SPDXLicense = "RPL-1.5"
 	// RealNetworks Public Source License v1.0.
-	SPDXLicenseRPSL1_0
+	SPDXLicenseRPSL1_0 SPDXLicense = "RPSL-1.0"
 	// RSA Message-Digest License.
-	SPDXLicenseRSAMD
+	SPDXLicenseRSAMD SPDXLicense = "RSA-MD"
 	// Ricoh Source Code Public License.
-	SPDXLicenseRSCPL
+	SPDXLicenseRSCPL SPDXLicense = "RSCPL"
 	// Ruby License.
-	SPDXLicenseRuby
+	SPDXLicenseRuby SPDXLicense = "Ruby"
 	// Sax Public Domain Notice.
-	SPDXLicenseSAXPD
+	SPDXLicenseSAXPD SPDXLicense = "SAX-PD"
 	// Saxpath License.
-	SPDXLicenseSaxpath
+	SPDXLicenseSaxpath SPDXLicense = "Saxpath"
 	// SCEA Shared Source License.
-	SPDXLicenseSCEA
+	SPDXLicenseSCEA SPDXLicense = "SCEA"
 	// Sendmail License.
-	SPDXLicenseSendmail
+	SPDXLicenseSendmail SPDXLicense = "Sendmail"
 	// SGI Free Software License B v1.0.
-	SPDXLicenseSGIB1_0
+	SPDXLicenseSGIB1_0 SPDXLicense = "SGI-B-1.0"
 	// SGI Free Software License B v1.1.
-	SPDXLicenseSGIB1_1
+	SPDXLicenseSGIB1_1 SPDXLicense = "SGI-B-1.1"
 	// SGI Free Software License B v2.0.
-	SPDXLicenseSGIB2_0
+	SPDXLicenseSGIB2_0 SPDXLicense = "SGI-B-2.0"
 	// Simple Public License 2.0.
-	SPDXLicenseSimPL2_0
+	SPDXLicenseSimPL2_0 SPDXLicense = "SimPL-2.0"
 	// Sun Industry Standards Source License v1.2.
-	SPDXLicenseSISSL1_2
+	SPDXLicenseSISSL1_2 SPDXLicense = "SISSL-1.2"
 	// Sun Industry Standards Source License v1.1.
-	SPDXLicenseSISSL
+	SPDXLicenseSISSL SPDXLicense = "SISSL"
 	// Sleepycat License.
-	SPDXLicenseSleepycat
+	SPDXLicenseSleepycat SPDXLicense = "Sleepycat"
 	// Standard ML of New Jersey License.
-	SPDXLicenseSMLNJ
+	SPDXLicenseSMLNJ SPDXLicense = "SMLNJ"
 	// Secure Messaging Protocol Public License.
-	SPDXLicenseSMPPL
+	SPDXLicenseSMPPL SPDXLicense = "SMPPL"
 	// SNIA Public License 1.1.
-	SPDXLicenseSNIA
+	SPDXLicenseSNIA SPDXLicense = "SNIA"
 	// Spencer License 86.
-	SPDXLicenseSpencer86
+	SPDXLicenseSpencer86 SPDXLicense = "Spencer-86"
 	// Spencer License 94.
-	SPDXLicenseSpencer94
+	SPDXLicenseSpencer94 SPDXLicense = "Spencer-94"
 	// Spencer License 99.
-	SPDXLicenseSpencer99
+	SPDXLicenseSpencer99 SPDXLicense = "Spencer-99"
 	// Sun Public License v1.0.
-	SPDXLicenseSPL1_0
+	SPDXLicenseSPL1_0 SPDXLicense = "SPL-1.0"
 	// SugarCRM Public License v1.1.3.
-	SPDXLicenseSugarCRM1_1_3
+	SPDXLicenseSugarCRM1_1_3 SPDXLicense = "SugarCRM-1.1.3"
 	// Scheme Widget Library (SWL) Software License Agreement.
-	SPDXLicenseSWL
+	SPDXLicenseSWL SPDXLicense = "SWL"
 	// TCL/TK License.
-	SPDXLicenseTCL
+	SPDXLicenseTCL SPDXLicense = "TCL"
 	// TCP Wrappers License.
-	SPDXLicenseTCPWrappers
+	SPDXLicenseTCPWrappers SPDXLicense = "TCP-wrappers"
 	// TMate Open Source License.
-	SPDXLicenseTMate
+	SPDXLicenseTMate SPDXLicense = "TMate"
 	// TORQUE v2.5+ Software License v1.1.
-	SPDXLicenseTORQUE1_1
+	SPDXLicenseTORQUE1_1 SPDXLicense = "TORQUE-1.1"
 	// Trusster Open Source License.
-	SPDXLicenseTOSL
+	SPDXLicenseTOSL SPDXLicense = "TOSL"
 	// Unicode License Agreement - Data Files and Software (2015).
-	SPDXLicenseUnicodeDFS2015
+	SPDXLicenseUnicodeDFS2015 SPDXLicense = "Unicode-DFS-2015"
 	// Unicode License Agreement - Data Files and Software (2016).
-	SPDXLicenseUnicodeDFS2016
+	SPDXLicenseUnicodeDFS2016 SPDXLicense = "Unicode-DFS-2016"
 	// Unicode Terms of Use.
-	SPDXLicenseUnicodeTOU
+	SPDXLicenseUnicodeTOU SPDXLicense = "Unicode-TOU"
 	// The Unlicense.
-	SPDXLicenseUnlicense
+	SPDXLicenseUnlicense SPDXLicense = "Unlicense"
 	// Universal Permissive License v1.0.
-	SPDXLicenseUPL1_0
+	SPDXLicenseUPL1_0 SPDXLicense = "UPL-1.0"
 	// Vim License.
-	SPDXLicenseVim
+	SPDXLicenseVim SPDXLicense = "Vim"
 	// VOSTROM Public License for Open Source.
-	SPDXLicenseVOSTROM
+	SPDXLicenseVOSTROM SPDXLicense = "VOSTROM"
 	// Vovida Software License v1.0.
-	SPDXLicenseVSL1_0
+	SPDXLicenseVSL1_0 SPDXLicense = "VSL-1.0"
 	// W3C Software Notice and License (1998-07-20).
-	SPDXLicenseW3C19980720
+	SPDXLicenseW3C19980720 SPDXLicense = "W3C-19980720"
 	// W3C Software Notice and Document License (2015-05-13).
-	SPDXLicenseW3C20150513
+	SPDXLicenseW3C20150513 SPDXLicense = "W3C-20150513"
 	// W3C Software Notice and License (2002-12-31).
-	SPDXLicenseW3C
+	SPDXLicenseW3C SPDXLicense = "W3C"
 	// Sybase Open Watcom Public License 1.0.
-	SPDXLicenseWatcom1_0
+	SPDXLicenseWatcom1_0 SPDXLicense = "Watcom-1.0"
 	// Wsuipa License.
-	SPDXLicenseWsuipa
+	SPDXLicenseWsuipa SPDXLicense = "Wsuipa"
 	// Do What The F*ck You Want To Public License.
-	SPDXLicenseWTFPL
+	SPDXLicenseWTFPL SPDXLicense = "WTFPL"
 	// X11 License.
-	SPDXLicenseX11
+	SPDXLicenseX11 SPDXLicense = "X11"
 	// Xerox License.
-	SPDXLicenseXerox
+	SPDXLicenseXerox SPDXLicense = "Xerox"
 	// XFree86 License 1.1.
-	SPDXLicenseXFree861_1
+	SPDXLicenseXFree861_1 SPDXLicense = "XFree86-1.1"
 	// xinetd License.
-	SPDXLicenseXinetd
+	SPDXLicenseXinetd SPDXLicense = "xinetd"
 	// X.Net License.
-	SPDXLicenseXnet
+	SPDXLicenseXnet SPDXLicense = "Xnet"
 	// XPP License.
-	SPDXLicenseXpp
+	SPDXLicenseXpp SPDXLicense = "xpp"
 	// XSkat License.
-	SPDXLicenseXSkat
+	SPDXLicenseXSkat SPDXLicense = "XSkat"
 	// Yahoo! Public License v1.0.
-	SPDXLicenseYPL1_0
+	SPDXLicenseYPL1_0 SPDXLicense = "YPL-1.0"
 	// Yahoo! Public License v1.1.
-	SPDXLicenseYPL1_1
+	SPDXLicenseYPL1_1 SPDXLicense = "YPL-1.1"
 	// Zed License.
-	SPDXLicenseZed
+	SPDXLicenseZed SPDXLicense = "Zed"
 	// Zend License v2.0.
-	SPDXLicenseZend2_0
+	SPDXLicenseZend2_0 SPDXLicense = "Zend-2.0"
 	// Zimbra Public License v1.3.
-	SPDXLicenseZimbra1_3
+	SPDXLicenseZimbra1_3 SPDXLicense = "Zimbra-1.3"
 	// Zimbra Public License v1.4.
-	SPDXLicenseZimbra1_4
+	SPDXLicenseZimbra1_4 SPDXLicense = "Zimbra-1.4"
 	// zlib/libpng License with Acknowledgement.
-	SPDXLicenseZlibAcknowledgement
+	SPDXLicenseZlibAcknowledgement SPDXLicense = "zlib-acknowledgement"
 	// zlib License.
-	SPDXLicenseZlib
+	SPDXLicenseZlib SPDXLicense = "Zlib"
 	// Zope Public License 1.1.
-	SPDXLicenseZPL1_1
+	SPDXLicenseZPL1_1 SPDXLicense = "ZPL-1.1"
 	// Zope Public License 2.0.
-	SPDXLicenseZPL2_0
+	SPDXLicenseZPL2_0 SPDXLicense = "ZPL-2.0"
 	// Zope Public License 2.1.
-	SPDXLicenseZPL2_1
+	SPDXLicenseZPL2_1 SPDXLicense = "ZPL-2.1"
 )
-
-func (code SPDXLicense) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *SPDXLicense) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "not-open-source":
-		*code = SPDXLicenseNotOpenSource
-	case "0BSD":
-		*code = SPDXLicense0BSD
-	case "AAL":
-		*code = SPDXLicenseAAL
-	case "Abstyles":
-		*code = SPDXLicenseAbstyles
-	case "Adobe-2006":
-		*code = SPDXLicenseAdobe2006
-	case "Adobe-Glyph":
-		*code = SPDXLicenseAdobeGlyph
-	case "ADSL":
-		*code = SPDXLicenseADSL
-	case "AFL-1.1":
-		*code = SPDXLicenseAFL1_1
-	case "AFL-1.2":
-		*code = SPDXLicenseAFL1_2
-	case "AFL-2.0":
-		*code = SPDXLicenseAFL2_0
-	case "AFL-2.1":
-		*code = SPDXLicenseAFL2_1
-	case "AFL-3.0":
-		*code = SPDXLicenseAFL3_0
-	case "Afmparse":
-		*code = SPDXLicenseAfmparse
-	case "AGPL-1.0-only":
-		*code = SPDXLicenseAGPL1_0Only
-	case "AGPL-1.0-or-later":
-		*code = SPDXLicenseAGPL1_0OrLater
-	case "AGPL-3.0-only":
-		*code = SPDXLicenseAGPL3_0Only
-	case "AGPL-3.0-or-later":
-		*code = SPDXLicenseAGPL3_0OrLater
-	case "Aladdin":
-		*code = SPDXLicenseAladdin
-	case "AMDPLPA":
-		*code = SPDXLicenseAMDPLPA
-	case "AML":
-		*code = SPDXLicenseAML
-	case "AMPAS":
-		*code = SPDXLicenseAMPAS
-	case "ANTLR-PD":
-		*code = SPDXLicenseANTLRPD
-	case "Apache-1.0":
-		*code = SPDXLicenseApache1_0
-	case "Apache-1.1":
-		*code = SPDXLicenseApache1_1
-	case "Apache-2.0":
-		*code = SPDXLicenseApache2_0
-	case "APAFML":
-		*code = SPDXLicenseAPAFML
-	case "APL-1.0":
-		*code = SPDXLicenseAPL1_0
-	case "APSL-1.0":
-		*code = SPDXLicenseAPSL1_0
-	case "APSL-1.1":
-		*code = SPDXLicenseAPSL1_1
-	case "APSL-1.2":
-		*code = SPDXLicenseAPSL1_2
-	case "APSL-2.0":
-		*code = SPDXLicenseAPSL2_0
-	case "Artistic-1.0-cl8":
-		*code = SPDXLicenseArtistic1_0Cl8
-	case "Artistic-1.0-Perl":
-		*code = SPDXLicenseArtistic1_0Perl
-	case "Artistic-1.0":
-		*code = SPDXLicenseArtistic1_0
-	case "Artistic-2.0":
-		*code = SPDXLicenseArtistic2_0
-	case "Bahyph":
-		*code = SPDXLicenseBahyph
-	case "Barr":
-		*code = SPDXLicenseBarr
-	case "Beerware":
-		*code = SPDXLicenseBeerware
-	case "BitTorrent-1.0":
-		*code = SPDXLicenseBitTorrent1_0
-	case "BitTorrent-1.1":
-		*code = SPDXLicenseBitTorrent1_1
-	case "Borceux":
-		*code = SPDXLicenseBorceux
-	case "BSD-1-Clause":
-		*code = SPDXLicenseBSD1Clause
-	case "BSD-2-Clause-FreeBSD":
-		*code = SPDXLicenseBSD2ClauseFreeBSD
-	case "BSD-2-Clause-NetBSD":
-		*code = SPDXLicenseBSD2ClauseNetBSD
-	case "BSD-2-Clause-Patent":
-		*code = SPDXLicenseBSD2ClausePatent
-	case "BSD-2-Clause":
-		*code = SPDXLicenseBSD2Clause
-	case "BSD-3-Clause-Attribution":
-		*code = SPDXLicenseBSD3ClauseAttribution
-	case "BSD-3-Clause-Clear":
-		*code = SPDXLicenseBSD3ClauseClear
-	case "BSD-3-Clause-LBNL":
-		*code = SPDXLicenseBSD3ClauseLBNL
-	case "BSD-3-Clause-No-Nuclear-License-2014":
-		*code = SPDXLicenseBSD3ClauseNoNuclearLicense2014
-	case "BSD-3-Clause-No-Nuclear-License":
-		*code = SPDXLicenseBSD3ClauseNoNuclearLicense
-	case "BSD-3-Clause-No-Nuclear-Warranty":
-		*code = SPDXLicenseBSD3ClauseNoNuclearWarranty
-	case "BSD-3-Clause":
-		*code = SPDXLicenseBSD3Clause
-	case "BSD-4-Clause-UC":
-		*code = SPDXLicenseBSD4ClauseUC
-	case "BSD-4-Clause":
-		*code = SPDXLicenseBSD4Clause
-	case "BSD-Protection":
-		*code = SPDXLicenseBSDProtection
-	case "BSD-Source-Code":
-		*code = SPDXLicenseBSDSourceCode
-	case "BSL-1.0":
-		*code = SPDXLicenseBSL1_0
-	case "bzip2-1.0.5":
-		*code = SPDXLicenseBzip21_0_5
-	case "bzip2-1.0.6":
-		*code = SPDXLicenseBzip21_0_6
-	case "Caldera":
-		*code = SPDXLicenseCaldera
-	case "CATOSL-1.1":
-		*code = SPDXLicenseCATOSL1_1
-	case "CC-BY-1.0":
-		*code = SPDXLicenseCCBY1_0
-	case "CC-BY-2.0":
-		*code = SPDXLicenseCCBY2_0
-	case "CC-BY-2.5":
-		*code = SPDXLicenseCCBY2_5
-	case "CC-BY-3.0":
-		*code = SPDXLicenseCCBY3_0
-	case "CC-BY-4.0":
-		*code = SPDXLicenseCCBY4_0
-	case "CC-BY-NC-1.0":
-		*code = SPDXLicenseCCBYNC1_0
-	case "CC-BY-NC-2.0":
-		*code = SPDXLicenseCCBYNC2_0
-	case "CC-BY-NC-2.5":
-		*code = SPDXLicenseCCBYNC2_5
-	case "CC-BY-NC-3.0":
-		*code = SPDXLicenseCCBYNC3_0
-	case "CC-BY-NC-4.0":
-		*code = SPDXLicenseCCBYNC4_0
-	case "CC-BY-NC-ND-1.0":
-		*code = SPDXLicenseCCBYNCND1_0
-	case "CC-BY-NC-ND-2.0":
-		*code = SPDXLicenseCCBYNCND2_0
-	case "CC-BY-NC-ND-2.5":
-		*code = SPDXLicenseCCBYNCND2_5
-	case "CC-BY-NC-ND-3.0":
-		*code = SPDXLicenseCCBYNCND3_0
-	case "CC-BY-NC-ND-4.0":
-		*code = SPDXLicenseCCBYNCND4_0
-	case "CC-BY-NC-SA-1.0":
-		*code = SPDXLicenseCCBYNCSA1_0
-	case "CC-BY-NC-SA-2.0":
-		*code = SPDXLicenseCCBYNCSA2_0
-	case "CC-BY-NC-SA-2.5":
-		*code = SPDXLicenseCCBYNCSA2_5
-	case "CC-BY-NC-SA-3.0":
-		*code = SPDXLicenseCCBYNCSA3_0
-	case "CC-BY-NC-SA-4.0":
-		*code = SPDXLicenseCCBYNCSA4_0
-	case "CC-BY-ND-1.0":
-		*code = SPDXLicenseCCBYND1_0
-	case "CC-BY-ND-2.0":
-		*code = SPDXLicenseCCBYND2_0
-	case "CC-BY-ND-2.5":
-		*code = SPDXLicenseCCBYND2_5
-	case "CC-BY-ND-3.0":
-		*code = SPDXLicenseCCBYND3_0
-	case "CC-BY-ND-4.0":
-		*code = SPDXLicenseCCBYND4_0
-	case "CC-BY-SA-1.0":
-		*code = SPDXLicenseCCBYSA1_0
-	case "CC-BY-SA-2.0":
-		*code = SPDXLicenseCCBYSA2_0
-	case "CC-BY-SA-2.5":
-		*code = SPDXLicenseCCBYSA2_5
-	case "CC-BY-SA-3.0":
-		*code = SPDXLicenseCCBYSA3_0
-	case "CC-BY-SA-4.0":
-		*code = SPDXLicenseCCBYSA4_0
-	case "CC0-1.0":
-		*code = SPDXLicenseCC01_0
-	case "CDDL-1.0":
-		*code = SPDXLicenseCDDL1_0
-	case "CDDL-1.1":
-		*code = SPDXLicenseCDDL1_1
-	case "CDLA-Permissive-1.0":
-		*code = SPDXLicenseCDLAPermissive1_0
-	case "CDLA-Sharing-1.0":
-		*code = SPDXLicenseCDLASharing1_0
-	case "CECILL-1.0":
-		*code = SPDXLicenseCECILL1_0
-	case "CECILL-1.1":
-		*code = SPDXLicenseCECILL1_1
-	case "CECILL-2.0":
-		*code = SPDXLicenseCECILL2_0
-	case "CECILL-2.1":
-		*code = SPDXLicenseCECILL2_1
-	case "CECILL-B":
-		*code = SPDXLicenseCECILLB
-	case "CECILL-C":
-		*code = SPDXLicenseCECILLC
-	case "ClArtistic":
-		*code = SPDXLicenseClArtistic
-	case "CNRI-Jython":
-		*code = SPDXLicenseCNRIJython
-	case "CNRI-Python-GPL-Compatible":
-		*code = SPDXLicenseCNRIPythonGPLCompatible
-	case "CNRI-Python":
-		*code = SPDXLicenseCNRIPython
-	case "Condor-1.1":
-		*code = SPDXLicenseCondor1_1
-	case "CPAL-1.0":
-		*code = SPDXLicenseCPAL1_0
-	case "CPL-1.0":
-		*code = SPDXLicenseCPL1_0
-	case "CPOL-1.02":
-		*code = SPDXLicenseCPOL1_02
-	case "Crossword":
-		*code = SPDXLicenseCrossword
-	case "CrystalStacker":
-		*code = SPDXLicenseCrystalStacker
-	case "CUA-OPL-1.0":
-		*code = SPDXLicenseCUAOPL1_0
-	case "Cube":
-		*code = SPDXLicenseCube
-	case "curl":
-		*code = SPDXLicenseCurl
-	case "D-FSL-1.0":
-		*code = SPDXLicenseDFSL1_0
-	case "diffmark":
-		*code = SPDXLicenseDiffmark
-	case "DOC":
-		*code = SPDXLicenseDOC
-	case "Dotseqn":
-		*code = SPDXLicenseDotseqn
-	case "DSDP":
-		*code = SPDXLicenseDSDP
-	case "dvipdfm":
-		*code = SPDXLicenseDvipdfm
-	case "ECL-1.0":
-		*code = SPDXLicenseECL1_0
-	case "ECL-2.0":
-		*code = SPDXLicenseECL2_0
-	case "EFL-1.0":
-		*code = SPDXLicenseEFL1_0
-	case "EFL-2.0":
-		*code = SPDXLicenseEFL2_0
-	case "eGenix":
-		*code = SPDXLicenseEGenix
-	case "Entessa":
-		*code = SPDXLicenseEntessa
-	case "EPL-1.0":
-		*code = SPDXLicenseEPL1_0
-	case "EPL-2.0":
-		*code = SPDXLicenseEPL2_0
-	case "ErlPL-1.1":
-		*code = SPDXLicenseErlPL1_1
-	case "EUDatagrid":
-		*code = SPDXLicenseEUDatagrid
-	case "EUPL-1.0":
-		*code = SPDXLicenseEUPL1_0
-	case "EUPL-1.1":
-		*code = SPDXLicenseEUPL1_1
-	case "EUPL-1.2":
-		*code = SPDXLicenseEUPL1_2
-	case "Eurosym":
-		*code = SPDXLicenseEurosym
-	case "Fair":
-		*code = SPDXLicenseFair
-	case "Frameworx-1.0":
-		*code = SPDXLicenseFrameworx1_0
-	case "FreeImage":
-		*code = SPDXLicenseFreeImage
-	case "FSFAP":
-		*code = SPDXLicenseFSFAP
-	case "FSFUL":
-		*code = SPDXLicenseFSFUL
-	case "FSFULLR":
-		*code = SPDXLicenseFSFULLR
-	case "FTL":
-		*code = SPDXLicenseFTL
-	case "GFDL-1.1-only":
-		*code = SPDXLicenseGFDL1_1Only
-	case "GFDL-1.1-or-later":
-		*code = SPDXLicenseGFDL1_1OrLater
-	case "GFDL-1.2-only":
-		*code = SPDXLicenseGFDL1_2Only
-	case "GFDL-1.2-or-later":
-		*code = SPDXLicenseGFDL1_2OrLater
-	case "GFDL-1.3-only":
-		*code = SPDXLicenseGFDL1_3Only
-	case "GFDL-1.3-or-later":
-		*code = SPDXLicenseGFDL1_3OrLater
-	case "Giftware":
-		*code = SPDXLicenseGiftware
-	case "GL2PS":
-		*code = SPDXLicenseGL2PS
-	case "Glide":
-		*code = SPDXLicenseGlide
-	case "Glulxe":
-		*code = SPDXLicenseGlulxe
-	case "gnuplot":
-		*code = SPDXLicenseGnuplot
-	case "GPL-1.0-only":
-		*code = SPDXLicenseGPL1_0Only
-	case "GPL-1.0-or-later":
-		*code = SPDXLicenseGPL1_0OrLater
-	case "GPL-2.0-only":
-		*code = SPDXLicenseGPL2_0Only
-	case "GPL-2.0-or-later":
-		*code = SPDXLicenseGPL2_0OrLater
-	case "GPL-3.0-only":
-		*code = SPDXLicenseGPL3_0Only
-	case "GPL-3.0-or-later":
-		*code = SPDXLicenseGPL3_0OrLater
-	case "gSOAP-1.3b":
-		*code = SPDXLicenseGSOAP1_3b
-	case "HaskellReport":
-		*code = SPDXLicenseHaskellReport
-	case "HPND":
-		*code = SPDXLicenseHPND
-	case "IBM-pibs":
-		*code = SPDXLicenseIBMPibs
-	case "ICU":
-		*code = SPDXLicenseICU
-	case "IJG":
-		*code = SPDXLicenseIJG
-	case "ImageMagick":
-		*code = SPDXLicenseImageMagick
-	case "iMatix":
-		*code = SPDXLicenseIMatix
-	case "Imlib2":
-		*code = SPDXLicenseImlib2
-	case "Info-ZIP":
-		*code = SPDXLicenseInfoZIP
-	case "Intel-ACPI":
-		*code = SPDXLicenseIntelACPI
-	case "Intel":
-		*code = SPDXLicenseIntel
-	case "Interbase-1.0":
-		*code = SPDXLicenseInterbase1_0
-	case "IPA":
-		*code = SPDXLicenseIPA
-	case "IPL-1.0":
-		*code = SPDXLicenseIPL1_0
-	case "ISC":
-		*code = SPDXLicenseISC
-	case "JasPer-2.0":
-		*code = SPDXLicenseJasPer2_0
-	case "JSON":
-		*code = SPDXLicenseJSON
-	case "LAL-1.2":
-		*code = SPDXLicenseLAL1_2
-	case "LAL-1.3":
-		*code = SPDXLicenseLAL1_3
-	case "Latex2e":
-		*code = SPDXLicenseLatex2e
-	case "Leptonica":
-		*code = SPDXLicenseLeptonica
-	case "LGPL-2.0-only":
-		*code = SPDXLicenseLGPL2_0Only
-	case "LGPL-2.0-or-later":
-		*code = SPDXLicenseLGPL2_0OrLater
-	case "LGPL-2.1-only":
-		*code = SPDXLicenseLGPL2_1Only
-	case "LGPL-2.1-or-later":
-		*code = SPDXLicenseLGPL2_1OrLater
-	case "LGPL-3.0-only":
-		*code = SPDXLicenseLGPL3_0Only
-	case "LGPL-3.0-or-later":
-		*code = SPDXLicenseLGPL3_0OrLater
-	case "LGPLLR":
-		*code = SPDXLicenseLGPLLR
-	case "Libpng":
-		*code = SPDXLicenseLibpng
-	case "libtiff":
-		*code = SPDXLicenseLibtiff
-	case "LiLiQ-P-1.1":
-		*code = SPDXLicenseLiLiQP1_1
-	case "LiLiQ-R-1.1":
-		*code = SPDXLicenseLiLiQR1_1
-	case "LiLiQ-Rplus-1.1":
-		*code = SPDXLicenseLiLiQRplus1_1
-	case "Linux-OpenIB":
-		*code = SPDXLicenseLinuxOpenIB
-	case "LPL-1.0":
-		*code = SPDXLicenseLPL1_0
-	case "LPL-1.02":
-		*code = SPDXLicenseLPL1_02
-	case "LPPL-1.0":
-		*code = SPDXLicenseLPPL1_0
-	case "LPPL-1.1":
-		*code = SPDXLicenseLPPL1_1
-	case "LPPL-1.2":
-		*code = SPDXLicenseLPPL1_2
-	case "LPPL-1.3a":
-		*code = SPDXLicenseLPPL1_3a
-	case "LPPL-1.3c":
-		*code = SPDXLicenseLPPL1_3c
-	case "MakeIndex":
-		*code = SPDXLicenseMakeIndex
-	case "MirOS":
-		*code = SPDXLicenseMirOS
-	case "MIT-0":
-		*code = SPDXLicenseMIT0
-	case "MIT-advertising":
-		*code = SPDXLicenseMITAdvertising
-	case "MIT-CMU":
-		*code = SPDXLicenseMITCMU
-	case "MIT-enna":
-		*code = SPDXLicenseMITEnna
-	case "MIT-feh":
-		*code = SPDXLicenseMITFeh
-	case "MIT":
-		*code = SPDXLicenseMIT
-	case "MITNFA":
-		*code = SPDXLicenseMITNFA
-	case "Motosoto":
-		*code = SPDXLicenseMotosoto
-	case "mpich2":
-		*code = SPDXLicenseMpich2
-	case "MPL-1.0":
-		*code = SPDXLicenseMPL1_0
-	case "MPL-1.1":
-		*code = SPDXLicenseMPL1_1
-	case "MPL-2.0-no-copyleft-exception":
-		*code = SPDXLicenseMPL2_0NoCopyleftException
-	case "MPL-2.0":
-		*code = SPDXLicenseMPL2_0
-	case "MS-PL":
-		*code = SPDXLicenseMSPL
-	case "MS-RL":
-		*code = SPDXLicenseMSRL
-	case "MTLL":
-		*code = SPDXLicenseMTLL
-	case "Multics":
-		*code = SPDXLicenseMultics
-	case "Mup":
-		*code = SPDXLicenseMup
-	case "NASA-1.3":
-		*code = SPDXLicenseNASA1_3
-	case "Naumen":
-		*code = SPDXLicenseNaumen
-	case "NBPL-1.0":
-		*code = SPDXLicenseNBPL1_0
-	case "NCSA":
-		*code = SPDXLicenseNCSA
-	case "Net-SNMP":
-		*code = SPDXLicenseNetSNMP
-	case "NetCDF":
-		*code = SPDXLicenseNetCDF
-	case "Newsletr":
-		*code = SPDXLicenseNewsletr
-	case "NGPL":
-		*code = SPDXLicenseNGPL
-	case "NLOD-1.0":
-		*code = SPDXLicenseNLOD1_0
-	case "NLPL":
-		*code = SPDXLicenseNLPL
-	case "Nokia":
-		*code = SPDXLicenseNokia
-	case "NOSL":
-		*code = SPDXLicenseNOSL
-	case "Noweb":
-		*code = SPDXLicenseNoweb
-	case "NPL-1.0":
-		*code = SPDXLicenseNPL1_0
-	case "NPL-1.1":
-		*code = SPDXLicenseNPL1_1
-	case "NPOSL-3.0":
-		*code = SPDXLicenseNPOSL3_0
-	case "NRL":
-		*code = SPDXLicenseNRL
-	case "NTP":
-		*code = SPDXLicenseNTP
-	case "OCCT-PL":
-		*code = SPDXLicenseOCCTPL
-	case "OCLC-2.0":
-		*code = SPDXLicenseOCLC2_0
-	case "ODbL-1.0":
-		*code = SPDXLicenseODbL1_0
-	case "OFL-1.0":
-		*code = SPDXLicenseOFL1_0
-	case "OFL-1.1":
-		*code = SPDXLicenseOFL1_1
-	case "OGTSL":
-		*code = SPDXLicenseOGTSL
-	case "OLDAP-1.1":
-		*code = SPDXLicenseOLDAP1_1
-	case "OLDAP-1.2":
-		*code = SPDXLicenseOLDAP1_2
-	case "OLDAP-1.3":
-		*code = SPDXLicenseOLDAP1_3
-	case "OLDAP-1.4":
-		*code = SPDXLicenseOLDAP1_4
-	case "OLDAP-2.0.1":
-		*code = SPDXLicenseOLDAP2_0_1
-	case "OLDAP-2.0":
-		*code = SPDXLicenseOLDAP2_0
-	case "OLDAP-2.1":
-		*code = SPDXLicenseOLDAP2_1
-	case "OLDAP-2.2.1":
-		*code = SPDXLicenseOLDAP2_2_1
-	case "OLDAP-2.2.2":
-		*code = SPDXLicenseOLDAP2_2_2
-	case "OLDAP-2.2":
-		*code = SPDXLicenseOLDAP2_2
-	case "OLDAP-2.3":
-		*code = SPDXLicenseOLDAP2_3
-	case "OLDAP-2.4":
-		*code = SPDXLicenseOLDAP2_4
-	case "OLDAP-2.5":
-		*code = SPDXLicenseOLDAP2_5
-	case "OLDAP-2.6":
-		*code = SPDXLicenseOLDAP2_6
-	case "OLDAP-2.7":
-		*code = SPDXLicenseOLDAP2_7
-	case "OLDAP-2.8":
-		*code = SPDXLicenseOLDAP2_8
-	case "OML":
-		*code = SPDXLicenseOML
-	case "OpenSSL":
-		*code = SPDXLicenseOpenSSL
-	case "OPL-1.0":
-		*code = SPDXLicenseOPL1_0
-	case "OSET-PL-2.1":
-		*code = SPDXLicenseOSETPL2_1
-	case "OSL-1.0":
-		*code = SPDXLicenseOSL1_0
-	case "OSL-1.1":
-		*code = SPDXLicenseOSL1_1
-	case "OSL-2.0":
-		*code = SPDXLicenseOSL2_0
-	case "OSL-2.1":
-		*code = SPDXLicenseOSL2_1
-	case "OSL-3.0":
-		*code = SPDXLicenseOSL3_0
-	case "PDDL-1.0":
-		*code = SPDXLicensePDDL1_0
-	case "PHP-3.0":
-		*code = SPDXLicensePHP3_0
-	case "PHP-3.01":
-		*code = SPDXLicensePHP3_01
-	case "Plexus":
-		*code = SPDXLicensePlexus
-	case "PostgreSQL":
-		*code = SPDXLicensePostgreSQL
-	case "psfrag":
-		*code = SPDXLicensePsfrag
-	case "psutils":
-		*code = SPDXLicensePsutils
-	case "Python-2.0":
-		*code = SPDXLicensePython2_0
-	case "Qhull":
-		*code = SPDXLicenseQhull
-	case "QPL-1.0":
-		*code = SPDXLicenseQPL1_0
-	case "Rdisc":
-		*code = SPDXLicenseRdisc
-	case "RHeCos-1.1":
-		*code = SPDXLicenseRHeCos1_1
-	case "RPL-1.1":
-		*code = SPDXLicenseRPL1_1
-	case "RPL-1.5":
-		*code = SPDXLicenseRPL1_5
-	case "RPSL-1.0":
-		*code = SPDXLicenseRPSL1_0
-	case "RSA-MD":
-		*code = SPDXLicenseRSAMD
-	case "RSCPL":
-		*code = SPDXLicenseRSCPL
-	case "Ruby":
-		*code = SPDXLicenseRuby
-	case "SAX-PD":
-		*code = SPDXLicenseSAXPD
-	case "Saxpath":
-		*code = SPDXLicenseSaxpath
-	case "SCEA":
-		*code = SPDXLicenseSCEA
-	case "Sendmail":
-		*code = SPDXLicenseSendmail
-	case "SGI-B-1.0":
-		*code = SPDXLicenseSGIB1_0
-	case "SGI-B-1.1":
-		*code = SPDXLicenseSGIB1_1
-	case "SGI-B-2.0":
-		*code = SPDXLicenseSGIB2_0
-	case "SimPL-2.0":
-		*code = SPDXLicenseSimPL2_0
-	case "SISSL-1.2":
-		*code = SPDXLicenseSISSL1_2
-	case "SISSL":
-		*code = SPDXLicenseSISSL
-	case "Sleepycat":
-		*code = SPDXLicenseSleepycat
-	case "SMLNJ":
-		*code = SPDXLicenseSMLNJ
-	case "SMPPL":
-		*code = SPDXLicenseSMPPL
-	case "SNIA":
-		*code = SPDXLicenseSNIA
-	case "Spencer-86":
-		*code = SPDXLicenseSpencer86
-	case "Spencer-94":
-		*code = SPDXLicenseSpencer94
-	case "Spencer-99":
-		*code = SPDXLicenseSpencer99
-	case "SPL-1.0":
-		*code = SPDXLicenseSPL1_0
-	case "SugarCRM-1.1.3":
-		*code = SPDXLicenseSugarCRM1_1_3
-	case "SWL":
-		*code = SPDXLicenseSWL
-	case "TCL":
-		*code = SPDXLicenseTCL
-	case "TCP-wrappers":
-		*code = SPDXLicenseTCPWrappers
-	case "TMate":
-		*code = SPDXLicenseTMate
-	case "TORQUE-1.1":
-		*code = SPDXLicenseTORQUE1_1
-	case "TOSL":
-		*code = SPDXLicenseTOSL
-	case "Unicode-DFS-2015":
-		*code = SPDXLicenseUnicodeDFS2015
-	case "Unicode-DFS-2016":
-		*code = SPDXLicenseUnicodeDFS2016
-	case "Unicode-TOU":
-		*code = SPDXLicenseUnicodeTOU
-	case "Unlicense":
-		*code = SPDXLicenseUnlicense
-	case "UPL-1.0":
-		*code = SPDXLicenseUPL1_0
-	case "Vim":
-		*code = SPDXLicenseVim
-	case "VOSTROM":
-		*code = SPDXLicenseVOSTROM
-	case "VSL-1.0":
-		*code = SPDXLicenseVSL1_0
-	case "W3C-19980720":
-		*code = SPDXLicenseW3C19980720
-	case "W3C-20150513":
-		*code = SPDXLicenseW3C20150513
-	case "W3C":
-		*code = SPDXLicenseW3C
-	case "Watcom-1.0":
-		*code = SPDXLicenseWatcom1_0
-	case "Wsuipa":
-		*code = SPDXLicenseWsuipa
-	case "WTFPL":
-		*code = SPDXLicenseWTFPL
-	case "X11":
-		*code = SPDXLicenseX11
-	case "Xerox":
-		*code = SPDXLicenseXerox
-	case "XFree86-1.1":
-		*code = SPDXLicenseXFree861_1
-	case "xinetd":
-		*code = SPDXLicenseXinetd
-	case "Xnet":
-		*code = SPDXLicenseXnet
-	case "xpp":
-		*code = SPDXLicenseXpp
-	case "XSkat":
-		*code = SPDXLicenseXSkat
-	case "YPL-1.0":
-		*code = SPDXLicenseYPL1_0
-	case "YPL-1.1":
-		*code = SPDXLicenseYPL1_1
-	case "Zed":
-		*code = SPDXLicenseZed
-	case "Zend-2.0":
-		*code = SPDXLicenseZend2_0
-	case "Zimbra-1.3":
-		*code = SPDXLicenseZimbra1_3
-	case "Zimbra-1.4":
-		*code = SPDXLicenseZimbra1_4
-	case "zlib-acknowledgement":
-		*code = SPDXLicenseZlibAcknowledgement
-	case "Zlib":
-		*code = SPDXLicenseZlib
-	case "ZPL-1.1":
-		*code = SPDXLicenseZPL1_1
-	case "ZPL-2.0":
-		*code = SPDXLicenseZPL2_0
-	case "ZPL-2.1":
-		*code = SPDXLicenseZPL2_1
-	default:
-		return fmt.Errorf("unknown SPDXLicense code `%s`", s)
-	}
-	return nil
-}
 
 func (code SPDXLicense) String() string {
 	return code.Code()
 }
 
 func (code SPDXLicense) Code() string {
-	switch code {
-	case SPDXLicenseNotOpenSource:
-		return "not-open-source"
-	case SPDXLicense0BSD:
-		return "0BSD"
-	case SPDXLicenseAAL:
-		return "AAL"
-	case SPDXLicenseAbstyles:
-		return "Abstyles"
-	case SPDXLicenseAdobe2006:
-		return "Adobe-2006"
-	case SPDXLicenseAdobeGlyph:
-		return "Adobe-Glyph"
-	case SPDXLicenseADSL:
-		return "ADSL"
-	case SPDXLicenseAFL1_1:
-		return "AFL-1.1"
-	case SPDXLicenseAFL1_2:
-		return "AFL-1.2"
-	case SPDXLicenseAFL2_0:
-		return "AFL-2.0"
-	case SPDXLicenseAFL2_1:
-		return "AFL-2.1"
-	case SPDXLicenseAFL3_0:
-		return "AFL-3.0"
-	case SPDXLicenseAfmparse:
-		return "Afmparse"
-	case SPDXLicenseAGPL1_0Only:
-		return "AGPL-1.0-only"
-	case SPDXLicenseAGPL1_0OrLater:
-		return "AGPL-1.0-or-later"
-	case SPDXLicenseAGPL3_0Only:
-		return "AGPL-3.0-only"
-	case SPDXLicenseAGPL3_0OrLater:
-		return "AGPL-3.0-or-later"
-	case SPDXLicenseAladdin:
-		return "Aladdin"
-	case SPDXLicenseAMDPLPA:
-		return "AMDPLPA"
-	case SPDXLicenseAML:
-		return "AML"
-	case SPDXLicenseAMPAS:
-		return "AMPAS"
-	case SPDXLicenseANTLRPD:
-		return "ANTLR-PD"
-	case SPDXLicenseApache1_0:
-		return "Apache-1.0"
-	case SPDXLicenseApache1_1:
-		return "Apache-1.1"
-	case SPDXLicenseApache2_0:
-		return "Apache-2.0"
-	case SPDXLicenseAPAFML:
-		return "APAFML"
-	case SPDXLicenseAPL1_0:
-		return "APL-1.0"
-	case SPDXLicenseAPSL1_0:
-		return "APSL-1.0"
-	case SPDXLicenseAPSL1_1:
-		return "APSL-1.1"
-	case SPDXLicenseAPSL1_2:
-		return "APSL-1.2"
-	case SPDXLicenseAPSL2_0:
-		return "APSL-2.0"
-	case SPDXLicenseArtistic1_0Cl8:
-		return "Artistic-1.0-cl8"
-	case SPDXLicenseArtistic1_0Perl:
-		return "Artistic-1.0-Perl"
-	case SPDXLicenseArtistic1_0:
-		return "Artistic-1.0"
-	case SPDXLicenseArtistic2_0:
-		return "Artistic-2.0"
-	case SPDXLicenseBahyph:
-		return "Bahyph"
-	case SPDXLicenseBarr:
-		return "Barr"
-	case SPDXLicenseBeerware:
-		return "Beerware"
-	case SPDXLicenseBitTorrent1_0:
-		return "BitTorrent-1.0"
-	case SPDXLicenseBitTorrent1_1:
-		return "BitTorrent-1.1"
-	case SPDXLicenseBorceux:
-		return "Borceux"
-	case SPDXLicenseBSD1Clause:
-		return "BSD-1-Clause"
-	case SPDXLicenseBSD2ClauseFreeBSD:
-		return "BSD-2-Clause-FreeBSD"
-	case SPDXLicenseBSD2ClauseNetBSD:
-		return "BSD-2-Clause-NetBSD"
-	case SPDXLicenseBSD2ClausePatent:
-		return "BSD-2-Clause-Patent"
-	case SPDXLicenseBSD2Clause:
-		return "BSD-2-Clause"
-	case SPDXLicenseBSD3ClauseAttribution:
-		return "BSD-3-Clause-Attribution"
-	case SPDXLicenseBSD3ClauseClear:
-		return "BSD-3-Clause-Clear"
-	case SPDXLicenseBSD3ClauseLBNL:
-		return "BSD-3-Clause-LBNL"
-	case SPDXLicenseBSD3ClauseNoNuclearLicense2014:
-		return "BSD-3-Clause-No-Nuclear-License-2014"
-	case SPDXLicenseBSD3ClauseNoNuclearLicense:
-		return "BSD-3-Clause-No-Nuclear-License"
-	case SPDXLicenseBSD3ClauseNoNuclearWarranty:
-		return "BSD-3-Clause-No-Nuclear-Warranty"
-	case SPDXLicenseBSD3Clause:
-		return "BSD-3-Clause"
-	case SPDXLicenseBSD4ClauseUC:
-		return "BSD-4-Clause-UC"
-	case SPDXLicenseBSD4Clause:
-		return "BSD-4-Clause"
-	case SPDXLicenseBSDProtection:
-		return "BSD-Protection"
-	case SPDXLicenseBSDSourceCode:
-		return "BSD-Source-Code"
-	case SPDXLicenseBSL1_0:
-		return "BSL-1.0"
-	case SPDXLicenseBzip21_0_5:
-		return "bzip2-1.0.5"
-	case SPDXLicenseBzip21_0_6:
-		return "bzip2-1.0.6"
-	case SPDXLicenseCaldera:
-		return "Caldera"
-	case SPDXLicenseCATOSL1_1:
-		return "CATOSL-1.1"
-	case SPDXLicenseCCBY1_0:
-		return "CC-BY-1.0"
-	case SPDXLicenseCCBY2_0:
-		return "CC-BY-2.0"
-	case SPDXLicenseCCBY2_5:
-		return "CC-BY-2.5"
-	case SPDXLicenseCCBY3_0:
-		return "CC-BY-3.0"
-	case SPDXLicenseCCBY4_0:
-		return "CC-BY-4.0"
-	case SPDXLicenseCCBYNC1_0:
-		return "CC-BY-NC-1.0"
-	case SPDXLicenseCCBYNC2_0:
-		return "CC-BY-NC-2.0"
-	case SPDXLicenseCCBYNC2_5:
-		return "CC-BY-NC-2.5"
-	case SPDXLicenseCCBYNC3_0:
-		return "CC-BY-NC-3.0"
-	case SPDXLicenseCCBYNC4_0:
-		return "CC-BY-NC-4.0"
-	case SPDXLicenseCCBYNCND1_0:
-		return "CC-BY-NC-ND-1.0"
-	case SPDXLicenseCCBYNCND2_0:
-		return "CC-BY-NC-ND-2.0"
-	case SPDXLicenseCCBYNCND2_5:
-		return "CC-BY-NC-ND-2.5"
-	case SPDXLicenseCCBYNCND3_0:
-		return "CC-BY-NC-ND-3.0"
-	case SPDXLicenseCCBYNCND4_0:
-		return "CC-BY-NC-ND-4.0"
-	case SPDXLicenseCCBYNCSA1_0:
-		return "CC-BY-NC-SA-1.0"
-	case SPDXLicenseCCBYNCSA2_0:
-		return "CC-BY-NC-SA-2.0"
-	case SPDXLicenseCCBYNCSA2_5:
-		return "CC-BY-NC-SA-2.5"
-	case SPDXLicenseCCBYNCSA3_0:
-		return "CC-BY-NC-SA-3.0"
-	case SPDXLicenseCCBYNCSA4_0:
-		return "CC-BY-NC-SA-4.0"
-	case SPDXLicenseCCBYND1_0:
-		return "CC-BY-ND-1.0"
-	case SPDXLicenseCCBYND2_0:
-		return "CC-BY-ND-2.0"
-	case SPDXLicenseCCBYND2_5:
-		return "CC-BY-ND-2.5"
-	case SPDXLicenseCCBYND3_0:
-		return "CC-BY-ND-3.0"
-	case SPDXLicenseCCBYND4_0:
-		return "CC-BY-ND-4.0"
-	case SPDXLicenseCCBYSA1_0:
-		return "CC-BY-SA-1.0"
-	case SPDXLicenseCCBYSA2_0:
-		return "CC-BY-SA-2.0"
-	case SPDXLicenseCCBYSA2_5:
-		return "CC-BY-SA-2.5"
-	case SPDXLicenseCCBYSA3_0:
-		return "CC-BY-SA-3.0"
-	case SPDXLicenseCCBYSA4_0:
-		return "CC-BY-SA-4.0"
-	case SPDXLicenseCC01_0:
-		return "CC0-1.0"
-	case SPDXLicenseCDDL1_0:
-		return "CDDL-1.0"
-	case SPDXLicenseCDDL1_1:
-		return "CDDL-1.1"
-	case SPDXLicenseCDLAPermissive1_0:
-		return "CDLA-Permissive-1.0"
-	case SPDXLicenseCDLASharing1_0:
-		return "CDLA-Sharing-1.0"
-	case SPDXLicenseCECILL1_0:
-		return "CECILL-1.0"
-	case SPDXLicenseCECILL1_1:
-		return "CECILL-1.1"
-	case SPDXLicenseCECILL2_0:
-		return "CECILL-2.0"
-	case SPDXLicenseCECILL2_1:
-		return "CECILL-2.1"
-	case SPDXLicenseCECILLB:
-		return "CECILL-B"
-	case SPDXLicenseCECILLC:
-		return "CECILL-C"
-	case SPDXLicenseClArtistic:
-		return "ClArtistic"
-	case SPDXLicenseCNRIJython:
-		return "CNRI-Jython"
-	case SPDXLicenseCNRIPythonGPLCompatible:
-		return "CNRI-Python-GPL-Compatible"
-	case SPDXLicenseCNRIPython:
-		return "CNRI-Python"
-	case SPDXLicenseCondor1_1:
-		return "Condor-1.1"
-	case SPDXLicenseCPAL1_0:
-		return "CPAL-1.0"
-	case SPDXLicenseCPL1_0:
-		return "CPL-1.0"
-	case SPDXLicenseCPOL1_02:
-		return "CPOL-1.02"
-	case SPDXLicenseCrossword:
-		return "Crossword"
-	case SPDXLicenseCrystalStacker:
-		return "CrystalStacker"
-	case SPDXLicenseCUAOPL1_0:
-		return "CUA-OPL-1.0"
-	case SPDXLicenseCube:
-		return "Cube"
-	case SPDXLicenseCurl:
-		return "curl"
-	case SPDXLicenseDFSL1_0:
-		return "D-FSL-1.0"
-	case SPDXLicenseDiffmark:
-		return "diffmark"
-	case SPDXLicenseDOC:
-		return "DOC"
-	case SPDXLicenseDotseqn:
-		return "Dotseqn"
-	case SPDXLicenseDSDP:
-		return "DSDP"
-	case SPDXLicenseDvipdfm:
-		return "dvipdfm"
-	case SPDXLicenseECL1_0:
-		return "ECL-1.0"
-	case SPDXLicenseECL2_0:
-		return "ECL-2.0"
-	case SPDXLicenseEFL1_0:
-		return "EFL-1.0"
-	case SPDXLicenseEFL2_0:
-		return "EFL-2.0"
-	case SPDXLicenseEGenix:
-		return "eGenix"
-	case SPDXLicenseEntessa:
-		return "Entessa"
-	case SPDXLicenseEPL1_0:
-		return "EPL-1.0"
-	case SPDXLicenseEPL2_0:
-		return "EPL-2.0"
-	case SPDXLicenseErlPL1_1:
-		return "ErlPL-1.1"
-	case SPDXLicenseEUDatagrid:
-		return "EUDatagrid"
-	case SPDXLicenseEUPL1_0:
-		return "EUPL-1.0"
-	case SPDXLicenseEUPL1_1:
-		return "EUPL-1.1"
-	case SPDXLicenseEUPL1_2:
-		return "EUPL-1.2"
-	case SPDXLicenseEurosym:
-		return "Eurosym"
-	case SPDXLicenseFair:
-		return "Fair"
-	case SPDXLicenseFrameworx1_0:
-		return "Frameworx-1.0"
-	case SPDXLicenseFreeImage:
-		return "FreeImage"
-	case SPDXLicenseFSFAP:
-		return "FSFAP"
-	case SPDXLicenseFSFUL:
-		return "FSFUL"
-	case SPDXLicenseFSFULLR:
-		return "FSFULLR"
-	case SPDXLicenseFTL:
-		return "FTL"
-	case SPDXLicenseGFDL1_1Only:
-		return "GFDL-1.1-only"
-	case SPDXLicenseGFDL1_1OrLater:
-		return "GFDL-1.1-or-later"
-	case SPDXLicenseGFDL1_2Only:
-		return "GFDL-1.2-only"
-	case SPDXLicenseGFDL1_2OrLater:
-		return "GFDL-1.2-or-later"
-	case SPDXLicenseGFDL1_3Only:
-		return "GFDL-1.3-only"
-	case SPDXLicenseGFDL1_3OrLater:
-		return "GFDL-1.3-or-later"
-	case SPDXLicenseGiftware:
-		return "Giftware"
-	case SPDXLicenseGL2PS:
-		return "GL2PS"
-	case SPDXLicenseGlide:
-		return "Glide"
-	case SPDXLicenseGlulxe:
-		return "Glulxe"
-	case SPDXLicenseGnuplot:
-		return "gnuplot"
-	case SPDXLicenseGPL1_0Only:
-		return "GPL-1.0-only"
-	case SPDXLicenseGPL1_0OrLater:
-		return "GPL-1.0-or-later"
-	case SPDXLicenseGPL2_0Only:
-		return "GPL-2.0-only"
-	case SPDXLicenseGPL2_0OrLater:
-		return "GPL-2.0-or-later"
-	case SPDXLicenseGPL3_0Only:
-		return "GPL-3.0-only"
-	case SPDXLicenseGPL3_0OrLater:
-		return "GPL-3.0-or-later"
-	case SPDXLicenseGSOAP1_3b:
-		return "gSOAP-1.3b"
-	case SPDXLicenseHaskellReport:
-		return "HaskellReport"
-	case SPDXLicenseHPND:
-		return "HPND"
-	case SPDXLicenseIBMPibs:
-		return "IBM-pibs"
-	case SPDXLicenseICU:
-		return "ICU"
-	case SPDXLicenseIJG:
-		return "IJG"
-	case SPDXLicenseImageMagick:
-		return "ImageMagick"
-	case SPDXLicenseIMatix:
-		return "iMatix"
-	case SPDXLicenseImlib2:
-		return "Imlib2"
-	case SPDXLicenseInfoZIP:
-		return "Info-ZIP"
-	case SPDXLicenseIntelACPI:
-		return "Intel-ACPI"
-	case SPDXLicenseIntel:
-		return "Intel"
-	case SPDXLicenseInterbase1_0:
-		return "Interbase-1.0"
-	case SPDXLicenseIPA:
-		return "IPA"
-	case SPDXLicenseIPL1_0:
-		return "IPL-1.0"
-	case SPDXLicenseISC:
-		return "ISC"
-	case SPDXLicenseJasPer2_0:
-		return "JasPer-2.0"
-	case SPDXLicenseJSON:
-		return "JSON"
-	case SPDXLicenseLAL1_2:
-		return "LAL-1.2"
-	case SPDXLicenseLAL1_3:
-		return "LAL-1.3"
-	case SPDXLicenseLatex2e:
-		return "Latex2e"
-	case SPDXLicenseLeptonica:
-		return "Leptonica"
-	case SPDXLicenseLGPL2_0Only:
-		return "LGPL-2.0-only"
-	case SPDXLicenseLGPL2_0OrLater:
-		return "LGPL-2.0-or-later"
-	case SPDXLicenseLGPL2_1Only:
-		return "LGPL-2.1-only"
-	case SPDXLicenseLGPL2_1OrLater:
-		return "LGPL-2.1-or-later"
-	case SPDXLicenseLGPL3_0Only:
-		return "LGPL-3.0-only"
-	case SPDXLicenseLGPL3_0OrLater:
-		return "LGPL-3.0-or-later"
-	case SPDXLicenseLGPLLR:
-		return "LGPLLR"
-	case SPDXLicenseLibpng:
-		return "Libpng"
-	case SPDXLicenseLibtiff:
-		return "libtiff"
-	case SPDXLicenseLiLiQP1_1:
-		return "LiLiQ-P-1.1"
-	case SPDXLicenseLiLiQR1_1:
-		return "LiLiQ-R-1.1"
-	case SPDXLicenseLiLiQRplus1_1:
-		return "LiLiQ-Rplus-1.1"
-	case SPDXLicenseLinuxOpenIB:
-		return "Linux-OpenIB"
-	case SPDXLicenseLPL1_0:
-		return "LPL-1.0"
-	case SPDXLicenseLPL1_02:
-		return "LPL-1.02"
-	case SPDXLicenseLPPL1_0:
-		return "LPPL-1.0"
-	case SPDXLicenseLPPL1_1:
-		return "LPPL-1.1"
-	case SPDXLicenseLPPL1_2:
-		return "LPPL-1.2"
-	case SPDXLicenseLPPL1_3a:
-		return "LPPL-1.3a"
-	case SPDXLicenseLPPL1_3c:
-		return "LPPL-1.3c"
-	case SPDXLicenseMakeIndex:
-		return "MakeIndex"
-	case SPDXLicenseMirOS:
-		return "MirOS"
-	case SPDXLicenseMIT0:
-		return "MIT-0"
-	case SPDXLicenseMITAdvertising:
-		return "MIT-advertising"
-	case SPDXLicenseMITCMU:
-		return "MIT-CMU"
-	case SPDXLicenseMITEnna:
-		return "MIT-enna"
-	case SPDXLicenseMITFeh:
-		return "MIT-feh"
-	case SPDXLicenseMIT:
-		return "MIT"
-	case SPDXLicenseMITNFA:
-		return "MITNFA"
-	case SPDXLicenseMotosoto:
-		return "Motosoto"
-	case SPDXLicenseMpich2:
-		return "mpich2"
-	case SPDXLicenseMPL1_0:
-		return "MPL-1.0"
-	case SPDXLicenseMPL1_1:
-		return "MPL-1.1"
-	case SPDXLicenseMPL2_0NoCopyleftException:
-		return "MPL-2.0-no-copyleft-exception"
-	case SPDXLicenseMPL2_0:
-		return "MPL-2.0"
-	case SPDXLicenseMSPL:
-		return "MS-PL"
-	case SPDXLicenseMSRL:
-		return "MS-RL"
-	case SPDXLicenseMTLL:
-		return "MTLL"
-	case SPDXLicenseMultics:
-		return "Multics"
-	case SPDXLicenseMup:
-		return "Mup"
-	case SPDXLicenseNASA1_3:
-		return "NASA-1.3"
-	case SPDXLicenseNaumen:
-		return "Naumen"
-	case SPDXLicenseNBPL1_0:
-		return "NBPL-1.0"
-	case SPDXLicenseNCSA:
-		return "NCSA"
-	case SPDXLicenseNetSNMP:
-		return "Net-SNMP"
-	case SPDXLicenseNetCDF:
-		return "NetCDF"
-	case SPDXLicenseNewsletr:
-		return "Newsletr"
-	case SPDXLicenseNGPL:
-		return "NGPL"
-	case SPDXLicenseNLOD1_0:
-		return "NLOD-1.0"
-	case SPDXLicenseNLPL:
-		return "NLPL"
-	case SPDXLicenseNokia:
-		return "Nokia"
-	case SPDXLicenseNOSL:
-		return "NOSL"
-	case SPDXLicenseNoweb:
-		return "Noweb"
-	case SPDXLicenseNPL1_0:
-		return "NPL-1.0"
-	case SPDXLicenseNPL1_1:
-		return "NPL-1.1"
-	case SPDXLicenseNPOSL3_0:
-		return "NPOSL-3.0"
-	case SPDXLicenseNRL:
-		return "NRL"
-	case SPDXLicenseNTP:
-		return "NTP"
-	case SPDXLicenseOCCTPL:
-		return "OCCT-PL"
-	case SPDXLicenseOCLC2_0:
-		return "OCLC-2.0"
-	case SPDXLicenseODbL1_0:
-		return "ODbL-1.0"
-	case SPDXLicenseOFL1_0:
-		return "OFL-1.0"
-	case SPDXLicenseOFL1_1:
-		return "OFL-1.1"
-	case SPDXLicenseOGTSL:
-		return "OGTSL"
-	case SPDXLicenseOLDAP1_1:
-		return "OLDAP-1.1"
-	case SPDXLicenseOLDAP1_2:
-		return "OLDAP-1.2"
-	case SPDXLicenseOLDAP1_3:
-		return "OLDAP-1.3"
-	case SPDXLicenseOLDAP1_4:
-		return "OLDAP-1.4"
-	case SPDXLicenseOLDAP2_0_1:
-		return "OLDAP-2.0.1"
-	case SPDXLicenseOLDAP2_0:
-		return "OLDAP-2.0"
-	case SPDXLicenseOLDAP2_1:
-		return "OLDAP-2.1"
-	case SPDXLicenseOLDAP2_2_1:
-		return "OLDAP-2.2.1"
-	case SPDXLicenseOLDAP2_2_2:
-		return "OLDAP-2.2.2"
-	case SPDXLicenseOLDAP2_2:
-		return "OLDAP-2.2"
-	case SPDXLicenseOLDAP2_3:
-		return "OLDAP-2.3"
-	case SPDXLicenseOLDAP2_4:
-		return "OLDAP-2.4"
-	case SPDXLicenseOLDAP2_5:
-		return "OLDAP-2.5"
-	case SPDXLicenseOLDAP2_6:
-		return "OLDAP-2.6"
-	case SPDXLicenseOLDAP2_7:
-		return "OLDAP-2.7"
-	case SPDXLicenseOLDAP2_8:
-		return "OLDAP-2.8"
-	case SPDXLicenseOML:
-		return "OML"
-	case SPDXLicenseOpenSSL:
-		return "OpenSSL"
-	case SPDXLicenseOPL1_0:
-		return "OPL-1.0"
-	case SPDXLicenseOSETPL2_1:
-		return "OSET-PL-2.1"
-	case SPDXLicenseOSL1_0:
-		return "OSL-1.0"
-	case SPDXLicenseOSL1_1:
-		return "OSL-1.1"
-	case SPDXLicenseOSL2_0:
-		return "OSL-2.0"
-	case SPDXLicenseOSL2_1:
-		return "OSL-2.1"
-	case SPDXLicenseOSL3_0:
-		return "OSL-3.0"
-	case SPDXLicensePDDL1_0:
-		return "PDDL-1.0"
-	case SPDXLicensePHP3_0:
-		return "PHP-3.0"
-	case SPDXLicensePHP3_01:
-		return "PHP-3.01"
-	case SPDXLicensePlexus:
-		return "Plexus"
-	case SPDXLicensePostgreSQL:
-		return "PostgreSQL"
-	case SPDXLicensePsfrag:
-		return "psfrag"
-	case SPDXLicensePsutils:
-		return "psutils"
-	case SPDXLicensePython2_0:
-		return "Python-2.0"
-	case SPDXLicenseQhull:
-		return "Qhull"
-	case SPDXLicenseQPL1_0:
-		return "QPL-1.0"
-	case SPDXLicenseRdisc:
-		return "Rdisc"
-	case SPDXLicenseRHeCos1_1:
-		return "RHeCos-1.1"
-	case SPDXLicenseRPL1_1:
-		return "RPL-1.1"
-	case SPDXLicenseRPL1_5:
-		return "RPL-1.5"
-	case SPDXLicenseRPSL1_0:
-		return "RPSL-1.0"
-	case SPDXLicenseRSAMD:
-		return "RSA-MD"
-	case SPDXLicenseRSCPL:
-		return "RSCPL"
-	case SPDXLicenseRuby:
-		return "Ruby"
-	case SPDXLicenseSAXPD:
-		return "SAX-PD"
-	case SPDXLicenseSaxpath:
-		return "Saxpath"
-	case SPDXLicenseSCEA:
-		return "SCEA"
-	case SPDXLicenseSendmail:
-		return "Sendmail"
-	case SPDXLicenseSGIB1_0:
-		return "SGI-B-1.0"
-	case SPDXLicenseSGIB1_1:
-		return "SGI-B-1.1"
-	case SPDXLicenseSGIB2_0:
-		return "SGI-B-2.0"
-	case SPDXLicenseSimPL2_0:
-		return "SimPL-2.0"
-	case SPDXLicenseSISSL1_2:
-		return "SISSL-1.2"
-	case SPDXLicenseSISSL:
-		return "SISSL"
-	case SPDXLicenseSleepycat:
-		return "Sleepycat"
-	case SPDXLicenseSMLNJ:
-		return "SMLNJ"
-	case SPDXLicenseSMPPL:
-		return "SMPPL"
-	case SPDXLicenseSNIA:
-		return "SNIA"
-	case SPDXLicenseSpencer86:
-		return "Spencer-86"
-	case SPDXLicenseSpencer94:
-		return "Spencer-94"
-	case SPDXLicenseSpencer99:
-		return "Spencer-99"
-	case SPDXLicenseSPL1_0:
-		return "SPL-1.0"
-	case SPDXLicenseSugarCRM1_1_3:
-		return "SugarCRM-1.1.3"
-	case SPDXLicenseSWL:
-		return "SWL"
-	case SPDXLicenseTCL:
-		return "TCL"
-	case SPDXLicenseTCPWrappers:
-		return "TCP-wrappers"
-	case SPDXLicenseTMate:
-		return "TMate"
-	case SPDXLicenseTORQUE1_1:
-		return "TORQUE-1.1"
-	case SPDXLicenseTOSL:
-		return "TOSL"
-	case SPDXLicenseUnicodeDFS2015:
-		return "Unicode-DFS-2015"
-	case SPDXLicenseUnicodeDFS2016:
-		return "Unicode-DFS-2016"
-	case SPDXLicenseUnicodeTOU:
-		return "Unicode-TOU"
-	case SPDXLicenseUnlicense:
-		return "Unlicense"
-	case SPDXLicenseUPL1_0:
-		return "UPL-1.0"
-	case SPDXLicenseVim:
-		return "Vim"
-	case SPDXLicenseVOSTROM:
-		return "VOSTROM"
-	case SPDXLicenseVSL1_0:
-		return "VSL-1.0"
-	case SPDXLicenseW3C19980720:
-		return "W3C-19980720"
-	case SPDXLicenseW3C20150513:
-		return "W3C-20150513"
-	case SPDXLicenseW3C:
-		return "W3C"
-	case SPDXLicenseWatcom1_0:
-		return "Watcom-1.0"
-	case SPDXLicenseWsuipa:
-		return "Wsuipa"
-	case SPDXLicenseWTFPL:
-		return "WTFPL"
-	case SPDXLicenseX11:
-		return "X11"
-	case SPDXLicenseXerox:
-		return "Xerox"
-	case SPDXLicenseXFree861_1:
-		return "XFree86-1.1"
-	case SPDXLicenseXinetd:
-		return "xinetd"
-	case SPDXLicenseXnet:
-		return "Xnet"
-	case SPDXLicenseXpp:
-		return "xpp"
-	case SPDXLicenseXSkat:
-		return "XSkat"
-	case SPDXLicenseYPL1_0:
-		return "YPL-1.0"
-	case SPDXLicenseYPL1_1:
-		return "YPL-1.1"
-	case SPDXLicenseZed:
-		return "Zed"
-	case SPDXLicenseZend2_0:
-		return "Zend-2.0"
-	case SPDXLicenseZimbra1_3:
-		return "Zimbra-1.3"
-	case SPDXLicenseZimbra1_4:
-		return "Zimbra-1.4"
-	case SPDXLicenseZlibAcknowledgement:
-		return "zlib-acknowledgement"
-	case SPDXLicenseZlib:
-		return "Zlib"
-	case SPDXLicenseZPL1_1:
-		return "ZPL-1.1"
-	case SPDXLicenseZPL2_0:
-		return "ZPL-2.0"
-	case SPDXLicenseZPL2_1:
-		return "ZPL-2.1"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code SPDXLicense) Display() string {

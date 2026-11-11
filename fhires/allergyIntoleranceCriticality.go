@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Estimate of the potential clinical harm, or seriousness, of a reaction to an identified substance.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality
-type AllergyIntoleranceCriticality int
+type AllergyIntoleranceCriticality string
 
 const (
-	AllergyIntoleranceCriticalityLow AllergyIntoleranceCriticality = iota
+	// Worst case result of a future exposure is not assessed to be life-threatening or having high potential for organ system failure.
+	AllergyIntoleranceCriticalityLow AllergyIntoleranceCriticality = "low"
 	// Worst case result of a future exposure is assessed to be life-threatening or having high potential for organ system failure.
-	AllergyIntoleranceCriticalityHigh
+	AllergyIntoleranceCriticalityHigh AllergyIntoleranceCriticality = "high"
 	// Unable to assess the worst case result of a future exposure.
-	AllergyIntoleranceCriticalityUnableToAssess
+	AllergyIntoleranceCriticalityUnableToAssess AllergyIntoleranceCriticality = "unable-to-assess"
 )
-
-func (code AllergyIntoleranceCriticality) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *AllergyIntoleranceCriticality) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "low":
-		*code = AllergyIntoleranceCriticalityLow
-	case "high":
-		*code = AllergyIntoleranceCriticalityHigh
-	case "unable-to-assess":
-		*code = AllergyIntoleranceCriticalityUnableToAssess
-	default:
-		return fmt.Errorf("unknown AllergyIntoleranceCriticality code `%s`", s)
-	}
-	return nil
-}
 
 func (code AllergyIntoleranceCriticality) String() string {
 	return code.Code()
 }
 
 func (code AllergyIntoleranceCriticality) Code() string {
-	switch code {
-	case AllergyIntoleranceCriticalityLow:
-		return "low"
-	case AllergyIntoleranceCriticalityHigh:
-		return "high"
-	case AllergyIntoleranceCriticalityUnableToAssess:
-		return "unable-to-assess"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code AllergyIntoleranceCriticality) Display() string {

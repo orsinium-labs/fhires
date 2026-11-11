@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Codes identifying the lifecycle stage of an Invoice.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/invoice-status
-type InvoiceStatus int
+type InvoiceStatus string
 
 const (
-	InvoiceStatusDraft InvoiceStatus = iota
+	// the invoice has been prepared but not yet finalized.
+	InvoiceStatusDraft InvoiceStatus = "draft"
 	// the invoice has been finalized and sent to the recipient.
-	InvoiceStatusIssued
+	InvoiceStatusIssued InvoiceStatus = "issued"
 	// the invoice has been balaced / completely paid.
-	InvoiceStatusBalanced
+	InvoiceStatusBalanced InvoiceStatus = "balanced"
 	// the invoice was cancelled.
-	InvoiceStatusCancelled
+	InvoiceStatusCancelled InvoiceStatus = "cancelled"
 	// the invoice was determined as entered in error before it was issued.
-	InvoiceStatusEnteredInError
+	InvoiceStatusEnteredInError InvoiceStatus = "entered-in-error"
 )
-
-func (code InvoiceStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *InvoiceStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "draft":
-		*code = InvoiceStatusDraft
-	case "issued":
-		*code = InvoiceStatusIssued
-	case "balanced":
-		*code = InvoiceStatusBalanced
-	case "cancelled":
-		*code = InvoiceStatusCancelled
-	case "entered-in-error":
-		*code = InvoiceStatusEnteredInError
-	default:
-		return fmt.Errorf("unknown InvoiceStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code InvoiceStatus) String() string {
 	return code.Code()
 }
 
 func (code InvoiceStatus) Code() string {
-	switch code {
-	case InvoiceStatusDraft:
-		return "draft"
-	case InvoiceStatusIssued:
-		return "issued"
-	case InvoiceStatusBalanced:
-		return "balanced"
-	case InvoiceStatusCancelled:
-		return "cancelled"
-	case InvoiceStatusEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code InvoiceStatus) Display() string {

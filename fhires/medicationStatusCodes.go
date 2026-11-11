@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Medication Status Codes
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/medication-status
-type MedicationStatusCodes int
+type MedicationStatusCodes string
 
 const (
-	MedicationStatusCodesActive MedicationStatusCodes = iota
+	// The medication record is current and is appropriate for reference in new instances.
+	MedicationStatusCodesActive MedicationStatusCodes = "active"
 	// The medication record is not current and is not is appropriate for reference in new instances.
-	MedicationStatusCodesInactive
+	MedicationStatusCodesInactive MedicationStatusCodes = "inactive"
 	// The medication record was created erroneously and is not appropriated for reference in new instances.
-	MedicationStatusCodesEnteredInError
+	MedicationStatusCodesEnteredInError MedicationStatusCodes = "entered-in-error"
 )
-
-func (code MedicationStatusCodes) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *MedicationStatusCodes) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "active":
-		*code = MedicationStatusCodesActive
-	case "inactive":
-		*code = MedicationStatusCodesInactive
-	case "entered-in-error":
-		*code = MedicationStatusCodesEnteredInError
-	default:
-		return fmt.Errorf("unknown MedicationStatusCodes code `%s`", s)
-	}
-	return nil
-}
 
 func (code MedicationStatusCodes) String() string {
 	return code.Code()
 }
 
 func (code MedicationStatusCodes) Code() string {
-	switch code {
-	case MedicationStatusCodesActive:
-		return "active"
-	case MedicationStatusCodesInactive:
-		return "inactive"
-	case MedicationStatusCodesEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code MedicationStatusCodes) Display() string {

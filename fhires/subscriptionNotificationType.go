@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The type of notification represented by the status message.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/subscription-notification-type
-type SubscriptionNotificationType int
+type SubscriptionNotificationType string
 
 const (
-	SubscriptionNotificationTypeHandshake SubscriptionNotificationType = iota
+	// The status was generated as part of the setup or verification of a communications channel.
+	SubscriptionNotificationTypeHandshake SubscriptionNotificationType = "handshake"
 	// The status was generated to perform a heartbeat notification to the subscriber.
-	SubscriptionNotificationTypeHeartbeat
+	SubscriptionNotificationTypeHeartbeat SubscriptionNotificationType = "heartbeat"
 	// The status was generated for an event to the subscriber.
-	SubscriptionNotificationTypeEventNotification
+	SubscriptionNotificationTypeEventNotification SubscriptionNotificationType = "event-notification"
 	// The status was generated in response to a status query/request.
-	SubscriptionNotificationTypeQueryStatus
+	SubscriptionNotificationTypeQueryStatus SubscriptionNotificationType = "query-status"
 	// The status was generated in response to an event query/request.
-	SubscriptionNotificationTypeQueryEvent
+	SubscriptionNotificationTypeQueryEvent SubscriptionNotificationType = "query-event"
 )
-
-func (code SubscriptionNotificationType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *SubscriptionNotificationType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "handshake":
-		*code = SubscriptionNotificationTypeHandshake
-	case "heartbeat":
-		*code = SubscriptionNotificationTypeHeartbeat
-	case "event-notification":
-		*code = SubscriptionNotificationTypeEventNotification
-	case "query-status":
-		*code = SubscriptionNotificationTypeQueryStatus
-	case "query-event":
-		*code = SubscriptionNotificationTypeQueryEvent
-	default:
-		return fmt.Errorf("unknown SubscriptionNotificationType code `%s`", s)
-	}
-	return nil
-}
 
 func (code SubscriptionNotificationType) String() string {
 	return code.Code()
 }
 
 func (code SubscriptionNotificationType) Code() string {
-	switch code {
-	case SubscriptionNotificationTypeHandshake:
-		return "handshake"
-	case SubscriptionNotificationTypeHeartbeat:
-		return "heartbeat"
-	case SubscriptionNotificationTypeEventNotification:
-		return "event-notification"
-	case SubscriptionNotificationTypeQueryStatus:
-		return "query-status"
-	case SubscriptionNotificationTypeQueryEvent:
-		return "query-event"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code SubscriptionNotificationType) Display() string {

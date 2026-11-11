@@ -1,149 +1,57 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Operations supported by REST at the system level.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/system-restful-interaction
-type SystemRestfulInteraction int
+type SystemRestfulInteraction string
 
 const (
-	SystemRestfulInteractionRead SystemRestfulInteraction = iota
+	// Read the current state of the resource.
+	SystemRestfulInteractionRead SystemRestfulInteraction = "read"
 	// Read the state of a specific version of the resource.
-	SystemRestfulInteractionVread
+	SystemRestfulInteractionVread SystemRestfulInteraction = "vread"
 	// Update an existing resource by its id (or create it if it is new).
-	SystemRestfulInteractionUpdate
+	SystemRestfulInteractionUpdate SystemRestfulInteraction = "update"
 	// Update an existing resource by posting a set of changes to it.
-	SystemRestfulInteractionPatch
+	SystemRestfulInteractionPatch SystemRestfulInteraction = "patch"
 	// Delete a resource.
-	SystemRestfulInteractionDelete
+	SystemRestfulInteractionDelete SystemRestfulInteraction = "delete"
 	// Retrieve the change history for a particular resource, type of resource, or the entire system.
-	SystemRestfulInteractionHistory
+	SystemRestfulInteractionHistory SystemRestfulInteraction = "history"
 	// Retrieve the change history for a particular resource.
-	SystemRestfulInteractionHistoryInstance
+	SystemRestfulInteractionHistoryInstance SystemRestfulInteraction = "history-instance"
 	// Retrieve the change history for all resources of a particular type.
-	SystemRestfulInteractionHistoryType
+	SystemRestfulInteractionHistoryType SystemRestfulInteraction = "history-type"
 	// Retrieve the change history for all resources on a system.
-	SystemRestfulInteractionHistorySystem
+	SystemRestfulInteractionHistorySystem SystemRestfulInteraction = "history-system"
 	// Create a new resource with a server assigned id.
-	SystemRestfulInteractionCreate
+	SystemRestfulInteractionCreate SystemRestfulInteraction = "create"
 	// Search a resource type or all resources based on some filter criteria.
-	SystemRestfulInteractionSearch
+	SystemRestfulInteractionSearch SystemRestfulInteraction = "search"
 	// Search all resources of the specified type based on some filter criteria.
-	SystemRestfulInteractionSearchType
+	SystemRestfulInteractionSearchType SystemRestfulInteraction = "search-type"
 	// Search all resources based on some filter criteria.
-	SystemRestfulInteractionSearchSystem
+	SystemRestfulInteractionSearchSystem SystemRestfulInteraction = "search-system"
 	// Search resources in a compartment based on some filter criteria.
-	SystemRestfulInteractionSearchCompartment
+	SystemRestfulInteractionSearchCompartment SystemRestfulInteraction = "search-compartment"
 	// Get a Capability Statement for the system.
-	SystemRestfulInteractionCapabilities
+	SystemRestfulInteractionCapabilities SystemRestfulInteraction = "capabilities"
 	// Update, create or delete a set of resources as a single transaction.
-	SystemRestfulInteractionTransaction
+	SystemRestfulInteractionTransaction SystemRestfulInteraction = "transaction"
 	// perform a set of a separate interactions in a single http operation
-	SystemRestfulInteractionBatch
+	SystemRestfulInteractionBatch SystemRestfulInteraction = "batch"
 	// Perform an operation as defined by an OperationDefinition.
-	SystemRestfulInteractionOperation
+	SystemRestfulInteractionOperation SystemRestfulInteraction = "operation"
 )
-
-func (code SystemRestfulInteraction) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *SystemRestfulInteraction) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "read":
-		*code = SystemRestfulInteractionRead
-	case "vread":
-		*code = SystemRestfulInteractionVread
-	case "update":
-		*code = SystemRestfulInteractionUpdate
-	case "patch":
-		*code = SystemRestfulInteractionPatch
-	case "delete":
-		*code = SystemRestfulInteractionDelete
-	case "history":
-		*code = SystemRestfulInteractionHistory
-	case "history-instance":
-		*code = SystemRestfulInteractionHistoryInstance
-	case "history-type":
-		*code = SystemRestfulInteractionHistoryType
-	case "history-system":
-		*code = SystemRestfulInteractionHistorySystem
-	case "create":
-		*code = SystemRestfulInteractionCreate
-	case "search":
-		*code = SystemRestfulInteractionSearch
-	case "search-type":
-		*code = SystemRestfulInteractionSearchType
-	case "search-system":
-		*code = SystemRestfulInteractionSearchSystem
-	case "search-compartment":
-		*code = SystemRestfulInteractionSearchCompartment
-	case "capabilities":
-		*code = SystemRestfulInteractionCapabilities
-	case "transaction":
-		*code = SystemRestfulInteractionTransaction
-	case "batch":
-		*code = SystemRestfulInteractionBatch
-	case "operation":
-		*code = SystemRestfulInteractionOperation
-	default:
-		return fmt.Errorf("unknown SystemRestfulInteraction code `%s`", s)
-	}
-	return nil
-}
 
 func (code SystemRestfulInteraction) String() string {
 	return code.Code()
 }
 
 func (code SystemRestfulInteraction) Code() string {
-	switch code {
-	case SystemRestfulInteractionRead:
-		return "read"
-	case SystemRestfulInteractionVread:
-		return "vread"
-	case SystemRestfulInteractionUpdate:
-		return "update"
-	case SystemRestfulInteractionPatch:
-		return "patch"
-	case SystemRestfulInteractionDelete:
-		return "delete"
-	case SystemRestfulInteractionHistory:
-		return "history"
-	case SystemRestfulInteractionHistoryInstance:
-		return "history-instance"
-	case SystemRestfulInteractionHistoryType:
-		return "history-type"
-	case SystemRestfulInteractionHistorySystem:
-		return "history-system"
-	case SystemRestfulInteractionCreate:
-		return "create"
-	case SystemRestfulInteractionSearch:
-		return "search"
-	case SystemRestfulInteractionSearchType:
-		return "search-type"
-	case SystemRestfulInteractionSearchSystem:
-		return "search-system"
-	case SystemRestfulInteractionSearchCompartment:
-		return "search-compartment"
-	case SystemRestfulInteractionCapabilities:
-		return "capabilities"
-	case SystemRestfulInteractionTransaction:
-		return "transaction"
-	case SystemRestfulInteractionBatch:
-		return "batch"
-	case SystemRestfulInteractionOperation:
-		return "operation"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code SystemRestfulInteraction) Display() string {

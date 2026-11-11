@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The gender of a person used for administrative purposes.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/administrative-gender
-type AdministrativeGender int
+type AdministrativeGender string
 
 const (
-	AdministrativeGenderMale AdministrativeGender = iota
+	// Male.
+	AdministrativeGenderMale AdministrativeGender = "male"
 	// Female.
-	AdministrativeGenderFemale
+	AdministrativeGenderFemale AdministrativeGender = "female"
 	// Other.
-	AdministrativeGenderOther
+	AdministrativeGenderOther AdministrativeGender = "other"
 	// Unknown.
-	AdministrativeGenderUnknown
+	AdministrativeGenderUnknown AdministrativeGender = "unknown"
 )
-
-func (code AdministrativeGender) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *AdministrativeGender) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "male":
-		*code = AdministrativeGenderMale
-	case "female":
-		*code = AdministrativeGenderFemale
-	case "other":
-		*code = AdministrativeGenderOther
-	case "unknown":
-		*code = AdministrativeGenderUnknown
-	default:
-		return fmt.Errorf("unknown AdministrativeGender code `%s`", s)
-	}
-	return nil
-}
 
 func (code AdministrativeGender) String() string {
 	return code.Code()
 }
 
 func (code AdministrativeGender) Code() string {
-	switch code {
-	case AdministrativeGenderMale:
-		return "male"
-	case AdministrativeGenderFemale:
-		return "female"
-	case AdministrativeGenderOther:
-		return "other"
-	case AdministrativeGenderUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code AdministrativeGender) Display() string {

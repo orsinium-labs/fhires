@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // How a search parameter relates to the set of elements returned by evaluating its expression query.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/search-processingmode
-type SearchProcessingModeType int
+type SearchProcessingModeType string
 
 const (
-	SearchProcessingModeTypeNormal SearchProcessingModeType = iota
+	// The search parameter is derived directly from the selected nodes based on the type definitions.
+	SearchProcessingModeTypeNormal SearchProcessingModeType = "normal"
 	// The search parameter is derived by a phonetic transform from the selected nodes.
-	SearchProcessingModeTypePhonetic
+	SearchProcessingModeTypePhonetic SearchProcessingModeType = "phonetic"
 	// The interpretation of the xpath statement is unknown (and can't be automated).
-	SearchProcessingModeTypeOther
+	SearchProcessingModeTypeOther SearchProcessingModeType = "other"
 )
-
-func (code SearchProcessingModeType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *SearchProcessingModeType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "normal":
-		*code = SearchProcessingModeTypeNormal
-	case "phonetic":
-		*code = SearchProcessingModeTypePhonetic
-	case "other":
-		*code = SearchProcessingModeTypeOther
-	default:
-		return fmt.Errorf("unknown SearchProcessingModeType code `%s`", s)
-	}
-	return nil
-}
 
 func (code SearchProcessingModeType) String() string {
 	return code.Code()
 }
 
 func (code SearchProcessingModeType) Code() string {
-	switch code {
-	case SearchProcessingModeTypeNormal:
-		return "normal"
-	case SearchProcessingModeTypePhonetic:
-		return "phonetic"
-	case SearchProcessingModeTypeOther:
-		return "other"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code SearchProcessingModeType) Display() string {

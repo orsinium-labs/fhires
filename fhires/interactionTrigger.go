@@ -1,149 +1,57 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // FHIR RESTful interaction codes used for SubscriptionTopic trigger.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/interaction-trigger
-type InteractionTrigger int
+type InteractionTrigger string
 
 const (
-	InteractionTriggerRead InteractionTrigger = iota
+	// Read the current state of the resource.
+	InteractionTriggerRead InteractionTrigger = "read"
 	// Read the state of a specific version of the resource.
-	InteractionTriggerVread
+	InteractionTriggerVread InteractionTrigger = "vread"
 	// Update an existing resource by its id (or create it if it is new).
-	InteractionTriggerUpdate
+	InteractionTriggerUpdate InteractionTrigger = "update"
 	// Update an existing resource by posting a set of changes to it.
-	InteractionTriggerPatch
+	InteractionTriggerPatch InteractionTrigger = "patch"
 	// Delete a resource.
-	InteractionTriggerDelete
+	InteractionTriggerDelete InteractionTrigger = "delete"
 	// Retrieve the change history for a particular resource, type of resource, or the entire system.
-	InteractionTriggerHistory
+	InteractionTriggerHistory InteractionTrigger = "history"
 	// Retrieve the change history for a particular resource.
-	InteractionTriggerHistoryInstance
+	InteractionTriggerHistoryInstance InteractionTrigger = "history-instance"
 	// Retrieve the change history for all resources of a particular type.
-	InteractionTriggerHistoryType
+	InteractionTriggerHistoryType InteractionTrigger = "history-type"
 	// Retrieve the change history for all resources on a system.
-	InteractionTriggerHistorySystem
+	InteractionTriggerHistorySystem InteractionTrigger = "history-system"
 	// Create a new resource with a server assigned id.
-	InteractionTriggerCreate
+	InteractionTriggerCreate InteractionTrigger = "create"
 	// Search a resource type or all resources based on some filter criteria.
-	InteractionTriggerSearch
+	InteractionTriggerSearch InteractionTrigger = "search"
 	// Search all resources of the specified type based on some filter criteria.
-	InteractionTriggerSearchType
+	InteractionTriggerSearchType InteractionTrigger = "search-type"
 	// Search all resources based on some filter criteria.
-	InteractionTriggerSearchSystem
+	InteractionTriggerSearchSystem InteractionTrigger = "search-system"
 	// Search resources in a compartment based on some filter criteria.
-	InteractionTriggerSearchCompartment
+	InteractionTriggerSearchCompartment InteractionTrigger = "search-compartment"
 	// Get a Capability Statement for the system.
-	InteractionTriggerCapabilities
+	InteractionTriggerCapabilities InteractionTrigger = "capabilities"
 	// Update, create or delete a set of resources as a single transaction.
-	InteractionTriggerTransaction
+	InteractionTriggerTransaction InteractionTrigger = "transaction"
 	// perform a set of a separate interactions in a single http operation
-	InteractionTriggerBatch
+	InteractionTriggerBatch InteractionTrigger = "batch"
 	// Perform an operation as defined by an OperationDefinition.
-	InteractionTriggerOperation
+	InteractionTriggerOperation InteractionTrigger = "operation"
 )
-
-func (code InteractionTrigger) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *InteractionTrigger) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "read":
-		*code = InteractionTriggerRead
-	case "vread":
-		*code = InteractionTriggerVread
-	case "update":
-		*code = InteractionTriggerUpdate
-	case "patch":
-		*code = InteractionTriggerPatch
-	case "delete":
-		*code = InteractionTriggerDelete
-	case "history":
-		*code = InteractionTriggerHistory
-	case "history-instance":
-		*code = InteractionTriggerHistoryInstance
-	case "history-type":
-		*code = InteractionTriggerHistoryType
-	case "history-system":
-		*code = InteractionTriggerHistorySystem
-	case "create":
-		*code = InteractionTriggerCreate
-	case "search":
-		*code = InteractionTriggerSearch
-	case "search-type":
-		*code = InteractionTriggerSearchType
-	case "search-system":
-		*code = InteractionTriggerSearchSystem
-	case "search-compartment":
-		*code = InteractionTriggerSearchCompartment
-	case "capabilities":
-		*code = InteractionTriggerCapabilities
-	case "transaction":
-		*code = InteractionTriggerTransaction
-	case "batch":
-		*code = InteractionTriggerBatch
-	case "operation":
-		*code = InteractionTriggerOperation
-	default:
-		return fmt.Errorf("unknown InteractionTrigger code `%s`", s)
-	}
-	return nil
-}
 
 func (code InteractionTrigger) String() string {
 	return code.Code()
 }
 
 func (code InteractionTrigger) Code() string {
-	switch code {
-	case InteractionTriggerRead:
-		return "read"
-	case InteractionTriggerVread:
-		return "vread"
-	case InteractionTriggerUpdate:
-		return "update"
-	case InteractionTriggerPatch:
-		return "patch"
-	case InteractionTriggerDelete:
-		return "delete"
-	case InteractionTriggerHistory:
-		return "history"
-	case InteractionTriggerHistoryInstance:
-		return "history-instance"
-	case InteractionTriggerHistoryType:
-		return "history-type"
-	case InteractionTriggerHistorySystem:
-		return "history-system"
-	case InteractionTriggerCreate:
-		return "create"
-	case InteractionTriggerSearch:
-		return "search"
-	case InteractionTriggerSearchType:
-		return "search-type"
-	case InteractionTriggerSearchSystem:
-		return "search-system"
-	case InteractionTriggerSearchCompartment:
-		return "search-compartment"
-	case InteractionTriggerCapabilities:
-		return "capabilities"
-	case InteractionTriggerTransaction:
-		return "transaction"
-	case InteractionTriggerBatch:
-		return "batch"
-	case InteractionTriggerOperation:
-		return "operation"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code InteractionTrigger) Display() string {

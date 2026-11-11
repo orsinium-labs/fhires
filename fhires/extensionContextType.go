@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // How an extension context is interpreted.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/extension-context-type
-type ExtensionContextType int
+type ExtensionContextType string
 
 const (
-	ExtensionContextTypeFhirpath ExtensionContextType = iota
+	// The context is all elements that match the FHIRPath query found in the expression.
+	ExtensionContextTypeFhirpath ExtensionContextType = "fhirpath"
 	// The context is any element that has an ElementDefinition.id that matches that found in the expression. This includes ElementDefinition Ids that have slicing identifiers. The full path for the element is [url]#[elementid]. If there is no #, the Element id is one defined in the base specification.
-	ExtensionContextTypeElement
+	ExtensionContextTypeElement ExtensionContextType = "element"
 	// The context is a particular extension from a particular StructureDefinition, and the expression is just a uri that identifies the extension.
-	ExtensionContextTypeExtension
+	ExtensionContextTypeExtension ExtensionContextType = "extension"
 )
-
-func (code ExtensionContextType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ExtensionContextType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "fhirpath":
-		*code = ExtensionContextTypeFhirpath
-	case "element":
-		*code = ExtensionContextTypeElement
-	case "extension":
-		*code = ExtensionContextTypeExtension
-	default:
-		return fmt.Errorf("unknown ExtensionContextType code `%s`", s)
-	}
-	return nil
-}
 
 func (code ExtensionContextType) String() string {
 	return code.Code()
 }
 
 func (code ExtensionContextType) Code() string {
-	switch code {
-	case ExtensionContextTypeFhirpath:
-		return "fhirpath"
-	case ExtensionContextTypeElement:
-		return "element"
-	case ExtensionContextTypeExtension:
-		return "extension"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ExtensionContextType) Display() string {

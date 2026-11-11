@@ -1,77 +1,33 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Defines selection behavior of a group.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/action-selection-behavior
-type ActionSelectionBehavior int
+type ActionSelectionBehavior string
 
 const (
-	ActionSelectionBehaviorAny ActionSelectionBehavior = iota
+	// Any number of the actions in the group may be chosen, from zero to all.
+	ActionSelectionBehaviorAny ActionSelectionBehavior = "any"
 	// All the actions in the group must be selected as a single unit.
-	ActionSelectionBehaviorAll
+	ActionSelectionBehaviorAll ActionSelectionBehavior = "all"
 	// All the actions in the group are meant to be chosen as a single unit: either all must be selected by the end user, or none may be selected.
-	ActionSelectionBehaviorAllOrNone
+	ActionSelectionBehaviorAllOrNone ActionSelectionBehavior = "all-or-none"
 	// The end user must choose one and only one of the selectable actions in the group. The user SHALL NOT choose none of the actions in the group.
-	ActionSelectionBehaviorExactlyOne
+	ActionSelectionBehaviorExactlyOne ActionSelectionBehavior = "exactly-one"
 	// The end user may choose zero or at most one of the actions in the group.
-	ActionSelectionBehaviorAtMostOne
+	ActionSelectionBehaviorAtMostOne ActionSelectionBehavior = "at-most-one"
 	// The end user must choose a minimum of one, and as many additional as desired.
-	ActionSelectionBehaviorOneOrMore
+	ActionSelectionBehaviorOneOrMore ActionSelectionBehavior = "one-or-more"
 )
-
-func (code ActionSelectionBehavior) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ActionSelectionBehavior) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "any":
-		*code = ActionSelectionBehaviorAny
-	case "all":
-		*code = ActionSelectionBehaviorAll
-	case "all-or-none":
-		*code = ActionSelectionBehaviorAllOrNone
-	case "exactly-one":
-		*code = ActionSelectionBehaviorExactlyOne
-	case "at-most-one":
-		*code = ActionSelectionBehaviorAtMostOne
-	case "one-or-more":
-		*code = ActionSelectionBehaviorOneOrMore
-	default:
-		return fmt.Errorf("unknown ActionSelectionBehavior code `%s`", s)
-	}
-	return nil
-}
 
 func (code ActionSelectionBehavior) String() string {
 	return code.Code()
 }
 
 func (code ActionSelectionBehavior) Code() string {
-	switch code {
-	case ActionSelectionBehaviorAny:
-		return "any"
-	case ActionSelectionBehaviorAll:
-		return "all"
-	case ActionSelectionBehaviorAllOrNone:
-		return "all-or-none"
-	case ActionSelectionBehaviorExactlyOne:
-		return "exactly-one"
-	case ActionSelectionBehaviorAtMostOne:
-		return "at-most-one"
-	case ActionSelectionBehaviorOneOrMore:
-		return "one-or-more"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ActionSelectionBehavior) Display() string {

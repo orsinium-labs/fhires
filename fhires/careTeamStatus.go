@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Indicates the status of the care team.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/care-team-status
-type CareTeamStatus int
+type CareTeamStatus string
 
 const (
-	CareTeamStatusProposed CareTeamStatus = iota
+	// The care team has been drafted and proposed, but not yet participating in the coordination and delivery of patient care.
+	CareTeamStatusProposed CareTeamStatus = "proposed"
 	// The care team is currently participating in the coordination and delivery of care.
-	CareTeamStatusActive
+	CareTeamStatusActive CareTeamStatus = "active"
 	// The care team is temporarily on hold or suspended and not participating in the coordination and delivery of care.
-	CareTeamStatusSuspended
+	CareTeamStatusSuspended CareTeamStatus = "suspended"
 	// The care team was, but is no longer, participating in the coordination and delivery of care.
-	CareTeamStatusInactive
+	CareTeamStatusInactive CareTeamStatus = "inactive"
 	// The care team should have never existed.
-	CareTeamStatusEnteredInError
+	CareTeamStatusEnteredInError CareTeamStatus = "entered-in-error"
 )
-
-func (code CareTeamStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *CareTeamStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "proposed":
-		*code = CareTeamStatusProposed
-	case "active":
-		*code = CareTeamStatusActive
-	case "suspended":
-		*code = CareTeamStatusSuspended
-	case "inactive":
-		*code = CareTeamStatusInactive
-	case "entered-in-error":
-		*code = CareTeamStatusEnteredInError
-	default:
-		return fmt.Errorf("unknown CareTeamStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code CareTeamStatus) String() string {
 	return code.Code()
 }
 
 func (code CareTeamStatus) Code() string {
-	switch code {
-	case CareTeamStatusProposed:
-		return "proposed"
-	case CareTeamStatusActive:
-		return "active"
-	case CareTeamStatusSuspended:
-		return "suspended"
-	case CareTeamStatusInactive:
-		return "inactive"
-	case CareTeamStatusEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code CareTeamStatus) Display() string {

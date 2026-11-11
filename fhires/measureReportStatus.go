@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The status of the measure report.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/measure-report-status
-type MeasureReportStatus int
+type MeasureReportStatus string
 
 const (
-	MeasureReportStatusComplete MeasureReportStatus = iota
+	// The report is complete and ready for use.
+	MeasureReportStatusComplete MeasureReportStatus = "complete"
 	// The report is currently being generated.
-	MeasureReportStatusPending
+	MeasureReportStatusPending MeasureReportStatus = "pending"
 	// An error occurred attempting to generate the report.
-	MeasureReportStatusError
+	MeasureReportStatusError MeasureReportStatus = "error"
 )
-
-func (code MeasureReportStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *MeasureReportStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "complete":
-		*code = MeasureReportStatusComplete
-	case "pending":
-		*code = MeasureReportStatusPending
-	case "error":
-		*code = MeasureReportStatusError
-	default:
-		return fmt.Errorf("unknown MeasureReportStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code MeasureReportStatus) String() string {
 	return code.Code()
 }
 
 func (code MeasureReportStatus) Code() string {
-	switch code {
-	case MeasureReportStatusComplete:
-		return "complete"
-	case MeasureReportStatusPending:
-		return "pending"
-	case MeasureReportStatusError:
-		return "error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code MeasureReportStatus) Display() string {

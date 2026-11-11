@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // How a resource reference is interpreted when testing consent restrictions.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/consent-data-meaning
-type ConsentDataMeaning int
+type ConsentDataMeaning string
 
 const (
-	ConsentDataMeaningInstance ConsentDataMeaning = iota
+	// The consent applies directly to the instance of the resource.
+	ConsentDataMeaningInstance ConsentDataMeaning = "instance"
 	// The consent applies directly to the instance of the resource and instances it refers to.
-	ConsentDataMeaningRelated
+	ConsentDataMeaningRelated ConsentDataMeaning = "related"
 	// The consent applies directly to the instance of the resource and instances that refer to it.
-	ConsentDataMeaningDependents
+	ConsentDataMeaningDependents ConsentDataMeaning = "dependents"
 	// The consent applies to instances of resources that are authored by.
-	ConsentDataMeaningAuthoredby
+	ConsentDataMeaningAuthoredby ConsentDataMeaning = "authoredby"
 )
-
-func (code ConsentDataMeaning) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ConsentDataMeaning) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "instance":
-		*code = ConsentDataMeaningInstance
-	case "related":
-		*code = ConsentDataMeaningRelated
-	case "dependents":
-		*code = ConsentDataMeaningDependents
-	case "authoredby":
-		*code = ConsentDataMeaningAuthoredby
-	default:
-		return fmt.Errorf("unknown ConsentDataMeaning code `%s`", s)
-	}
-	return nil
-}
 
 func (code ConsentDataMeaning) String() string {
 	return code.Code()
 }
 
 func (code ConsentDataMeaning) Code() string {
-	switch code {
-	case ConsentDataMeaningInstance:
-		return "instance"
-	case ConsentDataMeaningRelated:
-		return "related"
-	case ConsentDataMeaningDependents:
-		return "dependents"
-	case ConsentDataMeaningAuthoredby:
-		return "authoredby"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ConsentDataMeaning) Display() string {

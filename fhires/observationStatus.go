@@ -1,89 +1,37 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Codes providing the status of an observation.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/observation-status
-type ObservationStatus int
+type ObservationStatus string
 
 const (
-	ObservationStatusRegistered ObservationStatus = iota
+	// The existence of the observation is registered, but there is no result yet available.
+	ObservationStatusRegistered ObservationStatus = "registered"
 	// This is an initial or interim observation: data may be incomplete or unverified.
-	ObservationStatusPreliminary
+	ObservationStatusPreliminary ObservationStatus = "preliminary"
 	// The observation is complete and there are no further actions needed. Additional information such "released", "signed", etc. would be represented using [Provenance](provenance.html) which provides not only the act but also the actors and dates and other related data. These act states would be associated with an observation status of `preliminary` until they are all completed and then a status of `final` would be applied.
-	ObservationStatusFinal
+	ObservationStatusFinal ObservationStatus = "final"
 	// Subsequent to being Final, the observation has been modified subsequent.  This includes updates/new information and corrections.
-	ObservationStatusAmended
+	ObservationStatusAmended ObservationStatus = "amended"
 	// Subsequent to being Final, the observation has been modified to correct an error in the test result.
-	ObservationStatusCorrected
+	ObservationStatusCorrected ObservationStatus = "corrected"
 	// The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
-	ObservationStatusCancelled
+	ObservationStatusCancelled ObservationStatus = "cancelled"
 	// The observation has been withdrawn following previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
-	ObservationStatusEnteredInError
+	ObservationStatusEnteredInError ObservationStatus = "entered-in-error"
 	// The authoring/source system does not know which of the status values currently applies for this observation. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, but the authoring/source system does not know which.
-	ObservationStatusUnknown
+	ObservationStatusUnknown ObservationStatus = "unknown"
 )
-
-func (code ObservationStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ObservationStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "registered":
-		*code = ObservationStatusRegistered
-	case "preliminary":
-		*code = ObservationStatusPreliminary
-	case "final":
-		*code = ObservationStatusFinal
-	case "amended":
-		*code = ObservationStatusAmended
-	case "corrected":
-		*code = ObservationStatusCorrected
-	case "cancelled":
-		*code = ObservationStatusCancelled
-	case "entered-in-error":
-		*code = ObservationStatusEnteredInError
-	case "unknown":
-		*code = ObservationStatusUnknown
-	default:
-		return fmt.Errorf("unknown ObservationStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code ObservationStatus) String() string {
 	return code.Code()
 }
 
 func (code ObservationStatus) Code() string {
-	switch code {
-	case ObservationStatusRegistered:
-		return "registered"
-	case ObservationStatusPreliminary:
-		return "preliminary"
-	case ObservationStatusFinal:
-		return "final"
-	case ObservationStatusAmended:
-		return "amended"
-	case ObservationStatusCorrected:
-		return "corrected"
-	case ObservationStatusCancelled:
-		return "cancelled"
-	case ObservationStatusEnteredInError:
-		return "entered-in-error"
-	case ObservationStatusUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ObservationStatus) Display() string {

@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Identifies the purpose of the naming system.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/namingsystem-type
-type NamingSystemType int
+type NamingSystemType string
 
 const (
-	NamingSystemTypeCodesystem NamingSystemType = iota
+	// The naming system is used to define concepts and symbols to represent those concepts; e.g. UCUM, LOINC, NDC code, local lab codes, etc.
+	NamingSystemTypeCodesystem NamingSystemType = "codesystem"
 	// The naming system is used to manage identifiers (e.g. license numbers, order numbers, etc.).
-	NamingSystemTypeIdentifier
+	NamingSystemTypeIdentifier NamingSystemType = "identifier"
 	// The naming system is used as the root for other identifiers and naming systems.
-	NamingSystemTypeRoot
+	NamingSystemTypeRoot NamingSystemType = "root"
 )
-
-func (code NamingSystemType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *NamingSystemType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "codesystem":
-		*code = NamingSystemTypeCodesystem
-	case "identifier":
-		*code = NamingSystemTypeIdentifier
-	case "root":
-		*code = NamingSystemTypeRoot
-	default:
-		return fmt.Errorf("unknown NamingSystemType code `%s`", s)
-	}
-	return nil
-}
 
 func (code NamingSystemType) String() string {
 	return code.Code()
 }
 
 func (code NamingSystemType) Code() string {
-	switch code {
-	case NamingSystemTypeCodesystem:
-		return "codesystem"
-	case NamingSystemTypeIdentifier:
-		return "identifier"
-	case NamingSystemTypeRoot:
-		return "root"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code NamingSystemType) Display() string {

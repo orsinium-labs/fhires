@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Possible values for the disposition of a comment or change request, typically used for comments and change requests, to indicate the disposition of the responsible party towards the changes suggested by the comment or change request.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/artifactassessment-disposition
-type ArtifactAssessmentDisposition int
+type ArtifactAssessmentDisposition string
 
 const (
-	ArtifactAssessmentDispositionUnresolved ArtifactAssessmentDisposition = iota
+	// The comment is unresolved
+	ArtifactAssessmentDispositionUnresolved ArtifactAssessmentDisposition = "unresolved"
 	// The comment is not persuasive (rejected in full)
-	ArtifactAssessmentDispositionNotPersuasive
+	ArtifactAssessmentDispositionNotPersuasive ArtifactAssessmentDisposition = "not-persuasive"
 	// The comment is persuasive (accepted in full)
-	ArtifactAssessmentDispositionPersuasive
+	ArtifactAssessmentDispositionPersuasive ArtifactAssessmentDisposition = "persuasive"
 	// The comment is persuasive with modification (partially accepted)
-	ArtifactAssessmentDispositionPersuasiveWithModification
+	ArtifactAssessmentDispositionPersuasiveWithModification ArtifactAssessmentDisposition = "persuasive-with-modification"
 	// The comment is not persuasive with modification (partially rejected)
-	ArtifactAssessmentDispositionNotPersuasiveWithModification
+	ArtifactAssessmentDispositionNotPersuasiveWithModification ArtifactAssessmentDisposition = "not-persuasive-with-modification"
 )
-
-func (code ArtifactAssessmentDisposition) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ArtifactAssessmentDisposition) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "unresolved":
-		*code = ArtifactAssessmentDispositionUnresolved
-	case "not-persuasive":
-		*code = ArtifactAssessmentDispositionNotPersuasive
-	case "persuasive":
-		*code = ArtifactAssessmentDispositionPersuasive
-	case "persuasive-with-modification":
-		*code = ArtifactAssessmentDispositionPersuasiveWithModification
-	case "not-persuasive-with-modification":
-		*code = ArtifactAssessmentDispositionNotPersuasiveWithModification
-	default:
-		return fmt.Errorf("unknown ArtifactAssessmentDisposition code `%s`", s)
-	}
-	return nil
-}
 
 func (code ArtifactAssessmentDisposition) String() string {
 	return code.Code()
 }
 
 func (code ArtifactAssessmentDisposition) Code() string {
-	switch code {
-	case ArtifactAssessmentDispositionUnresolved:
-		return "unresolved"
-	case ArtifactAssessmentDispositionNotPersuasive:
-		return "not-persuasive"
-	case ArtifactAssessmentDispositionPersuasive:
-		return "persuasive"
-	case ArtifactAssessmentDispositionPersuasiveWithModification:
-		return "persuasive-with-modification"
-	case ArtifactAssessmentDispositionNotPersuasiveWithModification:
-		return "not-persuasive-with-modification"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ArtifactAssessmentDisposition) Display() string {

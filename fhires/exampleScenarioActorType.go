@@ -1,53 +1,25 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The type of actor - system or human.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/examplescenario-actor-type
-type ExampleScenarioActorType int
+type ExampleScenarioActorType string
 
 const (
-	ExampleScenarioActorTypePerson ExampleScenarioActorType = iota
+	// A human actor
+	ExampleScenarioActorTypePerson ExampleScenarioActorType = "person"
 	// A software application or other system
-	ExampleScenarioActorTypeSystem
+	ExampleScenarioActorTypeSystem ExampleScenarioActorType = "system"
 )
-
-func (code ExampleScenarioActorType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ExampleScenarioActorType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "person":
-		*code = ExampleScenarioActorTypePerson
-	case "system":
-		*code = ExampleScenarioActorTypeSystem
-	default:
-		return fmt.Errorf("unknown ExampleScenarioActorType code `%s`", s)
-	}
-	return nil
-}
 
 func (code ExampleScenarioActorType) String() string {
 	return code.Code()
 }
 
 func (code ExampleScenarioActorType) Code() string {
-	switch code {
-	case ExampleScenarioActorTypePerson:
-		return "person"
-	case ExampleScenarioActorTypeSystem:
-		return "system"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ExampleScenarioActorType) Display() string {

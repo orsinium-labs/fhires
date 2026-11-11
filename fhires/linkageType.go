@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Used to distinguish different roles a resource can play within a set of linked resources.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/linkage-type
-type LinkageType int
+type LinkageType string
 
 const (
-	LinkageTypeSource LinkageType = iota
+	// The resource represents the "source of truth" (from the perspective of this Linkage resource) for the underlying event/condition/etc.
+	LinkageTypeSource LinkageType = "source"
 	// The resource represents an alternative view of the underlying event/condition/etc.  The resource may still be actively maintained, even though it is not considered to be the source of truth.
-	LinkageTypeAlternate
+	LinkageTypeAlternate LinkageType = "alternate"
 	// The resource represents an obsolete record of the underlying event/condition/etc.  It is not expected to be actively maintained.
-	LinkageTypeHistorical
+	LinkageTypeHistorical LinkageType = "historical"
 )
-
-func (code LinkageType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *LinkageType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "source":
-		*code = LinkageTypeSource
-	case "alternate":
-		*code = LinkageTypeAlternate
-	case "historical":
-		*code = LinkageTypeHistorical
-	default:
-		return fmt.Errorf("unknown LinkageType code `%s`", s)
-	}
-	return nil
-}
 
 func (code LinkageType) String() string {
 	return code.Code()
 }
 
 func (code LinkageType) Code() string {
-	switch code {
-	case LinkageTypeSource:
-		return "source"
-	case LinkageTypeAlternate:
-		return "alternate"
-	case LinkageTypeHistorical:
-		return "historical"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code LinkageType) Display() string {

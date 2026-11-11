@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The use of a questionnaire.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose
-type ConditionQuestionnairePurpose int
+type ConditionQuestionnairePurpose string
 
 const (
-	ConditionQuestionnairePurposePreadmit ConditionQuestionnairePurpose = iota
+	// A pre-admit questionnaire.
+	ConditionQuestionnairePurposePreadmit ConditionQuestionnairePurpose = "preadmit"
 	// A questionnaire that helps with diferential diagnosis.
-	ConditionQuestionnairePurposeDiffDiagnosis
+	ConditionQuestionnairePurposeDiffDiagnosis ConditionQuestionnairePurpose = "diff-diagnosis"
 	// A questionnaire to check on outcomes for the patient.
-	ConditionQuestionnairePurposeOutcome
+	ConditionQuestionnairePurposeOutcome ConditionQuestionnairePurpose = "outcome"
 )
-
-func (code ConditionQuestionnairePurpose) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ConditionQuestionnairePurpose) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "preadmit":
-		*code = ConditionQuestionnairePurposePreadmit
-	case "diff-diagnosis":
-		*code = ConditionQuestionnairePurposeDiffDiagnosis
-	case "outcome":
-		*code = ConditionQuestionnairePurposeOutcome
-	default:
-		return fmt.Errorf("unknown ConditionQuestionnairePurpose code `%s`", s)
-	}
-	return nil
-}
 
 func (code ConditionQuestionnairePurpose) String() string {
 	return code.Code()
 }
 
 func (code ConditionQuestionnairePurpose) Code() string {
-	switch code {
-	case ConditionQuestionnairePurposePreadmit:
-		return "preadmit"
-	case ConditionQuestionnairePurposeDiffDiagnosis:
-		return "diff-diagnosis"
-	case ConditionQuestionnairePurposeOutcome:
-		return "outcome"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ConditionQuestionnairePurpose) Display() string {

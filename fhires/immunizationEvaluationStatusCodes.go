@@ -1,83 +1,35 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The value set to instantiate this attribute should be drawn from a terminologically robust code system that consists of or contains concepts to support describing the current status of the evaluation for vaccine administration event.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/immunization-evaluation-status
-type ImmunizationEvaluationStatusCodes int
+type ImmunizationEvaluationStatusCodes string
 
 const (
-	ImmunizationEvaluationStatusCodesInProgress ImmunizationEvaluationStatusCodes = iota
+	// The administration has started but has not yet completed.
+	ImmunizationEvaluationStatusCodesInProgress ImmunizationEvaluationStatusCodes = "in-progress"
 	// The administration was terminated prior to any impact on the subject (though preparatory actions may have been taken)
-	ImmunizationEvaluationStatusCodesNotDone
+	ImmunizationEvaluationStatusCodesNotDone ImmunizationEvaluationStatusCodes = "not-done"
 	// Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called 'suspended'.
-	ImmunizationEvaluationStatusCodesOnHold
+	ImmunizationEvaluationStatusCodesOnHold ImmunizationEvaluationStatusCodes = "on-hold"
 	// All actions that are implied by the administration have occurred.
-	ImmunizationEvaluationStatusCodesCompleted
+	ImmunizationEvaluationStatusCodesCompleted ImmunizationEvaluationStatusCodes = "completed"
 	// The administration was entered in error and therefore nullified.
-	ImmunizationEvaluationStatusCodesEnteredInError
+	ImmunizationEvaluationStatusCodesEnteredInError ImmunizationEvaluationStatusCodes = "entered-in-error"
 	// Actions implied by the administration have been permanently halted, before all of them occurred.
-	ImmunizationEvaluationStatusCodesStopped
+	ImmunizationEvaluationStatusCodesStopped ImmunizationEvaluationStatusCodes = "stopped"
 	// The authoring system does not know which of the status values currently applies for this request. Note: This concept is not to be used for 'other' - one of the listed statuses is presumed to apply, it's just not known which one.
-	ImmunizationEvaluationStatusCodesUnknown
+	ImmunizationEvaluationStatusCodesUnknown ImmunizationEvaluationStatusCodes = "unknown"
 )
-
-func (code ImmunizationEvaluationStatusCodes) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ImmunizationEvaluationStatusCodes) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "in-progress":
-		*code = ImmunizationEvaluationStatusCodesInProgress
-	case "not-done":
-		*code = ImmunizationEvaluationStatusCodesNotDone
-	case "on-hold":
-		*code = ImmunizationEvaluationStatusCodesOnHold
-	case "completed":
-		*code = ImmunizationEvaluationStatusCodesCompleted
-	case "entered-in-error":
-		*code = ImmunizationEvaluationStatusCodesEnteredInError
-	case "stopped":
-		*code = ImmunizationEvaluationStatusCodesStopped
-	case "unknown":
-		*code = ImmunizationEvaluationStatusCodesUnknown
-	default:
-		return fmt.Errorf("unknown ImmunizationEvaluationStatusCodes code `%s`", s)
-	}
-	return nil
-}
 
 func (code ImmunizationEvaluationStatusCodes) String() string {
 	return code.Code()
 }
 
 func (code ImmunizationEvaluationStatusCodes) Code() string {
-	switch code {
-	case ImmunizationEvaluationStatusCodesInProgress:
-		return "in-progress"
-	case ImmunizationEvaluationStatusCodesNotDone:
-		return "not-done"
-	case ImmunizationEvaluationStatusCodesOnHold:
-		return "on-hold"
-	case ImmunizationEvaluationStatusCodesCompleted:
-		return "completed"
-	case ImmunizationEvaluationStatusCodesEnteredInError:
-		return "entered-in-error"
-	case ImmunizationEvaluationStatusCodesStopped:
-		return "stopped"
-	case ImmunizationEvaluationStatusCodesUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ImmunizationEvaluationStatusCodes) Display() string {

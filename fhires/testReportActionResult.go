@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The results of executing an action.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/report-action-result-codes
-type TestReportActionResult int
+type TestReportActionResult string
 
 const (
-	TestReportActionResultPass TestReportActionResult = iota
+	// The action was successful.
+	TestReportActionResultPass TestReportActionResult = "pass"
 	// The action was skipped.
-	TestReportActionResultSkip
+	TestReportActionResultSkip TestReportActionResult = "skip"
 	// The action failed.
-	TestReportActionResultFail
+	TestReportActionResultFail TestReportActionResult = "fail"
 	// The action passed but with warnings.
-	TestReportActionResultWarning
+	TestReportActionResultWarning TestReportActionResult = "warning"
 	// The action encountered a fatal error and the engine was unable to process.
-	TestReportActionResultError
+	TestReportActionResultError TestReportActionResult = "error"
 )
-
-func (code TestReportActionResult) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *TestReportActionResult) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "pass":
-		*code = TestReportActionResultPass
-	case "skip":
-		*code = TestReportActionResultSkip
-	case "fail":
-		*code = TestReportActionResultFail
-	case "warning":
-		*code = TestReportActionResultWarning
-	case "error":
-		*code = TestReportActionResultError
-	default:
-		return fmt.Errorf("unknown TestReportActionResult code `%s`", s)
-	}
-	return nil
-}
 
 func (code TestReportActionResult) String() string {
 	return code.Code()
 }
 
 func (code TestReportActionResult) Code() string {
-	switch code {
-	case TestReportActionResultPass:
-		return "pass"
-	case TestReportActionResultSkip:
-		return "skip"
-	case TestReportActionResultFail:
-		return "fail"
-	case TestReportActionResultWarning:
-		return "warning"
-	case TestReportActionResultError:
-		return "error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code TestReportActionResult) Display() string {

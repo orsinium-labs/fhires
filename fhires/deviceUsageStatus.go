@@ -1,83 +1,35 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // A coded concept indicating the current status of the Device Usage.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/deviceusage-status
-type DeviceUsageStatus int
+type DeviceUsageStatus string
 
 const (
-	DeviceUsageStatusActive DeviceUsageStatus = iota
+	// The device is still being used.
+	DeviceUsageStatusActive DeviceUsageStatus = "active"
 	// The device is no longer being used.
-	DeviceUsageStatusCompleted
+	DeviceUsageStatusCompleted DeviceUsageStatus = "completed"
 	// The device was not used.
-	DeviceUsageStatusNotDone
+	DeviceUsageStatusNotDone DeviceUsageStatus = "not-done"
 	// The statement was recorded incorrectly.
-	DeviceUsageStatusEnteredInError
+	DeviceUsageStatusEnteredInError DeviceUsageStatus = "entered-in-error"
 	// The device may be used at some time in the future.
-	DeviceUsageStatusIntended
+	DeviceUsageStatusIntended DeviceUsageStatus = "intended"
 	// Actions implied by the statement have been permanently halted, before all of them occurred.
-	DeviceUsageStatusStopped
+	DeviceUsageStatusStopped DeviceUsageStatus = "stopped"
 	// Actions implied by the statement have been temporarily halted, but are expected to continue later. May also be called "suspended".
-	DeviceUsageStatusOnHold
+	DeviceUsageStatusOnHold DeviceUsageStatus = "on-hold"
 )
-
-func (code DeviceUsageStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *DeviceUsageStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "active":
-		*code = DeviceUsageStatusActive
-	case "completed":
-		*code = DeviceUsageStatusCompleted
-	case "not-done":
-		*code = DeviceUsageStatusNotDone
-	case "entered-in-error":
-		*code = DeviceUsageStatusEnteredInError
-	case "intended":
-		*code = DeviceUsageStatusIntended
-	case "stopped":
-		*code = DeviceUsageStatusStopped
-	case "on-hold":
-		*code = DeviceUsageStatusOnHold
-	default:
-		return fmt.Errorf("unknown DeviceUsageStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code DeviceUsageStatus) String() string {
 	return code.Code()
 }
 
 func (code DeviceUsageStatus) Code() string {
-	switch code {
-	case DeviceUsageStatusActive:
-		return "active"
-	case DeviceUsageStatusCompleted:
-		return "completed"
-	case DeviceUsageStatusNotDone:
-		return "not-done"
-	case DeviceUsageStatusEnteredInError:
-		return "entered-in-error"
-	case DeviceUsageStatusIntended:
-		return "intended"
-	case DeviceUsageStatusStopped:
-		return "stopped"
-	case DeviceUsageStatusOnHold:
-		return "on-hold"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code DeviceUsageStatus) Display() string {

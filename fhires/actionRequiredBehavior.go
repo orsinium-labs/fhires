@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Defines expectations around whether an action or action group is required.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/action-required-behavior
-type ActionRequiredBehavior int
+type ActionRequiredBehavior string
 
 const (
-	ActionRequiredBehaviorMust ActionRequiredBehavior = iota
+	// An action with this behavior must be included in the actions processed by the end user; the end user SHALL NOT choose not to include this action.
+	ActionRequiredBehaviorMust ActionRequiredBehavior = "must"
 	// An action with this behavior may be included in the set of actions processed by the end user.
-	ActionRequiredBehaviorCould
+	ActionRequiredBehaviorCould ActionRequiredBehavior = "could"
 	// An action with this behavior must be included in the set of actions processed by the end user, unless the end user provides documentation as to why the action was not included.
-	ActionRequiredBehaviorMustUnlessDocumented
+	ActionRequiredBehaviorMustUnlessDocumented ActionRequiredBehavior = "must-unless-documented"
 )
-
-func (code ActionRequiredBehavior) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ActionRequiredBehavior) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "must":
-		*code = ActionRequiredBehaviorMust
-	case "could":
-		*code = ActionRequiredBehaviorCould
-	case "must-unless-documented":
-		*code = ActionRequiredBehaviorMustUnlessDocumented
-	default:
-		return fmt.Errorf("unknown ActionRequiredBehavior code `%s`", s)
-	}
-	return nil
-}
 
 func (code ActionRequiredBehavior) String() string {
 	return code.Code()
 }
 
 func (code ActionRequiredBehavior) Code() string {
-	switch code {
-	case ActionRequiredBehaviorMust:
-		return "must"
-	case ActionRequiredBehaviorCould:
-		return "could"
-	case ActionRequiredBehaviorMustUnlessDocumented:
-		return "must-unless-documented"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ActionRequiredBehavior) Display() string {

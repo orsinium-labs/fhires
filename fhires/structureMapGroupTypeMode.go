@@ -1,53 +1,25 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // If this is the default rule set to apply for the source type, or this combination of types.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/map-group-type-mode
-type StructureMapGroupTypeMode int
+type StructureMapGroupTypeMode string
 
 const (
-	StructureMapGroupTypeModeTypes StructureMapGroupTypeMode = iota
+	// This group is a default mapping group for the specified types and for the primary source type.
+	StructureMapGroupTypeModeTypes StructureMapGroupTypeMode = "types"
 	// This group is a default mapping group for the specified types.
-	StructureMapGroupTypeModeTypeAndTypes
+	StructureMapGroupTypeModeTypeAndTypes StructureMapGroupTypeMode = "type-and-types"
 )
-
-func (code StructureMapGroupTypeMode) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *StructureMapGroupTypeMode) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "types":
-		*code = StructureMapGroupTypeModeTypes
-	case "type-and-types":
-		*code = StructureMapGroupTypeModeTypeAndTypes
-	default:
-		return fmt.Errorf("unknown StructureMapGroupTypeMode code `%s`", s)
-	}
-	return nil
-}
 
 func (code StructureMapGroupTypeMode) String() string {
 	return code.Code()
 }
 
 func (code StructureMapGroupTypeMode) Code() string {
-	switch code {
-	case StructureMapGroupTypeModeTypes:
-		return "types"
-	case StructureMapGroupTypeModeTypeAndTypes:
-		return "type-and-types"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code StructureMapGroupTypeMode) Display() string {

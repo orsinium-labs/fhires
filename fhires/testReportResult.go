@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The reported execution result.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/report-result-codes
-type TestReportResult int
+type TestReportResult string
 
 const (
-	TestReportResultPass TestReportResult = iota
+	// All test operations successfully passed all asserts.
+	TestReportResultPass TestReportResult = "pass"
 	// One or more test operations failed one or more asserts.
-	TestReportResultFail
+	TestReportResultFail TestReportResult = "fail"
 	// One or more test operations is pending execution completion.
-	TestReportResultPending
+	TestReportResultPending TestReportResult = "pending"
 )
-
-func (code TestReportResult) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *TestReportResult) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "pass":
-		*code = TestReportResultPass
-	case "fail":
-		*code = TestReportResultFail
-	case "pending":
-		*code = TestReportResultPending
-	default:
-		return fmt.Errorf("unknown TestReportResult code `%s`", s)
-	}
-	return nil
-}
 
 func (code TestReportResult) String() string {
 	return code.Code()
 }
 
 func (code TestReportResult) Code() string {
-	switch code {
-	case TestReportResultPass:
-		return "pass"
-	case TestReportResultFail:
-		return "fail"
-	case TestReportResultPending:
-		return "pending"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code TestReportResult) Display() string {

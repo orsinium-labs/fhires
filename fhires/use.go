@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The purpose of the Claim: predetermination, preauthorization, claim.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/claim-use
-type Use int
+type Use string
 
 const (
-	UseClaim Use = iota
+	// The treatment is complete and this represents a Claim for the services.
+	UseClaim Use = "claim"
 	// The treatment is proposed and this represents a Pre-authorization for the services.
-	UsePreauthorization
+	UsePreauthorization Use = "preauthorization"
 	// The treatment is proposed and this represents a Pre-determination for the services.
-	UsePredetermination
+	UsePredetermination Use = "predetermination"
 )
-
-func (code Use) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *Use) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "claim":
-		*code = UseClaim
-	case "preauthorization":
-		*code = UsePreauthorization
-	case "predetermination":
-		*code = UsePredetermination
-	default:
-		return fmt.Errorf("unknown Use code `%s`", s)
-	}
-	return nil
-}
 
 func (code Use) String() string {
 	return code.Code()
 }
 
 func (code Use) Code() string {
-	switch code {
-	case UseClaim:
-		return "claim"
-	case UsePreauthorization:
-		return "preauthorization"
-	case UsePredetermination:
-		return "predetermination"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code Use) Display() string {

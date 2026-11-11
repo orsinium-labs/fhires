@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The status of the ImagingStudy.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/imagingstudy-status
-type ImagingStudyStatus int
+type ImagingStudyStatus string
 
 const (
-	ImagingStudyStatusRegistered ImagingStudyStatus = iota
+	// The existence of the imaging study is registered, but there is nothing yet available.
+	ImagingStudyStatusRegistered ImagingStudyStatus = "registered"
 	// At least one instance has been associated with this imaging study.
-	ImagingStudyStatusAvailable
+	ImagingStudyStatusAvailable ImagingStudyStatus = "available"
 	// The imaging study is unavailable because the imaging study was not started or not completed (also sometimes called "aborted").
-	ImagingStudyStatusCancelled
+	ImagingStudyStatusCancelled ImagingStudyStatus = "cancelled"
 	// The imaging study has been withdrawn following a previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
-	ImagingStudyStatusEnteredInError
+	ImagingStudyStatusEnteredInError ImagingStudyStatus = "entered-in-error"
 	// The system does not know which of the status values currently applies for this request. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
-	ImagingStudyStatusUnknown
+	ImagingStudyStatusUnknown ImagingStudyStatus = "unknown"
 )
-
-func (code ImagingStudyStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ImagingStudyStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "registered":
-		*code = ImagingStudyStatusRegistered
-	case "available":
-		*code = ImagingStudyStatusAvailable
-	case "cancelled":
-		*code = ImagingStudyStatusCancelled
-	case "entered-in-error":
-		*code = ImagingStudyStatusEnteredInError
-	case "unknown":
-		*code = ImagingStudyStatusUnknown
-	default:
-		return fmt.Errorf("unknown ImagingStudyStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code ImagingStudyStatus) String() string {
 	return code.Code()
 }
 
 func (code ImagingStudyStatus) Code() string {
-	switch code {
-	case ImagingStudyStatusRegistered:
-		return "registered"
-	case ImagingStudyStatusAvailable:
-		return "available"
-	case ImagingStudyStatusCancelled:
-		return "cancelled"
-	case ImagingStudyStatusEnteredInError:
-		return "entered-in-error"
-	case ImagingStudyStatusUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ImagingStudyStatus) Display() string {

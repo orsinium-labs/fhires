@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // How an entity was used in an activity.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/provenance-entity-role
-type ProvenanceEntityRole int
+type ProvenanceEntityRole string
 
 const (
-	ProvenanceEntityRoleRevision ProvenanceEntityRole = iota
+	// An entity that is used by the activity to produce a new version of that entity.
+	ProvenanceEntityRoleRevision ProvenanceEntityRole = "revision"
 	// An entity that is copied in full or part by an agent that is not the author of the entity.
-	ProvenanceEntityRoleQuotation
+	ProvenanceEntityRoleQuotation ProvenanceEntityRole = "quotation"
 	// An entity that is used as input to the activity that produced the target.
-	ProvenanceEntityRoleSource
+	ProvenanceEntityRoleSource ProvenanceEntityRole = "source"
 	// The record resulting from this event adheres to the protocol, guideline, order set or other definition represented by this entity.
-	ProvenanceEntityRoleInstantiates
+	ProvenanceEntityRoleInstantiates ProvenanceEntityRole = "instantiates"
 	// An entity that is removed from accessibility, usually through the DELETE operator.
-	ProvenanceEntityRoleRemoval
+	ProvenanceEntityRoleRemoval ProvenanceEntityRole = "removal"
 )
-
-func (code ProvenanceEntityRole) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ProvenanceEntityRole) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "revision":
-		*code = ProvenanceEntityRoleRevision
-	case "quotation":
-		*code = ProvenanceEntityRoleQuotation
-	case "source":
-		*code = ProvenanceEntityRoleSource
-	case "instantiates":
-		*code = ProvenanceEntityRoleInstantiates
-	case "removal":
-		*code = ProvenanceEntityRoleRemoval
-	default:
-		return fmt.Errorf("unknown ProvenanceEntityRole code `%s`", s)
-	}
-	return nil
-}
 
 func (code ProvenanceEntityRole) String() string {
 	return code.Code()
 }
 
 func (code ProvenanceEntityRole) Code() string {
-	switch code {
-	case ProvenanceEntityRoleRevision:
-		return "revision"
-	case ProvenanceEntityRoleQuotation:
-		return "quotation"
-	case ProvenanceEntityRoleSource:
-		return "source"
-	case ProvenanceEntityRoleInstantiates:
-		return "instantiates"
-	case ProvenanceEntityRoleRemoval:
-		return "removal"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ProvenanceEntityRole) Display() string {

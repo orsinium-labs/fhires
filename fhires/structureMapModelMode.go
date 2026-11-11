@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // How the referenced structure is used in this mapping.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/map-model-mode
-type StructureMapModelMode int
+type StructureMapModelMode string
 
 const (
-	StructureMapModelModeSource StructureMapModelMode = iota
+	// This structure describes an instance passed to the mapping engine that is used a source of data.
+	StructureMapModelModeSource StructureMapModelMode = "source"
 	// This structure describes an instance that the mapping engine may ask for that is used a source of data.
-	StructureMapModelModeQueried
+	StructureMapModelModeQueried StructureMapModelMode = "queried"
 	// This structure describes an instance passed to the mapping engine that is used a target of data.
-	StructureMapModelModeTarget
+	StructureMapModelModeTarget StructureMapModelMode = "target"
 	// This structure describes an instance that the mapping engine may ask to create that is used a target of data.
-	StructureMapModelModeProduced
+	StructureMapModelModeProduced StructureMapModelMode = "produced"
 )
-
-func (code StructureMapModelMode) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *StructureMapModelMode) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "source":
-		*code = StructureMapModelModeSource
-	case "queried":
-		*code = StructureMapModelModeQueried
-	case "target":
-		*code = StructureMapModelModeTarget
-	case "produced":
-		*code = StructureMapModelModeProduced
-	default:
-		return fmt.Errorf("unknown StructureMapModelMode code `%s`", s)
-	}
-	return nil
-}
 
 func (code StructureMapModelMode) String() string {
 	return code.Code()
 }
 
 func (code StructureMapModelMode) Code() string {
-	switch code {
-	case StructureMapModelModeSource:
-		return "source"
-	case StructureMapModelModeQueried:
-		return "queried"
-	case StructureMapModelModeTarget:
-		return "target"
-	case StructureMapModelModeProduced:
-		return "produced"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code StructureMapModelMode) Display() string {

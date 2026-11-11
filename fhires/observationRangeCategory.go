@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Codes identifying the category of observation range.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/observation-range-category
-type ObservationRangeCategory int
+type ObservationRangeCategory string
 
 const (
-	ObservationRangeCategoryReference ObservationRangeCategory = iota
+	// Reference (Normal) Range for Ordinal and Continuous Observations.
+	ObservationRangeCategoryReference ObservationRangeCategory = "reference"
 	// Critical Range for Ordinal and Continuous Observations. Results outside this range are critical.
-	ObservationRangeCategoryCritical
+	ObservationRangeCategoryCritical ObservationRangeCategory = "critical"
 	// Absolute Range for Ordinal and Continuous Observations. Results outside this range are not possible.
-	ObservationRangeCategoryAbsolute
+	ObservationRangeCategoryAbsolute ObservationRangeCategory = "absolute"
 )
-
-func (code ObservationRangeCategory) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ObservationRangeCategory) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "reference":
-		*code = ObservationRangeCategoryReference
-	case "critical":
-		*code = ObservationRangeCategoryCritical
-	case "absolute":
-		*code = ObservationRangeCategoryAbsolute
-	default:
-		return fmt.Errorf("unknown ObservationRangeCategory code `%s`", s)
-	}
-	return nil
-}
 
 func (code ObservationRangeCategory) String() string {
 	return code.Code()
 }
 
 func (code ObservationRangeCategory) Code() string {
-	switch code {
-	case ObservationRangeCategoryReference:
-		return "reference"
-	case ObservationRangeCategoryCritical:
-		return "critical"
-	case ObservationRangeCategoryAbsolute:
-		return "absolute"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ObservationRangeCategory) Display() string {

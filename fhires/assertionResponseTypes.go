@@ -1,305 +1,109 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The type of response code to use for assertion.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/assert-response-code-types
-type AssertionResponseTypes int
+type AssertionResponseTypes string
 
 const (
-	AssertionResponseTypesContinue AssertionResponseTypes = iota
+	// Response code is 100.
+	AssertionResponseTypesContinue AssertionResponseTypes = "continue"
 	// Response code is 101.
-	AssertionResponseTypesSwitchingProtocols
+	AssertionResponseTypesSwitchingProtocols AssertionResponseTypes = "switchingProtocols"
 	// Response code is 200.
-	AssertionResponseTypesOkay
+	AssertionResponseTypesOkay AssertionResponseTypes = "okay"
 	// Response code is 201.
-	AssertionResponseTypesCreated
+	AssertionResponseTypesCreated AssertionResponseTypes = "created"
 	// Response code is 202.
-	AssertionResponseTypesAccepted
+	AssertionResponseTypesAccepted AssertionResponseTypes = "accepted"
 	// Response code is 203.
-	AssertionResponseTypesNonAuthoritativeInformation
+	AssertionResponseTypesNonAuthoritativeInformation AssertionResponseTypes = "nonAuthoritativeInformation"
 	// Response code is 204.
-	AssertionResponseTypesNoContent
+	AssertionResponseTypesNoContent AssertionResponseTypes = "noContent"
 	// Response code is 205.
-	AssertionResponseTypesResetContent
+	AssertionResponseTypesResetContent AssertionResponseTypes = "resetContent"
 	// Response code is 206.
-	AssertionResponseTypesPartialContent
+	AssertionResponseTypesPartialContent AssertionResponseTypes = "partialContent"
 	// Response code is 300.
-	AssertionResponseTypesMultipleChoices
+	AssertionResponseTypesMultipleChoices AssertionResponseTypes = "multipleChoices"
 	// Response code is 301.
-	AssertionResponseTypesMovedPermanently
+	AssertionResponseTypesMovedPermanently AssertionResponseTypes = "movedPermanently"
 	// Response code is 302.
-	AssertionResponseTypesFound
+	AssertionResponseTypesFound AssertionResponseTypes = "found"
 	// Response code is 303.
-	AssertionResponseTypesSeeOther
+	AssertionResponseTypesSeeOther AssertionResponseTypes = "seeOther"
 	// Response code is 304.
-	AssertionResponseTypesNotModified
+	AssertionResponseTypesNotModified AssertionResponseTypes = "notModified"
 	// Response code is 305.
-	AssertionResponseTypesUseProxy
+	AssertionResponseTypesUseProxy AssertionResponseTypes = "useProxy"
 	// Response code is 307.
-	AssertionResponseTypesTemporaryRedirect
+	AssertionResponseTypesTemporaryRedirect AssertionResponseTypes = "temporaryRedirect"
 	// Response code is 308.
-	AssertionResponseTypesPermanentRedirect
+	AssertionResponseTypesPermanentRedirect AssertionResponseTypes = "permanentRedirect"
 	// Response code is 400.
-	AssertionResponseTypesBadRequest
+	AssertionResponseTypesBadRequest AssertionResponseTypes = "badRequest"
 	// Response code is 401.
-	AssertionResponseTypesUnauthorized
+	AssertionResponseTypesUnauthorized AssertionResponseTypes = "unauthorized"
 	// Response code is 402.
-	AssertionResponseTypesPaymentRequired
+	AssertionResponseTypesPaymentRequired AssertionResponseTypes = "paymentRequired"
 	// Response code is 403.
-	AssertionResponseTypesForbidden
+	AssertionResponseTypesForbidden AssertionResponseTypes = "forbidden"
 	// Response code is 404.
-	AssertionResponseTypesNotFound
+	AssertionResponseTypesNotFound AssertionResponseTypes = "notFound"
 	// Response code is 405.
-	AssertionResponseTypesMethodNotAllowed
+	AssertionResponseTypesMethodNotAllowed AssertionResponseTypes = "methodNotAllowed"
 	// Response code is 406.
-	AssertionResponseTypesNotAcceptable
+	AssertionResponseTypesNotAcceptable AssertionResponseTypes = "notAcceptable"
 	// Response code is 407.
-	AssertionResponseTypesProxyAuthenticationRequired
+	AssertionResponseTypesProxyAuthenticationRequired AssertionResponseTypes = "proxyAuthenticationRequired"
 	// Response code is 408.
-	AssertionResponseTypesRequestTimeout
+	AssertionResponseTypesRequestTimeout AssertionResponseTypes = "requestTimeout"
 	// Response code is 409.
-	AssertionResponseTypesConflict
+	AssertionResponseTypesConflict AssertionResponseTypes = "conflict"
 	// Response code is 410.
-	AssertionResponseTypesGone
+	AssertionResponseTypesGone AssertionResponseTypes = "gone"
 	// Response code is 411.
-	AssertionResponseTypesLengthRequired
+	AssertionResponseTypesLengthRequired AssertionResponseTypes = "lengthRequired"
 	// Response code is 412.
-	AssertionResponseTypesPreconditionFailed
+	AssertionResponseTypesPreconditionFailed AssertionResponseTypes = "preconditionFailed"
 	// Response code is 413.
-	AssertionResponseTypesContentTooLarge
+	AssertionResponseTypesContentTooLarge AssertionResponseTypes = "contentTooLarge"
 	// Response code is 414.
-	AssertionResponseTypesUriTooLong
+	AssertionResponseTypesUriTooLong AssertionResponseTypes = "uriTooLong"
 	// Response code is 415.
-	AssertionResponseTypesUnsupportedMediaType
+	AssertionResponseTypesUnsupportedMediaType AssertionResponseTypes = "unsupportedMediaType"
 	// Response code is 416.
-	AssertionResponseTypesRangeNotSatisfiable
+	AssertionResponseTypesRangeNotSatisfiable AssertionResponseTypes = "rangeNotSatisfiable"
 	// Response code is 417.
-	AssertionResponseTypesExpectationFailed
+	AssertionResponseTypesExpectationFailed AssertionResponseTypes = "expectationFailed"
 	// Response code is 421.
-	AssertionResponseTypesMisdirectedRequest
+	AssertionResponseTypesMisdirectedRequest AssertionResponseTypes = "misdirectedRequest"
 	// Response code is 422.
-	AssertionResponseTypesUnprocessableContent
+	AssertionResponseTypesUnprocessableContent AssertionResponseTypes = "unprocessableContent"
 	// Response code is 426.
-	AssertionResponseTypesUpgradeRequired
+	AssertionResponseTypesUpgradeRequired AssertionResponseTypes = "upgradeRequired"
 	// Response code is 500.
-	AssertionResponseTypesInternalServerError
+	AssertionResponseTypesInternalServerError AssertionResponseTypes = "internalServerError"
 	// Response code is 501.
-	AssertionResponseTypesNotImplemented
+	AssertionResponseTypesNotImplemented AssertionResponseTypes = "notImplemented"
 	// Response code is 502.
-	AssertionResponseTypesBadGateway
+	AssertionResponseTypesBadGateway AssertionResponseTypes = "badGateway"
 	// Response code is 503.
-	AssertionResponseTypesServiceUnavailable
+	AssertionResponseTypesServiceUnavailable AssertionResponseTypes = "serviceUnavailable"
 	// Response code is 504.
-	AssertionResponseTypesGatewayTimeout
+	AssertionResponseTypesGatewayTimeout AssertionResponseTypes = "gatewayTimeout"
 	// Response code is 505.
-	AssertionResponseTypesHttpVersionNotSupported
+	AssertionResponseTypesHttpVersionNotSupported AssertionResponseTypes = "httpVersionNotSupported"
 )
-
-func (code AssertionResponseTypes) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *AssertionResponseTypes) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "continue":
-		*code = AssertionResponseTypesContinue
-	case "switchingProtocols":
-		*code = AssertionResponseTypesSwitchingProtocols
-	case "okay":
-		*code = AssertionResponseTypesOkay
-	case "created":
-		*code = AssertionResponseTypesCreated
-	case "accepted":
-		*code = AssertionResponseTypesAccepted
-	case "nonAuthoritativeInformation":
-		*code = AssertionResponseTypesNonAuthoritativeInformation
-	case "noContent":
-		*code = AssertionResponseTypesNoContent
-	case "resetContent":
-		*code = AssertionResponseTypesResetContent
-	case "partialContent":
-		*code = AssertionResponseTypesPartialContent
-	case "multipleChoices":
-		*code = AssertionResponseTypesMultipleChoices
-	case "movedPermanently":
-		*code = AssertionResponseTypesMovedPermanently
-	case "found":
-		*code = AssertionResponseTypesFound
-	case "seeOther":
-		*code = AssertionResponseTypesSeeOther
-	case "notModified":
-		*code = AssertionResponseTypesNotModified
-	case "useProxy":
-		*code = AssertionResponseTypesUseProxy
-	case "temporaryRedirect":
-		*code = AssertionResponseTypesTemporaryRedirect
-	case "permanentRedirect":
-		*code = AssertionResponseTypesPermanentRedirect
-	case "badRequest":
-		*code = AssertionResponseTypesBadRequest
-	case "unauthorized":
-		*code = AssertionResponseTypesUnauthorized
-	case "paymentRequired":
-		*code = AssertionResponseTypesPaymentRequired
-	case "forbidden":
-		*code = AssertionResponseTypesForbidden
-	case "notFound":
-		*code = AssertionResponseTypesNotFound
-	case "methodNotAllowed":
-		*code = AssertionResponseTypesMethodNotAllowed
-	case "notAcceptable":
-		*code = AssertionResponseTypesNotAcceptable
-	case "proxyAuthenticationRequired":
-		*code = AssertionResponseTypesProxyAuthenticationRequired
-	case "requestTimeout":
-		*code = AssertionResponseTypesRequestTimeout
-	case "conflict":
-		*code = AssertionResponseTypesConflict
-	case "gone":
-		*code = AssertionResponseTypesGone
-	case "lengthRequired":
-		*code = AssertionResponseTypesLengthRequired
-	case "preconditionFailed":
-		*code = AssertionResponseTypesPreconditionFailed
-	case "contentTooLarge":
-		*code = AssertionResponseTypesContentTooLarge
-	case "uriTooLong":
-		*code = AssertionResponseTypesUriTooLong
-	case "unsupportedMediaType":
-		*code = AssertionResponseTypesUnsupportedMediaType
-	case "rangeNotSatisfiable":
-		*code = AssertionResponseTypesRangeNotSatisfiable
-	case "expectationFailed":
-		*code = AssertionResponseTypesExpectationFailed
-	case "misdirectedRequest":
-		*code = AssertionResponseTypesMisdirectedRequest
-	case "unprocessableContent":
-		*code = AssertionResponseTypesUnprocessableContent
-	case "upgradeRequired":
-		*code = AssertionResponseTypesUpgradeRequired
-	case "internalServerError":
-		*code = AssertionResponseTypesInternalServerError
-	case "notImplemented":
-		*code = AssertionResponseTypesNotImplemented
-	case "badGateway":
-		*code = AssertionResponseTypesBadGateway
-	case "serviceUnavailable":
-		*code = AssertionResponseTypesServiceUnavailable
-	case "gatewayTimeout":
-		*code = AssertionResponseTypesGatewayTimeout
-	case "httpVersionNotSupported":
-		*code = AssertionResponseTypesHttpVersionNotSupported
-	default:
-		return fmt.Errorf("unknown AssertionResponseTypes code `%s`", s)
-	}
-	return nil
-}
 
 func (code AssertionResponseTypes) String() string {
 	return code.Code()
 }
 
 func (code AssertionResponseTypes) Code() string {
-	switch code {
-	case AssertionResponseTypesContinue:
-		return "continue"
-	case AssertionResponseTypesSwitchingProtocols:
-		return "switchingProtocols"
-	case AssertionResponseTypesOkay:
-		return "okay"
-	case AssertionResponseTypesCreated:
-		return "created"
-	case AssertionResponseTypesAccepted:
-		return "accepted"
-	case AssertionResponseTypesNonAuthoritativeInformation:
-		return "nonAuthoritativeInformation"
-	case AssertionResponseTypesNoContent:
-		return "noContent"
-	case AssertionResponseTypesResetContent:
-		return "resetContent"
-	case AssertionResponseTypesPartialContent:
-		return "partialContent"
-	case AssertionResponseTypesMultipleChoices:
-		return "multipleChoices"
-	case AssertionResponseTypesMovedPermanently:
-		return "movedPermanently"
-	case AssertionResponseTypesFound:
-		return "found"
-	case AssertionResponseTypesSeeOther:
-		return "seeOther"
-	case AssertionResponseTypesNotModified:
-		return "notModified"
-	case AssertionResponseTypesUseProxy:
-		return "useProxy"
-	case AssertionResponseTypesTemporaryRedirect:
-		return "temporaryRedirect"
-	case AssertionResponseTypesPermanentRedirect:
-		return "permanentRedirect"
-	case AssertionResponseTypesBadRequest:
-		return "badRequest"
-	case AssertionResponseTypesUnauthorized:
-		return "unauthorized"
-	case AssertionResponseTypesPaymentRequired:
-		return "paymentRequired"
-	case AssertionResponseTypesForbidden:
-		return "forbidden"
-	case AssertionResponseTypesNotFound:
-		return "notFound"
-	case AssertionResponseTypesMethodNotAllowed:
-		return "methodNotAllowed"
-	case AssertionResponseTypesNotAcceptable:
-		return "notAcceptable"
-	case AssertionResponseTypesProxyAuthenticationRequired:
-		return "proxyAuthenticationRequired"
-	case AssertionResponseTypesRequestTimeout:
-		return "requestTimeout"
-	case AssertionResponseTypesConflict:
-		return "conflict"
-	case AssertionResponseTypesGone:
-		return "gone"
-	case AssertionResponseTypesLengthRequired:
-		return "lengthRequired"
-	case AssertionResponseTypesPreconditionFailed:
-		return "preconditionFailed"
-	case AssertionResponseTypesContentTooLarge:
-		return "contentTooLarge"
-	case AssertionResponseTypesUriTooLong:
-		return "uriTooLong"
-	case AssertionResponseTypesUnsupportedMediaType:
-		return "unsupportedMediaType"
-	case AssertionResponseTypesRangeNotSatisfiable:
-		return "rangeNotSatisfiable"
-	case AssertionResponseTypesExpectationFailed:
-		return "expectationFailed"
-	case AssertionResponseTypesMisdirectedRequest:
-		return "misdirectedRequest"
-	case AssertionResponseTypesUnprocessableContent:
-		return "unprocessableContent"
-	case AssertionResponseTypesUpgradeRequired:
-		return "upgradeRequired"
-	case AssertionResponseTypesInternalServerError:
-		return "internalServerError"
-	case AssertionResponseTypesNotImplemented:
-		return "notImplemented"
-	case AssertionResponseTypesBadGateway:
-		return "badGateway"
-	case AssertionResponseTypesServiceUnavailable:
-		return "serviceUnavailable"
-	case AssertionResponseTypesGatewayTimeout:
-		return "gatewayTimeout"
-	case AssertionResponseTypesHttpVersionNotSupported:
-		return "httpVersionNotSupported"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code AssertionResponseTypes) Display() string {

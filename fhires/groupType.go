@@ -1,101 +1,41 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Types of resources that are part of group.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/group-type
-type GroupType int
+type GroupType string
 
 const (
-	GroupTypePerson GroupType = iota
+	// Group contains "person" Patient resources.
+	GroupTypePerson GroupType = "person"
 	// Group contains "animal" Patient resources.
-	GroupTypeAnimal
+	GroupTypeAnimal GroupType = "animal"
 	// Group contains healthcare practitioner resources (Practitioner or PractitionerRole).
-	GroupTypePractitioner
+	GroupTypePractitioner GroupType = "practitioner"
 	// Group contains Device resources.
-	GroupTypeDevice
+	GroupTypeDevice GroupType = "device"
 	// Group contains CareTeam resources.
-	GroupTypeCareteam
+	GroupTypeCareteam GroupType = "careteam"
 	// Group contains HealthcareService resources.
-	GroupTypeHealthcareservice
+	GroupTypeHealthcareservice GroupType = "healthcareservice"
 	// Group contains Location resources.
-	GroupTypeLocation
+	GroupTypeLocation GroupType = "location"
 	// Group contains Organization resources.
-	GroupTypeOrganization
+	GroupTypeOrganization GroupType = "organization"
 	// Group contains RelatedPerson resources.
-	GroupTypeRelatedperson
+	GroupTypeRelatedperson GroupType = "relatedperson"
 	// Group contains Specimen resources.
-	GroupTypeSpecimen
+	GroupTypeSpecimen GroupType = "specimen"
 )
-
-func (code GroupType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *GroupType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "person":
-		*code = GroupTypePerson
-	case "animal":
-		*code = GroupTypeAnimal
-	case "practitioner":
-		*code = GroupTypePractitioner
-	case "device":
-		*code = GroupTypeDevice
-	case "careteam":
-		*code = GroupTypeCareteam
-	case "healthcareservice":
-		*code = GroupTypeHealthcareservice
-	case "location":
-		*code = GroupTypeLocation
-	case "organization":
-		*code = GroupTypeOrganization
-	case "relatedperson":
-		*code = GroupTypeRelatedperson
-	case "specimen":
-		*code = GroupTypeSpecimen
-	default:
-		return fmt.Errorf("unknown GroupType code `%s`", s)
-	}
-	return nil
-}
 
 func (code GroupType) String() string {
 	return code.Code()
 }
 
 func (code GroupType) Code() string {
-	switch code {
-	case GroupTypePerson:
-		return "person"
-	case GroupTypeAnimal:
-		return "animal"
-	case GroupTypePractitioner:
-		return "practitioner"
-	case GroupTypeDevice:
-		return "device"
-	case GroupTypeCareteam:
-		return "careteam"
-	case GroupTypeHealthcareservice:
-		return "healthcareservice"
-	case GroupTypeLocation:
-		return "location"
-	case GroupTypeOrganization:
-		return "organization"
-	case GroupTypeRelatedperson:
-		return "relatedperson"
-	case GroupTypeSpecimen:
-		return "specimen"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code GroupType) Display() string {

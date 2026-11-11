@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The status of the location.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/encounter-location-status
-type EncounterLocationStatus int
+type EncounterLocationStatus string
 
 const (
-	EncounterLocationStatusPlanned EncounterLocationStatus = iota
+	// The patient is planned to be moved to this location at some point in the future.
+	EncounterLocationStatusPlanned EncounterLocationStatus = "planned"
 	// The patient is currently at this location, or was between the period specified.A system may update these records when the patient leaves the location to either reserved, or completed.
-	EncounterLocationStatusActive
+	EncounterLocationStatusActive EncounterLocationStatus = "active"
 	// This location is held empty for this patient.
-	EncounterLocationStatusReserved
+	EncounterLocationStatusReserved EncounterLocationStatus = "reserved"
 	// The patient was at this location during the period specified.Not to be used when the patient is currently at the location.
-	EncounterLocationStatusCompleted
+	EncounterLocationStatusCompleted EncounterLocationStatus = "completed"
 )
-
-func (code EncounterLocationStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *EncounterLocationStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "planned":
-		*code = EncounterLocationStatusPlanned
-	case "active":
-		*code = EncounterLocationStatusActive
-	case "reserved":
-		*code = EncounterLocationStatusReserved
-	case "completed":
-		*code = EncounterLocationStatusCompleted
-	default:
-		return fmt.Errorf("unknown EncounterLocationStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code EncounterLocationStatus) String() string {
 	return code.Code()
 }
 
 func (code EncounterLocationStatus) Code() string {
-	switch code {
-	case EncounterLocationStatusPlanned:
-		return "planned"
-	case EncounterLocationStatusActive:
-		return "active"
-	case EncounterLocationStatusReserved:
-		return "reserved"
-	case EncounterLocationStatusCompleted:
-		return "completed"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code EncounterLocationStatus) Display() string {

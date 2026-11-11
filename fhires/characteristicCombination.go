@@ -1,83 +1,35 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Logical grouping of characteristics.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/characteristic-combination
-type CharacteristicCombination int
+type CharacteristicCombination string
 
 const (
-	CharacteristicCombinationAllOf CharacteristicCombination = iota
+	// Combine characteristics with AND.
+	CharacteristicCombinationAllOf CharacteristicCombination = "all-of"
 	// Combine characteristics with OR.
-	CharacteristicCombinationAnyOf
+	CharacteristicCombinationAnyOf CharacteristicCombination = "any-of"
 	// Meet at least the threshold number of characteristics for definition.
-	CharacteristicCombinationAtLeast
+	CharacteristicCombinationAtLeast CharacteristicCombination = "at-least"
 	// Meet at most the threshold number of characteristics for definition.
-	CharacteristicCombinationAtMost
+	CharacteristicCombinationAtMost CharacteristicCombination = "at-most"
 	// Combine characteristics statistically. Use method to specify the statistical method.
-	CharacteristicCombinationStatistical
+	CharacteristicCombinationStatistical CharacteristicCombination = "statistical"
 	// Combine characteristics by addition of benefits and subtraction of harms.
-	CharacteristicCombinationNetEffect
+	CharacteristicCombinationNetEffect CharacteristicCombination = "net-effect"
 	// Combine characteristics as a collection used as the dataset.
-	CharacteristicCombinationDataset
+	CharacteristicCombinationDataset CharacteristicCombination = "dataset"
 )
-
-func (code CharacteristicCombination) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *CharacteristicCombination) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "all-of":
-		*code = CharacteristicCombinationAllOf
-	case "any-of":
-		*code = CharacteristicCombinationAnyOf
-	case "at-least":
-		*code = CharacteristicCombinationAtLeast
-	case "at-most":
-		*code = CharacteristicCombinationAtMost
-	case "statistical":
-		*code = CharacteristicCombinationStatistical
-	case "net-effect":
-		*code = CharacteristicCombinationNetEffect
-	case "dataset":
-		*code = CharacteristicCombinationDataset
-	default:
-		return fmt.Errorf("unknown CharacteristicCombination code `%s`", s)
-	}
-	return nil
-}
 
 func (code CharacteristicCombination) String() string {
 	return code.Code()
 }
 
 func (code CharacteristicCombination) Code() string {
-	switch code {
-	case CharacteristicCombinationAllOf:
-		return "all-of"
-	case CharacteristicCombinationAnyOf:
-		return "any-of"
-	case CharacteristicCombinationAtLeast:
-		return "at-least"
-	case CharacteristicCombinationAtMost:
-		return "at-most"
-	case CharacteristicCombinationStatistical:
-		return "statistical"
-	case CharacteristicCombinationNetEffect:
-		return "net-effect"
-	case CharacteristicCombinationDataset:
-		return "dataset"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code CharacteristicCombination) Display() string {

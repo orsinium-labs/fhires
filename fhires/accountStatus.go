@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Indicates whether the account is available to be used.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/account-status
-type AccountStatus int
+type AccountStatus string
 
 const (
-	AccountStatusActive AccountStatus = iota
+	// This account is active and may be used.
+	AccountStatusActive AccountStatus = "active"
 	// This account is inactive and should not be used to track financial information.
-	AccountStatusInactive
+	AccountStatusInactive AccountStatus = "inactive"
 	// This instance should not have been part of this patient's medical record.
-	AccountStatusEnteredInError
+	AccountStatusEnteredInError AccountStatus = "entered-in-error"
 	// This account is on hold.
-	AccountStatusOnHold
+	AccountStatusOnHold AccountStatus = "on-hold"
 	// The account status is unknown.
-	AccountStatusUnknown
+	AccountStatusUnknown AccountStatus = "unknown"
 )
-
-func (code AccountStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *AccountStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "active":
-		*code = AccountStatusActive
-	case "inactive":
-		*code = AccountStatusInactive
-	case "entered-in-error":
-		*code = AccountStatusEnteredInError
-	case "on-hold":
-		*code = AccountStatusOnHold
-	case "unknown":
-		*code = AccountStatusUnknown
-	default:
-		return fmt.Errorf("unknown AccountStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code AccountStatus) String() string {
 	return code.Code()
 }
 
 func (code AccountStatus) Code() string {
-	switch code {
-	case AccountStatusActive:
-		return "active"
-	case AccountStatusInactive:
-		return "inactive"
-	case AccountStatusEnteredInError:
-		return "entered-in-error"
-	case AccountStatusOnHold:
-		return "on-hold"
-	case AccountStatusUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code AccountStatus) Display() string {

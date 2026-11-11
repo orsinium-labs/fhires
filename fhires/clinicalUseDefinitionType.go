@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Overall defining type of this clinical use definition.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/clinical-use-definition-type
-type ClinicalUseDefinitionType int
+type ClinicalUseDefinitionType string
 
 const (
-	ClinicalUseDefinitionTypeIndication ClinicalUseDefinitionType = iota
+	// A reason for giving the medication.
+	ClinicalUseDefinitionTypeIndication ClinicalUseDefinitionType = "indication"
 	// A reason for not giving the medication.
-	ClinicalUseDefinitionTypeContraindication
+	ClinicalUseDefinitionTypeContraindication ClinicalUseDefinitionType = "contraindication"
 	// Interactions between the medication and other substances.
-	ClinicalUseDefinitionTypeInteraction
+	ClinicalUseDefinitionTypeInteraction ClinicalUseDefinitionType = "interaction"
 	// Side effects or adverse effects associated with the medication.
-	ClinicalUseDefinitionTypeUndesirableEffect
+	ClinicalUseDefinitionTypeUndesirableEffect ClinicalUseDefinitionType = "undesirable-effect"
 	// A general warning or issue that is not specifically one of the other types.
-	ClinicalUseDefinitionTypeWarning
+	ClinicalUseDefinitionTypeWarning ClinicalUseDefinitionType = "warning"
 )
-
-func (code ClinicalUseDefinitionType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ClinicalUseDefinitionType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "indication":
-		*code = ClinicalUseDefinitionTypeIndication
-	case "contraindication":
-		*code = ClinicalUseDefinitionTypeContraindication
-	case "interaction":
-		*code = ClinicalUseDefinitionTypeInteraction
-	case "undesirable-effect":
-		*code = ClinicalUseDefinitionTypeUndesirableEffect
-	case "warning":
-		*code = ClinicalUseDefinitionTypeWarning
-	default:
-		return fmt.Errorf("unknown ClinicalUseDefinitionType code `%s`", s)
-	}
-	return nil
-}
 
 func (code ClinicalUseDefinitionType) String() string {
 	return code.Code()
 }
 
 func (code ClinicalUseDefinitionType) Code() string {
-	switch code {
-	case ClinicalUseDefinitionTypeIndication:
-		return "indication"
-	case ClinicalUseDefinitionTypeContraindication:
-		return "contraindication"
-	case ClinicalUseDefinitionTypeInteraction:
-		return "interaction"
-	case ClinicalUseDefinitionTypeUndesirableEffect:
-		return "undesirable-effect"
-	case ClinicalUseDefinitionTypeWarning:
-		return "warning"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ClinicalUseDefinitionType) Display() string {

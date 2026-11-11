@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The free/busy status of the slot.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/slotstatus
-type SlotStatus int
+type SlotStatus string
 
 const (
-	SlotStatusBusy SlotStatus = iota
+	// Indicates that the time interval is busy because one  or more events have been scheduled for that interval.
+	SlotStatusBusy SlotStatus = "busy"
 	// Indicates that the time interval is free for scheduling.
-	SlotStatusFree
+	SlotStatusFree SlotStatus = "free"
 	// Indicates that the time interval is busy and that the interval cannot be scheduled.
-	SlotStatusBusyUnavailable
+	SlotStatusBusyUnavailable SlotStatus = "busy-unavailable"
 	// Indicates that the time interval is busy because one or more events have been tentatively scheduled for that interval.
-	SlotStatusBusyTentative
+	SlotStatusBusyTentative SlotStatus = "busy-tentative"
 	// This instance should not have been part of this patient's medical record.
-	SlotStatusEnteredInError
+	SlotStatusEnteredInError SlotStatus = "entered-in-error"
 )
-
-func (code SlotStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *SlotStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "busy":
-		*code = SlotStatusBusy
-	case "free":
-		*code = SlotStatusFree
-	case "busy-unavailable":
-		*code = SlotStatusBusyUnavailable
-	case "busy-tentative":
-		*code = SlotStatusBusyTentative
-	case "entered-in-error":
-		*code = SlotStatusEnteredInError
-	default:
-		return fmt.Errorf("unknown SlotStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code SlotStatus) String() string {
 	return code.Code()
 }
 
 func (code SlotStatus) Code() string {
-	switch code {
-	case SlotStatusBusy:
-		return "busy"
-	case SlotStatusFree:
-		return "free"
-	case SlotStatusBusyUnavailable:
-		return "busy-unavailable"
-	case SlotStatusBusyTentative:
-		return "busy-tentative"
-	case SlotStatusEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code SlotStatus) Display() string {

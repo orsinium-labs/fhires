@@ -1,53 +1,25 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Whether an operation parameter is an input or an output parameter.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/operation-parameter-use
-type OperationParameterUse int
+type OperationParameterUse string
 
 const (
-	OperationParameterUseIn OperationParameterUse = iota
+	// This is an input parameter.
+	OperationParameterUseIn OperationParameterUse = "in"
 	// This is an output parameter.
-	OperationParameterUseOut
+	OperationParameterUseOut OperationParameterUse = "out"
 )
-
-func (code OperationParameterUse) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *OperationParameterUse) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "in":
-		*code = OperationParameterUseIn
-	case "out":
-		*code = OperationParameterUseOut
-	default:
-		return fmt.Errorf("unknown OperationParameterUse code `%s`", s)
-	}
-	return nil
-}
 
 func (code OperationParameterUse) String() string {
 	return code.Code()
 }
 
 func (code OperationParameterUse) Code() string {
-	switch code {
-	case OperationParameterUseIn:
-		return "in"
-	case OperationParameterUseOut:
-		return "out"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code OperationParameterUse) Display() string {

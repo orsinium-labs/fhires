@@ -1,53 +1,25 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The possible sort directions, ascending or descending.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/sort-direction
-type SortDirection int
+type SortDirection string
 
 const (
-	SortDirectionAscending SortDirection = iota
+	// Sort by the value ascending, so that lower values appear first.
+	SortDirectionAscending SortDirection = "ascending"
 	// Sort by the value descending, so that lower values appear last.
-	SortDirectionDescending
+	SortDirectionDescending SortDirection = "descending"
 )
-
-func (code SortDirection) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *SortDirection) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "ascending":
-		*code = SortDirectionAscending
-	case "descending":
-		*code = SortDirectionDescending
-	default:
-		return fmt.Errorf("unknown SortDirection code `%s`", s)
-	}
-	return nil
-}
 
 func (code SortDirection) String() string {
 	return code.Code()
 }
 
 func (code SortDirection) Code() string {
-	switch code {
-	case SortDirectionAscending:
-		return "ascending"
-	case SortDirectionDescending:
-		return "descending"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code SortDirection) Display() string {

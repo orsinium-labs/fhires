@@ -1,95 +1,39 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Codes that reflect the current state of a goal and whether the goal is still being targeted.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/goal-status
-type GoalLifecycleStatus int
+type GoalLifecycleStatus string
 
 const (
-	GoalLifecycleStatusProposed GoalLifecycleStatus = iota
+	// A goal is proposed for this patient.
+	GoalLifecycleStatusProposed GoalLifecycleStatus = "proposed"
 	// A goal is planned for this patient.
-	GoalLifecycleStatusPlanned
+	GoalLifecycleStatusPlanned GoalLifecycleStatus = "planned"
 	// A proposed goal was accepted or acknowledged.
-	GoalLifecycleStatusAccepted
+	GoalLifecycleStatusAccepted GoalLifecycleStatus = "accepted"
 	// The goal is being sought actively.
-	GoalLifecycleStatusActive
+	GoalLifecycleStatusActive GoalLifecycleStatus = "active"
 	// The goal remains a long term objective but is no longer being actively pursued for a temporary period of time.
-	GoalLifecycleStatusOnHold
+	GoalLifecycleStatusOnHold GoalLifecycleStatus = "on-hold"
 	// The goal is no longer being sought.
-	GoalLifecycleStatusCompleted
+	GoalLifecycleStatusCompleted GoalLifecycleStatus = "completed"
 	// The goal has been abandoned.
-	GoalLifecycleStatusCancelled
+	GoalLifecycleStatusCancelled GoalLifecycleStatus = "cancelled"
 	// The goal was entered in error and voided.
-	GoalLifecycleStatusEnteredInError
+	GoalLifecycleStatusEnteredInError GoalLifecycleStatus = "entered-in-error"
 	// A proposed goal was rejected.
-	GoalLifecycleStatusRejected
+	GoalLifecycleStatusRejected GoalLifecycleStatus = "rejected"
 )
-
-func (code GoalLifecycleStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *GoalLifecycleStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "proposed":
-		*code = GoalLifecycleStatusProposed
-	case "planned":
-		*code = GoalLifecycleStatusPlanned
-	case "accepted":
-		*code = GoalLifecycleStatusAccepted
-	case "active":
-		*code = GoalLifecycleStatusActive
-	case "on-hold":
-		*code = GoalLifecycleStatusOnHold
-	case "completed":
-		*code = GoalLifecycleStatusCompleted
-	case "cancelled":
-		*code = GoalLifecycleStatusCancelled
-	case "entered-in-error":
-		*code = GoalLifecycleStatusEnteredInError
-	case "rejected":
-		*code = GoalLifecycleStatusRejected
-	default:
-		return fmt.Errorf("unknown GoalLifecycleStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code GoalLifecycleStatus) String() string {
 	return code.Code()
 }
 
 func (code GoalLifecycleStatus) Code() string {
-	switch code {
-	case GoalLifecycleStatusProposed:
-		return "proposed"
-	case GoalLifecycleStatusPlanned:
-		return "planned"
-	case GoalLifecycleStatusAccepted:
-		return "accepted"
-	case GoalLifecycleStatusActive:
-		return "active"
-	case GoalLifecycleStatusOnHold:
-		return "on-hold"
-	case GoalLifecycleStatusCompleted:
-		return "completed"
-	case GoalLifecycleStatusCancelled:
-		return "cancelled"
-	case GoalLifecycleStatusEnteredInError:
-		return "entered-in-error"
-	case GoalLifecycleStatusRejected:
-		return "rejected"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code GoalLifecycleStatus) Display() string {

@@ -1,11 +1,5 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The way in which this manufacturer is associated with the ingredient.
 //
 // For example whether it is a possible one (others allowed), or an exclusive authorized one for this ingredient. Note that this is not the manufacturing process role.
@@ -13,47 +7,20 @@ import (
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/ingredient-manufacturer-role
-type IngredientManufacturerRole int
+type IngredientManufacturerRole string
 
 const (
-	IngredientManufacturerRoleAllowed IngredientManufacturerRole = iota
-	IngredientManufacturerRolePossible
-	IngredientManufacturerRoleActual
+	IngredientManufacturerRoleAllowed  IngredientManufacturerRole = "allowed"
+	IngredientManufacturerRolePossible IngredientManufacturerRole = "possible"
+	IngredientManufacturerRoleActual   IngredientManufacturerRole = "actual"
 )
-
-func (code IngredientManufacturerRole) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *IngredientManufacturerRole) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "allowed":
-		*code = IngredientManufacturerRoleAllowed
-	case "possible":
-		*code = IngredientManufacturerRolePossible
-	case "actual":
-		*code = IngredientManufacturerRoleActual
-	default:
-		return fmt.Errorf("unknown IngredientManufacturerRole code `%s`", s)
-	}
-	return nil
-}
 
 func (code IngredientManufacturerRole) String() string {
 	return code.Code()
 }
 
 func (code IngredientManufacturerRole) Code() string {
-	switch code {
-	case IngredientManufacturerRoleAllowed:
-		return "allowed"
-	case IngredientManufacturerRolePossible:
-		return "possible"
-	case IngredientManufacturerRoleActual:
-		return "actual"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code IngredientManufacturerRole) Display() string {

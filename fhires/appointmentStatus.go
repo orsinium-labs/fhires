@@ -1,104 +1,44 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The free/busy status of an appointment.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/appointmentstatus
-type AppointmentStatus int
+type AppointmentStatus string
 
 const (
-	AppointmentStatusProposed AppointmentStatus = iota
+	// None of the participant(s) have finalized their acceptance of the appointment request, and the start/end time might not be set yet.
+	AppointmentStatusProposed AppointmentStatus = "proposed"
 	// Some or all of the participant(s) have not finalized their acceptance of the appointment request.
-	AppointmentStatusPending
+	AppointmentStatusPending AppointmentStatus = "pending"
 	// All participant(s) have been considered and the appointment is confirmed to go ahead at the date/times specified.
-	AppointmentStatusBooked
+	AppointmentStatusBooked AppointmentStatus = "booked"
 	// The patient/patients has/have arrived and is/are waiting to be seen.
-	AppointmentStatusArrived
+	AppointmentStatusArrived AppointmentStatus = "arrived"
 	// The planning stages of the appointment are now complete, the encounter resource will exist and will track further status changes. Note that an encounter may exist before the appointment status is fulfilled for many reasons.
-	AppointmentStatusFulfilled
+	AppointmentStatusFulfilled AppointmentStatus = "fulfilled"
 	// The appointment has been cancelled.
-	AppointmentStatusCancelled
+	AppointmentStatusCancelled AppointmentStatus = "cancelled"
 	// Some or all of the participant(s) have not/did not appear for the appointment (usually the patient).
-	AppointmentStatusNoshow
+	AppointmentStatusNoshow AppointmentStatus = "noshow"
 	// This instance should not have been part of this patient's medical record.
-	AppointmentStatusEnteredInError
+	AppointmentStatusEnteredInError AppointmentStatus = "entered-in-error"
 	// When checked in, all pre-encounter administrative work is complete, and the encounter may begin. (where multiple patients are involved, they are all present).
-	AppointmentStatusCheckedIn
+	AppointmentStatusCheckedIn AppointmentStatus = "checked-in"
 	/*
 	   The appointment has been placed on a waitlist, to be scheduled/confirmed in the future when a slot/service is available.
 	   A specific time might or might not be pre-allocated.
 	*/
-	AppointmentStatusWaitlist
+	AppointmentStatusWaitlist AppointmentStatus = "waitlist"
 )
-
-func (code AppointmentStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *AppointmentStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "proposed":
-		*code = AppointmentStatusProposed
-	case "pending":
-		*code = AppointmentStatusPending
-	case "booked":
-		*code = AppointmentStatusBooked
-	case "arrived":
-		*code = AppointmentStatusArrived
-	case "fulfilled":
-		*code = AppointmentStatusFulfilled
-	case "cancelled":
-		*code = AppointmentStatusCancelled
-	case "noshow":
-		*code = AppointmentStatusNoshow
-	case "entered-in-error":
-		*code = AppointmentStatusEnteredInError
-	case "checked-in":
-		*code = AppointmentStatusCheckedIn
-	case "waitlist":
-		*code = AppointmentStatusWaitlist
-	default:
-		return fmt.Errorf("unknown AppointmentStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code AppointmentStatus) String() string {
 	return code.Code()
 }
 
 func (code AppointmentStatus) Code() string {
-	switch code {
-	case AppointmentStatusProposed:
-		return "proposed"
-	case AppointmentStatusPending:
-		return "pending"
-	case AppointmentStatusBooked:
-		return "booked"
-	case AppointmentStatusArrived:
-		return "arrived"
-	case AppointmentStatusFulfilled:
-		return "fulfilled"
-	case AppointmentStatusCancelled:
-		return "cancelled"
-	case AppointmentStatusNoshow:
-		return "noshow"
-	case AppointmentStatusEnteredInError:
-		return "entered-in-error"
-	case AppointmentStatusCheckedIn:
-		return "checked-in"
-	case AppointmentStatusWaitlist:
-		return "waitlist"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code AppointmentStatus) Display() string {

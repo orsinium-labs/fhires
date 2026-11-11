@@ -1,53 +1,25 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Behavior a server can exhibit when a criteria state does not exist (e.g., state prior to a create or after a delete).
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/subscriptiontopic-cr-behavior
-type CriteriaNotExistsBehavior int
+type CriteriaNotExistsBehavior string
 
 const (
-	CriteriaNotExistsBehaviorTestPasses CriteriaNotExistsBehavior = iota
+	// The requested conditional statement will pass if a matching state does not exist (e.g., previous state during create).
+	CriteriaNotExistsBehaviorTestPasses CriteriaNotExistsBehavior = "test-passes"
 	// The requested conditional statement will fail if a matching state does not exist (e.g., previous state during create).
-	CriteriaNotExistsBehaviorTestFails
+	CriteriaNotExistsBehaviorTestFails CriteriaNotExistsBehavior = "test-fails"
 )
-
-func (code CriteriaNotExistsBehavior) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *CriteriaNotExistsBehavior) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "test-passes":
-		*code = CriteriaNotExistsBehaviorTestPasses
-	case "test-fails":
-		*code = CriteriaNotExistsBehaviorTestFails
-	default:
-		return fmt.Errorf("unknown CriteriaNotExistsBehavior code `%s`", s)
-	}
-	return nil
-}
 
 func (code CriteriaNotExistsBehavior) String() string {
 	return code.Code()
 }
 
 func (code CriteriaNotExistsBehavior) Code() string {
-	switch code {
-	case CriteriaNotExistsBehaviorTestPasses:
-		return "test-passes"
-	case CriteriaNotExistsBehaviorTestFails:
-		return "test-fails"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code CriteriaNotExistsBehavior) Display() string {

@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Indicates that a parameter applies when the operation is being invoked at the specified level
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/operation-parameter-scope
-type OperationParameterScope int
+type OperationParameterScope string
 
 const (
-	OperationParameterScopeInstance OperationParameterScope = iota
+	// This is a parameter that can be used at the instance level.
+	OperationParameterScopeInstance OperationParameterScope = "instance"
 	// This is a parameter that can be used at the type level.
-	OperationParameterScopeType
+	OperationParameterScopeType OperationParameterScope = "type"
 	// This is a parameter that can be used at the system level.
-	OperationParameterScopeSystem
+	OperationParameterScopeSystem OperationParameterScope = "system"
 )
-
-func (code OperationParameterScope) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *OperationParameterScope) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "instance":
-		*code = OperationParameterScopeInstance
-	case "type":
-		*code = OperationParameterScopeType
-	case "system":
-		*code = OperationParameterScopeSystem
-	default:
-		return fmt.Errorf("unknown OperationParameterScope code `%s`", s)
-	}
-	return nil
-}
 
 func (code OperationParameterScope) String() string {
 	return code.Code()
 }
 
 func (code OperationParameterScope) Code() string {
-	switch code {
-	case OperationParameterScopeInstance:
-		return "instance"
-	case OperationParameterScopeType:
-		return "type"
-	case OperationParameterScopeSystem:
-		return "system"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code OperationParameterScope) Display() string {

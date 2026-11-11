@@ -1,53 +1,25 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Codes providing the combined status of a specimen.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/specimen-combined
-type SpecimenCombined int
+type SpecimenCombined string
 
 const (
-	SpecimenCombinedGrouped SpecimenCombined = iota
+	// The specimen is in a group.
+	SpecimenCombinedGrouped SpecimenCombined = "grouped"
 	// The specimen is pooled.
-	SpecimenCombinedPooled
+	SpecimenCombinedPooled SpecimenCombined = "pooled"
 )
-
-func (code SpecimenCombined) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *SpecimenCombined) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "grouped":
-		*code = SpecimenCombinedGrouped
-	case "pooled":
-		*code = SpecimenCombinedPooled
-	default:
-		return fmt.Errorf("unknown SpecimenCombined code `%s`", s)
-	}
-	return nil
-}
 
 func (code SpecimenCombined) String() string {
 	return code.Code()
 }
 
 func (code SpecimenCombined) Code() string {
-	switch code {
-	case SpecimenCombinedGrouped:
-		return "grouped"
-	case SpecimenCombinedPooled:
-		return "pooled"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code SpecimenCombined) Display() string {

@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The presentation types of notes.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/note-type
-type NoteType int
+type NoteType string
 
 const (
-	NoteTypeDisplay NoteType = iota
+	// Display the note.
+	NoteTypeDisplay NoteType = "display"
 	// Print the note on the form.
-	NoteTypePrint
+	NoteTypePrint NoteType = "print"
 	// Print the note for the operator.
-	NoteTypePrintoper
+	NoteTypePrintoper NoteType = "printoper"
 )
-
-func (code NoteType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *NoteType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "display":
-		*code = NoteTypeDisplay
-	case "print":
-		*code = NoteTypePrint
-	case "printoper":
-		*code = NoteTypePrintoper
-	default:
-		return fmt.Errorf("unknown NoteType code `%s`", s)
-	}
-	return nil
-}
 
 func (code NoteType) String() string {
 	return code.Code()
 }
 
 func (code NoteType) Code() string {
-	switch code {
-	case NoteTypeDisplay:
-		return "display"
-	case NoteTypePrint:
-		return "print"
-	case NoteTypePrintoper:
-		return "printoper"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code NoteType) Display() string {

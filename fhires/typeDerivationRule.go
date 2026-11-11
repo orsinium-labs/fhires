@@ -1,53 +1,25 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // How a type relates to its baseDefinition.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/type-derivation-rule
-type TypeDerivationRule int
+type TypeDerivationRule string
 
 const (
-	TypeDerivationRuleSpecialization TypeDerivationRule = iota
+	// This definition defines a new type that adds additional elements and optionally additional rules to the base type.
+	TypeDerivationRuleSpecialization TypeDerivationRule = "specialization"
 	// This definition adds additional rules to an existing concrete type.
-	TypeDerivationRuleConstraint
+	TypeDerivationRuleConstraint TypeDerivationRule = "constraint"
 )
-
-func (code TypeDerivationRule) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *TypeDerivationRule) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "specialization":
-		*code = TypeDerivationRuleSpecialization
-	case "constraint":
-		*code = TypeDerivationRuleConstraint
-	default:
-		return fmt.Errorf("unknown TypeDerivationRule code `%s`", s)
-	}
-	return nil
-}
 
 func (code TypeDerivationRule) String() string {
 	return code.Code()
 }
 
 func (code TypeDerivationRule) Code() string {
-	switch code {
-	case TypeDerivationRuleSpecialization:
-		return "specialization"
-	case TypeDerivationRuleConstraint:
-		return "constraint"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code TypeDerivationRule) Display() string {

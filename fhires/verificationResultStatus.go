@@ -1,83 +1,35 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The validation status of the target
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/verificationresult-status
-type VerificationResultStatus int
+type VerificationResultStatus string
 
 const (
-	VerificationResultStatusAttested VerificationResultStatus = iota
 	// ***TODO***
-	VerificationResultStatusValidated
+	VerificationResultStatusAttested VerificationResultStatus = "attested"
 	// ***TODO***
-	VerificationResultStatusInProcess
+	VerificationResultStatusValidated VerificationResultStatus = "validated"
 	// ***TODO***
-	VerificationResultStatusReqRevalid
+	VerificationResultStatusInProcess VerificationResultStatus = "in-process"
 	// ***TODO***
-	VerificationResultStatusValFail
+	VerificationResultStatusReqRevalid VerificationResultStatus = "req-revalid"
 	// ***TODO***
-	VerificationResultStatusRevalFail
+	VerificationResultStatusValFail VerificationResultStatus = "val-fail"
+	// ***TODO***
+	VerificationResultStatusRevalFail VerificationResultStatus = "reval-fail"
 	// The VerificationResult record was created erroneously and is not appropriated for use.
-	VerificationResultStatusEnteredInError
+	VerificationResultStatusEnteredInError VerificationResultStatus = "entered-in-error"
 )
-
-func (code VerificationResultStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *VerificationResultStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "attested":
-		*code = VerificationResultStatusAttested
-	case "validated":
-		*code = VerificationResultStatusValidated
-	case "in-process":
-		*code = VerificationResultStatusInProcess
-	case "req-revalid":
-		*code = VerificationResultStatusReqRevalid
-	case "val-fail":
-		*code = VerificationResultStatusValFail
-	case "reval-fail":
-		*code = VerificationResultStatusRevalFail
-	case "entered-in-error":
-		*code = VerificationResultStatusEnteredInError
-	default:
-		return fmt.Errorf("unknown VerificationResultStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code VerificationResultStatus) String() string {
 	return code.Code()
 }
 
 func (code VerificationResultStatus) Code() string {
-	switch code {
-	case VerificationResultStatusAttested:
-		return "attested"
-	case VerificationResultStatusValidated:
-		return "validated"
-	case VerificationResultStatusInProcess:
-		return "in-process"
-	case VerificationResultStatusReqRevalid:
-		return "req-revalid"
-	case VerificationResultStatusValFail:
-		return "val-fail"
-	case VerificationResultStatusRevalFail:
-		return "reval-fail"
-	case VerificationResultStatusEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code VerificationResultStatus) Display() string {

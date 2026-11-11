@@ -1,53 +1,25 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // SHALL applications comply with this constraint?
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/constraint-severity
-type ConstraintSeverity int
+type ConstraintSeverity string
 
 const (
-	ConstraintSeverityError ConstraintSeverity = iota
+	// If the constraint is violated, the resource is not conformant.
+	ConstraintSeverityError ConstraintSeverity = "error"
 	// If the constraint is violated, the resource is conformant, but it is not necessarily following best practice.
-	ConstraintSeverityWarning
+	ConstraintSeverityWarning ConstraintSeverity = "warning"
 )
-
-func (code ConstraintSeverity) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ConstraintSeverity) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "error":
-		*code = ConstraintSeverityError
-	case "warning":
-		*code = ConstraintSeverityWarning
-	default:
-		return fmt.Errorf("unknown ConstraintSeverity code `%s`", s)
-	}
-	return nil
-}
 
 func (code ConstraintSeverity) String() string {
 	return code.Code()
 }
 
 func (code ConstraintSeverity) Code() string {
-	switch code {
-	case ConstraintSeverityError:
-		return "error"
-	case ConstraintSeverityWarning:
-		return "warning"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ConstraintSeverity) Display() string {

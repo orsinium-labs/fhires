@@ -1,83 +1,35 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Codes identifying the lifecycle stage of a request.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/request-status
-type RequestStatus int
+type RequestStatus string
 
 const (
-	RequestStatusDraft RequestStatus = iota
+	// The request has been created but is not yet complete or ready for action.
+	RequestStatusDraft RequestStatus = "draft"
 	// The request is in force and ready to be acted upon.
-	RequestStatusActive
+	RequestStatusActive RequestStatus = "active"
 	// The request (and any implicit authorization to act) has been temporarily withdrawn but is expected to resume in the future.
-	RequestStatusOnHold
+	RequestStatusOnHold RequestStatus = "on-hold"
 	// The request (and any implicit authorization to act) has been terminated prior to the known full completion of the intended actions.  No further activity should occur.
-	RequestStatusRevoked
+	RequestStatusRevoked RequestStatus = "revoked"
 	// The activity described by the request has been fully performed.  No further activity will occur.
-	RequestStatusCompleted
+	RequestStatusCompleted RequestStatus = "completed"
 	// This request should never have existed and should be considered 'void'.  (It is possible that real-world decisions were based on it.  If real-world activity has occurred, the status should be "revoked" rather than "entered-in-error".).
-	RequestStatusEnteredInError
+	RequestStatusEnteredInError RequestStatus = "entered-in-error"
 	// The authoring/source system does not know which of the status values currently applies for this request.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
-	RequestStatusUnknown
+	RequestStatusUnknown RequestStatus = "unknown"
 )
-
-func (code RequestStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *RequestStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "draft":
-		*code = RequestStatusDraft
-	case "active":
-		*code = RequestStatusActive
-	case "on-hold":
-		*code = RequestStatusOnHold
-	case "revoked":
-		*code = RequestStatusRevoked
-	case "completed":
-		*code = RequestStatusCompleted
-	case "entered-in-error":
-		*code = RequestStatusEnteredInError
-	case "unknown":
-		*code = RequestStatusUnknown
-	default:
-		return fmt.Errorf("unknown RequestStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code RequestStatus) String() string {
 	return code.Code()
 }
 
 func (code RequestStatus) Code() string {
-	switch code {
-	case RequestStatusDraft:
-		return "draft"
-	case RequestStatusActive:
-		return "active"
-	case RequestStatusOnHold:
-		return "on-hold"
-	case RequestStatusRevoked:
-		return "revoked"
-	case RequestStatusCompleted:
-		return "completed"
-	case RequestStatusEnteredInError:
-		return "entered-in-error"
-	case RequestStatusUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code RequestStatus) Display() string {

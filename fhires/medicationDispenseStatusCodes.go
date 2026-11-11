@@ -1,95 +1,39 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // MedicationDispense Status Codes
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/medicationdispense-status
-type MedicationDispenseStatusCodes int
+type MedicationDispenseStatusCodes string
 
 const (
-	MedicationDispenseStatusCodesPreparation MedicationDispenseStatusCodes = iota
+	// The core event has not started yet, but some staging activities have begun (e.g. initial compounding or packaging of medication). Preparation stages may be tracked for billing purposes.
+	MedicationDispenseStatusCodesPreparation MedicationDispenseStatusCodes = "preparation"
 	// The dispensed product is ready for pickup.
-	MedicationDispenseStatusCodesInProgress
+	MedicationDispenseStatusCodesInProgress MedicationDispenseStatusCodes = "in-progress"
 	// The dispensed product was not and will never be picked up by the patient.
-	MedicationDispenseStatusCodesCancelled
+	MedicationDispenseStatusCodesCancelled MedicationDispenseStatusCodes = "cancelled"
 	// The dispense process is paused while waiting for an external event to reactivate the dispense.  For example, new stock has arrived or the prescriber has called.
-	MedicationDispenseStatusCodesOnHold
+	MedicationDispenseStatusCodesOnHold MedicationDispenseStatusCodes = "on-hold"
 	// The dispensed product has been picked up.
-	MedicationDispenseStatusCodesCompleted
+	MedicationDispenseStatusCodesCompleted MedicationDispenseStatusCodes = "completed"
 	// The dispense was entered in error and therefore nullified.
-	MedicationDispenseStatusCodesEnteredInError
+	MedicationDispenseStatusCodesEnteredInError MedicationDispenseStatusCodes = "entered-in-error"
 	// Actions implied by the dispense have been permanently halted, before all of them occurred.
-	MedicationDispenseStatusCodesStopped
+	MedicationDispenseStatusCodesStopped MedicationDispenseStatusCodes = "stopped"
 	// The dispense was declined and not performed.
-	MedicationDispenseStatusCodesDeclined
+	MedicationDispenseStatusCodesDeclined MedicationDispenseStatusCodes = "declined"
 	// The authoring system does not know which of the status values applies for this medication dispense.  Note: this concept is not to be used for other - one of the listed statuses is presumed to apply, it's just now known which one.
-	MedicationDispenseStatusCodesUnknown
+	MedicationDispenseStatusCodesUnknown MedicationDispenseStatusCodes = "unknown"
 )
-
-func (code MedicationDispenseStatusCodes) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *MedicationDispenseStatusCodes) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "preparation":
-		*code = MedicationDispenseStatusCodesPreparation
-	case "in-progress":
-		*code = MedicationDispenseStatusCodesInProgress
-	case "cancelled":
-		*code = MedicationDispenseStatusCodesCancelled
-	case "on-hold":
-		*code = MedicationDispenseStatusCodesOnHold
-	case "completed":
-		*code = MedicationDispenseStatusCodesCompleted
-	case "entered-in-error":
-		*code = MedicationDispenseStatusCodesEnteredInError
-	case "stopped":
-		*code = MedicationDispenseStatusCodesStopped
-	case "declined":
-		*code = MedicationDispenseStatusCodesDeclined
-	case "unknown":
-		*code = MedicationDispenseStatusCodesUnknown
-	default:
-		return fmt.Errorf("unknown MedicationDispenseStatusCodes code `%s`", s)
-	}
-	return nil
-}
 
 func (code MedicationDispenseStatusCodes) String() string {
 	return code.Code()
 }
 
 func (code MedicationDispenseStatusCodes) Code() string {
-	switch code {
-	case MedicationDispenseStatusCodesPreparation:
-		return "preparation"
-	case MedicationDispenseStatusCodesInProgress:
-		return "in-progress"
-	case MedicationDispenseStatusCodesCancelled:
-		return "cancelled"
-	case MedicationDispenseStatusCodesOnHold:
-		return "on-hold"
-	case MedicationDispenseStatusCodesCompleted:
-		return "completed"
-	case MedicationDispenseStatusCodesEnteredInError:
-		return "entered-in-error"
-	case MedicationDispenseStatusCodesStopped:
-		return "stopped"
-	case MedicationDispenseStatusCodesDeclined:
-		return "declined"
-	case MedicationDispenseStatusCodesUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code MedicationDispenseStatusCodes) Display() string {

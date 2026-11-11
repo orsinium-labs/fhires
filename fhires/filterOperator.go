@@ -1,107 +1,43 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The kind of operation to perform as a part of a property based filter.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/filter-operator
-type FilterOperator int
+type FilterOperator string
 
 const (
-	FilterOperatorEquals FilterOperator = iota
+	// The specified property of the code equals the provided value.
+	FilterOperatorEquals FilterOperator = "="
 	// Includes all concept ids that have a transitive is-a relationship with the concept Id provided as the value, including the provided concept itself (include descendant codes and self).
-	FilterOperatorIsA
+	FilterOperatorIsA FilterOperator = "is-a"
 	// Includes all concept ids that have a transitive is-a relationship with the concept Id provided as the value, excluding the provided concept itself (i.e. include descendant codes only).
-	FilterOperatorDescendentOf
+	FilterOperatorDescendentOf FilterOperator = "descendent-of"
 	// The specified property of the code does not have an is-a relationship with the provided value.
-	FilterOperatorIsNotA
+	FilterOperatorIsNotA FilterOperator = "is-not-a"
 	// The specified property of the code  matches the regex specified in the provided value.
-	FilterOperatorRegex
+	FilterOperatorRegex FilterOperator = "regex"
 	// The specified property of the code is in the set of codes or concepts specified in the provided value (comma-separated list).
-	FilterOperatorIn
+	FilterOperatorIn FilterOperator = "in"
 	// The specified property of the code is not in the set of codes or concepts specified in the provided value (comma-separated list).
-	FilterOperatorNotIn
+	FilterOperatorNotIn FilterOperator = "not-in"
 	// Includes all concept ids that have a transitive is-a relationship from the concept Id provided as the value, including the provided concept itself (i.e. include ancestor codes and self).
-	FilterOperatorGeneralizes
+	FilterOperatorGeneralizes FilterOperator = "generalizes"
 	// Only concepts with a direct hierarchical relationship to the index code and no other concepts. This does not include the index code in the output.
-	FilterOperatorChildOf
+	FilterOperatorChildOf FilterOperator = "child-of"
 	// Includes concept ids that have a transitive is-a relationship with the concept Id provided as the value, but which do not have any concept ids with transitive is-a relationships with themselves.
-	FilterOperatorDescendentLeaf
+	FilterOperatorDescendentLeaf FilterOperator = "descendent-leaf"
 	// The specified property of the code has at least one value (if the specified value is true; if the specified value is false, then matches when the specified property of the code has no values).
-	FilterOperatorExists
+	FilterOperatorExists FilterOperator = "exists"
 )
-
-func (code FilterOperator) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *FilterOperator) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "=":
-		*code = FilterOperatorEquals
-	case "is-a":
-		*code = FilterOperatorIsA
-	case "descendent-of":
-		*code = FilterOperatorDescendentOf
-	case "is-not-a":
-		*code = FilterOperatorIsNotA
-	case "regex":
-		*code = FilterOperatorRegex
-	case "in":
-		*code = FilterOperatorIn
-	case "not-in":
-		*code = FilterOperatorNotIn
-	case "generalizes":
-		*code = FilterOperatorGeneralizes
-	case "child-of":
-		*code = FilterOperatorChildOf
-	case "descendent-leaf":
-		*code = FilterOperatorDescendentLeaf
-	case "exists":
-		*code = FilterOperatorExists
-	default:
-		return fmt.Errorf("unknown FilterOperator code `%s`", s)
-	}
-	return nil
-}
 
 func (code FilterOperator) String() string {
 	return code.Code()
 }
 
 func (code FilterOperator) Code() string {
-	switch code {
-	case FilterOperatorEquals:
-		return "="
-	case FilterOperatorIsA:
-		return "is-a"
-	case FilterOperatorDescendentOf:
-		return "descendent-of"
-	case FilterOperatorIsNotA:
-		return "is-not-a"
-	case FilterOperatorRegex:
-		return "regex"
-	case FilterOperatorIn:
-		return "in"
-	case FilterOperatorNotIn:
-		return "not-in"
-	case FilterOperatorGeneralizes:
-		return "generalizes"
-	case FilterOperatorChildOf:
-		return "child-of"
-	case FilterOperatorDescendentLeaf:
-		return "descendent-leaf"
-	case FilterOperatorExists:
-		return "exists"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code FilterOperator) Display() string {

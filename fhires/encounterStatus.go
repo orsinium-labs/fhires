@@ -1,95 +1,39 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Current state of the encounter.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/encounter-status
-type EncounterStatus int
+type EncounterStatus string
 
 const (
-	EncounterStatusPlanned EncounterStatus = iota
+	// The Encounter has not yet started.
+	EncounterStatusPlanned EncounterStatus = "planned"
 	// The Encounter has begun and the patient is present / the practitioner and the patient are meeting.
-	EncounterStatusInProgress
+	EncounterStatusInProgress EncounterStatus = "in-progress"
 	// The Encounter has begun, but is currently on hold, e.g. because the patient is temporarily on leave.
-	EncounterStatusOnHold
+	EncounterStatusOnHold EncounterStatus = "on-hold"
 	// The Encounter has been clinically completed, the patient has been discharged from the facility or the visit has ended, and the patient may have departed (refer to subjectStatus). While the encounter is in this status, administrative activities are usually performed, collating all required documentation and charge information before being released for billing, at which point the status will move to completed.
-	EncounterStatusDischarged
+	EncounterStatusDischarged EncounterStatus = "discharged"
 	// The Encounter has ended.
-	EncounterStatusCompleted
+	EncounterStatusCompleted EncounterStatus = "completed"
 	// The Encounter has ended before it has begun.
-	EncounterStatusCancelled
+	EncounterStatusCancelled EncounterStatus = "cancelled"
 	// The Encounter has started, but was not able to be completed. Further action may need to be performed, such as rescheduling appointments related to this encounter.
-	EncounterStatusDiscontinued
+	EncounterStatusDiscontinued EncounterStatus = "discontinued"
 	// This instance should not have been part of this patient's medical record.
-	EncounterStatusEnteredInError
+	EncounterStatusEnteredInError EncounterStatus = "entered-in-error"
 	// The encounter status is unknown. Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown".
-	EncounterStatusUnknown
+	EncounterStatusUnknown EncounterStatus = "unknown"
 )
-
-func (code EncounterStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *EncounterStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "planned":
-		*code = EncounterStatusPlanned
-	case "in-progress":
-		*code = EncounterStatusInProgress
-	case "on-hold":
-		*code = EncounterStatusOnHold
-	case "discharged":
-		*code = EncounterStatusDischarged
-	case "completed":
-		*code = EncounterStatusCompleted
-	case "cancelled":
-		*code = EncounterStatusCancelled
-	case "discontinued":
-		*code = EncounterStatusDiscontinued
-	case "entered-in-error":
-		*code = EncounterStatusEnteredInError
-	case "unknown":
-		*code = EncounterStatusUnknown
-	default:
-		return fmt.Errorf("unknown EncounterStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code EncounterStatus) String() string {
 	return code.Code()
 }
 
 func (code EncounterStatus) Code() string {
-	switch code {
-	case EncounterStatusPlanned:
-		return "planned"
-	case EncounterStatusInProgress:
-		return "in-progress"
-	case EncounterStatusOnHold:
-		return "on-hold"
-	case EncounterStatusDischarged:
-		return "discharged"
-	case EncounterStatusCompleted:
-		return "completed"
-	case EncounterStatusCancelled:
-		return "cancelled"
-	case EncounterStatusDiscontinued:
-		return "discontinued"
-	case EncounterStatusEnteredInError:
-		return "entered-in-error"
-	case EncounterStatusUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code EncounterStatus) Display() string {

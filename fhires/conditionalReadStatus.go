@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // A code that indicates how the server supports conditional read.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/conditional-read-status
-type ConditionalReadStatus int
+type ConditionalReadStatus string
 
 const (
-	ConditionalReadStatusNotSupported ConditionalReadStatus = iota
+	// No support for conditional reads.
+	ConditionalReadStatusNotSupported ConditionalReadStatus = "not-supported"
 	// Conditional reads are supported, but only with the If-Modified-Since HTTP Header.
-	ConditionalReadStatusModifiedSince
+	ConditionalReadStatusModifiedSince ConditionalReadStatus = "modified-since"
 	// Conditional reads are supported, but only with the If-None-Match HTTP Header.
-	ConditionalReadStatusNotMatch
+	ConditionalReadStatusNotMatch ConditionalReadStatus = "not-match"
 	// Conditional reads are supported, with both If-Modified-Since and If-None-Match HTTP Headers.
-	ConditionalReadStatusFullSupport
+	ConditionalReadStatusFullSupport ConditionalReadStatus = "full-support"
 )
-
-func (code ConditionalReadStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ConditionalReadStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "not-supported":
-		*code = ConditionalReadStatusNotSupported
-	case "modified-since":
-		*code = ConditionalReadStatusModifiedSince
-	case "not-match":
-		*code = ConditionalReadStatusNotMatch
-	case "full-support":
-		*code = ConditionalReadStatusFullSupport
-	default:
-		return fmt.Errorf("unknown ConditionalReadStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code ConditionalReadStatus) String() string {
 	return code.Code()
 }
 
 func (code ConditionalReadStatus) Code() string {
-	switch code {
-	case ConditionalReadStatusNotSupported:
-		return "not-supported"
-	case ConditionalReadStatusModifiedSince:
-		return "modified-since"
-	case ConditionalReadStatusNotMatch:
-		return "not-match"
-	case ConditionalReadStatusFullSupport:
-		return "full-support"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ConditionalReadStatus) Display() string {

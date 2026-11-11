@@ -1,143 +1,55 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // How data is copied/created.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/map-transform
-type StructureMapTransform int
+type StructureMapTransform string
 
 const (
-	StructureMapTransformCreate StructureMapTransform = iota
+	// create(type : string) - type is passed through to the application on the standard API, and must be known by it.
+	StructureMapTransformCreate StructureMapTransform = "create"
 	// copy(source).
-	StructureMapTransformCopy
+	StructureMapTransformCopy StructureMapTransform = "copy"
 	// truncate(source, length) - source must be stringy type.
-	StructureMapTransformTruncate
+	StructureMapTransformTruncate StructureMapTransform = "truncate"
 	// escape(source, fmt1, fmt2) - change source from one kind of escaping to another (plain, java, xml, json). note that this is for when the string itself is escaped.
-	StructureMapTransformEscape
+	StructureMapTransformEscape StructureMapTransform = "escape"
 	// cast(source, type?) - cast (convert) source from one type to another. Target type can be left as implicit if there is one and only one target type known. The default namespace for the type is 'FHIR' (see [FHIRPath type specifiers](http://hl7.org/fhirpath/N1/#is-type-specifier))
-	StructureMapTransformCast
+	StructureMapTransformCast StructureMapTransform = "cast"
 	// append(source...) - source is element or string.
-	StructureMapTransformAppend
+	StructureMapTransformAppend StructureMapTransform = "append"
 	// translate(source, uri_of_map) - use the translate operation.
-	StructureMapTransformTranslate
+	StructureMapTransformTranslate StructureMapTransform = "translate"
 	// reference(source : object) - return a string that references the provided tree properly.
-	StructureMapTransformReference
+	StructureMapTransformReference StructureMapTransform = "reference"
 	// Perform a date operation. *Parameters to be documented*.
-	StructureMapTransformDateOp
+	StructureMapTransformDateOp StructureMapTransform = "dateOp"
 	// Generate a random UUID (in lowercase). No Parameters.
-	StructureMapTransformUuid
+	StructureMapTransformUuid StructureMapTransform = "uuid"
 	// Return the appropriate string to put in a reference that refers to the resource provided as a parameter.
-	StructureMapTransformPointer
+	StructureMapTransformPointer StructureMapTransform = "pointer"
 	// Execute the supplied FHIRPath expression and use the value returned by that.
-	StructureMapTransformEvaluate
+	StructureMapTransformEvaluate StructureMapTransform = "evaluate"
 	// Create a CodeableConcept. Parameters = (text) or (system. Code[, display]).
-	StructureMapTransformCc
+	StructureMapTransformCc StructureMapTransform = "cc"
 	// Create a Coding. Parameters = (system. Code[, display]).
-	StructureMapTransformC
+	StructureMapTransformC StructureMapTransform = "c"
 	// Create a quantity. Parameters = (text) or (value, unit, [system, code]) where text is the natural representation e.g. [comparator]value[space]unit.
-	StructureMapTransformQty
+	StructureMapTransformQty StructureMapTransform = "qty"
 	// Create an identifier. Parameters = (system, value[, type]) where type is a code from the identifier type value set.
-	StructureMapTransformId
+	StructureMapTransformId StructureMapTransform = "id"
 	// Create a contact details. Parameters = (value) or (system, value). If no system is provided, the system should be inferred from the content of the value.
-	StructureMapTransformCp
+	StructureMapTransformCp StructureMapTransform = "cp"
 )
-
-func (code StructureMapTransform) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *StructureMapTransform) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "create":
-		*code = StructureMapTransformCreate
-	case "copy":
-		*code = StructureMapTransformCopy
-	case "truncate":
-		*code = StructureMapTransformTruncate
-	case "escape":
-		*code = StructureMapTransformEscape
-	case "cast":
-		*code = StructureMapTransformCast
-	case "append":
-		*code = StructureMapTransformAppend
-	case "translate":
-		*code = StructureMapTransformTranslate
-	case "reference":
-		*code = StructureMapTransformReference
-	case "dateOp":
-		*code = StructureMapTransformDateOp
-	case "uuid":
-		*code = StructureMapTransformUuid
-	case "pointer":
-		*code = StructureMapTransformPointer
-	case "evaluate":
-		*code = StructureMapTransformEvaluate
-	case "cc":
-		*code = StructureMapTransformCc
-	case "c":
-		*code = StructureMapTransformC
-	case "qty":
-		*code = StructureMapTransformQty
-	case "id":
-		*code = StructureMapTransformId
-	case "cp":
-		*code = StructureMapTransformCp
-	default:
-		return fmt.Errorf("unknown StructureMapTransform code `%s`", s)
-	}
-	return nil
-}
 
 func (code StructureMapTransform) String() string {
 	return code.Code()
 }
 
 func (code StructureMapTransform) Code() string {
-	switch code {
-	case StructureMapTransformCreate:
-		return "create"
-	case StructureMapTransformCopy:
-		return "copy"
-	case StructureMapTransformTruncate:
-		return "truncate"
-	case StructureMapTransformEscape:
-		return "escape"
-	case StructureMapTransformCast:
-		return "cast"
-	case StructureMapTransformAppend:
-		return "append"
-	case StructureMapTransformTranslate:
-		return "translate"
-	case StructureMapTransformReference:
-		return "reference"
-	case StructureMapTransformDateOp:
-		return "dateOp"
-	case StructureMapTransformUuid:
-		return "uuid"
-	case StructureMapTransformPointer:
-		return "pointer"
-	case StructureMapTransformEvaluate:
-		return "evaluate"
-	case StructureMapTransformCc:
-		return "cc"
-	case StructureMapTransformC:
-		return "c"
-	case StructureMapTransformQty:
-		return "qty"
-	case StructureMapTransformId:
-		return "id"
-	case StructureMapTransformCp:
-		return "cp"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code StructureMapTransform) Display() string {

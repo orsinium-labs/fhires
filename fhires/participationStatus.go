@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The Participation status of an appointment.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/participationstatus
-type ParticipationStatus int
+type ParticipationStatus string
 
 const (
-	ParticipationStatusAccepted ParticipationStatus = iota
+	// The participant has accepted the appointment.
+	ParticipationStatusAccepted ParticipationStatus = "accepted"
 	// The participant has declined the appointment and will not participate in the appointment.
-	ParticipationStatusDeclined
+	ParticipationStatusDeclined ParticipationStatus = "declined"
 	// The participant has  tentatively accepted the appointment. This could be automatically created by a system and requires further processing before it can be accepted. There is no commitment that attendance will occur.
-	ParticipationStatusTentative
+	ParticipationStatusTentative ParticipationStatus = "tentative"
 	// The participant needs to indicate if they accept the appointment by changing this status to one of the other statuses.
-	ParticipationStatusNeedsAction
+	ParticipationStatusNeedsAction ParticipationStatus = "needs-action"
 )
-
-func (code ParticipationStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ParticipationStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "accepted":
-		*code = ParticipationStatusAccepted
-	case "declined":
-		*code = ParticipationStatusDeclined
-	case "tentative":
-		*code = ParticipationStatusTentative
-	case "needs-action":
-		*code = ParticipationStatusNeedsAction
-	default:
-		return fmt.Errorf("unknown ParticipationStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code ParticipationStatus) String() string {
 	return code.Code()
 }
 
 func (code ParticipationStatus) Code() string {
-	switch code {
-	case ParticipationStatusAccepted:
-		return "accepted"
-	case ParticipationStatusDeclined:
-		return "declined"
-	case ParticipationStatusTentative:
-		return "tentative"
-	case ParticipationStatusNeedsAction:
-		return "needs-action"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ParticipationStatus) Display() string {

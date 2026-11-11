@@ -1,53 +1,25 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Controls how multiple enableWhen values are interpreted -  whether all or any must be true.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/questionnaire-enable-behavior
-type EnableWhenBehavior int
+type EnableWhenBehavior string
 
 const (
-	EnableWhenBehaviorAll EnableWhenBehavior = iota
+	// Enable the question when all the enableWhen criteria are satisfied.
+	EnableWhenBehaviorAll EnableWhenBehavior = "all"
 	// Enable the question when any of the enableWhen criteria are satisfied.
-	EnableWhenBehaviorAny
+	EnableWhenBehaviorAny EnableWhenBehavior = "any"
 )
-
-func (code EnableWhenBehavior) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *EnableWhenBehavior) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "all":
-		*code = EnableWhenBehaviorAll
-	case "any":
-		*code = EnableWhenBehaviorAny
-	default:
-		return fmt.Errorf("unknown EnableWhenBehavior code `%s`", s)
-	}
-	return nil
-}
 
 func (code EnableWhenBehavior) String() string {
 	return code.Code()
 }
 
 func (code EnableWhenBehavior) Code() string {
-	switch code {
-	case EnableWhenBehaviorAll:
-		return "all"
-	case EnableWhenBehaviorAny:
-		return "any"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code EnableWhenBehavior) Display() string {

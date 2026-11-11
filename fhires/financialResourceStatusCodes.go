@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // This value set includes Status codes.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/fm-status
-type FinancialResourceStatusCodes int
+type FinancialResourceStatusCodes string
 
 const (
-	FinancialResourceStatusCodesActive FinancialResourceStatusCodes = iota
+	// The instance is currently in-force.
+	FinancialResourceStatusCodesActive FinancialResourceStatusCodes = "active"
 	// The instance is withdrawn, rescinded or reversed.
-	FinancialResourceStatusCodesCancelled
+	FinancialResourceStatusCodesCancelled FinancialResourceStatusCodes = "cancelled"
 	// A new instance the contents of which is not complete.
-	FinancialResourceStatusCodesDraft
+	FinancialResourceStatusCodesDraft FinancialResourceStatusCodes = "draft"
 	// The instance was entered in error.
-	FinancialResourceStatusCodesEnteredInError
+	FinancialResourceStatusCodesEnteredInError FinancialResourceStatusCodes = "entered-in-error"
 )
-
-func (code FinancialResourceStatusCodes) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *FinancialResourceStatusCodes) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "active":
-		*code = FinancialResourceStatusCodesActive
-	case "cancelled":
-		*code = FinancialResourceStatusCodesCancelled
-	case "draft":
-		*code = FinancialResourceStatusCodesDraft
-	case "entered-in-error":
-		*code = FinancialResourceStatusCodesEnteredInError
-	default:
-		return fmt.Errorf("unknown FinancialResourceStatusCodes code `%s`", s)
-	}
-	return nil
-}
 
 func (code FinancialResourceStatusCodes) String() string {
 	return code.Code()
 }
 
 func (code FinancialResourceStatusCodes) Code() string {
-	switch code {
-	case FinancialResourceStatusCodesActive:
-		return "active"
-	case FinancialResourceStatusCodesCancelled:
-		return "cancelled"
-	case FinancialResourceStatusCodesDraft:
-		return "draft"
-	case FinancialResourceStatusCodesEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code FinancialResourceStatusCodes) Display() string {

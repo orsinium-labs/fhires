@@ -1,83 +1,35 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The type of a ConceptMap mapping property value.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/conceptmap-property-type
-type ConceptMapPropertyType int
+type ConceptMapPropertyType string
 
 const (
-	ConceptMapPropertyTypeCoding ConceptMapPropertyType = iota
+	// The property  value is a code defined in an external code system. This may be used for translations, but is not the intent.
+	ConceptMapPropertyTypeCoding ConceptMapPropertyType = "Coding"
 	// The property value is a string.
-	ConceptMapPropertyTypeString
+	ConceptMapPropertyTypeString ConceptMapPropertyType = "string"
 	// The property value is an integer (often used to assign ranking values to concepts for supporting score assessments).
-	ConceptMapPropertyTypeInteger
+	ConceptMapPropertyTypeInteger ConceptMapPropertyType = "integer"
 	// The property value is a boolean true | false.
-	ConceptMapPropertyTypeBoolean
+	ConceptMapPropertyTypeBoolean ConceptMapPropertyType = "boolean"
 	// The property is a date or a date + time.
-	ConceptMapPropertyTypeDateTime
+	ConceptMapPropertyTypeDateTime ConceptMapPropertyType = "dateTime"
 	// The property value is a decimal number.
-	ConceptMapPropertyTypeDecimal
+	ConceptMapPropertyTypeDecimal ConceptMapPropertyType = "decimal"
 	// The property value is a code as defined in the CodeSystem in ConceptMap.property.system.
-	ConceptMapPropertyTypeCode
+	ConceptMapPropertyTypeCode ConceptMapPropertyType = "code"
 )
-
-func (code ConceptMapPropertyType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ConceptMapPropertyType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "Coding":
-		*code = ConceptMapPropertyTypeCoding
-	case "string":
-		*code = ConceptMapPropertyTypeString
-	case "integer":
-		*code = ConceptMapPropertyTypeInteger
-	case "boolean":
-		*code = ConceptMapPropertyTypeBoolean
-	case "dateTime":
-		*code = ConceptMapPropertyTypeDateTime
-	case "decimal":
-		*code = ConceptMapPropertyTypeDecimal
-	case "code":
-		*code = ConceptMapPropertyTypeCode
-	default:
-		return fmt.Errorf("unknown ConceptMapPropertyType code `%s`", s)
-	}
-	return nil
-}
 
 func (code ConceptMapPropertyType) String() string {
 	return code.Code()
 }
 
 func (code ConceptMapPropertyType) Code() string {
-	switch code {
-	case ConceptMapPropertyTypeCoding:
-		return "Coding"
-	case ConceptMapPropertyTypeString:
-		return "string"
-	case ConceptMapPropertyTypeInteger:
-		return "integer"
-	case ConceptMapPropertyTypeBoolean:
-		return "boolean"
-	case ConceptMapPropertyTypeDateTime:
-		return "dateTime"
-	case ConceptMapPropertyTypeDecimal:
-		return "decimal"
-	case ConceptMapPropertyTypeCode:
-		return "code"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ConceptMapPropertyType) Display() string {

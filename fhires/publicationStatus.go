@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The lifecycle status of an artifact.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/publication-status
-type PublicationStatus int
+type PublicationStatus string
 
 const (
-	PublicationStatusDraft PublicationStatus = iota
+	// This resource is still under development and is not yet considered to be ready for normal use.
+	PublicationStatusDraft PublicationStatus = "draft"
 	// This resource is ready for normal use.
-	PublicationStatusActive
+	PublicationStatusActive PublicationStatus = "active"
 	// This resource has been withdrawn or superseded and should no longer be used.
-	PublicationStatusRetired
+	PublicationStatusRetired PublicationStatus = "retired"
 	// The authoring system does not know which of the status values currently applies for this resource.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
-	PublicationStatusUnknown
+	PublicationStatusUnknown PublicationStatus = "unknown"
 )
-
-func (code PublicationStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *PublicationStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "draft":
-		*code = PublicationStatusDraft
-	case "active":
-		*code = PublicationStatusActive
-	case "retired":
-		*code = PublicationStatusRetired
-	case "unknown":
-		*code = PublicationStatusUnknown
-	default:
-		return fmt.Errorf("unknown PublicationStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code PublicationStatus) String() string {
 	return code.Code()
 }
 
 func (code PublicationStatus) Code() string {
-	switch code {
-	case PublicationStatusDraft:
-		return "draft"
-	case PublicationStatusActive:
-		return "active"
-	case PublicationStatusRetired:
-		return "retired"
-	case PublicationStatusUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code PublicationStatus) Display() string {

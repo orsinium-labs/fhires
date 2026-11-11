@@ -1,77 +1,33 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Status of the transport
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/transport-status
-type TransportStatus int
+type TransportStatus string
 
 const (
-	TransportStatusInProgress TransportStatus = iota
+	// Transport has started but not completed.
+	TransportStatusInProgress TransportStatus = "in-progress"
 	// Transport has been completed.
-	TransportStatusCompleted
+	TransportStatusCompleted TransportStatus = "completed"
 	// Transport was started but not completed.
-	TransportStatusAbandoned
+	TransportStatusAbandoned TransportStatus = "abandoned"
 	// Transport was cancelled before started.
-	TransportStatusCancelled
+	TransportStatusCancelled TransportStatus = "cancelled"
 	// Planned transport that is not yet requested.
-	TransportStatusPlanned
+	TransportStatusPlanned TransportStatus = "planned"
 	// This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "abandoned" rather than "entered-in-error".).
-	TransportStatusEnteredInError
+	TransportStatusEnteredInError TransportStatus = "entered-in-error"
 )
-
-func (code TransportStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *TransportStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "in-progress":
-		*code = TransportStatusInProgress
-	case "completed":
-		*code = TransportStatusCompleted
-	case "abandoned":
-		*code = TransportStatusAbandoned
-	case "cancelled":
-		*code = TransportStatusCancelled
-	case "planned":
-		*code = TransportStatusPlanned
-	case "entered-in-error":
-		*code = TransportStatusEnteredInError
-	default:
-		return fmt.Errorf("unknown TransportStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code TransportStatus) String() string {
 	return code.Code()
 }
 
 func (code TransportStatus) Code() string {
-	switch code {
-	case TransportStatusInProgress:
-		return "in-progress"
-	case TransportStatusCompleted:
-		return "completed"
-	case TransportStatusAbandoned:
-		return "abandoned"
-	case TransportStatusCancelled:
-		return "cancelled"
-	case TransportStatusPlanned:
-		return "planned"
-	case TransportStatusEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code TransportStatus) Display() string {

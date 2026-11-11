@@ -1,149 +1,57 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Operations supported by REST at the type or instance level.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/type-restful-interaction
-type TypeRestfulInteraction int
+type TypeRestfulInteraction string
 
 const (
-	TypeRestfulInteractionRead TypeRestfulInteraction = iota
+	// Read the current state of the resource.
+	TypeRestfulInteractionRead TypeRestfulInteraction = "read"
 	// Read the state of a specific version of the resource.
-	TypeRestfulInteractionVread
+	TypeRestfulInteractionVread TypeRestfulInteraction = "vread"
 	// Update an existing resource by its id (or create it if it is new).
-	TypeRestfulInteractionUpdate
+	TypeRestfulInteractionUpdate TypeRestfulInteraction = "update"
 	// Update an existing resource by posting a set of changes to it.
-	TypeRestfulInteractionPatch
+	TypeRestfulInteractionPatch TypeRestfulInteraction = "patch"
 	// Delete a resource.
-	TypeRestfulInteractionDelete
+	TypeRestfulInteractionDelete TypeRestfulInteraction = "delete"
 	// Retrieve the change history for a particular resource, type of resource, or the entire system.
-	TypeRestfulInteractionHistory
+	TypeRestfulInteractionHistory TypeRestfulInteraction = "history"
 	// Retrieve the change history for a particular resource.
-	TypeRestfulInteractionHistoryInstance
+	TypeRestfulInteractionHistoryInstance TypeRestfulInteraction = "history-instance"
 	// Retrieve the change history for all resources of a particular type.
-	TypeRestfulInteractionHistoryType
+	TypeRestfulInteractionHistoryType TypeRestfulInteraction = "history-type"
 	// Retrieve the change history for all resources on a system.
-	TypeRestfulInteractionHistorySystem
+	TypeRestfulInteractionHistorySystem TypeRestfulInteraction = "history-system"
 	// Create a new resource with a server assigned id.
-	TypeRestfulInteractionCreate
+	TypeRestfulInteractionCreate TypeRestfulInteraction = "create"
 	// Search a resource type or all resources based on some filter criteria.
-	TypeRestfulInteractionSearch
+	TypeRestfulInteractionSearch TypeRestfulInteraction = "search"
 	// Search all resources of the specified type based on some filter criteria.
-	TypeRestfulInteractionSearchType
+	TypeRestfulInteractionSearchType TypeRestfulInteraction = "search-type"
 	// Search all resources based on some filter criteria.
-	TypeRestfulInteractionSearchSystem
+	TypeRestfulInteractionSearchSystem TypeRestfulInteraction = "search-system"
 	// Search resources in a compartment based on some filter criteria.
-	TypeRestfulInteractionSearchCompartment
+	TypeRestfulInteractionSearchCompartment TypeRestfulInteraction = "search-compartment"
 	// Get a Capability Statement for the system.
-	TypeRestfulInteractionCapabilities
+	TypeRestfulInteractionCapabilities TypeRestfulInteraction = "capabilities"
 	// Update, create or delete a set of resources as a single transaction.
-	TypeRestfulInteractionTransaction
+	TypeRestfulInteractionTransaction TypeRestfulInteraction = "transaction"
 	// perform a set of a separate interactions in a single http operation
-	TypeRestfulInteractionBatch
+	TypeRestfulInteractionBatch TypeRestfulInteraction = "batch"
 	// Perform an operation as defined by an OperationDefinition.
-	TypeRestfulInteractionOperation
+	TypeRestfulInteractionOperation TypeRestfulInteraction = "operation"
 )
-
-func (code TypeRestfulInteraction) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *TypeRestfulInteraction) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "read":
-		*code = TypeRestfulInteractionRead
-	case "vread":
-		*code = TypeRestfulInteractionVread
-	case "update":
-		*code = TypeRestfulInteractionUpdate
-	case "patch":
-		*code = TypeRestfulInteractionPatch
-	case "delete":
-		*code = TypeRestfulInteractionDelete
-	case "history":
-		*code = TypeRestfulInteractionHistory
-	case "history-instance":
-		*code = TypeRestfulInteractionHistoryInstance
-	case "history-type":
-		*code = TypeRestfulInteractionHistoryType
-	case "history-system":
-		*code = TypeRestfulInteractionHistorySystem
-	case "create":
-		*code = TypeRestfulInteractionCreate
-	case "search":
-		*code = TypeRestfulInteractionSearch
-	case "search-type":
-		*code = TypeRestfulInteractionSearchType
-	case "search-system":
-		*code = TypeRestfulInteractionSearchSystem
-	case "search-compartment":
-		*code = TypeRestfulInteractionSearchCompartment
-	case "capabilities":
-		*code = TypeRestfulInteractionCapabilities
-	case "transaction":
-		*code = TypeRestfulInteractionTransaction
-	case "batch":
-		*code = TypeRestfulInteractionBatch
-	case "operation":
-		*code = TypeRestfulInteractionOperation
-	default:
-		return fmt.Errorf("unknown TypeRestfulInteraction code `%s`", s)
-	}
-	return nil
-}
 
 func (code TypeRestfulInteraction) String() string {
 	return code.Code()
 }
 
 func (code TypeRestfulInteraction) Code() string {
-	switch code {
-	case TypeRestfulInteractionRead:
-		return "read"
-	case TypeRestfulInteractionVread:
-		return "vread"
-	case TypeRestfulInteractionUpdate:
-		return "update"
-	case TypeRestfulInteractionPatch:
-		return "patch"
-	case TypeRestfulInteractionDelete:
-		return "delete"
-	case TypeRestfulInteractionHistory:
-		return "history"
-	case TypeRestfulInteractionHistoryInstance:
-		return "history-instance"
-	case TypeRestfulInteractionHistoryType:
-		return "history-type"
-	case TypeRestfulInteractionHistorySystem:
-		return "history-system"
-	case TypeRestfulInteractionCreate:
-		return "create"
-	case TypeRestfulInteractionSearch:
-		return "search"
-	case TypeRestfulInteractionSearchType:
-		return "search-type"
-	case TypeRestfulInteractionSearchSystem:
-		return "search-system"
-	case TypeRestfulInteractionSearchCompartment:
-		return "search-compartment"
-	case TypeRestfulInteractionCapabilities:
-		return "capabilities"
-	case TypeRestfulInteractionTransaction:
-		return "transaction"
-	case TypeRestfulInteractionBatch:
-		return "batch"
-	case TypeRestfulInteractionOperation:
-		return "operation"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code TypeRestfulInteraction) Display() string {

@@ -1,95 +1,39 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Codes indicating the degree of authority/intentionality associated with a request.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/request-intent
-type RequestIntent int
+type RequestIntent string
 
 const (
-	RequestIntentProposal RequestIntent = iota
+	// The request is a suggestion made by someone/something that does not have an intention to ensure it occurs and without providing an authorization to act.
+	RequestIntentProposal RequestIntent = "proposal"
 	// The request represents an intention to ensure something occurs without providing an authorization for others to act.
-	RequestIntentPlan
+	RequestIntentPlan RequestIntent = "plan"
 	// The request represents a legally binding instruction authored by a Patient or RelatedPerson.
-	RequestIntentDirective
+	RequestIntentDirective RequestIntent = "directive"
 	// The request represents a request/demand and authorization for action by the requestor.
-	RequestIntentOrder
+	RequestIntentOrder RequestIntent = "order"
 	// The request represents an original authorization for action.
-	RequestIntentOriginalOrder
+	RequestIntentOriginalOrder RequestIntent = "original-order"
 	// The request represents an automatically generated supplemental authorization for action based on a parent authorization together with initial results of the action taken against that parent authorization.
-	RequestIntentReflexOrder
+	RequestIntentReflexOrder RequestIntent = "reflex-order"
 	// The request represents the view of an authorization instantiated by a fulfilling system representing the details of the fulfiller's intention to act upon a submitted order.
-	RequestIntentFillerOrder
+	RequestIntentFillerOrder RequestIntent = "filler-order"
 	// An order created in fulfillment of a broader order that represents the authorization for a single activity occurrence.  E.g. The administration of a single dose of a drug.
-	RequestIntentInstanceOrder
+	RequestIntentInstanceOrder RequestIntent = "instance-order"
 	// The request represents a component or option for a RequestOrchestration that establishes timing, conditionality and/or other constraints among a set of requests.  Refer to [[[RequestOrchestration]]] for additional information on how this status is used.
-	RequestIntentOption
+	RequestIntentOption RequestIntent = "option"
 )
-
-func (code RequestIntent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *RequestIntent) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "proposal":
-		*code = RequestIntentProposal
-	case "plan":
-		*code = RequestIntentPlan
-	case "directive":
-		*code = RequestIntentDirective
-	case "order":
-		*code = RequestIntentOrder
-	case "original-order":
-		*code = RequestIntentOriginalOrder
-	case "reflex-order":
-		*code = RequestIntentReflexOrder
-	case "filler-order":
-		*code = RequestIntentFillerOrder
-	case "instance-order":
-		*code = RequestIntentInstanceOrder
-	case "option":
-		*code = RequestIntentOption
-	default:
-		return fmt.Errorf("unknown RequestIntent code `%s`", s)
-	}
-	return nil
-}
 
 func (code RequestIntent) String() string {
 	return code.Code()
 }
 
 func (code RequestIntent) Code() string {
-	switch code {
-	case RequestIntentProposal:
-		return "proposal"
-	case RequestIntentPlan:
-		return "plan"
-	case RequestIntentDirective:
-		return "directive"
-	case RequestIntentOrder:
-		return "order"
-	case RequestIntentOriginalOrder:
-		return "original-order"
-	case RequestIntentReflexOrder:
-		return "reflex-order"
-	case RequestIntentFillerOrder:
-		return "filler-order"
-	case RequestIntentInstanceOrder:
-		return "instance-order"
-	case RequestIntentOption:
-		return "option"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code RequestIntent) Display() string {

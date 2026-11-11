@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The impact of the content of a message.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/message-significance-category
-type MessageSignificanceCategory int
+type MessageSignificanceCategory string
 
 const (
-	MessageSignificanceCategoryConsequence MessageSignificanceCategory = iota
+	// The message represents/requests a change that should not be processed more than once; e.g., making a booking for an appointment.
+	MessageSignificanceCategoryConsequence MessageSignificanceCategory = "consequence"
 	// The message represents a response to query for current information. Retrospective processing is wrong and/or wasteful.
-	MessageSignificanceCategoryCurrency
+	MessageSignificanceCategoryCurrency MessageSignificanceCategory = "currency"
 	// The content is not necessarily intended to be current, and it can be reprocessed, though there may be version issues created by processing old notifications.
-	MessageSignificanceCategoryNotification
+	MessageSignificanceCategoryNotification MessageSignificanceCategory = "notification"
 )
-
-func (code MessageSignificanceCategory) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *MessageSignificanceCategory) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "consequence":
-		*code = MessageSignificanceCategoryConsequence
-	case "currency":
-		*code = MessageSignificanceCategoryCurrency
-	case "notification":
-		*code = MessageSignificanceCategoryNotification
-	default:
-		return fmt.Errorf("unknown MessageSignificanceCategory code `%s`", s)
-	}
-	return nil
-}
 
 func (code MessageSignificanceCategory) String() string {
 	return code.Code()
 }
 
 func (code MessageSignificanceCategory) Code() string {
-	switch code {
-	case MessageSignificanceCategoryConsequence:
-		return "consequence"
-	case MessageSignificanceCategoryCurrency:
-		return "currency"
-	case MessageSignificanceCategoryNotification:
-		return "notification"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code MessageSignificanceCategory) Display() string {

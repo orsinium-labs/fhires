@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The status of the endpoint.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/endpoint-status
-type EndpointStatus int
+type EndpointStatus string
 
 const (
-	EndpointStatusActive EndpointStatus = iota
+	// This endpoint is expected to be active and can be used.
+	EndpointStatusActive EndpointStatus = "active"
 	// This endpoint is temporarily unavailable.
-	EndpointStatusSuspended
+	EndpointStatusSuspended EndpointStatus = "suspended"
 	// This endpoint has exceeded connectivity thresholds and is considered in an error state and should no longer be attempted to connect to until corrective action is taken.
-	EndpointStatusError
+	EndpointStatusError EndpointStatus = "error"
 	// This endpoint is no longer to be used.
-	EndpointStatusOff
+	EndpointStatusOff EndpointStatus = "off"
 	// This instance should not have been part of this patient's medical record.
-	EndpointStatusEnteredInError
+	EndpointStatusEnteredInError EndpointStatus = "entered-in-error"
 )
-
-func (code EndpointStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *EndpointStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "active":
-		*code = EndpointStatusActive
-	case "suspended":
-		*code = EndpointStatusSuspended
-	case "error":
-		*code = EndpointStatusError
-	case "off":
-		*code = EndpointStatusOff
-	case "entered-in-error":
-		*code = EndpointStatusEnteredInError
-	default:
-		return fmt.Errorf("unknown EndpointStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code EndpointStatus) String() string {
 	return code.Code()
 }
 
 func (code EndpointStatus) Code() string {
-	switch code {
-	case EndpointStatusActive:
-		return "active"
-	case EndpointStatusSuspended:
-		return "suspended"
-	case EndpointStatusError:
-		return "error"
-	case EndpointStatusOff:
-		return "off"
-	case EndpointStatusEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code EndpointStatus) Display() string {

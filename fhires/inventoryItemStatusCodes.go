@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // InventoryItem Status Codes
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/inventoryitem-status
-type InventoryItemStatusCodes int
+type InventoryItemStatusCodes string
 
 const (
-	InventoryItemStatusCodesActive InventoryItemStatusCodes = iota
+	// The item is active and can be referenced.
+	InventoryItemStatusCodesActive InventoryItemStatusCodes = "active"
 	// The item is presently inactive - there may be references to it but the item is not expected to be used.
-	InventoryItemStatusCodesInactive
+	InventoryItemStatusCodesInactive InventoryItemStatusCodes = "inactive"
 	// The item record was entered in error.
-	InventoryItemStatusCodesEnteredInError
+	InventoryItemStatusCodesEnteredInError InventoryItemStatusCodes = "entered-in-error"
 	// The item status has not been determined.
-	InventoryItemStatusCodesUnknown
+	InventoryItemStatusCodesUnknown InventoryItemStatusCodes = "unknown"
 )
-
-func (code InventoryItemStatusCodes) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *InventoryItemStatusCodes) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "active":
-		*code = InventoryItemStatusCodesActive
-	case "inactive":
-		*code = InventoryItemStatusCodesInactive
-	case "entered-in-error":
-		*code = InventoryItemStatusCodesEnteredInError
-	case "unknown":
-		*code = InventoryItemStatusCodesUnknown
-	default:
-		return fmt.Errorf("unknown InventoryItemStatusCodes code `%s`", s)
-	}
-	return nil
-}
 
 func (code InventoryItemStatusCodes) String() string {
 	return code.Code()
 }
 
 func (code InventoryItemStatusCodes) Code() string {
-	switch code {
-	case InventoryItemStatusCodesActive:
-		return "active"
-	case InventoryItemStatusCodesInactive:
-		return "inactive"
-	case InventoryItemStatusCodesEnteredInError:
-		return "entered-in-error"
-	case InventoryItemStatusCodesUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code InventoryItemStatusCodes) Display() string {

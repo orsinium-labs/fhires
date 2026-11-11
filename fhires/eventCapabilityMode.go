@@ -1,53 +1,25 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The mode of a message capability statement.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/event-capability-mode
-type EventCapabilityMode int
+type EventCapabilityMode string
 
 const (
-	EventCapabilityModeSender EventCapabilityMode = iota
+	// The application sends requests and receives responses.
+	EventCapabilityModeSender EventCapabilityMode = "sender"
 	// The application receives requests and sends responses.
-	EventCapabilityModeReceiver
+	EventCapabilityModeReceiver EventCapabilityMode = "receiver"
 )
-
-func (code EventCapabilityMode) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *EventCapabilityMode) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "sender":
-		*code = EventCapabilityModeSender
-	case "receiver":
-		*code = EventCapabilityModeReceiver
-	default:
-		return fmt.Errorf("unknown EventCapabilityMode code `%s`", s)
-	}
-	return nil
-}
 
 func (code EventCapabilityMode) String() string {
 	return code.Code()
 }
 
 func (code EventCapabilityMode) Code() string {
-	switch code {
-	case EventCapabilityModeSender:
-		return "sender"
-	case EventCapabilityModeReceiver:
-		return "receiver"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code EventCapabilityMode) Display() string {

@@ -1,77 +1,33 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Device Production Identifier in UDI
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/device-productidentifierinudi
-type DeviceProductionIdentifierInUDI int
+type DeviceProductionIdentifierInUDI string
 
 const (
-	DeviceProductionIdentifierInUDILotNumber DeviceProductionIdentifierInUDI = iota
+	// The label includes the lot number.
+	DeviceProductionIdentifierInUDILotNumber DeviceProductionIdentifierInUDI = "lot-number"
 	// The label includes the manufacture date.
-	DeviceProductionIdentifierInUDIManufacturedDate
+	DeviceProductionIdentifierInUDIManufacturedDate DeviceProductionIdentifierInUDI = "manufactured-date"
 	// The label includes the serial number.
-	DeviceProductionIdentifierInUDISerialNumber
+	DeviceProductionIdentifierInUDISerialNumber DeviceProductionIdentifierInUDI = "serial-number"
 	// The label includes the expiration date.
-	DeviceProductionIdentifierInUDIExpirationDate
+	DeviceProductionIdentifierInUDIExpirationDate DeviceProductionIdentifierInUDI = "expiration-date"
 	// The label includes the biological source identifier.
-	DeviceProductionIdentifierInUDIBiologicalSource
+	DeviceProductionIdentifierInUDIBiologicalSource DeviceProductionIdentifierInUDI = "biological-source"
 	// The label includes the software version.
-	DeviceProductionIdentifierInUDISoftwareVersion
+	DeviceProductionIdentifierInUDISoftwareVersion DeviceProductionIdentifierInUDI = "software-version"
 )
-
-func (code DeviceProductionIdentifierInUDI) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *DeviceProductionIdentifierInUDI) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "lot-number":
-		*code = DeviceProductionIdentifierInUDILotNumber
-	case "manufactured-date":
-		*code = DeviceProductionIdentifierInUDIManufacturedDate
-	case "serial-number":
-		*code = DeviceProductionIdentifierInUDISerialNumber
-	case "expiration-date":
-		*code = DeviceProductionIdentifierInUDIExpirationDate
-	case "biological-source":
-		*code = DeviceProductionIdentifierInUDIBiologicalSource
-	case "software-version":
-		*code = DeviceProductionIdentifierInUDISoftwareVersion
-	default:
-		return fmt.Errorf("unknown DeviceProductionIdentifierInUDI code `%s`", s)
-	}
-	return nil
-}
 
 func (code DeviceProductionIdentifierInUDI) String() string {
 	return code.Code()
 }
 
 func (code DeviceProductionIdentifierInUDI) Code() string {
-	switch code {
-	case DeviceProductionIdentifierInUDILotNumber:
-		return "lot-number"
-	case DeviceProductionIdentifierInUDIManufacturedDate:
-		return "manufactured-date"
-	case DeviceProductionIdentifierInUDISerialNumber:
-		return "serial-number"
-	case DeviceProductionIdentifierInUDIExpirationDate:
-		return "expiration-date"
-	case DeviceProductionIdentifierInUDIBiologicalSource:
-		return "biological-source"
-	case DeviceProductionIdentifierInUDISoftwareVersion:
-		return "software-version"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code DeviceProductionIdentifierInUDI) Display() string {

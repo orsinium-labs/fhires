@@ -1,239 +1,87 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // A code that describes the type of issue.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/issue-type
-type IssueType int
+type IssueType string
 
 const (
-	IssueTypeInvalid IssueType = iota
+	// Content invalid against the specification or a profile.
+	IssueTypeInvalid IssueType = "invalid"
 	// A structural issue in the content such as wrong namespace, unable to parse the content completely, invalid syntax, etc.
-	IssueTypeStructure
+	IssueTypeStructure IssueType = "structure"
 	// A required element is missing.
-	IssueTypeRequired
+	IssueTypeRequired IssueType = "required"
 	// An element or header value is invalid.
-	IssueTypeValue
+	IssueTypeValue IssueType = "value"
 	// A content validation rule failed - e.g. a schematron rule.
-	IssueTypeInvariant
+	IssueTypeInvariant IssueType = "invariant"
 	// An authentication/authorization/permissions issue of some kind.
-	IssueTypeSecurity
+	IssueTypeSecurity IssueType = "security"
 	// The client needs to initiate an authentication process.
-	IssueTypeLogin
+	IssueTypeLogin IssueType = "login"
 	// The user or system was not able to be authenticated (either there is no process, or the proferred token is unacceptable).
-	IssueTypeUnknown
+	IssueTypeUnknown IssueType = "unknown"
 	// User session expired; a login may be required.
-	IssueTypeExpired
+	IssueTypeExpired IssueType = "expired"
 	// The user does not have the rights to perform this action.
-	IssueTypeForbidden
+	IssueTypeForbidden IssueType = "forbidden"
 	// Some information was not or might not have been returned due to business rules, consent or privacy rules, or access permission constraints.  This information may be accessible through alternate processes.
-	IssueTypeSuppressed
+	IssueTypeSuppressed IssueType = "suppressed"
 	// Processing issues. These are expected to be final e.g. there is no point resubmitting the same content unchanged.
-	IssueTypeProcessing
+	IssueTypeProcessing IssueType = "processing"
 	// The interaction, operation, resource or profile is not supported.
-	IssueTypeNotSupported
+	IssueTypeNotSupported IssueType = "not-supported"
 	// An attempt was made to create a duplicate record.
-	IssueTypeDuplicate
+	IssueTypeDuplicate IssueType = "duplicate"
 	// Multiple matching records were found when the operation required only one match.
-	IssueTypeMultipleMatches
+	IssueTypeMultipleMatches IssueType = "multiple-matches"
 	// The reference provided was not found. In a pure RESTful environment, this would be an HTTP 404 error, but this code may be used where the content is not found further into the application architecture.
-	IssueTypeNotFound
+	IssueTypeNotFound IssueType = "not-found"
 	// The reference pointed to content (usually a resource) that has been deleted.
-	IssueTypeDeleted
+	IssueTypeDeleted IssueType = "deleted"
 	// Provided content is too long (typically, this is a denial of service protection type of error).
-	IssueTypeTooLong
+	IssueTypeTooLong IssueType = "too-long"
 	// The code or system could not be understood, or it was not valid in the context of a particular ValueSet.code.
-	IssueTypeCodeInvalid
+	IssueTypeCodeInvalid IssueType = "code-invalid"
 	// An extension was found that was not acceptable, could not be resolved, or a modifierExtension was not recognized.
-	IssueTypeExtension
+	IssueTypeExtension IssueType = "extension"
 	// The operation was stopped to protect server resources; e.g. a request for a value set expansion on all of SNOMED CT.
-	IssueTypeTooCostly
+	IssueTypeTooCostly IssueType = "too-costly"
 	// The content/operation failed to pass some business rule and so could not proceed.
-	IssueTypeBusinessRule
+	IssueTypeBusinessRule IssueType = "business-rule"
 	// Content could not be accepted because of an edit conflict (i.e. version aware updates). (In a pure RESTful environment, this would be an HTTP 409 error, but this code may be used where the conflict is discovered further into the application architecture.).
-	IssueTypeConflict
+	IssueTypeConflict IssueType = "conflict"
 	// Some search filters might not have applied on all results.  Data may have been included that does not meet all of the filters listed in the `self` `Bundle.link`.
-	IssueTypeLimitedFilter
+	IssueTypeLimitedFilter IssueType = "limited-filter"
 	// Transient processing issues. The system receiving the message may be able to resubmit the same content once an underlying issue is resolved.
-	IssueTypeTransient
+	IssueTypeTransient IssueType = "transient"
 	// A resource/record locking failure (usually in an underlying database).
-	IssueTypeLockError
+	IssueTypeLockError IssueType = "lock-error"
 	// The persistent store is unavailable; e.g. the database is down for maintenance or similar action, and the interaction or operation cannot be processed.
-	IssueTypeNoStore
+	IssueTypeNoStore IssueType = "no-store"
 	// An unexpected internal error has occurred.
-	IssueTypeException
+	IssueTypeException IssueType = "exception"
 	// An internal timeout has occurred.
-	IssueTypeTimeout
+	IssueTypeTimeout IssueType = "timeout"
 	// Not all data sources typically accessed could be reached or responded in time, so the returned information might not be complete (applies to search interactions and some operations).
-	IssueTypeIncomplete
+	IssueTypeIncomplete IssueType = "incomplete"
 	// The system is not prepared to handle this request due to load management.
-	IssueTypeThrottled
+	IssueTypeThrottled IssueType = "throttled"
 	// A message unrelated to the processing success of the completed operation (examples of the latter include things like reminders of password expiry, system maintenance times, etc.).
-	IssueTypeInformational
+	IssueTypeInformational IssueType = "informational"
 	// The operation completed successfully.
-	IssueTypeSuccess
+	IssueTypeSuccess IssueType = "success"
 )
-
-func (code IssueType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *IssueType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "invalid":
-		*code = IssueTypeInvalid
-	case "structure":
-		*code = IssueTypeStructure
-	case "required":
-		*code = IssueTypeRequired
-	case "value":
-		*code = IssueTypeValue
-	case "invariant":
-		*code = IssueTypeInvariant
-	case "security":
-		*code = IssueTypeSecurity
-	case "login":
-		*code = IssueTypeLogin
-	case "unknown":
-		*code = IssueTypeUnknown
-	case "expired":
-		*code = IssueTypeExpired
-	case "forbidden":
-		*code = IssueTypeForbidden
-	case "suppressed":
-		*code = IssueTypeSuppressed
-	case "processing":
-		*code = IssueTypeProcessing
-	case "not-supported":
-		*code = IssueTypeNotSupported
-	case "duplicate":
-		*code = IssueTypeDuplicate
-	case "multiple-matches":
-		*code = IssueTypeMultipleMatches
-	case "not-found":
-		*code = IssueTypeNotFound
-	case "deleted":
-		*code = IssueTypeDeleted
-	case "too-long":
-		*code = IssueTypeTooLong
-	case "code-invalid":
-		*code = IssueTypeCodeInvalid
-	case "extension":
-		*code = IssueTypeExtension
-	case "too-costly":
-		*code = IssueTypeTooCostly
-	case "business-rule":
-		*code = IssueTypeBusinessRule
-	case "conflict":
-		*code = IssueTypeConflict
-	case "limited-filter":
-		*code = IssueTypeLimitedFilter
-	case "transient":
-		*code = IssueTypeTransient
-	case "lock-error":
-		*code = IssueTypeLockError
-	case "no-store":
-		*code = IssueTypeNoStore
-	case "exception":
-		*code = IssueTypeException
-	case "timeout":
-		*code = IssueTypeTimeout
-	case "incomplete":
-		*code = IssueTypeIncomplete
-	case "throttled":
-		*code = IssueTypeThrottled
-	case "informational":
-		*code = IssueTypeInformational
-	case "success":
-		*code = IssueTypeSuccess
-	default:
-		return fmt.Errorf("unknown IssueType code `%s`", s)
-	}
-	return nil
-}
 
 func (code IssueType) String() string {
 	return code.Code()
 }
 
 func (code IssueType) Code() string {
-	switch code {
-	case IssueTypeInvalid:
-		return "invalid"
-	case IssueTypeStructure:
-		return "structure"
-	case IssueTypeRequired:
-		return "required"
-	case IssueTypeValue:
-		return "value"
-	case IssueTypeInvariant:
-		return "invariant"
-	case IssueTypeSecurity:
-		return "security"
-	case IssueTypeLogin:
-		return "login"
-	case IssueTypeUnknown:
-		return "unknown"
-	case IssueTypeExpired:
-		return "expired"
-	case IssueTypeForbidden:
-		return "forbidden"
-	case IssueTypeSuppressed:
-		return "suppressed"
-	case IssueTypeProcessing:
-		return "processing"
-	case IssueTypeNotSupported:
-		return "not-supported"
-	case IssueTypeDuplicate:
-		return "duplicate"
-	case IssueTypeMultipleMatches:
-		return "multiple-matches"
-	case IssueTypeNotFound:
-		return "not-found"
-	case IssueTypeDeleted:
-		return "deleted"
-	case IssueTypeTooLong:
-		return "too-long"
-	case IssueTypeCodeInvalid:
-		return "code-invalid"
-	case IssueTypeExtension:
-		return "extension"
-	case IssueTypeTooCostly:
-		return "too-costly"
-	case IssueTypeBusinessRule:
-		return "business-rule"
-	case IssueTypeConflict:
-		return "conflict"
-	case IssueTypeLimitedFilter:
-		return "limited-filter"
-	case IssueTypeTransient:
-		return "transient"
-	case IssueTypeLockError:
-		return "lock-error"
-	case IssueTypeNoStore:
-		return "no-store"
-	case IssueTypeException:
-		return "exception"
-	case IssueTypeTimeout:
-		return "timeout"
-	case IssueTypeIncomplete:
-		return "incomplete"
-	case IssueTypeThrottled:
-		return "throttled"
-	case IssueTypeInformational:
-		return "informational"
-	case IssueTypeSuccess:
-		return "success"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code IssueType) Display() string {

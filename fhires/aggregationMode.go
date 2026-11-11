@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // How resource references can be aggregated.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/resource-aggregation-mode
-type AggregationMode int
+type AggregationMode string
 
 const (
-	AggregationModeContained AggregationMode = iota
+	// The reference is a local reference to a contained resource.
+	AggregationModeContained AggregationMode = "contained"
 	// The reference to a resource that has to be resolved externally to the resource that includes the reference.
-	AggregationModeReferenced
+	AggregationModeReferenced AggregationMode = "referenced"
 	// When the resource is in a Bundle, the resource the reference points to will be found in the same bundle as the resource that includes the reference.
-	AggregationModeBundled
+	AggregationModeBundled AggregationMode = "bundled"
 )
-
-func (code AggregationMode) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *AggregationMode) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "contained":
-		*code = AggregationModeContained
-	case "referenced":
-		*code = AggregationModeReferenced
-	case "bundled":
-		*code = AggregationModeBundled
-	default:
-		return fmt.Errorf("unknown AggregationMode code `%s`", s)
-	}
-	return nil
-}
 
 func (code AggregationMode) String() string {
 	return code.Code()
 }
 
 func (code AggregationMode) Code() string {
-	switch code {
-	case AggregationModeContained:
-		return "contained"
-	case AggregationModeReferenced:
-		return "referenced"
-	case AggregationModeBundled:
-		return "bundled"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code AggregationMode) Display() string {

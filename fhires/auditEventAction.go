@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Indicator for type of action performed during the event that generated the event.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/audit-event-action
-type AuditEventAction int
+type AuditEventAction string
 
 const (
-	AuditEventActionC AuditEventAction = iota
+	// Create a new database object, such as placing an order.
+	AuditEventActionC AuditEventAction = "C"
 	// Read data, such as to print or display to a doctor.
-	AuditEventActionR
+	AuditEventActionR AuditEventAction = "R"
 	// Update data, such as revise patient information.
-	AuditEventActionU
+	AuditEventActionU AuditEventAction = "U"
 	// Delete items, such as a doctor master file record.
-	AuditEventActionD
+	AuditEventActionD AuditEventAction = "D"
 	// Perform a system or application function such as log-on, program execution or use of an object's method, or perform a query/search operation.
-	AuditEventActionE
+	AuditEventActionE AuditEventAction = "E"
 )
-
-func (code AuditEventAction) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *AuditEventAction) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "C":
-		*code = AuditEventActionC
-	case "R":
-		*code = AuditEventActionR
-	case "U":
-		*code = AuditEventActionU
-	case "D":
-		*code = AuditEventActionD
-	case "E":
-		*code = AuditEventActionE
-	default:
-		return fmt.Errorf("unknown AuditEventAction code `%s`", s)
-	}
-	return nil
-}
 
 func (code AuditEventAction) String() string {
 	return code.Code()
 }
 
 func (code AuditEventAction) Code() string {
-	switch code {
-	case AuditEventActionC:
-		return "C"
-	case AuditEventActionR:
-		return "R"
-	case AuditEventActionU:
-		return "U"
-	case AuditEventActionD:
-		return "D"
-	case AuditEventActionE:
-		return "E"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code AuditEventAction) Display() string {

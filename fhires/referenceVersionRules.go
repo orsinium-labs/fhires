@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Whether a reference needs to be version specific or version independent, or whether either can be used.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/reference-version-rules
-type ReferenceVersionRules int
+type ReferenceVersionRules string
 
 const (
-	ReferenceVersionRulesEither ReferenceVersionRules = iota
+	// The reference may be either version independent or version specific.
+	ReferenceVersionRulesEither ReferenceVersionRules = "either"
 	// The reference must be version independent.
-	ReferenceVersionRulesIndependent
+	ReferenceVersionRulesIndependent ReferenceVersionRules = "independent"
 	// The reference must be version specific.
-	ReferenceVersionRulesSpecific
+	ReferenceVersionRulesSpecific ReferenceVersionRules = "specific"
 )
-
-func (code ReferenceVersionRules) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ReferenceVersionRules) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "either":
-		*code = ReferenceVersionRulesEither
-	case "independent":
-		*code = ReferenceVersionRulesIndependent
-	case "specific":
-		*code = ReferenceVersionRulesSpecific
-	default:
-		return fmt.Errorf("unknown ReferenceVersionRules code `%s`", s)
-	}
-	return nil
-}
 
 func (code ReferenceVersionRules) String() string {
 	return code.Code()
 }
 
 func (code ReferenceVersionRules) Code() string {
-	switch code {
-	case ReferenceVersionRulesEither:
-		return "either"
-	case ReferenceVersionRulesIndependent:
-		return "independent"
-	case ReferenceVersionRulesSpecific:
-		return "specific"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ReferenceVersionRules) Display() string {

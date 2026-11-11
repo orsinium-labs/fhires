@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Use of contact point.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/contact-point-use
-type ContactPointUse int
+type ContactPointUse string
 
 const (
-	ContactPointUseHome ContactPointUse = iota
+	// A communication contact point at a home; attempted contacts for business purposes might intrude privacy and chances are one will contact family or other household members instead of the person one wishes to call. Typically used with urgent cases, or if no other contacts are available.
+	ContactPointUseHome ContactPointUse = "home"
 	// An office contact point. First choice for business related contacts during business hours.
-	ContactPointUseWork
+	ContactPointUseWork ContactPointUse = "work"
 	// A temporary contact point. The period can provide more detailed information.
-	ContactPointUseTemp
+	ContactPointUseTemp ContactPointUse = "temp"
 	// This contact point is no longer in use (or was never correct, but retained for records).
-	ContactPointUseOld
+	ContactPointUseOld ContactPointUse = "old"
 	// A telecommunication device that moves and stays with its owner. May have characteristics of all other use codes, suitable for urgent matters, not the first choice for routine business.
-	ContactPointUseMobile
+	ContactPointUseMobile ContactPointUse = "mobile"
 )
-
-func (code ContactPointUse) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ContactPointUse) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "home":
-		*code = ContactPointUseHome
-	case "work":
-		*code = ContactPointUseWork
-	case "temp":
-		*code = ContactPointUseTemp
-	case "old":
-		*code = ContactPointUseOld
-	case "mobile":
-		*code = ContactPointUseMobile
-	default:
-		return fmt.Errorf("unknown ContactPointUse code `%s`", s)
-	}
-	return nil
-}
 
 func (code ContactPointUse) String() string {
 	return code.Code()
 }
 
 func (code ContactPointUse) Code() string {
-	switch code {
-	case ContactPointUseHome:
-		return "home"
-	case ContactPointUseWork:
-		return "work"
-	case ContactPointUseTemp:
-		return "temp"
-	case ContactPointUseOld:
-		return "old"
-	case ContactPointUseMobile:
-		return "mobile"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ContactPointUse) Display() string {

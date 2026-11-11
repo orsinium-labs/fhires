@@ -1,83 +1,35 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The use of a human name.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/name-use
-type NameUse int
+type NameUse string
 
 const (
-	NameUseUsual NameUse = iota
+	// Known as/conventional/the one you normally use.
+	NameUseUsual NameUse = "usual"
 	// The formal name as registered in an official (government) registry, but which name might not be commonly used. May be called "legal name".
-	NameUseOfficial
+	NameUseOfficial NameUse = "official"
 	// A temporary name. Name.period can provide more detailed information. This may also be used for temporary names assigned at birth or in emergency situations.
-	NameUseTemp
+	NameUseTemp NameUse = "temp"
 	// A name that is used to address the person in an informal manner, but is not part of their formal or usual name.
-	NameUseNickname
+	NameUseNickname NameUse = "nickname"
 	// Anonymous assigned name, alias, or pseudonym (used to protect a person's identity for privacy reasons).
-	NameUseAnonymous
+	NameUseAnonymous NameUse = "anonymous"
 	// This name is no longer in use (or was never correct, but retained for records).
-	NameUseOld
+	NameUseOld NameUse = "old"
 	// A name used prior to changing name because of marriage. This name use is for use by applications that collect and store names that were used prior to a marriage. Marriage naming customs vary greatly around the world, and are constantly changing. This term is not gender specific. The use of this term does not imply any particular history for a person's name.
-	NameUseMaiden
+	NameUseMaiden NameUse = "maiden"
 )
-
-func (code NameUse) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *NameUse) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "usual":
-		*code = NameUseUsual
-	case "official":
-		*code = NameUseOfficial
-	case "temp":
-		*code = NameUseTemp
-	case "nickname":
-		*code = NameUseNickname
-	case "anonymous":
-		*code = NameUseAnonymous
-	case "old":
-		*code = NameUseOld
-	case "maiden":
-		*code = NameUseMaiden
-	default:
-		return fmt.Errorf("unknown NameUse code `%s`", s)
-	}
-	return nil
-}
 
 func (code NameUse) String() string {
 	return code.Code()
 }
 
 func (code NameUse) Code() string {
-	switch code {
-	case NameUseUsual:
-		return "usual"
-	case NameUseOfficial:
-		return "official"
-	case NameUseTemp:
-		return "temp"
-	case NameUseNickname:
-		return "nickname"
-	case NameUseAnonymous:
-		return "anonymous"
-	case NameUseOld:
-		return "old"
-	case NameUseMaiden:
-		return "maiden"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code NameUse) Display() string {

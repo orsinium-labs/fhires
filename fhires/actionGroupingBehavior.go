@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Defines organization behavior of a group.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/action-grouping-behavior
-type ActionGroupingBehavior int
+type ActionGroupingBehavior string
 
 const (
-	ActionGroupingBehaviorVisualGroup ActionGroupingBehavior = iota
+	// Any group marked with this behavior should be displayed as a visual group to the end user.
+	ActionGroupingBehaviorVisualGroup ActionGroupingBehavior = "visual-group"
 	// A group with this behavior logically groups its sub-elements, and may be shown as a visual group to the end user, but it is not required to do so.
-	ActionGroupingBehaviorLogicalGroup
+	ActionGroupingBehaviorLogicalGroup ActionGroupingBehavior = "logical-group"
 	// A group of related alternative actions is a sentence group if the target referenced by the action is the same in all the actions and each action simply constitutes a different variation on how to specify the details for the target. For example, two actions that could be in a SentenceGroup are "aspirin, 500 mg, 2 times per day" and "aspirin, 300 mg, 3 times per day". In both cases, aspirin is the target referenced by the action, and the two actions represent different options for how aspirin might be ordered for the patient. Note that a SentenceGroup would almost always have an associated selection behavior of "AtMostOne", unless it's a required action, in which case, it would be "ExactlyOne".
-	ActionGroupingBehaviorSentenceGroup
+	ActionGroupingBehaviorSentenceGroup ActionGroupingBehavior = "sentence-group"
 )
-
-func (code ActionGroupingBehavior) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ActionGroupingBehavior) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "visual-group":
-		*code = ActionGroupingBehaviorVisualGroup
-	case "logical-group":
-		*code = ActionGroupingBehaviorLogicalGroup
-	case "sentence-group":
-		*code = ActionGroupingBehaviorSentenceGroup
-	default:
-		return fmt.Errorf("unknown ActionGroupingBehavior code `%s`", s)
-	}
-	return nil
-}
 
 func (code ActionGroupingBehavior) String() string {
 	return code.Code()
 }
 
 func (code ActionGroupingBehavior) Code() string {
-	switch code {
-	case ActionGroupingBehaviorVisualGroup:
-		return "visual-group"
-	case ActionGroupingBehaviorLogicalGroup:
-		return "logical-group"
-	case ActionGroupingBehaviorSentenceGroup:
-		return "sentence-group"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ActionGroupingBehavior) Display() string {

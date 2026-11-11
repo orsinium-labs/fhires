@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Category of an identified substance associated with allergies or intolerances.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/allergy-intolerance-category
-type AllergyIntoleranceCategory int
+type AllergyIntoleranceCategory string
 
 const (
-	AllergyIntoleranceCategoryFood AllergyIntoleranceCategory = iota
+	// Any substance consumed to provide nutritional support for the body.
+	AllergyIntoleranceCategoryFood AllergyIntoleranceCategory = "food"
 	// Substances administered to achieve a physiological effect.
-	AllergyIntoleranceCategoryMedication
+	AllergyIntoleranceCategoryMedication AllergyIntoleranceCategory = "medication"
 	// Any substances that are encountered in the environment, including any substance not already classified as food, medication, or biologic.
-	AllergyIntoleranceCategoryEnvironment
+	AllergyIntoleranceCategoryEnvironment AllergyIntoleranceCategory = "environment"
 	// A preparation that is synthesized from living organisms or their products, especially a human or animal protein, such as a hormone or antitoxin, that is used as a diagnostic, preventive, or therapeutic agent. Examples of biologic medications include: vaccines; allergenic extracts, which are used for both diagnosis and treatment (for example, allergy shots); gene therapies; cellular therapies.  There are other biologic products, such as tissues, which are not typically associated with allergies.
-	AllergyIntoleranceCategoryBiologic
+	AllergyIntoleranceCategoryBiologic AllergyIntoleranceCategory = "biologic"
 )
-
-func (code AllergyIntoleranceCategory) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *AllergyIntoleranceCategory) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "food":
-		*code = AllergyIntoleranceCategoryFood
-	case "medication":
-		*code = AllergyIntoleranceCategoryMedication
-	case "environment":
-		*code = AllergyIntoleranceCategoryEnvironment
-	case "biologic":
-		*code = AllergyIntoleranceCategoryBiologic
-	default:
-		return fmt.Errorf("unknown AllergyIntoleranceCategory code `%s`", s)
-	}
-	return nil
-}
 
 func (code AllergyIntoleranceCategory) String() string {
 	return code.Code()
 }
 
 func (code AllergyIntoleranceCategory) Code() string {
-	switch code {
-	case AllergyIntoleranceCategoryFood:
-		return "food"
-	case AllergyIntoleranceCategoryMedication:
-		return "medication"
-	case AllergyIntoleranceCategoryEnvironment:
-		return "environment"
-	case AllergyIntoleranceCategoryBiologic:
-		return "biologic"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code AllergyIntoleranceCategory) Display() string {

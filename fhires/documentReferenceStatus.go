@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The status of the document reference.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/document-reference-status
-type DocumentReferenceStatus int
+type DocumentReferenceStatus string
 
 const (
-	DocumentReferenceStatusCurrent DocumentReferenceStatus = iota
+	// This is the current reference for this document.
+	DocumentReferenceStatusCurrent DocumentReferenceStatus = "current"
 	// This reference has been superseded by another reference.
-	DocumentReferenceStatusSuperseded
+	DocumentReferenceStatusSuperseded DocumentReferenceStatus = "superseded"
 	// This reference was created in error.
-	DocumentReferenceStatusEnteredInError
+	DocumentReferenceStatusEnteredInError DocumentReferenceStatus = "entered-in-error"
 )
-
-func (code DocumentReferenceStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *DocumentReferenceStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "current":
-		*code = DocumentReferenceStatusCurrent
-	case "superseded":
-		*code = DocumentReferenceStatusSuperseded
-	case "entered-in-error":
-		*code = DocumentReferenceStatusEnteredInError
-	default:
-		return fmt.Errorf("unknown DocumentReferenceStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code DocumentReferenceStatus) String() string {
 	return code.Code()
 }
 
 func (code DocumentReferenceStatus) Code() string {
-	switch code {
-	case DocumentReferenceStatusCurrent:
-		return "current"
-	case DocumentReferenceStatusSuperseded:
-		return "superseded"
-	case DocumentReferenceStatusEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code DocumentReferenceStatus) Display() string {

@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Describes the type of a metric calibration.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/metric-calibration-type
-type DeviceMetricCalibrationType int
+type DeviceMetricCalibrationType string
 
 const (
-	DeviceMetricCalibrationTypeUnspecified DeviceMetricCalibrationType = iota
+	// Metric calibration method has not been identified.
+	DeviceMetricCalibrationTypeUnspecified DeviceMetricCalibrationType = "unspecified"
 	// Offset metric calibration method.
-	DeviceMetricCalibrationTypeOffset
+	DeviceMetricCalibrationTypeOffset DeviceMetricCalibrationType = "offset"
 	// Gain metric calibration method.
-	DeviceMetricCalibrationTypeGain
+	DeviceMetricCalibrationTypeGain DeviceMetricCalibrationType = "gain"
 	// Two-point metric calibration method.
-	DeviceMetricCalibrationTypeTwoPoint
+	DeviceMetricCalibrationTypeTwoPoint DeviceMetricCalibrationType = "two-point"
 )
-
-func (code DeviceMetricCalibrationType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *DeviceMetricCalibrationType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "unspecified":
-		*code = DeviceMetricCalibrationTypeUnspecified
-	case "offset":
-		*code = DeviceMetricCalibrationTypeOffset
-	case "gain":
-		*code = DeviceMetricCalibrationTypeGain
-	case "two-point":
-		*code = DeviceMetricCalibrationTypeTwoPoint
-	default:
-		return fmt.Errorf("unknown DeviceMetricCalibrationType code `%s`", s)
-	}
-	return nil
-}
 
 func (code DeviceMetricCalibrationType) String() string {
 	return code.Code()
 }
 
 func (code DeviceMetricCalibrationType) Code() string {
-	switch code {
-	case DeviceMetricCalibrationTypeUnspecified:
-		return "unspecified"
-	case DeviceMetricCalibrationTypeOffset:
-		return "offset"
-	case DeviceMetricCalibrationTypeGain:
-		return "gain"
-	case DeviceMetricCalibrationTypeTwoPoint:
-		return "two-point"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code DeviceMetricCalibrationType) Display() string {

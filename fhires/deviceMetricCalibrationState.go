@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Describes the state of a metric calibration.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/metric-calibration-state
-type DeviceMetricCalibrationState int
+type DeviceMetricCalibrationState string
 
 const (
-	DeviceMetricCalibrationStateNotCalibrated DeviceMetricCalibrationState = iota
+	// The metric has not been calibrated.
+	DeviceMetricCalibrationStateNotCalibrated DeviceMetricCalibrationState = "not-calibrated"
 	// The metric needs to be calibrated.
-	DeviceMetricCalibrationStateCalibrationRequired
+	DeviceMetricCalibrationStateCalibrationRequired DeviceMetricCalibrationState = "calibration-required"
 	// The metric has been calibrated.
-	DeviceMetricCalibrationStateCalibrated
+	DeviceMetricCalibrationStateCalibrated DeviceMetricCalibrationState = "calibrated"
 	// The state of calibration of this metric is unspecified.
-	DeviceMetricCalibrationStateUnspecified
+	DeviceMetricCalibrationStateUnspecified DeviceMetricCalibrationState = "unspecified"
 )
-
-func (code DeviceMetricCalibrationState) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *DeviceMetricCalibrationState) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "not-calibrated":
-		*code = DeviceMetricCalibrationStateNotCalibrated
-	case "calibration-required":
-		*code = DeviceMetricCalibrationStateCalibrationRequired
-	case "calibrated":
-		*code = DeviceMetricCalibrationStateCalibrated
-	case "unspecified":
-		*code = DeviceMetricCalibrationStateUnspecified
-	default:
-		return fmt.Errorf("unknown DeviceMetricCalibrationState code `%s`", s)
-	}
-	return nil
-}
 
 func (code DeviceMetricCalibrationState) String() string {
 	return code.Code()
 }
 
 func (code DeviceMetricCalibrationState) Code() string {
-	switch code {
-	case DeviceMetricCalibrationStateNotCalibrated:
-		return "not-calibrated"
-	case DeviceMetricCalibrationStateCalibrationRequired:
-		return "calibration-required"
-	case DeviceMetricCalibrationStateCalibrated:
-		return "calibrated"
-	case DeviceMetricCalibrationStateUnspecified:
-		return "unspecified"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code DeviceMetricCalibrationState) Display() string {

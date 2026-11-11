@@ -1,77 +1,33 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Indicates the state of the consent.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/consent-state-codes
-type ConsentState int
+type ConsentState string
 
 const (
-	ConsentStateDraft ConsentState = iota
+	// The consent is in development or awaiting use but is not yet intended to be acted upon.
+	ConsentStateDraft ConsentState = "draft"
 	// The consent is to be followed and enforced.
-	ConsentStateActive
+	ConsentStateActive ConsentState = "active"
 	// The consent is terminated or replaced.
-	ConsentStateInactive
+	ConsentStateInactive ConsentState = "inactive"
 	// The consent development has been terminated prior to completion.
-	ConsentStateNotDone
+	ConsentStateNotDone ConsentState = "not-done"
 	// The consent was created wrongly (e.g. wrong patient) and should be ignored.
-	ConsentStateEnteredInError
+	ConsentStateEnteredInError ConsentState = "entered-in-error"
 	// The resource is in an indeterminate state.
-	ConsentStateUnknown
+	ConsentStateUnknown ConsentState = "unknown"
 )
-
-func (code ConsentState) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ConsentState) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "draft":
-		*code = ConsentStateDraft
-	case "active":
-		*code = ConsentStateActive
-	case "inactive":
-		*code = ConsentStateInactive
-	case "not-done":
-		*code = ConsentStateNotDone
-	case "entered-in-error":
-		*code = ConsentStateEnteredInError
-	case "unknown":
-		*code = ConsentStateUnknown
-	default:
-		return fmt.Errorf("unknown ConsentState code `%s`", s)
-	}
-	return nil
-}
 
 func (code ConsentState) String() string {
 	return code.Code()
 }
 
 func (code ConsentState) Code() string {
-	switch code {
-	case ConsentStateDraft:
-		return "draft"
-	case ConsentStateActive:
-		return "active"
-	case ConsentStateInactive:
-		return "inactive"
-	case ConsentStateNotDone:
-		return "not-done"
-	case ConsentStateEnteredInError:
-		return "entered-in-error"
-	case ConsentStateUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ConsentState) Display() string {

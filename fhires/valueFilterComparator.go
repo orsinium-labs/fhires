@@ -1,95 +1,39 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The type of comparator operator to use
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/value-filter-comparator
-type ValueFilterComparator int
+type ValueFilterComparator string
 
 const (
-	ValueFilterComparatorEq ValueFilterComparator = iota
+	// the value for the parameter in the resource is equal to the provided value.
+	ValueFilterComparatorEq ValueFilterComparator = "eq"
 	// the value for the parameter in the resource is not equal to the provided value.
-	ValueFilterComparatorNe
+	ValueFilterComparatorNe ValueFilterComparator = "ne"
 	// the value for the parameter in the resource is greater than the provided value.
-	ValueFilterComparatorGt
+	ValueFilterComparatorGt ValueFilterComparator = "gt"
 	// the value for the parameter in the resource is less than the provided value.
-	ValueFilterComparatorLt
+	ValueFilterComparatorLt ValueFilterComparator = "lt"
 	// the value for the parameter in the resource is greater or equal to the provided value.
-	ValueFilterComparatorGe
+	ValueFilterComparatorGe ValueFilterComparator = "ge"
 	// the value for the parameter in the resource is less or equal to the provided value.
-	ValueFilterComparatorLe
+	ValueFilterComparatorLe ValueFilterComparator = "le"
 	// the value for the parameter in the resource starts after the provided value.
-	ValueFilterComparatorSa
+	ValueFilterComparatorSa ValueFilterComparator = "sa"
 	// the value for the parameter in the resource ends before the provided value.
-	ValueFilterComparatorEb
+	ValueFilterComparatorEb ValueFilterComparator = "eb"
 	// the value for the parameter in the resource is approximately the same to the provided value.
-	ValueFilterComparatorAp
+	ValueFilterComparatorAp ValueFilterComparator = "ap"
 )
-
-func (code ValueFilterComparator) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ValueFilterComparator) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "eq":
-		*code = ValueFilterComparatorEq
-	case "ne":
-		*code = ValueFilterComparatorNe
-	case "gt":
-		*code = ValueFilterComparatorGt
-	case "lt":
-		*code = ValueFilterComparatorLt
-	case "ge":
-		*code = ValueFilterComparatorGe
-	case "le":
-		*code = ValueFilterComparatorLe
-	case "sa":
-		*code = ValueFilterComparatorSa
-	case "eb":
-		*code = ValueFilterComparatorEb
-	case "ap":
-		*code = ValueFilterComparatorAp
-	default:
-		return fmt.Errorf("unknown ValueFilterComparator code `%s`", s)
-	}
-	return nil
-}
 
 func (code ValueFilterComparator) String() string {
 	return code.Code()
 }
 
 func (code ValueFilterComparator) Code() string {
-	switch code {
-	case ValueFilterComparatorEq:
-		return "eq"
-	case ValueFilterComparatorNe:
-		return "ne"
-	case ValueFilterComparatorGt:
-		return "gt"
-	case ValueFilterComparatorLt:
-		return "lt"
-	case ValueFilterComparatorGe:
-		return "ge"
-	case ValueFilterComparatorLe:
-		return "le"
-	case ValueFilterComparatorSa:
-		return "sa"
-	case ValueFilterComparatorEb:
-		return "eb"
-	case ValueFilterComparatorAp:
-		return "ap"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ValueFilterComparator) Display() string {

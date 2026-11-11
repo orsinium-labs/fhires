@@ -1,257 +1,93 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The type of relationship to the related artifact.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/related-artifact-type
-type RelatedArtifactType int
+type RelatedArtifactType string
 
 const (
-	RelatedArtifactTypeDocumentation RelatedArtifactType = iota
+	// Additional documentation for the knowledge resource. This would include additional instructions on usage as well as additional information on clinical context or appropriateness.
+	RelatedArtifactTypeDocumentation RelatedArtifactType = "documentation"
 	// The target artifact is a summary of the justification for the knowledge resource including supporting evidence, relevant guidelines, or other clinically important information. This information is intended to provide a way to make the justification for the knowledge resource available to the consumer of interventions or results produced by the knowledge resource.
-	RelatedArtifactTypeJustification
+	RelatedArtifactTypeJustification RelatedArtifactType = "justification"
 	// Bibliographic citation for papers, references, or other relevant material for the knowledge resource. This is intended to allow for citation of related material, but that was not necessarily specifically prepared in connection with this knowledge resource.
-	RelatedArtifactTypeCitation
+	RelatedArtifactTypeCitation RelatedArtifactType = "citation"
 	// The previous version of the knowledge artifact, used to establish an ordering of versions of an artifact, independent of the status of each version.
-	RelatedArtifactTypePredecessor
+	RelatedArtifactTypePredecessor RelatedArtifactType = "predecessor"
 	// The subsequent version of the knowledge artfact, used to establish an ordering of versions of an artifact, independent of the status of each version.
-	RelatedArtifactTypeSuccessor
+	RelatedArtifactTypeSuccessor RelatedArtifactType = "successor"
 	// This artifact is derived from the target artifact. This is intended to capture the relationship in which a particular knowledge resource is based on the content of another artifact, but is modified to capture either a different set of overall requirements, or a more specific set of requirements such as those involved in a particular institution or clinical setting. The artifact may be derived from one or more target artifacts.
-	RelatedArtifactTypeDerivedFrom
+	RelatedArtifactTypeDerivedFrom RelatedArtifactType = "derived-from"
 	// This artifact depends on the target artifact. There is a requirement to use the target artifact in the creation or interpretation of this artifact.
-	RelatedArtifactTypeDependsOn
+	RelatedArtifactTypeDependsOn RelatedArtifactType = "depends-on"
 	// This artifact is composed of the target artifact. This artifact is constructed with the target artifact as a component. The target artifact is a part of this artifact. (A dataset is composed of data.).
-	RelatedArtifactTypeComposedOf
+	RelatedArtifactTypeComposedOf RelatedArtifactType = "composed-of"
 	// This artifact is a part of the target artifact. The target artifact is composed of this artifact (and possibly other artifacts).
-	RelatedArtifactTypePartOf
+	RelatedArtifactTypePartOf RelatedArtifactType = "part-of"
 	// This artifact amends or changes the target artifact. This artifact adds additional information that is functionally expected to replace information in the target artifact. This artifact replaces a part but not all of the target artifact.
-	RelatedArtifactTypeAmends
+	RelatedArtifactTypeAmends RelatedArtifactType = "amends"
 	// This artifact is amended with or changed by the target artifact. There is information in this artifact that should be functionally replaced with information in the target artifact.
-	RelatedArtifactTypeAmendedWith
+	RelatedArtifactTypeAmendedWith RelatedArtifactType = "amended-with"
 	// This artifact adds additional information to the target artifact. The additional information does not replace or change information in the target artifact.
-	RelatedArtifactTypeAppends
+	RelatedArtifactTypeAppends RelatedArtifactType = "appends"
 	// This artifact has additional information in the target artifact.
-	RelatedArtifactTypeAppendedWith
+	RelatedArtifactTypeAppendedWith RelatedArtifactType = "appended-with"
 	// This artifact cites the target artifact. This may be a bibliographic citation for papers, references, or other relevant material for the knowledge resource. This is intended to allow for citation of related material, but that was not necessarily specifically prepared in connection with this knowledge resource.
-	RelatedArtifactTypeCites
+	RelatedArtifactTypeCites RelatedArtifactType = "cites"
 	// This artifact is cited by the target artifact.
-	RelatedArtifactTypeCitedBy
+	RelatedArtifactTypeCitedBy RelatedArtifactType = "cited-by"
 	// This artifact contains comments about the target artifact.
-	RelatedArtifactTypeCommentsOn
+	RelatedArtifactTypeCommentsOn RelatedArtifactType = "comments-on"
 	// This artifact has comments about it in the target artifact.  The type of comments may be expressed in the targetClassifier element such as reply, review, editorial, feedback, solicited, unsolicited, structured, unstructured.
-	RelatedArtifactTypeCommentIn
+	RelatedArtifactTypeCommentIn RelatedArtifactType = "comment-in"
 	// This artifact is a container in which the target artifact is contained. A container is a data structure whose instances are collections of other objects. (A database contains the dataset.).
-	RelatedArtifactTypeContains
+	RelatedArtifactTypeContains RelatedArtifactType = "contains"
 	// This artifact is contained in the target artifact. The target artifact is a data structure whose instances are collections of other objects.
-	RelatedArtifactTypeContainedIn
+	RelatedArtifactTypeContainedIn RelatedArtifactType = "contained-in"
 	// This artifact identifies errors and replacement content for the target artifact.
-	RelatedArtifactTypeCorrects
+	RelatedArtifactTypeCorrects RelatedArtifactType = "corrects"
 	// This artifact has corrections to it in the target artifact. The target artifact identifies errors and replacement content for this artifact.
-	RelatedArtifactTypeCorrectionIn
+	RelatedArtifactTypeCorrectionIn RelatedArtifactType = "correction-in"
 	// This artifact replaces or supersedes the target artifact. The target artifact may be considered deprecated.
-	RelatedArtifactTypeReplaces
+	RelatedArtifactTypeReplaces RelatedArtifactType = "replaces"
 	// This artifact is replaced with or superseded by the target artifact. This artifact may be considered deprecated.
-	RelatedArtifactTypeReplacedWith
+	RelatedArtifactTypeReplacedWith RelatedArtifactType = "replaced-with"
 	// This artifact retracts the target artifact. The content that was published in the target artifact should be considered removed from publication and should no longer be considered part of the public record.
-	RelatedArtifactTypeRetracts
+	RelatedArtifactTypeRetracts RelatedArtifactType = "retracts"
 	// This artifact is retracted by the target artifact. The content that was published in this artifact should be considered removed from publication and should no longer be considered part of the public record.
-	RelatedArtifactTypeRetractedBy
+	RelatedArtifactTypeRetractedBy RelatedArtifactType = "retracted-by"
 	// This artifact is a signature of the target artifact.
-	RelatedArtifactTypeSigns
+	RelatedArtifactTypeSigns RelatedArtifactType = "signs"
 	// This artifact has characteristics in common with the target artifact. This relationship may be used in systems to “deduplicate” knowledge artifacts from different sources, or in systems to show “similar items”.
-	RelatedArtifactTypeSimilarTo
+	RelatedArtifactTypeSimilarTo RelatedArtifactType = "similar-to"
 	// This artifact provides additional support for the target artifact. The type of support  is not documentation as it does not describe, explain, or instruct regarding the target artifact.
-	RelatedArtifactTypeSupports
+	RelatedArtifactTypeSupports RelatedArtifactType = "supports"
 	// The target artifact contains additional information related to the knowledge artifact but is not documentation as the additional information does not describe, explain, or instruct regarding the knowledge artifact content or application. This could include an associated dataset.
-	RelatedArtifactTypeSupportedWith
+	RelatedArtifactTypeSupportedWith RelatedArtifactType = "supported-with"
 	// This artifact was generated by transforming the target artifact (e.g., format or language conversion). This is intended to capture the relationship in which a particular knowledge resource is based on the content of another artifact, but changes are only apparent in form and there is only one target artifact with the “transforms” relationship type.
-	RelatedArtifactTypeTransforms
+	RelatedArtifactTypeTransforms RelatedArtifactType = "transforms"
 	// This artifact was transformed into the target artifact (e.g., by format or language conversion).
-	RelatedArtifactTypeTransformedInto
+	RelatedArtifactTypeTransformedInto RelatedArtifactType = "transformed-into"
 	// This artifact was generated by transforming a related artifact (e.g., format or language conversion), noted separately with the “transforms” relationship type. This transformation used the target artifact to inform the transformation. The target artifact may be a conversion script or translation guide.
-	RelatedArtifactTypeTransformedWith
+	RelatedArtifactTypeTransformedWith RelatedArtifactType = "transformed-with"
 	// This artifact provides additional documentation for the target artifact. This could include additional instructions on usage as well as additional information on clinical context or appropriateness.
-	RelatedArtifactTypeDocuments
+	RelatedArtifactTypeDocuments RelatedArtifactType = "documents"
 	// The target artifact is a precise description of a concept in this artifact. This may be used when the RelatedArtifact datatype is used in elements contained in this artifact.
-	RelatedArtifactTypeSpecificationOf
+	RelatedArtifactTypeSpecificationOf RelatedArtifactType = "specification-of"
 	// This artifact was created with the target artifact. The target artifact is a tool or support material used in the creation of the artifact, and not content that the artifact was derived from.
-	RelatedArtifactTypeCreatedWith
+	RelatedArtifactTypeCreatedWith RelatedArtifactType = "created-with"
 	// The related artifact is the citation for this artifact.
-	RelatedArtifactTypeCiteAs
+	RelatedArtifactTypeCiteAs RelatedArtifactType = "cite-as"
 )
-
-func (code RelatedArtifactType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *RelatedArtifactType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "documentation":
-		*code = RelatedArtifactTypeDocumentation
-	case "justification":
-		*code = RelatedArtifactTypeJustification
-	case "citation":
-		*code = RelatedArtifactTypeCitation
-	case "predecessor":
-		*code = RelatedArtifactTypePredecessor
-	case "successor":
-		*code = RelatedArtifactTypeSuccessor
-	case "derived-from":
-		*code = RelatedArtifactTypeDerivedFrom
-	case "depends-on":
-		*code = RelatedArtifactTypeDependsOn
-	case "composed-of":
-		*code = RelatedArtifactTypeComposedOf
-	case "part-of":
-		*code = RelatedArtifactTypePartOf
-	case "amends":
-		*code = RelatedArtifactTypeAmends
-	case "amended-with":
-		*code = RelatedArtifactTypeAmendedWith
-	case "appends":
-		*code = RelatedArtifactTypeAppends
-	case "appended-with":
-		*code = RelatedArtifactTypeAppendedWith
-	case "cites":
-		*code = RelatedArtifactTypeCites
-	case "cited-by":
-		*code = RelatedArtifactTypeCitedBy
-	case "comments-on":
-		*code = RelatedArtifactTypeCommentsOn
-	case "comment-in":
-		*code = RelatedArtifactTypeCommentIn
-	case "contains":
-		*code = RelatedArtifactTypeContains
-	case "contained-in":
-		*code = RelatedArtifactTypeContainedIn
-	case "corrects":
-		*code = RelatedArtifactTypeCorrects
-	case "correction-in":
-		*code = RelatedArtifactTypeCorrectionIn
-	case "replaces":
-		*code = RelatedArtifactTypeReplaces
-	case "replaced-with":
-		*code = RelatedArtifactTypeReplacedWith
-	case "retracts":
-		*code = RelatedArtifactTypeRetracts
-	case "retracted-by":
-		*code = RelatedArtifactTypeRetractedBy
-	case "signs":
-		*code = RelatedArtifactTypeSigns
-	case "similar-to":
-		*code = RelatedArtifactTypeSimilarTo
-	case "supports":
-		*code = RelatedArtifactTypeSupports
-	case "supported-with":
-		*code = RelatedArtifactTypeSupportedWith
-	case "transforms":
-		*code = RelatedArtifactTypeTransforms
-	case "transformed-into":
-		*code = RelatedArtifactTypeTransformedInto
-	case "transformed-with":
-		*code = RelatedArtifactTypeTransformedWith
-	case "documents":
-		*code = RelatedArtifactTypeDocuments
-	case "specification-of":
-		*code = RelatedArtifactTypeSpecificationOf
-	case "created-with":
-		*code = RelatedArtifactTypeCreatedWith
-	case "cite-as":
-		*code = RelatedArtifactTypeCiteAs
-	default:
-		return fmt.Errorf("unknown RelatedArtifactType code `%s`", s)
-	}
-	return nil
-}
 
 func (code RelatedArtifactType) String() string {
 	return code.Code()
 }
 
 func (code RelatedArtifactType) Code() string {
-	switch code {
-	case RelatedArtifactTypeDocumentation:
-		return "documentation"
-	case RelatedArtifactTypeJustification:
-		return "justification"
-	case RelatedArtifactTypeCitation:
-		return "citation"
-	case RelatedArtifactTypePredecessor:
-		return "predecessor"
-	case RelatedArtifactTypeSuccessor:
-		return "successor"
-	case RelatedArtifactTypeDerivedFrom:
-		return "derived-from"
-	case RelatedArtifactTypeDependsOn:
-		return "depends-on"
-	case RelatedArtifactTypeComposedOf:
-		return "composed-of"
-	case RelatedArtifactTypePartOf:
-		return "part-of"
-	case RelatedArtifactTypeAmends:
-		return "amends"
-	case RelatedArtifactTypeAmendedWith:
-		return "amended-with"
-	case RelatedArtifactTypeAppends:
-		return "appends"
-	case RelatedArtifactTypeAppendedWith:
-		return "appended-with"
-	case RelatedArtifactTypeCites:
-		return "cites"
-	case RelatedArtifactTypeCitedBy:
-		return "cited-by"
-	case RelatedArtifactTypeCommentsOn:
-		return "comments-on"
-	case RelatedArtifactTypeCommentIn:
-		return "comment-in"
-	case RelatedArtifactTypeContains:
-		return "contains"
-	case RelatedArtifactTypeContainedIn:
-		return "contained-in"
-	case RelatedArtifactTypeCorrects:
-		return "corrects"
-	case RelatedArtifactTypeCorrectionIn:
-		return "correction-in"
-	case RelatedArtifactTypeReplaces:
-		return "replaces"
-	case RelatedArtifactTypeReplacedWith:
-		return "replaced-with"
-	case RelatedArtifactTypeRetracts:
-		return "retracts"
-	case RelatedArtifactTypeRetractedBy:
-		return "retracted-by"
-	case RelatedArtifactTypeSigns:
-		return "signs"
-	case RelatedArtifactTypeSimilarTo:
-		return "similar-to"
-	case RelatedArtifactTypeSupports:
-		return "supports"
-	case RelatedArtifactTypeSupportedWith:
-		return "supported-with"
-	case RelatedArtifactTypeTransforms:
-		return "transforms"
-	case RelatedArtifactTypeTransformedInto:
-		return "transformed-into"
-	case RelatedArtifactTypeTransformedWith:
-		return "transformed-with"
-	case RelatedArtifactTypeDocuments:
-		return "documents"
-	case RelatedArtifactTypeSpecificationOf:
-		return "specification-of"
-	case RelatedArtifactTypeCreatedWith:
-		return "created-with"
-	case RelatedArtifactTypeCiteAs:
-		return "cite-as"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code RelatedArtifactType) Display() string {

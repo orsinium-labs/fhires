@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The kind of response to a message.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/response-code
-type ResponseType int
+type ResponseType string
 
 const (
-	ResponseTypeOk ResponseType = iota
+	// The message was accepted and processed without error.
+	ResponseTypeOk ResponseType = "ok"
 	// Some internal unexpected error occurred - wait and try again. Note - this is usually used for things like database unavailable, which may be expected to resolve, though human intervention may be required.
-	ResponseTypeTransientError
+	ResponseTypeTransientError ResponseType = "transient-error"
 	// The message was rejected because of a problem with the content. There is no point in re-sending without change. The response narrative SHALL describe the issue.
-	ResponseTypeFatalError
+	ResponseTypeFatalError ResponseType = "fatal-error"
 )
-
-func (code ResponseType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ResponseType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "ok":
-		*code = ResponseTypeOk
-	case "transient-error":
-		*code = ResponseTypeTransientError
-	case "fatal-error":
-		*code = ResponseTypeFatalError
-	default:
-		return fmt.Errorf("unknown ResponseType code `%s`", s)
-	}
-	return nil
-}
 
 func (code ResponseType) String() string {
 	return code.Code()
 }
 
 func (code ResponseType) Code() string {
-	switch code {
-	case ResponseTypeOk:
-		return "ok"
-	case ResponseTypeTransientError:
-		return "transient-error"
-	case ResponseTypeFatalError:
-		return "fatal-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ResponseType) Display() string {

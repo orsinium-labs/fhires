@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Indicates whether the location is still in use.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/location-status
-type LocationStatus int
+type LocationStatus string
 
 const (
-	LocationStatusActive LocationStatus = iota
+	// The location is operational.
+	LocationStatusActive LocationStatus = "active"
 	// The location is temporarily closed.
-	LocationStatusSuspended
+	LocationStatusSuspended LocationStatus = "suspended"
 	// The location is no longer used.
-	LocationStatusInactive
+	LocationStatusInactive LocationStatus = "inactive"
 )
-
-func (code LocationStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *LocationStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "active":
-		*code = LocationStatusActive
-	case "suspended":
-		*code = LocationStatusSuspended
-	case "inactive":
-		*code = LocationStatusInactive
-	default:
-		return fmt.Errorf("unknown LocationStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code LocationStatus) String() string {
 	return code.Code()
 }
 
 func (code LocationStatus) Code() string {
-	switch code {
-	case LocationStatusActive:
-		return "active"
-	case LocationStatusSuspended:
-		return "suspended"
-	case LocationStatusInactive:
-		return "inactive"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code LocationStatus) Display() string {

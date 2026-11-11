@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The type of participant.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/report-participant-type
-type TestReportParticipantType int
+type TestReportParticipantType string
 
 const (
-	TestReportParticipantTypeTestEngine TestReportParticipantType = iota
+	// The test execution engine.
+	TestReportParticipantTypeTestEngine TestReportParticipantType = "test-engine"
 	// A FHIR Client.
-	TestReportParticipantTypeClient
+	TestReportParticipantTypeClient TestReportParticipantType = "client"
 	// A FHIR Server.
-	TestReportParticipantTypeServer
+	TestReportParticipantTypeServer TestReportParticipantType = "server"
 )
-
-func (code TestReportParticipantType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *TestReportParticipantType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "test-engine":
-		*code = TestReportParticipantTypeTestEngine
-	case "client":
-		*code = TestReportParticipantTypeClient
-	case "server":
-		*code = TestReportParticipantTypeServer
-	default:
-		return fmt.Errorf("unknown TestReportParticipantType code `%s`", s)
-	}
-	return nil
-}
 
 func (code TestReportParticipantType) String() string {
 	return code.Code()
 }
 
 func (code TestReportParticipantType) Code() string {
-	switch code {
-	case TestReportParticipantTypeTestEngine:
-		return "test-engine"
-	case TestReportParticipantTypeClient:
-		return "client"
-	case TestReportParticipantTypeServer:
-		return "server"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code TestReportParticipantType) Display() string {

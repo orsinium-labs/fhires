@@ -1,83 +1,35 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // MedicationAdministration Status Codes
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/medication-admin-status
-type MedicationAdministrationStatusCodes int
+type MedicationAdministrationStatusCodes string
 
 const (
-	MedicationAdministrationStatusCodesInProgress MedicationAdministrationStatusCodes = iota
+	// The administration has started but has not yet completed.
+	MedicationAdministrationStatusCodesInProgress MedicationAdministrationStatusCodes = "in-progress"
 	// The administration was terminated prior to any impact on the subject (though preparatory actions may have been taken)
-	MedicationAdministrationStatusCodesNotDone
+	MedicationAdministrationStatusCodesNotDone MedicationAdministrationStatusCodes = "not-done"
 	// Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called 'suspended'.
-	MedicationAdministrationStatusCodesOnHold
+	MedicationAdministrationStatusCodesOnHold MedicationAdministrationStatusCodes = "on-hold"
 	// All actions that are implied by the administration have occurred.
-	MedicationAdministrationStatusCodesCompleted
+	MedicationAdministrationStatusCodesCompleted MedicationAdministrationStatusCodes = "completed"
 	// The administration was entered in error and therefore nullified.
-	MedicationAdministrationStatusCodesEnteredInError
+	MedicationAdministrationStatusCodesEnteredInError MedicationAdministrationStatusCodes = "entered-in-error"
 	// Actions implied by the administration have been permanently halted, before all of them occurred.
-	MedicationAdministrationStatusCodesStopped
+	MedicationAdministrationStatusCodesStopped MedicationAdministrationStatusCodes = "stopped"
 	// The authoring system does not know which of the status values currently applies for this request. Note: This concept is not to be used for 'other' - one of the listed statuses is presumed to apply, it's just not known which one.
-	MedicationAdministrationStatusCodesUnknown
+	MedicationAdministrationStatusCodesUnknown MedicationAdministrationStatusCodes = "unknown"
 )
-
-func (code MedicationAdministrationStatusCodes) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *MedicationAdministrationStatusCodes) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "in-progress":
-		*code = MedicationAdministrationStatusCodesInProgress
-	case "not-done":
-		*code = MedicationAdministrationStatusCodesNotDone
-	case "on-hold":
-		*code = MedicationAdministrationStatusCodesOnHold
-	case "completed":
-		*code = MedicationAdministrationStatusCodesCompleted
-	case "entered-in-error":
-		*code = MedicationAdministrationStatusCodesEnteredInError
-	case "stopped":
-		*code = MedicationAdministrationStatusCodesStopped
-	case "unknown":
-		*code = MedicationAdministrationStatusCodesUnknown
-	default:
-		return fmt.Errorf("unknown MedicationAdministrationStatusCodes code `%s`", s)
-	}
-	return nil
-}
 
 func (code MedicationAdministrationStatusCodes) String() string {
 	return code.Code()
 }
 
 func (code MedicationAdministrationStatusCodes) Code() string {
-	switch code {
-	case MedicationAdministrationStatusCodesInProgress:
-		return "in-progress"
-	case MedicationAdministrationStatusCodesNotDone:
-		return "not-done"
-	case MedicationAdministrationStatusCodesOnHold:
-		return "on-hold"
-	case MedicationAdministrationStatusCodesCompleted:
-		return "completed"
-	case MedicationAdministrationStatusCodesEnteredInError:
-		return "entered-in-error"
-	case MedicationAdministrationStatusCodesStopped:
-		return "stopped"
-	case MedicationAdministrationStatusCodesUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code MedicationAdministrationStatusCodes) Display() string {

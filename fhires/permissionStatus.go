@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Codes identifying the lifecycle stage of a product.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/permission-status
-type PermissionStatus int
+type PermissionStatus string
 
 const (
-	PermissionStatusActive PermissionStatus = iota
+	// Permission is given.
+	PermissionStatusActive PermissionStatus = "active"
 	// Permission was entered in error and is not active.
-	PermissionStatusEnteredInError
+	PermissionStatusEnteredInError PermissionStatus = "entered-in-error"
 	// Permission is being defined.
-	PermissionStatusDraft
+	PermissionStatusDraft PermissionStatus = "draft"
 	// Permission not granted.
-	PermissionStatusRejected
+	PermissionStatusRejected PermissionStatus = "rejected"
 )
-
-func (code PermissionStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *PermissionStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "active":
-		*code = PermissionStatusActive
-	case "entered-in-error":
-		*code = PermissionStatusEnteredInError
-	case "draft":
-		*code = PermissionStatusDraft
-	case "rejected":
-		*code = PermissionStatusRejected
-	default:
-		return fmt.Errorf("unknown PermissionStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code PermissionStatus) String() string {
 	return code.Code()
 }
 
 func (code PermissionStatus) Code() string {
-	switch code {
-	case PermissionStatusActive:
-		return "active"
-	case PermissionStatusEnteredInError:
-		return "entered-in-error"
-	case PermissionStatusDraft:
-		return "draft"
-	case PermissionStatusRejected:
-		return "rejected"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code PermissionStatus) Display() string {

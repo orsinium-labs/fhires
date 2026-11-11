@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Codes providing the type of triggeredBy observation.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/observation-triggeredbytype
-type TriggeredBytype int
+type TriggeredBytype string
 
 const (
-	TriggeredBytypeReflex TriggeredBytype = iota
+	// Performance of one or more other tests depending on the results of the initial test.  This may include collection of additional specimen. While a new ServiceRequest is not required to perform the additional test, where it is still needed (e.g., requesting another laboratory to perform the reflex test), the Observation.basedOn would reference the new ServiceRequest that requested the additional test to be performed as well as the original ServiceRequest to reflect the one that provided the authorization.
+	TriggeredBytypeReflex TriggeredBytype = "reflex"
 	// Performance of the same test again with the same parameters/settings/solution.
-	TriggeredBytypeRepeat
+	TriggeredBytypeRepeat TriggeredBytype = "repeat"
 	// Performance of the same test but with different parameters/settings/solution.
-	TriggeredBytypeReRun
+	TriggeredBytypeReRun TriggeredBytype = "re-run"
 )
-
-func (code TriggeredBytype) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *TriggeredBytype) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "reflex":
-		*code = TriggeredBytypeReflex
-	case "repeat":
-		*code = TriggeredBytypeRepeat
-	case "re-run":
-		*code = TriggeredBytypeReRun
-	default:
-		return fmt.Errorf("unknown TriggeredBytype code `%s`", s)
-	}
-	return nil
-}
 
 func (code TriggeredBytype) String() string {
 	return code.Code()
 }
 
 func (code TriggeredBytype) Code() string {
-	switch code {
-	case TriggeredBytypeReflex:
-		return "reflex"
-	case TriggeredBytypeRepeat:
-		return "repeat"
-	case TriggeredBytypeReRun:
-		return "re-run"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code TriggeredBytype) Display() string {

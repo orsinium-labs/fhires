@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The outcome of the processing.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/payment-outcome
-type PaymentOutcome int
+type PaymentOutcome string
 
 const (
-	PaymentOutcomeQueued PaymentOutcome = iota
+	// The Claim/Pre-authorization/Pre-determination has been received but processing has not begun.
+	PaymentOutcomeQueued PaymentOutcome = "queued"
 	// The processing has completed without errors
-	PaymentOutcomeComplete
+	PaymentOutcomeComplete PaymentOutcome = "complete"
 	// One or more errors have been detected in the Claim
-	PaymentOutcomeError
+	PaymentOutcomeError PaymentOutcome = "error"
 	// No errors have been detected in the Claim and some of the adjudication has been performed.
-	PaymentOutcomePartial
+	PaymentOutcomePartial PaymentOutcome = "partial"
 )
-
-func (code PaymentOutcome) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *PaymentOutcome) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "queued":
-		*code = PaymentOutcomeQueued
-	case "complete":
-		*code = PaymentOutcomeComplete
-	case "error":
-		*code = PaymentOutcomeError
-	case "partial":
-		*code = PaymentOutcomePartial
-	default:
-		return fmt.Errorf("unknown PaymentOutcome code `%s`", s)
-	}
-	return nil
-}
 
 func (code PaymentOutcome) String() string {
 	return code.Code()
 }
 
 func (code PaymentOutcome) Code() string {
-	switch code {
-	case PaymentOutcomeQueued:
-		return "queued"
-	case PaymentOutcomeComplete:
-		return "complete"
-	case PaymentOutcomeError:
-		return "error"
-	case PaymentOutcomePartial:
-		return "partial"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code PaymentOutcome) Display() string {

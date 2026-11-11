@@ -1,59 +1,27 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Codes identifying the lifecycle stage of a product.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/nutritionproduct-status
-type NutritionProductStatus int
+type NutritionProductStatus string
 
 const (
-	NutritionProductStatusActive NutritionProductStatus = iota
+	// The product can be used.
+	NutritionProductStatusActive NutritionProductStatus = "active"
 	// The product is not expected or allowed to be used.
-	NutritionProductStatusInactive
+	NutritionProductStatusInactive NutritionProductStatus = "inactive"
 	// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
-	NutritionProductStatusEnteredInError
+	NutritionProductStatusEnteredInError NutritionProductStatus = "entered-in-error"
 )
-
-func (code NutritionProductStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *NutritionProductStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "active":
-		*code = NutritionProductStatusActive
-	case "inactive":
-		*code = NutritionProductStatusInactive
-	case "entered-in-error":
-		*code = NutritionProductStatusEnteredInError
-	default:
-		return fmt.Errorf("unknown NutritionProductStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code NutritionProductStatus) String() string {
 	return code.Code()
 }
 
 func (code NutritionProductStatus) Code() string {
-	switch code {
-	case NutritionProductStatusActive:
-		return "active"
-	case NutritionProductStatusInactive:
-		return "inactive"
-	case NutritionProductStatusEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code NutritionProductStatus) Display() string {

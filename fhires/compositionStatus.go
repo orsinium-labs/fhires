@@ -1,107 +1,43 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The workflow/clinical status of the composition.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/composition-status
-type CompositionStatus int
+type CompositionStatus string
 
 const (
-	CompositionStatusRegistered CompositionStatus = iota
+	// The existence of the composition is registered, but there is nothing yet available.
+	CompositionStatusRegistered CompositionStatus = "registered"
 	// This is a partial (e.g. initial, interim or preliminary) composition: data in the composition may be incomplete or unverified.
-	CompositionStatusPartial
+	CompositionStatusPartial CompositionStatus = "partial"
 	// Verified early results are available, but not all results are final.
-	CompositionStatusPreliminary
+	CompositionStatusPreliminary CompositionStatus = "preliminary"
 	// This version of the composition is complete and verified by an appropriate person and no further work is planned. Any subsequent updates would be on a new version of the composition.
-	CompositionStatusFinal
+	CompositionStatusFinal CompositionStatus = "final"
 	// The composition content or the referenced resources have been modified (edited or added to) subsequent to being released as "final" and the composition is complete and verified by an authorized person.
-	CompositionStatusAmended
+	CompositionStatusAmended CompositionStatus = "amended"
 	// Subsequent to being final, the composition content has been modified to correct an error in the composition or referenced results.
-	CompositionStatusCorrected
+	CompositionStatusCorrected CompositionStatus = "corrected"
 	// Subsequent to being final, the composition content has been modified by adding new content. The existing content is unchanged.
-	CompositionStatusAppended
+	CompositionStatusAppended CompositionStatus = "appended"
 	// The composition is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
-	CompositionStatusCancelled
+	CompositionStatusCancelled CompositionStatus = "cancelled"
 	// The composition or document was originally created/issued in error, and this is an amendment that marks that the entire series should not be considered as valid.
-	CompositionStatusEnteredInError
+	CompositionStatusEnteredInError CompositionStatus = "entered-in-error"
 	// This composition has been withdrawn or superseded and should no longer be used.
-	CompositionStatusDeprecated
+	CompositionStatusDeprecated CompositionStatus = "deprecated"
 	// The authoring/source system does not know which of the status values currently applies for this observation. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, but the authoring/source system does not know which.
-	CompositionStatusUnknown
+	CompositionStatusUnknown CompositionStatus = "unknown"
 )
-
-func (code CompositionStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *CompositionStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "registered":
-		*code = CompositionStatusRegistered
-	case "partial":
-		*code = CompositionStatusPartial
-	case "preliminary":
-		*code = CompositionStatusPreliminary
-	case "final":
-		*code = CompositionStatusFinal
-	case "amended":
-		*code = CompositionStatusAmended
-	case "corrected":
-		*code = CompositionStatusCorrected
-	case "appended":
-		*code = CompositionStatusAppended
-	case "cancelled":
-		*code = CompositionStatusCancelled
-	case "entered-in-error":
-		*code = CompositionStatusEnteredInError
-	case "deprecated":
-		*code = CompositionStatusDeprecated
-	case "unknown":
-		*code = CompositionStatusUnknown
-	default:
-		return fmt.Errorf("unknown CompositionStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code CompositionStatus) String() string {
 	return code.Code()
 }
 
 func (code CompositionStatus) Code() string {
-	switch code {
-	case CompositionStatusRegistered:
-		return "registered"
-	case CompositionStatusPartial:
-		return "partial"
-	case CompositionStatusPreliminary:
-		return "preliminary"
-	case CompositionStatusFinal:
-		return "final"
-	case CompositionStatusAmended:
-		return "amended"
-	case CompositionStatusCorrected:
-		return "corrected"
-	case CompositionStatusAppended:
-		return "appended"
-	case CompositionStatusCancelled:
-		return "cancelled"
-	case CompositionStatusEnteredInError:
-		return "entered-in-error"
-	case CompositionStatusDeprecated:
-		return "deprecated"
-	case CompositionStatusUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code CompositionStatus) Display() string {

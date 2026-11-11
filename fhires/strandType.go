@@ -1,53 +1,25 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Type for strand.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/strand-type
-type StrandType int
+type StrandType string
 
 const (
-	StrandTypeWatson StrandType = iota
+	// Watson strand of starting sequence.
+	StrandTypeWatson StrandType = "watson"
 	// Crick strand of starting sequence.
-	StrandTypeCrick
+	StrandTypeCrick StrandType = "crick"
 )
-
-func (code StrandType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *StrandType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "watson":
-		*code = StrandTypeWatson
-	case "crick":
-		*code = StrandTypeCrick
-	default:
-		return fmt.Errorf("unknown StrandType code `%s`", s)
-	}
-	return nil
-}
 
 func (code StrandType) String() string {
 	return code.Code()
 }
 
 func (code StrandType) Code() string {
-	switch code {
-	case StrandTypeWatson:
-		return "watson"
-	case StrandTypeCrick:
-		return "crick"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code StrandType) Display() string {

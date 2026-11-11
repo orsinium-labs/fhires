@@ -1,95 +1,39 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // What Search Comparator Codes are supported in search.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/search-comparator
-type SearchComparator int
+type SearchComparator string
 
 const (
-	SearchComparatorEq SearchComparator = iota
+	// the value for the parameter in the resource is equal to the provided value.
+	SearchComparatorEq SearchComparator = "eq"
 	// the value for the parameter in the resource is not equal to the provided value.
-	SearchComparatorNe
+	SearchComparatorNe SearchComparator = "ne"
 	// the value for the parameter in the resource is greater than the provided value.
-	SearchComparatorGt
+	SearchComparatorGt SearchComparator = "gt"
 	// the value for the parameter in the resource is less than the provided value.
-	SearchComparatorLt
+	SearchComparatorLt SearchComparator = "lt"
 	// the value for the parameter in the resource is greater or equal to the provided value.
-	SearchComparatorGe
+	SearchComparatorGe SearchComparator = "ge"
 	// the value for the parameter in the resource is less or equal to the provided value.
-	SearchComparatorLe
+	SearchComparatorLe SearchComparator = "le"
 	// the value for the parameter in the resource starts after the provided value.
-	SearchComparatorSa
+	SearchComparatorSa SearchComparator = "sa"
 	// the value for the parameter in the resource ends before the provided value.
-	SearchComparatorEb
+	SearchComparatorEb SearchComparator = "eb"
 	// the value for the parameter in the resource is approximately the same to the provided value.
-	SearchComparatorAp
+	SearchComparatorAp SearchComparator = "ap"
 )
-
-func (code SearchComparator) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *SearchComparator) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "eq":
-		*code = SearchComparatorEq
-	case "ne":
-		*code = SearchComparatorNe
-	case "gt":
-		*code = SearchComparatorGt
-	case "lt":
-		*code = SearchComparatorLt
-	case "ge":
-		*code = SearchComparatorGe
-	case "le":
-		*code = SearchComparatorLe
-	case "sa":
-		*code = SearchComparatorSa
-	case "eb":
-		*code = SearchComparatorEb
-	case "ap":
-		*code = SearchComparatorAp
-	default:
-		return fmt.Errorf("unknown SearchComparator code `%s`", s)
-	}
-	return nil
-}
 
 func (code SearchComparator) String() string {
 	return code.Code()
 }
 
 func (code SearchComparator) Code() string {
-	switch code {
-	case SearchComparatorEq:
-		return "eq"
-	case SearchComparatorNe:
-		return "ne"
-	case SearchComparatorGt:
-		return "gt"
-	case SearchComparatorLt:
-		return "lt"
-	case SearchComparatorGe:
-		return "ge"
-	case SearchComparatorLe:
-		return "le"
-	case SearchComparatorSa:
-		return "sa"
-	case SearchComparatorEb:
-		return "eb"
-	case SearchComparatorAp:
-		return "ap"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code SearchComparator) Display() string {

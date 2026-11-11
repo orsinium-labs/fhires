@@ -1,71 +1,31 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // State values for FHIR Subscriptions.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/subscription-status
-type SubscriptionStatusCodes int
+type SubscriptionStatusCodes string
 
 const (
-	SubscriptionStatusCodesRequested SubscriptionStatusCodes = iota
+	// The client has requested the subscription, and the server has not yet set it up.
+	SubscriptionStatusCodesRequested SubscriptionStatusCodes = "requested"
 	// The subscription is active.
-	SubscriptionStatusCodesActive
+	SubscriptionStatusCodesActive SubscriptionStatusCodes = "active"
 	// The server has an error executing the notification.
-	SubscriptionStatusCodesError
+	SubscriptionStatusCodesError SubscriptionStatusCodes = "error"
 	// Too many errors have occurred or the subscription has expired.
-	SubscriptionStatusCodesOff
+	SubscriptionStatusCodesOff SubscriptionStatusCodes = "off"
 	// This subscription has been flagged as incorrect.
-	SubscriptionStatusCodesEnteredInError
+	SubscriptionStatusCodesEnteredInError SubscriptionStatusCodes = "entered-in-error"
 )
-
-func (code SubscriptionStatusCodes) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *SubscriptionStatusCodes) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "requested":
-		*code = SubscriptionStatusCodesRequested
-	case "active":
-		*code = SubscriptionStatusCodesActive
-	case "error":
-		*code = SubscriptionStatusCodesError
-	case "off":
-		*code = SubscriptionStatusCodesOff
-	case "entered-in-error":
-		*code = SubscriptionStatusCodesEnteredInError
-	default:
-		return fmt.Errorf("unknown SubscriptionStatusCodes code `%s`", s)
-	}
-	return nil
-}
 
 func (code SubscriptionStatusCodes) String() string {
 	return code.Code()
 }
 
 func (code SubscriptionStatusCodes) Code() string {
-	switch code {
-	case SubscriptionStatusCodesRequested:
-		return "requested"
-	case SubscriptionStatusCodesActive:
-		return "active"
-	case SubscriptionStatusCodesError:
-		return "error"
-	case SubscriptionStatusCodesOff:
-		return "off"
-	case SubscriptionStatusCodesEnteredInError:
-		return "entered-in-error"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code SubscriptionStatusCodes) Display() string {

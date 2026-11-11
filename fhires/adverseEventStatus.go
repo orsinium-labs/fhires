@@ -1,89 +1,37 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Codes identifying the lifecycle stage of an adverse event.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/adverse-event-status
-type AdverseEventStatus int
+type AdverseEventStatus string
 
 const (
-	AdverseEventStatusPreparation AdverseEventStatus = iota
+	// The core event has not started yet, but some staging activities have begun (e.g. surgical suite preparation).  Preparation stages may be tracked for billing purposes.
+	AdverseEventStatusPreparation AdverseEventStatus = "preparation"
 	// The event is currently occurring.
-	AdverseEventStatusInProgress
+	AdverseEventStatusInProgress AdverseEventStatus = "in-progress"
 	// The event was terminated prior to any activity beyond preparation.  I.e. The 'main' activity has not yet begun.  The boundary between preparatory and the 'main' activity is context-specific.
-	AdverseEventStatusNotDone
+	AdverseEventStatusNotDone AdverseEventStatus = "not-done"
 	// The event has been temporarily stopped but is expected to resume in the future.
-	AdverseEventStatusOnHold
+	AdverseEventStatusOnHold AdverseEventStatus = "on-hold"
 	// The event was terminated prior to the full completion of the intended activity but after at least some of the 'main' activity (beyond preparation) has occurred.
-	AdverseEventStatusStopped
+	AdverseEventStatusStopped AdverseEventStatus = "stopped"
 	// The event has now concluded.
-	AdverseEventStatusCompleted
+	AdverseEventStatusCompleted AdverseEventStatus = "completed"
 	// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "stopped" rather than "entered-in-error".).
-	AdverseEventStatusEnteredInError
+	AdverseEventStatusEnteredInError AdverseEventStatus = "entered-in-error"
 	// The authoring/source system does not know which of the status values currently applies for this event.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
-	AdverseEventStatusUnknown
+	AdverseEventStatusUnknown AdverseEventStatus = "unknown"
 )
-
-func (code AdverseEventStatus) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *AdverseEventStatus) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "preparation":
-		*code = AdverseEventStatusPreparation
-	case "in-progress":
-		*code = AdverseEventStatusInProgress
-	case "not-done":
-		*code = AdverseEventStatusNotDone
-	case "on-hold":
-		*code = AdverseEventStatusOnHold
-	case "stopped":
-		*code = AdverseEventStatusStopped
-	case "completed":
-		*code = AdverseEventStatusCompleted
-	case "entered-in-error":
-		*code = AdverseEventStatusEnteredInError
-	case "unknown":
-		*code = AdverseEventStatusUnknown
-	default:
-		return fmt.Errorf("unknown AdverseEventStatus code `%s`", s)
-	}
-	return nil
-}
 
 func (code AdverseEventStatus) String() string {
 	return code.Code()
 }
 
 func (code AdverseEventStatus) Code() string {
-	switch code {
-	case AdverseEventStatusPreparation:
-		return "preparation"
-	case AdverseEventStatusInProgress:
-		return "in-progress"
-	case AdverseEventStatusNotDone:
-		return "not-done"
-	case AdverseEventStatusOnHold:
-		return "on-hold"
-	case AdverseEventStatusStopped:
-		return "stopped"
-	case AdverseEventStatusCompleted:
-		return "completed"
-	case AdverseEventStatusEnteredInError:
-		return "entered-in-error"
-	case AdverseEventStatusUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code AdverseEventStatus) Display() string {

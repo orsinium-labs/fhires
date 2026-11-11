@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // How a compartment must be linked.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/graph-compartment-rule
-type GraphCompartmentRule int
+type GraphCompartmentRule string
 
 const (
-	GraphCompartmentRuleIdentical GraphCompartmentRule = iota
+	// The compartment must be identical (the same literal reference).
+	GraphCompartmentRuleIdentical GraphCompartmentRule = "identical"
 	// The compartment must be the same - the record must be about the same patient, but the reference may be different.
-	GraphCompartmentRuleMatching
+	GraphCompartmentRuleMatching GraphCompartmentRule = "matching"
 	// The compartment must be different.
-	GraphCompartmentRuleDifferent
+	GraphCompartmentRuleDifferent GraphCompartmentRule = "different"
 	// The compartment rule is defined in the accompanying FHIRPath expression.
-	GraphCompartmentRuleCustom
+	GraphCompartmentRuleCustom GraphCompartmentRule = "custom"
 )
-
-func (code GraphCompartmentRule) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *GraphCompartmentRule) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "identical":
-		*code = GraphCompartmentRuleIdentical
-	case "matching":
-		*code = GraphCompartmentRuleMatching
-	case "different":
-		*code = GraphCompartmentRuleDifferent
-	case "custom":
-		*code = GraphCompartmentRuleCustom
-	default:
-		return fmt.Errorf("unknown GraphCompartmentRule code `%s`", s)
-	}
-	return nil
-}
 
 func (code GraphCompartmentRule) String() string {
 	return code.Code()
 }
 
 func (code GraphCompartmentRule) Code() string {
-	switch code {
-	case GraphCompartmentRuleIdentical:
-		return "identical"
-	case GraphCompartmentRuleMatching:
-		return "matching"
-	case GraphCompartmentRuleDifferent:
-		return "different"
-	case GraphCompartmentRuleCustom:
-		return "custom"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code GraphCompartmentRule) Display() string {

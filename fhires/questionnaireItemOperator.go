@@ -1,83 +1,35 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The criteria by which a question is enabled.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/questionnaire-enable-operator
-type QuestionnaireItemOperator int
+type QuestionnaireItemOperator string
 
 const (
-	QuestionnaireItemOperatorExists QuestionnaireItemOperator = iota
+	// True if the determination of 'whether an answer exists for the question' is equal to the enableWhen answer (which must be a boolean).
+	QuestionnaireItemOperatorExists QuestionnaireItemOperator = "exists"
 	// True if at least one answer has a value that is equal to the enableWhen answer.
-	QuestionnaireItemOperatorEquals
+	QuestionnaireItemOperatorEquals QuestionnaireItemOperator = "="
 	// True if no answer has a value that is equal to the enableWhen answer.
-	QuestionnaireItemOperatorNotEquals
+	QuestionnaireItemOperatorNotEquals QuestionnaireItemOperator = "!="
 	// True if at least one answer has a value that is greater than the enableWhen answer.
-	QuestionnaireItemOperatorGreaterThan
+	QuestionnaireItemOperatorGreaterThan QuestionnaireItemOperator = ">"
 	// True if at least one answer has a value that is less than the enableWhen answer.
-	QuestionnaireItemOperatorLessThan
+	QuestionnaireItemOperatorLessThan QuestionnaireItemOperator = "<"
 	// True if at least one answer has a value that is greater or equal to the enableWhen answer.
-	QuestionnaireItemOperatorGreaterOrEquals
+	QuestionnaireItemOperatorGreaterOrEquals QuestionnaireItemOperator = ">="
 	// True if at least one answer has a value that is less or equal to the enableWhen answer.
-	QuestionnaireItemOperatorLessOrEquals
+	QuestionnaireItemOperatorLessOrEquals QuestionnaireItemOperator = "<="
 )
-
-func (code QuestionnaireItemOperator) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *QuestionnaireItemOperator) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "exists":
-		*code = QuestionnaireItemOperatorExists
-	case "=":
-		*code = QuestionnaireItemOperatorEquals
-	case "!=":
-		*code = QuestionnaireItemOperatorNotEquals
-	case ">":
-		*code = QuestionnaireItemOperatorGreaterThan
-	case "<":
-		*code = QuestionnaireItemOperatorLessThan
-	case ">=":
-		*code = QuestionnaireItemOperatorGreaterOrEquals
-	case "<=":
-		*code = QuestionnaireItemOperatorLessOrEquals
-	default:
-		return fmt.Errorf("unknown QuestionnaireItemOperator code `%s`", s)
-	}
-	return nil
-}
 
 func (code QuestionnaireItemOperator) String() string {
 	return code.Code()
 }
 
 func (code QuestionnaireItemOperator) Code() string {
-	switch code {
-	case QuestionnaireItemOperatorExists:
-		return "exists"
-	case QuestionnaireItemOperatorEquals:
-		return "="
-	case QuestionnaireItemOperatorNotEquals:
-		return "!="
-	case QuestionnaireItemOperatorGreaterThan:
-		return ">"
-	case QuestionnaireItemOperatorLessThan:
-		return "<"
-	case QuestionnaireItemOperatorGreaterOrEquals:
-		return ">="
-	case QuestionnaireItemOperatorLessOrEquals:
-		return "<="
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code QuestionnaireItemOperator) Display() string {

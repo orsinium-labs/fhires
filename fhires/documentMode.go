@@ -1,53 +1,25 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Whether the application produces or consumes documents.
 //
 // Status: active
 //
 // http://hl7.org/fhir/ValueSet/document-mode
-type DocumentMode int
+type DocumentMode string
 
 const (
-	DocumentModeProducer DocumentMode = iota
+	// The application produces documents of the specified type.
+	DocumentModeProducer DocumentMode = "producer"
 	// The application consumes documents of the specified type.
-	DocumentModeConsumer
+	DocumentModeConsumer DocumentMode = "consumer"
 )
-
-func (code DocumentMode) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *DocumentMode) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "producer":
-		*code = DocumentModeProducer
-	case "consumer":
-		*code = DocumentModeConsumer
-	default:
-		return fmt.Errorf("unknown DocumentMode code `%s`", s)
-	}
-	return nil
-}
 
 func (code DocumentMode) String() string {
 	return code.Code()
 }
 
 func (code DocumentMode) Code() string {
-	switch code {
-	case DocumentModeProducer:
-		return "producer"
-	case DocumentModeConsumer:
-		return "consumer"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code DocumentMode) Display() string {

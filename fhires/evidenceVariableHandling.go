@@ -1,11 +1,5 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The handling of the variable in statistical analysis for exposures or outcomes (E.g.
 //
 // Dichotomous, Continuous, Descriptive).
@@ -13,55 +7,25 @@ import (
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/variable-handling
-type EvidenceVariableHandling int
+type EvidenceVariableHandling string
 
 const (
-	EvidenceVariableHandlingContinuous EvidenceVariableHandling = iota
+	// A continuous variable is one for which, within the limits the variable ranges, any value is possible (from STATO http://purl.obolibrary.org/obo/STATO_0000251).
+	EvidenceVariableHandlingContinuous EvidenceVariableHandling = "continuous"
 	// A dichotomous variable is a categorical variable which is defined to have only 2 categories or possible values (from STATO http://purl.obolibrary.org/obo/STATO_0000090).
-	EvidenceVariableHandlingDichotomous
+	EvidenceVariableHandlingDichotomous EvidenceVariableHandling = "dichotomous"
 	// An ordinal variable is a categorical variable where the discrete possible values are ordered or correspond to an implicit ranking (from STATO http://purl.obolibrary.org/obo/STATO_0000228).
-	EvidenceVariableHandlingOrdinal
+	EvidenceVariableHandlingOrdinal EvidenceVariableHandling = "ordinal"
 	// A polychotomous variable is a categorical variable which is defined to have minimally 2 categories or possible values. (from STATO  http://purl.obolibrary.org/obo/STATO_0000087).  Suggestion to limit code use to situations when neither dichotomous nor ordinal variables apply.
-	EvidenceVariableHandlingPolychotomous
+	EvidenceVariableHandlingPolychotomous EvidenceVariableHandling = "polychotomous"
 )
-
-func (code EvidenceVariableHandling) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *EvidenceVariableHandling) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "continuous":
-		*code = EvidenceVariableHandlingContinuous
-	case "dichotomous":
-		*code = EvidenceVariableHandlingDichotomous
-	case "ordinal":
-		*code = EvidenceVariableHandlingOrdinal
-	case "polychotomous":
-		*code = EvidenceVariableHandlingPolychotomous
-	default:
-		return fmt.Errorf("unknown EvidenceVariableHandling code `%s`", s)
-	}
-	return nil
-}
 
 func (code EvidenceVariableHandling) String() string {
 	return code.Code()
 }
 
 func (code EvidenceVariableHandling) Code() string {
-	switch code {
-	case EvidenceVariableHandlingContinuous:
-		return "continuous"
-	case EvidenceVariableHandlingDichotomous:
-		return "dichotomous"
-	case EvidenceVariableHandlingOrdinal:
-		return "ordinal"
-	case EvidenceVariableHandlingPolychotomous:
-		return "polychotomous"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code EvidenceVariableHandling) Display() string {

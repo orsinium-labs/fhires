@@ -1,77 +1,33 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // The type of coordinates describing a 3D image region.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype
-type ImagingSelection3DGraphicType int
+type ImagingSelection3DGraphicType string
 
 const (
-	ImagingSelection3DGraphicTypePoint ImagingSelection3DGraphicType = iota
+	// A single location denoted by a single (x,y,z) triplet.
+	ImagingSelection3DGraphicTypePoint ImagingSelection3DGraphicType = "point"
 	// multiple locations each denoted by an (x,y,z) triplet; the points need not be coplanar.
-	ImagingSelection3DGraphicTypeMultipoint
+	ImagingSelection3DGraphicTypeMultipoint ImagingSelection3DGraphicType = "multipoint"
 	// a series of connected line segments with ordered vertices denoted by (x,y,z) triplets; the points need not be coplanar.
-	ImagingSelection3DGraphicTypePolyline
+	ImagingSelection3DGraphicTypePolyline ImagingSelection3DGraphicType = "polyline"
 	// a series of connected line segments with ordered vertices denoted by (x,y,z) triplets, where the first and last vertices shall be the same forming a polygon; the points shall be coplanar.
-	ImagingSelection3DGraphicTypePolygon
+	ImagingSelection3DGraphicTypePolygon ImagingSelection3DGraphicType = "polygon"
 	// an ellipse defined by four (x,y,z) triplets, the first two triplets specifying the endpoints of the major axis and the second two triplets specifying the endpoints of the minor axis.
-	ImagingSelection3DGraphicTypeEllipse
+	ImagingSelection3DGraphicTypeEllipse ImagingSelection3DGraphicType = "ellipse"
 	// a three-dimensional geometric surface whose plane sections are either ellipses or circles and contains three intersecting orthogonal axes, "a", "b", and "c"; the ellipsoid is defined by six (x,y,z) triplets, the first and second triplets specifying the endpoints of axis "a", the third and fourth triplets specifying the endpoints of axis "b", and the fifth and sixth triplets specifying the endpoints of axis "c".
-	ImagingSelection3DGraphicTypeEllipsoid
+	ImagingSelection3DGraphicTypeEllipsoid ImagingSelection3DGraphicType = "ellipsoid"
 )
-
-func (code ImagingSelection3DGraphicType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *ImagingSelection3DGraphicType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "point":
-		*code = ImagingSelection3DGraphicTypePoint
-	case "multipoint":
-		*code = ImagingSelection3DGraphicTypeMultipoint
-	case "polyline":
-		*code = ImagingSelection3DGraphicTypePolyline
-	case "polygon":
-		*code = ImagingSelection3DGraphicTypePolygon
-	case "ellipse":
-		*code = ImagingSelection3DGraphicTypeEllipse
-	case "ellipsoid":
-		*code = ImagingSelection3DGraphicTypeEllipsoid
-	default:
-		return fmt.Errorf("unknown ImagingSelection3DGraphicType code `%s`", s)
-	}
-	return nil
-}
 
 func (code ImagingSelection3DGraphicType) String() string {
 	return code.Code()
 }
 
 func (code ImagingSelection3DGraphicType) Code() string {
-	switch code {
-	case ImagingSelection3DGraphicTypePoint:
-		return "point"
-	case ImagingSelection3DGraphicTypeMultipoint:
-		return "multipoint"
-	case ImagingSelection3DGraphicTypePolyline:
-		return "polyline"
-	case ImagingSelection3DGraphicTypePolygon:
-		return "polygon"
-	case ImagingSelection3DGraphicTypeEllipse:
-		return "ellipse"
-	case ImagingSelection3DGraphicTypeEllipsoid:
-		return "ellipsoid"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code ImagingSelection3DGraphicType) Display() string {

@@ -1,83 +1,35 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // Codes to identify how UDI data was entered.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/udi-entry-type
-type UDIEntryType int
+type UDIEntryType string
 
 const (
-	UDIEntryTypeBarcode UDIEntryType = iota
+	// a barcodescanner captured the data from the device label.
+	UDIEntryTypeBarcode UDIEntryType = "barcode"
 	// An RFID chip reader captured the data from the device label.
-	UDIEntryTypeRfid
+	UDIEntryTypeRfid UDIEntryType = "rfid"
 	// The data was read from the label by a person and manually entered. (e.g.  via a keyboard).
-	UDIEntryTypeManual
+	UDIEntryTypeManual UDIEntryType = "manual"
 	// The data originated from a patient's implant card and was read by an operator.
-	UDIEntryTypeCard
+	UDIEntryTypeCard UDIEntryType = "card"
 	// The data originated from a patient source and was not directly scanned or read from a label or card.
-	UDIEntryTypeSelfReported
+	UDIEntryTypeSelfReported UDIEntryType = "self-reported"
 	// The UDI information was received electronically from the device through a communication protocol, such as the IEEE 11073 20601 version 4 exchange protocol over Bluetooth or USB.
-	UDIEntryTypeElectronicTransmission
+	UDIEntryTypeElectronicTransmission UDIEntryType = "electronic-transmission"
 	// The method of data capture has not been determined.
-	UDIEntryTypeUnknown
+	UDIEntryTypeUnknown UDIEntryType = "unknown"
 )
-
-func (code UDIEntryType) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *UDIEntryType) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "barcode":
-		*code = UDIEntryTypeBarcode
-	case "rfid":
-		*code = UDIEntryTypeRfid
-	case "manual":
-		*code = UDIEntryTypeManual
-	case "card":
-		*code = UDIEntryTypeCard
-	case "self-reported":
-		*code = UDIEntryTypeSelfReported
-	case "electronic-transmission":
-		*code = UDIEntryTypeElectronicTransmission
-	case "unknown":
-		*code = UDIEntryTypeUnknown
-	default:
-		return fmt.Errorf("unknown UDIEntryType code `%s`", s)
-	}
-	return nil
-}
 
 func (code UDIEntryType) String() string {
 	return code.Code()
 }
 
 func (code UDIEntryType) Code() string {
-	switch code {
-	case UDIEntryTypeBarcode:
-		return "barcode"
-	case UDIEntryTypeRfid:
-		return "rfid"
-	case UDIEntryTypeManual:
-		return "manual"
-	case UDIEntryTypeCard:
-		return "card"
-	case UDIEntryTypeSelfReported:
-		return "self-reported"
-	case UDIEntryTypeElectronicTransmission:
-		return "electronic-transmission"
-	case UDIEntryTypeUnknown:
-		return "unknown"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code UDIEntryType) Display() string {

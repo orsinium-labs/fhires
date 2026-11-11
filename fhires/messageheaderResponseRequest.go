@@ -1,65 +1,29 @@
 package fhires
 
-import (
-	"encoding/json/v2"
-	"fmt"
-	"strings"
-)
-
 // HL7-defined table of codes which identify conditions under which acknowledgments are required to be returned in response to a message.
 //
 // Status: draft
 //
 // http://hl7.org/fhir/ValueSet/messageheader-response-request
-type MessageheaderResponseRequest int
+type MessageheaderResponseRequest string
 
 const (
-	MessageheaderResponseRequestAlways MessageheaderResponseRequest = iota
+	// initiator expects a response for this message.
+	MessageheaderResponseRequestAlways MessageheaderResponseRequest = "always"
 	// initiator expects a response only if in error.
-	MessageheaderResponseRequestOnError
+	MessageheaderResponseRequestOnError MessageheaderResponseRequest = "on-error"
 	// initiator does not expect a response.
-	MessageheaderResponseRequestNever
+	MessageheaderResponseRequestNever MessageheaderResponseRequest = "never"
 	// initiator expects a response only if successful.
-	MessageheaderResponseRequestOnSuccess
+	MessageheaderResponseRequestOnSuccess MessageheaderResponseRequest = "on-success"
 )
-
-func (code MessageheaderResponseRequest) MarshalJSON() ([]byte, error) {
-	return json.Marshal(code.Code())
-}
-
-func (code *MessageheaderResponseRequest) UnmarshalJSON(json []byte) error {
-	s := strings.Trim(string(json), "\"")
-	switch s {
-	case "always":
-		*code = MessageheaderResponseRequestAlways
-	case "on-error":
-		*code = MessageheaderResponseRequestOnError
-	case "never":
-		*code = MessageheaderResponseRequestNever
-	case "on-success":
-		*code = MessageheaderResponseRequestOnSuccess
-	default:
-		return fmt.Errorf("unknown MessageheaderResponseRequest code `%s`", s)
-	}
-	return nil
-}
 
 func (code MessageheaderResponseRequest) String() string {
 	return code.Code()
 }
 
 func (code MessageheaderResponseRequest) Code() string {
-	switch code {
-	case MessageheaderResponseRequestAlways:
-		return "always"
-	case MessageheaderResponseRequestOnError:
-		return "on-error"
-	case MessageheaderResponseRequestNever:
-		return "never"
-	case MessageheaderResponseRequestOnSuccess:
-		return "on-success"
-	}
-	return "<unknown>"
+	return string(code)
 }
 
 func (code MessageheaderResponseRequest) Display() string {
