@@ -146,7 +146,7 @@ func (r DeviceRequest) ResourceType() string {
 	return "DeviceRequest"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r DeviceRequest) MarshalJSON() ([]byte, error) {
 	type Wrapper DeviceRequest
 	return marshalJSON(r.ResourceType(), Wrapper(r))

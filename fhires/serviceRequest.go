@@ -249,7 +249,7 @@ func (r ServiceRequest) ResourceType() string {
 	return "ServiceRequest"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r ServiceRequest) MarshalJSON() ([]byte, error) {
 	type Wrapper ServiceRequest
 	return marshalJSON(r.ResourceType(), Wrapper(r))

@@ -115,7 +115,7 @@ func (r EncounterHistory) ResourceType() string {
 	return "EncounterHistory"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r EncounterHistory) MarshalJSON() ([]byte, error) {
 	type Wrapper EncounterHistory
 	return marshalJSON(r.ResourceType(), Wrapper(r))

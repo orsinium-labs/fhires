@@ -1291,7 +1291,7 @@ func (r ExplanationOfBenefit) ResourceType() string {
 	return "ExplanationOfBenefit"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r ExplanationOfBenefit) MarshalJSON() ([]byte, error) {
 	type Wrapper ExplanationOfBenefit
 	return marshalJSON(r.ResourceType(), Wrapper(r))

@@ -190,7 +190,7 @@ func (r EventDefinition) ResourceType() string {
 	return "EventDefinition"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r EventDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper EventDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))

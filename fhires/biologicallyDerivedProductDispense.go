@@ -103,7 +103,7 @@ func (r BiologicallyDerivedProductDispense) ResourceType() string {
 	return "BiologicallyDerivedProductDispense"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r BiologicallyDerivedProductDispense) MarshalJSON() ([]byte, error) {
 	type Wrapper BiologicallyDerivedProductDispense
 	return marshalJSON(r.ResourceType(), Wrapper(r))

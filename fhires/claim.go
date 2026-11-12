@@ -738,7 +738,7 @@ func (r Claim) ResourceType() string {
 	return "Claim"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Claim) MarshalJSON() ([]byte, error) {
 	type Wrapper Claim
 	return marshalJSON(r.ResourceType(), Wrapper(r))

@@ -234,7 +234,7 @@ func (r GenomicStudy) ResourceType() string {
 	return "GenomicStudy"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r GenomicStudy) MarshalJSON() ([]byte, error) {
 	type Wrapper GenomicStudy
 	return marshalJSON(r.ResourceType(), Wrapper(r))

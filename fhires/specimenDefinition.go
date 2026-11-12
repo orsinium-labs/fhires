@@ -306,7 +306,7 @@ func (r SpecimenDefinition) ResourceType() string {
 	return "SpecimenDefinition"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r SpecimenDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper SpecimenDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))

@@ -162,7 +162,7 @@ func (r CompartmentDefinition) ResourceType() string {
 	return "CompartmentDefinition"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r CompartmentDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper CompartmentDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))

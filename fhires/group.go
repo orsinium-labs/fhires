@@ -152,7 +152,7 @@ func (r Group) ResourceType() string {
 	return "Group"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Group) MarshalJSON() ([]byte, error) {
 	type Wrapper Group
 	return marshalJSON(r.ResourceType(), Wrapper(r))

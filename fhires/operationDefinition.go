@@ -341,7 +341,7 @@ func (r OperationDefinition) ResourceType() string {
 	return "OperationDefinition"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r OperationDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper OperationDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))

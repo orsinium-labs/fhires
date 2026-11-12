@@ -97,7 +97,7 @@ func (r SubscriptionStatus) ResourceType() string {
 	return "SubscriptionStatus"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r SubscriptionStatus) MarshalJSON() ([]byte, error) {
 	type Wrapper SubscriptionStatus
 	return marshalJSON(r.ResourceType(), Wrapper(r))

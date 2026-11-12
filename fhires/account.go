@@ -282,7 +282,7 @@ func (r Account) ResourceType() string {
 	return "Account"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Account) MarshalJSON() ([]byte, error) {
 	type Wrapper Account
 	return marshalJSON(r.ResourceType(), Wrapper(r))

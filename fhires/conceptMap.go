@@ -515,7 +515,7 @@ func (r ConceptMap) ResourceType() string {
 	return "ConceptMap"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r ConceptMap) MarshalJSON() ([]byte, error) {
 	type Wrapper ConceptMap
 	return marshalJSON(r.ResourceType(), Wrapper(r))

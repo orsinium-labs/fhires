@@ -183,7 +183,7 @@ func (r DiagnosticReport) ResourceType() string {
 	return "DiagnosticReport"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r DiagnosticReport) MarshalJSON() ([]byte, error) {
 	type Wrapper DiagnosticReport
 	return marshalJSON(r.ResourceType(), Wrapper(r))

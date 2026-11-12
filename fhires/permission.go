@@ -199,7 +199,7 @@ func (r Permission) ResourceType() string {
 	return "Permission"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Permission) MarshalJSON() ([]byte, error) {
 	type Wrapper Permission
 	return marshalJSON(r.ResourceType(), Wrapper(r))

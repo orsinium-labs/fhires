@@ -40,7 +40,7 @@ func (r DomainResource) ResourceType() string {
 	return "DomainResource"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r DomainResource) MarshalJSON() ([]byte, error) {
 	type Wrapper DomainResource
 	return marshalJSON(r.ResourceType(), Wrapper(r))

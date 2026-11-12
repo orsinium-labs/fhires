@@ -50,7 +50,7 @@ func (r FormularyItem) ResourceType() string {
 	return "FormularyItem"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r FormularyItem) MarshalJSON() ([]byte, error) {
 	type Wrapper FormularyItem
 	return marshalJSON(r.ResourceType(), Wrapper(r))

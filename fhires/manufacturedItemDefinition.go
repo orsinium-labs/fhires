@@ -169,7 +169,7 @@ func (r ManufacturedItemDefinition) ResourceType() string {
 	return "ManufacturedItemDefinition"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r ManufacturedItemDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper ManufacturedItemDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))

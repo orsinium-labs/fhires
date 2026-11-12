@@ -424,7 +424,7 @@ func (r ExampleScenario) ResourceType() string {
 	return "ExampleScenario"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r ExampleScenario) MarshalJSON() ([]byte, error) {
 	type Wrapper ExampleScenario
 	return marshalJSON(r.ResourceType(), Wrapper(r))

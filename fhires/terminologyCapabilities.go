@@ -437,7 +437,7 @@ func (r TerminologyCapabilities) ResourceType() string {
 	return "TerminologyCapabilities"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r TerminologyCapabilities) MarshalJSON() ([]byte, error) {
 	type Wrapper TerminologyCapabilities
 	return marshalJSON(r.ResourceType(), Wrapper(r))

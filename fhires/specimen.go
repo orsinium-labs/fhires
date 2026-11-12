@@ -227,7 +227,7 @@ func (r Specimen) ResourceType() string {
 	return "Specimen"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Specimen) MarshalJSON() ([]byte, error) {
 	type Wrapper Specimen
 	return marshalJSON(r.ResourceType(), Wrapper(r))

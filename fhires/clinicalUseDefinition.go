@@ -279,7 +279,7 @@ func (r ClinicalUseDefinition) ResourceType() string {
 	return "ClinicalUseDefinition"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r ClinicalUseDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper ClinicalUseDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))

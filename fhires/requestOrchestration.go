@@ -385,7 +385,7 @@ func (r RequestOrchestration) ResourceType() string {
 	return "RequestOrchestration"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r RequestOrchestration) MarshalJSON() ([]byte, error) {
 	type Wrapper RequestOrchestration
 	return marshalJSON(r.ResourceType(), Wrapper(r))

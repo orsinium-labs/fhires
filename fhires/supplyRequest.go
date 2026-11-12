@@ -114,7 +114,7 @@ func (r SupplyRequest) ResourceType() string {
 	return "SupplyRequest"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r SupplyRequest) MarshalJSON() ([]byte, error) {
 	type Wrapper SupplyRequest
 	return marshalJSON(r.ResourceType(), Wrapper(r))

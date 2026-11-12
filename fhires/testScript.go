@@ -880,7 +880,7 @@ func (r TestScript) ResourceType() string {
 	return "TestScript"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r TestScript) MarshalJSON() ([]byte, error) {
 	type Wrapper TestScript
 	return marshalJSON(r.ResourceType(), Wrapper(r))

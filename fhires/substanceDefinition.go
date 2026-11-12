@@ -473,7 +473,7 @@ func (r SubstanceDefinition) ResourceType() string {
 	return "SubstanceDefinition"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r SubstanceDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper SubstanceDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))

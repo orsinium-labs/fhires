@@ -68,7 +68,7 @@ func (r PaymentNotice) ResourceType() string {
 	return "PaymentNotice"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r PaymentNotice) MarshalJSON() ([]byte, error) {
 	type Wrapper PaymentNotice
 	return marshalJSON(r.ResourceType(), Wrapper(r))

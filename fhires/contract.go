@@ -679,7 +679,7 @@ func (r Contract) ResourceType() string {
 	return "Contract"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Contract) MarshalJSON() ([]byte, error) {
 	type Wrapper Contract
 	return marshalJSON(r.ResourceType(), Wrapper(r))

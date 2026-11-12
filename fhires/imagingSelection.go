@@ -252,7 +252,7 @@ func (r ImagingSelection) ResourceType() string {
 	return "ImagingSelection"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r ImagingSelection) MarshalJSON() ([]byte, error) {
 	type Wrapper ImagingSelection
 	return marshalJSON(r.ResourceType(), Wrapper(r))

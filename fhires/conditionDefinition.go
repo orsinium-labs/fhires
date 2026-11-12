@@ -283,7 +283,7 @@ func (r ConditionDefinition) ResourceType() string {
 	return "ConditionDefinition"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r ConditionDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper ConditionDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))

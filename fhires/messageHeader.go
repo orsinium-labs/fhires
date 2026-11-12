@@ -184,7 +184,7 @@ func (r MessageHeader) ResourceType() string {
 	return "MessageHeader"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r MessageHeader) MarshalJSON() ([]byte, error) {
 	type Wrapper MessageHeader
 	return marshalJSON(r.ResourceType(), Wrapper(r))

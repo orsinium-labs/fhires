@@ -167,7 +167,7 @@ func (r CarePlan) ResourceType() string {
 	return "CarePlan"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r CarePlan) MarshalJSON() ([]byte, error) {
 	type Wrapper CarePlan
 	return marshalJSON(r.ResourceType(), Wrapper(r))

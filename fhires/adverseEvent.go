@@ -290,7 +290,7 @@ func (r AdverseEvent) ResourceType() string {
 	return "AdverseEvent"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r AdverseEvent) MarshalJSON() ([]byte, error) {
 	type Wrapper AdverseEvent
 	return marshalJSON(r.ResourceType(), Wrapper(r))

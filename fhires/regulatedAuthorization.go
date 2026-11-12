@@ -114,7 +114,7 @@ func (r RegulatedAuthorization) ResourceType() string {
 	return "RegulatedAuthorization"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r RegulatedAuthorization) MarshalJSON() ([]byte, error) {
 	type Wrapper RegulatedAuthorization
 	return marshalJSON(r.ResourceType(), Wrapper(r))

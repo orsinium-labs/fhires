@@ -279,7 +279,7 @@ func (r Consent) ResourceType() string {
 	return "Consent"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Consent) MarshalJSON() ([]byte, error) {
 	type Wrapper Consent
 	return marshalJSON(r.ResourceType(), Wrapper(r))

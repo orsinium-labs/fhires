@@ -332,7 +332,7 @@ func (r ActivityDefinition) ResourceType() string {
 	return "ActivityDefinition"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r ActivityDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper ActivityDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))

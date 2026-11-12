@@ -85,7 +85,7 @@ func (r DeviceAssociation) ResourceType() string {
 	return "DeviceAssociation"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r DeviceAssociation) MarshalJSON() ([]byte, error) {
 	type Wrapper DeviceAssociation
 	return marshalJSON(r.ResourceType(), Wrapper(r))

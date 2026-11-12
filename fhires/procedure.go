@@ -218,7 +218,7 @@ func (r Procedure) ResourceType() string {
 	return "Procedure"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Procedure) MarshalJSON() ([]byte, error) {
 	type Wrapper Procedure
 	return marshalJSON(r.ResourceType(), Wrapper(r))

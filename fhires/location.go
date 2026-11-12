@@ -145,7 +145,7 @@ func (r Location) ResourceType() string {
 	return "Location"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Location) MarshalJSON() ([]byte, error) {
 	type Wrapper Location
 	return marshalJSON(r.ResourceType(), Wrapper(r))

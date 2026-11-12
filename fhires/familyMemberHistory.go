@@ -222,7 +222,7 @@ func (r FamilyMemberHistory) ResourceType() string {
 	return "FamilyMemberHistory"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r FamilyMemberHistory) MarshalJSON() ([]byte, error) {
 	type Wrapper FamilyMemberHistory
 	return marshalJSON(r.ResourceType(), Wrapper(r))

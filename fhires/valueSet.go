@@ -667,7 +667,7 @@ func (r ValueSet) ResourceType() string {
 	return "ValueSet"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r ValueSet) MarshalJSON() ([]byte, error) {
 	type Wrapper ValueSet
 	return marshalJSON(r.ResourceType(), Wrapper(r))

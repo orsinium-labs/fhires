@@ -141,7 +141,7 @@ func (r Practitioner) ResourceType() string {
 	return "Practitioner"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Practitioner) MarshalJSON() ([]byte, error) {
 	type Wrapper Practitioner
 	return marshalJSON(r.ResourceType(), Wrapper(r))

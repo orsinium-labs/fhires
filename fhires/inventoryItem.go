@@ -254,7 +254,7 @@ func (r InventoryItem) ResourceType() string {
 	return "InventoryItem"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r InventoryItem) MarshalJSON() ([]byte, error) {
 	type Wrapper InventoryItem
 	return marshalJSON(r.ResourceType(), Wrapper(r))

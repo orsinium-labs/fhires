@@ -200,7 +200,7 @@ func (r Library) ResourceType() string {
 	return "Library"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Library) MarshalJSON() ([]byte, error) {
 	type Wrapper Library
 	return marshalJSON(r.ResourceType(), Wrapper(r))

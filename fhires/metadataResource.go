@@ -181,7 +181,7 @@ func (r MetadataResource) ResourceType() string {
 	return "MetadataResource"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r MetadataResource) MarshalJSON() ([]byte, error) {
 	type Wrapper MetadataResource
 	return marshalJSON(r.ResourceType(), Wrapper(r))

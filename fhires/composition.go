@@ -281,7 +281,7 @@ func (r Composition) ResourceType() string {
 	return "Composition"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Composition) MarshalJSON() ([]byte, error) {
 	type Wrapper Composition
 	return marshalJSON(r.ResourceType(), Wrapper(r))

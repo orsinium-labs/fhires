@@ -73,7 +73,7 @@ func (r Linkage) ResourceType() string {
 	return "Linkage"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Linkage) MarshalJSON() ([]byte, error) {
 	type Wrapper Linkage
 	return marshalJSON(r.ResourceType(), Wrapper(r))

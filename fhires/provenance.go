@@ -157,7 +157,7 @@ func (r Provenance) ResourceType() string {
 	return "Provenance"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Provenance) MarshalJSON() ([]byte, error) {
 	type Wrapper Provenance
 	return marshalJSON(r.ResourceType(), Wrapper(r))

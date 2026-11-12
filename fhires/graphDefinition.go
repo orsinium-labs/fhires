@@ -248,7 +248,7 @@ func (r GraphDefinition) ResourceType() string {
 	return "GraphDefinition"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r GraphDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper GraphDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))

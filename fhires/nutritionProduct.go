@@ -185,7 +185,7 @@ func (r NutritionProduct) ResourceType() string {
 	return "NutritionProduct"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r NutritionProduct) MarshalJSON() ([]byte, error) {
 	type Wrapper NutritionProduct
 	return marshalJSON(r.ResourceType(), Wrapper(r))

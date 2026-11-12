@@ -168,7 +168,7 @@ func (r Condition) ResourceType() string {
 	return "Condition"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Condition) MarshalJSON() ([]byte, error) {
 	type Wrapper Condition
 	return marshalJSON(r.ResourceType(), Wrapper(r))

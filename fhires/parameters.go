@@ -107,7 +107,7 @@ func (r Parameters) ResourceType() string {
 	return "Parameters"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Parameters) MarshalJSON() ([]byte, error) {
 	type Wrapper Parameters
 	return marshalJSON(r.ResourceType(), Wrapper(r))

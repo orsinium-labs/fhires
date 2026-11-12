@@ -287,7 +287,7 @@ func (r ObservationDefinition) ResourceType() string {
 	return "ObservationDefinition"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r ObservationDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper ObservationDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))

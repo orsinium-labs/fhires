@@ -226,7 +226,7 @@ func (r PackagedProductDefinition) ResourceType() string {
 	return "PackagedProductDefinition"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r PackagedProductDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper PackagedProductDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))

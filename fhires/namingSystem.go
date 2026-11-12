@@ -244,7 +244,7 @@ func (r NamingSystem) ResourceType() string {
 	return "NamingSystem"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r NamingSystem) MarshalJSON() ([]byte, error) {
 	type Wrapper NamingSystem
 	return marshalJSON(r.ResourceType(), Wrapper(r))

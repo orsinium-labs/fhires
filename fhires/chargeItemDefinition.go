@@ -235,7 +235,7 @@ func (r ChargeItemDefinition) ResourceType() string {
 	return "ChargeItemDefinition"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r ChargeItemDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper ChargeItemDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))

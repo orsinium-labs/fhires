@@ -402,7 +402,7 @@ func (r CodeSystem) ResourceType() string {
 	return "CodeSystem"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r CodeSystem) MarshalJSON() ([]byte, error) {
 	type Wrapper CodeSystem
 	return marshalJSON(r.ResourceType(), Wrapper(r))

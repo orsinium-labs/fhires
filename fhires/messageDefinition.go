@@ -220,7 +220,7 @@ func (r MessageDefinition) ResourceType() string {
 	return "MessageDefinition"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r MessageDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper MessageDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))

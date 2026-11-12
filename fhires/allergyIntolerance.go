@@ -180,7 +180,7 @@ func (r AllergyIntolerance) ResourceType() string {
 	return "AllergyIntolerance"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r AllergyIntolerance) MarshalJSON() ([]byte, error) {
 	type Wrapper AllergyIntolerance
 	return marshalJSON(r.ResourceType(), Wrapper(r))

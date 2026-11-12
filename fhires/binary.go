@@ -31,7 +31,7 @@ func (r Binary) ResourceType() string {
 	return "Binary"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Binary) MarshalJSON() ([]byte, error) {
 	type Wrapper Binary
 	return marshalJSON(r.ResourceType(), Wrapper(r))

@@ -519,7 +519,7 @@ func (r Measure) ResourceType() string {
 	return "Measure"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Measure) MarshalJSON() ([]byte, error) {
 	type Wrapper Measure
 	return marshalJSON(r.ResourceType(), Wrapper(r))

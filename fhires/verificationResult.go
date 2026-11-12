@@ -167,7 +167,7 @@ func (r VerificationResult) ResourceType() string {
 	return "VerificationResult"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r VerificationResult) MarshalJSON() ([]byte, error) {
 	type Wrapper VerificationResult
 	return marshalJSON(r.ResourceType(), Wrapper(r))

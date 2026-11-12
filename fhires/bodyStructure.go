@@ -151,7 +151,7 @@ func (r BodyStructure) ResourceType() string {
 	return "BodyStructure"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r BodyStructure) MarshalJSON() ([]byte, error) {
 	type Wrapper BodyStructure
 	return marshalJSON(r.ResourceType(), Wrapper(r))

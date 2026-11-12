@@ -817,7 +817,7 @@ func (r Citation) ResourceType() string {
 	return "Citation"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Citation) MarshalJSON() ([]byte, error) {
 	type Wrapper Citation
 	return marshalJSON(r.ResourceType(), Wrapper(r))

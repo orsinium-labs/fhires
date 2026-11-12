@@ -353,7 +353,7 @@ func (r Observation) ResourceType() string {
 	return "Observation"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r Observation) MarshalJSON() ([]byte, error) {
 	type Wrapper Observation
 	return marshalJSON(r.ResourceType(), Wrapper(r))

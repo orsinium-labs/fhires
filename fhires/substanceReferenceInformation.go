@@ -141,7 +141,7 @@ func (r SubstanceReferenceInformation) ResourceType() string {
 	return "SubstanceReferenceInformation"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r SubstanceReferenceInformation) MarshalJSON() ([]byte, error) {
 	type Wrapper SubstanceReferenceInformation
 	return marshalJSON(r.ResourceType(), Wrapper(r))

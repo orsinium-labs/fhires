@@ -240,7 +240,7 @@ func (r CoverageEligibilityRequest) ResourceType() string {
 	return "CoverageEligibilityRequest"
 }
 
-// MarshalJSON implements json.Marshaler
+// MarshalJSON implements [json.Marshaler]
 func (r CoverageEligibilityRequest) MarshalJSON() ([]byte, error) {
 	type Wrapper CoverageEligibilityRequest
 	return marshalJSON(r.ResourceType(), Wrapper(r))
