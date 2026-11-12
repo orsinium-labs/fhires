@@ -36,6 +36,16 @@ func TestJSONRoundTrip(t *testing.T) {
 	eq(t, resIn.Status, resOut.Status)
 }
 
+func TestXMLEncode(t *testing.T) {
+	resIn := fhires.Encounter{
+		ID:     new("123"),
+		Status: fhires.EncounterStatusCompleted,
+	}
+	raw, err := xml.Marshal(resIn)
+	noErr(t, err)
+	eq(t, string(raw), `<Encounter><id>123</id><status>completed</status></Encounter>`)
+}
+
 func TestXMLRoundTrip(t *testing.T) {
 	resIn := fhires.Encounter{
 		ID:     new("123"),
@@ -72,3 +82,26 @@ func TestAnyResourceJSONRoundTrip(t *testing.T) {
 	eq(t, *resIn.ID, *resOut.ID)
 	eq(t, resIn.Status, resOut.Status)
 }
+
+// func TestAnyResourceXMLRoundTrip(t *testing.T) {
+// 	bunIn := fhires.Bundle{
+// 		Entry: []fhires.BundleEntry{{
+// 			Resource: fhires.AnyResource{
+// 				Value: fhires.Encounter{
+// 					ID:     new("123"),
+// 					Status: fhires.EncounterStatusCompleted,
+// 				},
+// 			},
+// 		}},
+// 	}
+// 	raw, err := xml.Marshal(bunIn)
+// 	noErr(t, err)
+
+// 	var bunOut fhires.Bundle
+// 	err = xml.Unmarshal(raw, &bunOut)
+// 	noErr(t, err)
+// 	resIn := bunIn.Entry[0].Resource.Value.(fhires.Encounter)
+// 	resOut := bunOut.Entry[0].Resource.Value.(fhires.Encounter)
+// 	eq(t, *resIn.ID, *resOut.ID)
+// 	eq(t, resIn.Status, resOut.Status)
+// }
