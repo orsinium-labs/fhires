@@ -135,21 +135,6 @@ func marshalXML(e *xml.Encoder, start xml.StartElement, t string, r any) error {
 
 	var pending *xml.StartElement
 	var value []byte
-	flushStart := func() error {
-		if pending == nil {
-			return nil
-		}
-		if len(value) > 0 {
-			pending.Attr = append(pending.Attr, xml.Attr{
-				Name:  xml.Name{Local: "value"},
-				Value: string(value),
-			})
-		}
-		err := e.EncodeToken(*pending)
-		pending = nil
-		value = nil
-		return err
-	}
 
 	d := xml.NewDecoder(&b)
 	for {
@@ -160,24 +145,39 @@ func marshalXML(e *xml.Encoder, start xml.StartElement, t string, r any) error {
 		if err != nil {
 			return fmt.Errorf("get next token: %w", err)
 		}
-		switch element := token.(type) {
-		case xml.CharData:
+
+		// If there is inner text in the tag, store it
+		// as `value` attribute of the tag instead.
+		charData, isCharData := token.(xml.CharData)
+		if isCharData {
 			if pending != nil {
-				value = append(value, element...)
-				continue
+				value = append(value, charData...)
 			}
-		default:
-			err := flushStart()
+			continue
+		}
+
+		// Flush the pending start tag.
+		if pending != nil {
+			if len(value) > 0 {
+				pending.Attr = append(pending.Attr, xml.Attr{
+					Name:  xml.Name{Local: "value"},
+					Value: string(value),
+				})
+			}
+			err = e.EncodeToken(*pending)
+			pending = nil
+			value = value[:0]
 			if err != nil {
 				return fmt.Errorf("encode start element: %w", err)
 			}
-			startElement, isStart := token.(xml.StartElement)
-			if isStart {
-				copy := startElement.Copy()
-				pending = &copy
-				continue
-			}
 		}
+
+		startElement, isStart := token.(xml.StartElement)
+		if isStart {
+			pending = new(startElement.Copy())
+			continue
+		}
+
 		err = e.EncodeToken(token)
 		if err != nil {
 			return fmt.Errorf("encode element: %w", err)
