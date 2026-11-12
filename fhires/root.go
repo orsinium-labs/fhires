@@ -53,18 +53,21 @@ func (r AnyResource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *AnyResource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	r.Value = GetResource(start.Name.Local)
-	if val == nil {
-		return fmt.Errorf("unsupported resourceType: %s", res.XMLName)
-	}
-	err = xml.Unmarshal(b, &val)
+	t, err := d.Token()
 	if err != nil {
 		return err
 	}
-	if val == nil {
-		return errors.New("resource was not decoded")
+	e := t.(xml.StartElement)
+	r.Value = GetResource(e.Name.Local)
+	err = d.DecodeElement(&r.Value, &start)
+	if err != nil {
+		return err
 	}
-	r.Value = val
+	t, err = d.Token()
+	if err != nil {
+		return err
+	}
+	_ = t.(xml.EndElement)
 	return nil
 }
 
