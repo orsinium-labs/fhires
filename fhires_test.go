@@ -53,7 +53,7 @@ func TestXMLEncode(t *testing.T) {
 	}
 	raw, err := xml.Marshal(resIn)
 	noErr(t, err)
-	eq(t, string(raw), `<Encounter><id>123</id><status>completed</status></Encounter>`)
+	eq(t, string(raw), `<Encounter ><id>123</id><status>completed</status></Encounter>`)
 }
 
 func TestXMLDecode(t *testing.T) {

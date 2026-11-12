@@ -124,6 +124,61 @@ func marshalJSON(t string, r any) ([]byte, error) {
 	return b, nil
 }
 
+func marshalXML(e *xml.Encoder, start xml.StartElement, t string, r any) error {
+	var b bytes.Buffer
+	err := xml.NewEncoder(&b).Encode(r)
+	if err != nil && err != io.EOF {
+		return fmt.Errorf("encode: %w", err)
+	}
+	d := xml.NewDecoder(&b)
+	var prev *xml.StartElement
+	for {
+		token, err := d.Token()
+		if err != nil && err != io.EOF {
+			return fmt.Errorf("get next token: %w", err)
+		}
+		if token == nil {
+			break
+		}
+		fmt.Printf("%T\n", token)
+		switch element := token.(type) {
+		case xml.StartElement:
+			prev = &element
+		case xml.CharData:
+			err := e.EncodeToken(xml.StartElement{
+				Name: prev.Name,
+				Attr: []xml.Attr{{
+					Name:  xml.Name{Local: "value"},
+					Value: string(element),
+				}},
+			})
+			if err != nil {
+				return fmt.Errorf("encode non-value element: %w", err)
+			}
+			prev = nil
+		case xml.EndElement:
+			if prev != nil {
+				err := e.EncodeElement(*prev, start)
+				if err != nil {
+					return fmt.Errorf("encode element: %w", err)
+				}
+			} else {
+				err := e.EncodeToken(token)
+				if err != nil {
+					return fmt.Errorf("encode element: %w", err)
+				}
+			}
+
+		default:
+			err := e.EncodeToken(token)
+			if err != nil {
+				return fmt.Errorf("encode element: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
 func unmarshalXML(d *xml.Decoder, start xml.StartElement, t string, r any) error {
 	var b bytes.Buffer
 	encoder := xml.NewEncoder(&b)
