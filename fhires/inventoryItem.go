@@ -264,7 +264,7 @@ func (r InventoryItem) MarshalJSON() ([]byte, error) {
 func (r *InventoryItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper InventoryItem
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = InventoryItem(w)
 	return err
 }

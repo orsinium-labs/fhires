@@ -827,7 +827,7 @@ func (r Citation) MarshalJSON() ([]byte, error) {
 func (r *Citation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Citation
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Citation(w)
 	return err
 }

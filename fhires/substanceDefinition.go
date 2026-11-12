@@ -483,7 +483,7 @@ func (r SubstanceDefinition) MarshalJSON() ([]byte, error) {
 func (r *SubstanceDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper SubstanceDefinition
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = SubstanceDefinition(w)
 	return err
 }

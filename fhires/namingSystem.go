@@ -254,7 +254,7 @@ func (r NamingSystem) MarshalJSON() ([]byte, error) {
 func (r *NamingSystem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper NamingSystem
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = NamingSystem(w)
 	return err
 }

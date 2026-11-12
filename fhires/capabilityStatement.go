@@ -692,7 +692,7 @@ func (r CapabilityStatement) MarshalJSON() ([]byte, error) {
 func (r *CapabilityStatement) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper CapabilityStatement
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = CapabilityStatement(w)
 	return err
 }

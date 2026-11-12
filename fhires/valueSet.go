@@ -677,7 +677,7 @@ func (r ValueSet) MarshalJSON() ([]byte, error) {
 func (r *ValueSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ValueSet
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = ValueSet(w)
 	return err
 }

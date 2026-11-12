@@ -194,7 +194,7 @@ func (r MessageHeader) MarshalJSON() ([]byte, error) {
 func (r *MessageHeader) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper MessageHeader
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = MessageHeader(w)
 	return err
 }

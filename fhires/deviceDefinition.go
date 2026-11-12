@@ -588,7 +588,7 @@ func (r DeviceDefinition) MarshalJSON() ([]byte, error) {
 func (r *DeviceDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper DeviceDefinition
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = DeviceDefinition(w)
 	return err
 }

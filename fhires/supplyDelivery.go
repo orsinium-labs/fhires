@@ -112,7 +112,7 @@ func (r SupplyDelivery) MarshalJSON() ([]byte, error) {
 func (r *SupplyDelivery) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper SupplyDelivery
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = SupplyDelivery(w)
 	return err
 }

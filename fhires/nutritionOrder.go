@@ -447,7 +447,7 @@ func (r NutritionOrder) MarshalJSON() ([]byte, error) {
 func (r *NutritionOrder) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper NutritionOrder
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = NutritionOrder(w)
 	return err
 }

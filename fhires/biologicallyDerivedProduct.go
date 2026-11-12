@@ -155,7 +155,7 @@ func (r BiologicallyDerivedProduct) MarshalJSON() ([]byte, error) {
 func (r *BiologicallyDerivedProduct) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper BiologicallyDerivedProduct
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = BiologicallyDerivedProduct(w)
 	return err
 }

@@ -78,7 +78,7 @@ func (r Schedule) MarshalJSON() ([]byte, error) {
 func (r *Schedule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Schedule
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Schedule(w)
 	return err
 }

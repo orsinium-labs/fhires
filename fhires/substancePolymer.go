@@ -242,7 +242,7 @@ func (r SubstancePolymer) MarshalJSON() ([]byte, error) {
 func (r *SubstancePolymer) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper SubstancePolymer
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = SubstancePolymer(w)
 	return err
 }

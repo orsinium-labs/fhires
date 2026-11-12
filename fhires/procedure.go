@@ -228,7 +228,7 @@ func (r Procedure) MarshalJSON() ([]byte, error) {
 func (r *Procedure) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Procedure
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Procedure(w)
 	return err
 }

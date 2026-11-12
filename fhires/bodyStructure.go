@@ -161,7 +161,7 @@ func (r BodyStructure) MarshalJSON() ([]byte, error) {
 func (r *BodyStructure) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper BodyStructure
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = BodyStructure(w)
 	return err
 }

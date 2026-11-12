@@ -210,7 +210,7 @@ func (r Library) MarshalJSON() ([]byte, error) {
 func (r *Library) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Library
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Library(w)
 	return err
 }

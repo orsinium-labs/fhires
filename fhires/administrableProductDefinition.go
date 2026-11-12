@@ -214,7 +214,7 @@ func (r AdministrableProductDefinition) MarshalJSON() ([]byte, error) {
 func (r *AdministrableProductDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper AdministrableProductDefinition
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = AdministrableProductDefinition(w)
 	return err
 }

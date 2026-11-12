@@ -151,7 +151,7 @@ func (r SubstanceReferenceInformation) MarshalJSON() ([]byte, error) {
 func (r *SubstanceReferenceInformation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper SubstanceReferenceInformation
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = SubstanceReferenceInformation(w)
 	return err
 }

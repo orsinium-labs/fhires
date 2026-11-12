@@ -302,7 +302,7 @@ func (r AuditEvent) MarshalJSON() ([]byte, error) {
 func (r *AuditEvent) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper AuditEvent
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = AuditEvent(w)
 	return err
 }

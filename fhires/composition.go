@@ -291,7 +291,7 @@ func (r Composition) MarshalJSON() ([]byte, error) {
 func (r *Composition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Composition
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Composition(w)
 	return err
 }

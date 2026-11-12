@@ -316,7 +316,7 @@ func (r SpecimenDefinition) MarshalJSON() ([]byte, error) {
 func (r *SpecimenDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper SpecimenDefinition
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = SpecimenDefinition(w)
 	return err
 }

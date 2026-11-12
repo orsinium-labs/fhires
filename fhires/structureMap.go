@@ -461,7 +461,7 @@ func (r StructureMap) MarshalJSON() ([]byte, error) {
 func (r *StructureMap) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper StructureMap
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = StructureMap(w)
 	return err
 }

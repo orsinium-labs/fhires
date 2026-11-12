@@ -82,7 +82,7 @@ func (r Flag) MarshalJSON() ([]byte, error) {
 func (r *Flag) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Flag
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Flag(w)
 	return err
 }

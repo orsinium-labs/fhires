@@ -100,7 +100,7 @@ func (r GuidanceResponse) MarshalJSON() ([]byte, error) {
 func (r *GuidanceResponse) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper GuidanceResponse
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = GuidanceResponse(w)
 	return err
 }

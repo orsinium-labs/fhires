@@ -80,7 +80,7 @@ func (r ImmunizationEvaluation) MarshalJSON() ([]byte, error) {
 func (r *ImmunizationEvaluation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ImmunizationEvaluation
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = ImmunizationEvaluation(w)
 	return err
 }

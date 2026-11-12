@@ -68,7 +68,7 @@ func (r EnrollmentResponse) MarshalJSON() ([]byte, error) {
 func (r *EnrollmentResponse) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper EnrollmentResponse
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = EnrollmentResponse(w)
 	return err
 }

@@ -269,7 +269,7 @@ func (r CoverageEligibilityResponse) MarshalJSON() ([]byte, error) {
 func (r *CoverageEligibilityResponse) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper CoverageEligibilityResponse
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = CoverageEligibilityResponse(w)
 	return err
 }

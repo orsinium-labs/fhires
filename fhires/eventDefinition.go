@@ -200,7 +200,7 @@ func (r EventDefinition) MarshalJSON() ([]byte, error) {
 func (r *EventDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper EventDefinition
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = EventDefinition(w)
 	return err
 }

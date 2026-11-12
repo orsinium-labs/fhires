@@ -177,7 +177,7 @@ func (r VerificationResult) MarshalJSON() ([]byte, error) {
 func (r *VerificationResult) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper VerificationResult
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = VerificationResult(w)
 	return err
 }

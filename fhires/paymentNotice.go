@@ -78,7 +78,7 @@ func (r PaymentNotice) MarshalJSON() ([]byte, error) {
 func (r *PaymentNotice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper PaymentNotice
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = PaymentNotice(w)
 	return err
 }

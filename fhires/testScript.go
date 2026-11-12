@@ -890,7 +890,7 @@ func (r TestScript) MarshalJSON() ([]byte, error) {
 func (r *TestScript) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper TestScript
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = TestScript(w)
 	return err
 }

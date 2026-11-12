@@ -236,7 +236,7 @@ func (r PackagedProductDefinition) MarshalJSON() ([]byte, error) {
 func (r *PackagedProductDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper PackagedProductDefinition
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = PackagedProductDefinition(w)
 	return err
 }

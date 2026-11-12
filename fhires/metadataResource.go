@@ -191,7 +191,7 @@ func (r MetadataResource) MarshalJSON() ([]byte, error) {
 func (r *MetadataResource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper MetadataResource
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = MetadataResource(w)
 	return err
 }

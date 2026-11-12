@@ -195,7 +195,7 @@ func (r QuestionnaireResponse) MarshalJSON() ([]byte, error) {
 func (r *QuestionnaireResponse) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper QuestionnaireResponse
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = QuestionnaireResponse(w)
 	return err
 }

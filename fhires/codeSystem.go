@@ -412,7 +412,7 @@ func (r CodeSystem) MarshalJSON() ([]byte, error) {
 func (r *CodeSystem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper CodeSystem
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = CodeSystem(w)
 	return err
 }

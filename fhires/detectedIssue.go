@@ -155,7 +155,7 @@ func (r DetectedIssue) MarshalJSON() ([]byte, error) {
 func (r *DetectedIssue) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper DetectedIssue
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = DetectedIssue(w)
 	return err
 }

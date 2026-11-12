@@ -155,7 +155,7 @@ func (r Location) MarshalJSON() ([]byte, error) {
 func (r *Location) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Location
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Location(w)
 	return err
 }

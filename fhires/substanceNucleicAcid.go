@@ -173,7 +173,7 @@ func (r SubstanceNucleicAcid) MarshalJSON() ([]byte, error) {
 func (r *SubstanceNucleicAcid) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper SubstanceNucleicAcid
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = SubstanceNucleicAcid(w)
 	return err
 }

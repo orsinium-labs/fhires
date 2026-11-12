@@ -124,7 +124,7 @@ func (r SupplyRequest) MarshalJSON() ([]byte, error) {
 func (r *SupplyRequest) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper SupplyRequest
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = SupplyRequest(w)
 	return err
 }

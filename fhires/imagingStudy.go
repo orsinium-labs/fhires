@@ -239,7 +239,7 @@ func (r ImagingStudy) MarshalJSON() ([]byte, error) {
 func (r *ImagingStudy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ImagingStudy
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = ImagingStudy(w)
 	return err
 }

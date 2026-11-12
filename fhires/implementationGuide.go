@@ -562,7 +562,7 @@ func (r ImplementationGuide) MarshalJSON() ([]byte, error) {
 func (r *ImplementationGuide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ImplementationGuide
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = ImplementationGuide(w)
 	return err
 }

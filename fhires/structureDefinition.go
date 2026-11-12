@@ -309,7 +309,7 @@ func (r StructureDefinition) MarshalJSON() ([]byte, error) {
 func (r *StructureDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper StructureDefinition
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = StructureDefinition(w)
 	return err
 }

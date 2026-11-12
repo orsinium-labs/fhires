@@ -162,7 +162,7 @@ func (r Group) MarshalJSON() ([]byte, error) {
 func (r *Group) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Group
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Group(w)
 	return err
 }

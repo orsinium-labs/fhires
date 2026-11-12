@@ -254,7 +254,7 @@ func (r DocumentReference) MarshalJSON() ([]byte, error) {
 func (r *DocumentReference) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper DocumentReference
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = DocumentReference(w)
 	return err
 }

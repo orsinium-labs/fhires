@@ -245,7 +245,7 @@ func (r ChargeItemDefinition) MarshalJSON() ([]byte, error) {
 func (r *ChargeItemDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ChargeItemDefinition
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = ChargeItemDefinition(w)
 	return err
 }

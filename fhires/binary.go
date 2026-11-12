@@ -41,7 +41,7 @@ func (r Binary) MarshalJSON() ([]byte, error) {
 func (r *Binary) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Binary
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Binary(w)
 	return err
 }

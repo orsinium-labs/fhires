@@ -50,7 +50,7 @@ func (r DomainResource) MarshalJSON() ([]byte, error) {
 func (r *DomainResource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper DomainResource
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = DomainResource(w)
 	return err
 }

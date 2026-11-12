@@ -136,7 +136,7 @@ func (r ClinicalImpression) MarshalJSON() ([]byte, error) {
 func (r *ClinicalImpression) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ClinicalImpression
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = ClinicalImpression(w)
 	return err
 }

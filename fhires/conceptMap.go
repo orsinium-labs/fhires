@@ -525,7 +525,7 @@ func (r ConceptMap) MarshalJSON() ([]byte, error) {
 func (r *ConceptMap) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ConceptMap
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = ConceptMap(w)
 	return err
 }

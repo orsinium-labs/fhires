@@ -174,7 +174,7 @@ func (r Subscription) MarshalJSON() ([]byte, error) {
 func (r *Subscription) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Subscription
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Subscription(w)
 	return err
 }

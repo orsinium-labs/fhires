@@ -104,7 +104,7 @@ func (r Substance) MarshalJSON() ([]byte, error) {
 func (r *Substance) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Substance
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Substance(w)
 	return err
 }

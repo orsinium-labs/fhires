@@ -124,7 +124,7 @@ func (r RegulatedAuthorization) MarshalJSON() ([]byte, error) {
 func (r *RegulatedAuthorization) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper RegulatedAuthorization
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = RegulatedAuthorization(w)
 	return err
 }

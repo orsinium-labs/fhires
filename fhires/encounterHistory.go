@@ -125,7 +125,7 @@ func (r EncounterHistory) MarshalJSON() ([]byte, error) {
 func (r *EncounterHistory) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper EncounterHistory
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = EncounterHistory(w)
 	return err
 }

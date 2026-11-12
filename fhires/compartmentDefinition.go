@@ -172,7 +172,7 @@ func (r CompartmentDefinition) MarshalJSON() ([]byte, error) {
 func (r *CompartmentDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper CompartmentDefinition
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = CompartmentDefinition(w)
 	return err
 }

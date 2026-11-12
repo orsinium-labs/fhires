@@ -434,7 +434,7 @@ func (r ExampleScenario) MarshalJSON() ([]byte, error) {
 func (r *ExampleScenario) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ExampleScenario
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = ExampleScenario(w)
 	return err
 }

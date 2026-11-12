@@ -232,7 +232,7 @@ func (r FamilyMemberHistory) MarshalJSON() ([]byte, error) {
 func (r *FamilyMemberHistory) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper FamilyMemberHistory
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = FamilyMemberHistory(w)
 	return err
 }

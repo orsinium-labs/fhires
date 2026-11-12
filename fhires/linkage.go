@@ -83,7 +83,7 @@ func (r Linkage) MarshalJSON() ([]byte, error) {
 func (r *Linkage) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Linkage
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Linkage(w)
 	return err
 }

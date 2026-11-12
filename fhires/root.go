@@ -111,9 +111,12 @@ func marshalJSON(t string, r any) ([]byte, error) {
 	return b, nil
 }
 
-func unmarshalXML(d *xml.Decoder, start xml.StartElement, r any) error {
+func unmarshalXML(d *xml.Decoder, start xml.StartElement, t string, r any) error {
 	var b bytes.Buffer
 	encoder := xml.NewEncoder(&b)
+	if start.Name.Local != t {
+		return fmt.Errorf("unexpected XML tag: expected %s, got %s", t, start.Name.Local)
+	}
 	err := encoder.EncodeToken(start)
 	if err != nil {
 		return fmt.Errorf("encode start token: %w", err)

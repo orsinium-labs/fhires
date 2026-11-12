@@ -447,7 +447,7 @@ func (r TerminologyCapabilities) MarshalJSON() ([]byte, error) {
 func (r *TerminologyCapabilities) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper TerminologyCapabilities
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = TerminologyCapabilities(w)
 	return err
 }

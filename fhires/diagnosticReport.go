@@ -193,7 +193,7 @@ func (r DiagnosticReport) MarshalJSON() ([]byte, error) {
 func (r *DiagnosticReport) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper DiagnosticReport
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = DiagnosticReport(w)
 	return err
 }

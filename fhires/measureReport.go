@@ -326,7 +326,7 @@ func (r MeasureReport) MarshalJSON() ([]byte, error) {
 func (r *MeasureReport) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper MeasureReport
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = MeasureReport(w)
 	return err
 }

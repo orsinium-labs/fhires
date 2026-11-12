@@ -372,7 +372,7 @@ func (r EvidenceVariable) MarshalJSON() ([]byte, error) {
 func (r *EvidenceVariable) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper EvidenceVariable
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = EvidenceVariable(w)
 	return err
 }

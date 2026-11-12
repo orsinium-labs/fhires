@@ -289,7 +289,7 @@ func (r Consent) MarshalJSON() ([]byte, error) {
 func (r *Consent) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Consent
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Consent(w)
 	return err
 }

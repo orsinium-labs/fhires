@@ -402,7 +402,7 @@ func (r Questionnaire) MarshalJSON() ([]byte, error) {
 func (r *Questionnaire) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Questionnaire
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Questionnaire(w)
 	return err
 }

@@ -153,7 +153,7 @@ func (r Person) MarshalJSON() ([]byte, error) {
 func (r *Person) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Person
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Person(w)
 	return err
 }

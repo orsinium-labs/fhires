@@ -161,7 +161,7 @@ func (r Communication) MarshalJSON() ([]byte, error) {
 func (r *Communication) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Communication
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Communication(w)
 	return err
 }

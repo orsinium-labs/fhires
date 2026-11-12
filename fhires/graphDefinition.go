@@ -258,7 +258,7 @@ func (r GraphDefinition) MarshalJSON() ([]byte, error) {
 func (r *GraphDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper GraphDefinition
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = GraphDefinition(w)
 	return err
 }

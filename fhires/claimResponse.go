@@ -783,7 +783,7 @@ func (r ClaimResponse) MarshalJSON() ([]byte, error) {
 func (r *ClaimResponse) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ClaimResponse
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = ClaimResponse(w)
 	return err
 }

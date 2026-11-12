@@ -190,7 +190,7 @@ func (r AllergyIntolerance) MarshalJSON() ([]byte, error) {
 func (r *AllergyIntolerance) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper AllergyIntolerance
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = AllergyIntolerance(w)
 	return err
 }

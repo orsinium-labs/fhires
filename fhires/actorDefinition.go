@@ -157,7 +157,7 @@ func (r ActorDefinition) MarshalJSON() ([]byte, error) {
 func (r *ActorDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ActorDefinition
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = ActorDefinition(w)
 	return err
 }

@@ -324,7 +324,7 @@ func (r InsurancePlan) MarshalJSON() ([]byte, error) {
 func (r *InsurancePlan) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper InsurancePlan
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = InsurancePlan(w)
 	return err
 }

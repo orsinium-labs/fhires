@@ -92,7 +92,7 @@ func (r AppointmentResponse) MarshalJSON() ([]byte, error) {
 func (r *AppointmentResponse) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper AppointmentResponse
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = AppointmentResponse(w)
 	return err
 }

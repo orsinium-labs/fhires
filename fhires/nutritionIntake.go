@@ -207,7 +207,7 @@ func (r NutritionIntake) MarshalJSON() ([]byte, error) {
 func (r *NutritionIntake) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper NutritionIntake
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = NutritionIntake(w)
 	return err
 }

@@ -163,7 +163,7 @@ func (r ChargeItem) MarshalJSON() ([]byte, error) {
 func (r *ChargeItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ChargeItem
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = ChargeItem(w)
 	return err
 }

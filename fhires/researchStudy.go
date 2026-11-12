@@ -349,7 +349,7 @@ func (r ResearchStudy) MarshalJSON() ([]byte, error) {
 func (r *ResearchStudy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ResearchStudy
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = ResearchStudy(w)
 	return err
 }

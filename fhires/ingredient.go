@@ -216,7 +216,7 @@ func (r Ingredient) MarshalJSON() ([]byte, error) {
 func (r *Ingredient) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Ingredient
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Ingredient(w)
 	return err
 }

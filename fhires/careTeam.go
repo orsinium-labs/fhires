@@ -126,7 +126,7 @@ func (r CareTeam) MarshalJSON() ([]byte, error) {
 func (r *CareTeam) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper CareTeam
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = CareTeam(w)
 	return err
 }

@@ -196,7 +196,7 @@ func (r PaymentReconciliation) MarshalJSON() ([]byte, error) {
 func (r *PaymentReconciliation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper PaymentReconciliation
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = PaymentReconciliation(w)
 	return err
 }

@@ -297,7 +297,7 @@ func (r ObservationDefinition) MarshalJSON() ([]byte, error) {
 func (r *ObservationDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ObservationDefinition
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = ObservationDefinition(w)
 	return err
 }

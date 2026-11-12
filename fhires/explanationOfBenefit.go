@@ -1301,7 +1301,7 @@ func (r ExplanationOfBenefit) MarshalJSON() ([]byte, error) {
 func (r *ExplanationOfBenefit) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ExplanationOfBenefit
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = ExplanationOfBenefit(w)
 	return err
 }

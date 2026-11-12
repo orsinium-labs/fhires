@@ -179,7 +179,7 @@ func (r ManufacturedItemDefinition) MarshalJSON() ([]byte, error) {
 func (r *ManufacturedItemDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ManufacturedItemDefinition
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = ManufacturedItemDefinition(w)
 	return err
 }

@@ -151,7 +151,7 @@ func (r Practitioner) MarshalJSON() ([]byte, error) {
 func (r *Practitioner) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Practitioner
 	w := Wrapper(*r)
-	err := unmarshalXML(d, start, &w)
+	err := unmarshalXML(d, start, r.ResourceType(), &w)
 	*r = Practitioner(w)
 	return err
 }
