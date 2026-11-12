@@ -54,36 +54,36 @@ func (r AnyResource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *AnyResource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	for {
-		token, err := d.Token()
-		if err != nil {
-			return err
-		}
-		switch token := token.(type) {
-		case xml.StartElement:
-			if r.Value != nil {
-				return errors.New("expected a single resource element")
-			}
-			r.Value = GetResource(token.Name.Local)
-			if r.Value == nil {
-				return fmt.Errorf("unsupported resourceType: %s", token.Name.Local)
-			}
-			ptr := reflect.New(reflect.TypeOf(r.Value))
-			if err := d.DecodeElement(ptr.Interface(), &token); err != nil {
-				return err
-			}
-			r.Value = ptr.Elem().Interface().(IResource)
-		case xml.EndElement:
-			if r.Value == nil {
-				return errors.New("not a valid resource")
-			}
-			return nil
-		case xml.CharData:
-			if len(bytes.TrimSpace(token)) != 0 {
-				return errors.New("unexpected text in resource wrapper")
-			}
-		}
+	rawToken, err := d.Token()
+	if err != nil {
+		return err
 	}
+	token, isStart := rawToken.(xml.StartElement)
+	if !isStart {
+		return fmt.Errorf("expected XML opening tag, got %T", token)
+	}
+	if r.Value != nil {
+		return errors.New("expected a single resource element")
+	}
+	r.Value = GetResource(token.Name.Local)
+	if r.Value == nil {
+		return fmt.Errorf("unsupported resourceType: %s", token.Name.Local)
+	}
+	ptr := reflect.New(reflect.TypeOf(r.Value))
+	if err := d.DecodeElement(ptr.Interface(), &token); err != nil {
+		return err
+	}
+	r.Value = ptr.Elem().Interface().(IResource)
+
+	rawToken, err = d.Token()
+	if err != nil {
+		return err
+	}
+	_, isEnd := rawToken.(xml.EndElement)
+	if !isEnd {
+		return fmt.Errorf("expected XML closing tag, got %T", token)
+	}
+	return nil
 }
 
 // MarshalJSONTo implements [json.MarshalerTo].
