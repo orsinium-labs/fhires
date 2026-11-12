@@ -74,6 +74,13 @@ func (r Schedule) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r Schedule) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper Schedule
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *Schedule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Schedule

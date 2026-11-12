@@ -240,6 +240,13 @@ func (r GenomicStudy) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r GenomicStudy) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper GenomicStudy
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *GenomicStudy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper GenomicStudy

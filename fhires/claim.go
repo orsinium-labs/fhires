@@ -744,6 +744,13 @@ func (r Claim) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r Claim) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper Claim
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *Claim) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Claim

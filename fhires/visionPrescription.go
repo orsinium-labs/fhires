@@ -152,6 +152,13 @@ func (r VisionPrescription) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r VisionPrescription) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper VisionPrescription
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *VisionPrescription) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper VisionPrescription

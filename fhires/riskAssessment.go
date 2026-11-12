@@ -130,6 +130,13 @@ func (r RiskAssessment) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r RiskAssessment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper RiskAssessment
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *RiskAssessment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper RiskAssessment

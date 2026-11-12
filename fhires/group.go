@@ -158,6 +158,13 @@ func (r Group) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r Group) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper Group
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *Group) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Group

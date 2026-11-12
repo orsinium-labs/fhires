@@ -149,6 +149,13 @@ func (r Person) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r Person) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper Person
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *Person) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Person

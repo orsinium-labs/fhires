@@ -305,6 +305,13 @@ func (r StructureDefinition) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r StructureDefinition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper StructureDefinition
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *StructureDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper StructureDefinition

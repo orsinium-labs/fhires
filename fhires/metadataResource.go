@@ -187,6 +187,13 @@ func (r MetadataResource) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r MetadataResource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper MetadataResource
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *MetadataResource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper MetadataResource

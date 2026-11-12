@@ -82,6 +82,13 @@ func (r OrganizationAffiliation) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r OrganizationAffiliation) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper OrganizationAffiliation
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *OrganizationAffiliation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper OrganizationAffiliation

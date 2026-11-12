@@ -121,6 +121,13 @@ func (r EncounterHistory) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r EncounterHistory) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper EncounterHistory
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *EncounterHistory) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper EncounterHistory

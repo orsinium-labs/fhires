@@ -203,6 +203,13 @@ func (r NutritionIntake) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r NutritionIntake) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper NutritionIntake
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *NutritionIntake) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper NutritionIntake

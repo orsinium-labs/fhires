@@ -74,6 +74,13 @@ func (r PaymentNotice) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r PaymentNotice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper PaymentNotice
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *PaymentNotice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper PaymentNotice

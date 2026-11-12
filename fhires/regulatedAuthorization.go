@@ -120,6 +120,13 @@ func (r RegulatedAuthorization) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r RegulatedAuthorization) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper RegulatedAuthorization
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *RegulatedAuthorization) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper RegulatedAuthorization

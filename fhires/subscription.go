@@ -170,6 +170,13 @@ func (r Subscription) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r Subscription) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper Subscription
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *Subscription) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Subscription

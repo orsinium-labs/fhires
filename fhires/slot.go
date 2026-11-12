@@ -74,6 +74,13 @@ func (r Slot) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r Slot) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper Slot
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *Slot) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Slot

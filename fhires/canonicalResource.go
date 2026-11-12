@@ -143,6 +143,13 @@ func (r CanonicalResource) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r CanonicalResource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper CanonicalResource
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *CanonicalResource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper CanonicalResource

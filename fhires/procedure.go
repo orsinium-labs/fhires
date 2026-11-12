@@ -224,6 +224,13 @@ func (r Procedure) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r Procedure) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper Procedure
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *Procedure) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Procedure

@@ -186,6 +186,13 @@ func (r AllergyIntolerance) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r AllergyIntolerance) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper AllergyIntolerance
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *AllergyIntolerance) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper AllergyIntolerance

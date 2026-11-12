@@ -123,6 +123,13 @@ func (r DeviceUsage) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r DeviceUsage) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper DeviceUsage
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *DeviceUsage) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper DeviceUsage

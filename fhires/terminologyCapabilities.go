@@ -443,6 +443,13 @@ func (r TerminologyCapabilities) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r TerminologyCapabilities) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper TerminologyCapabilities
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *TerminologyCapabilities) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper TerminologyCapabilities

@@ -250,6 +250,13 @@ func (r NamingSystem) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r NamingSystem) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper NamingSystem
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *NamingSystem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper NamingSystem

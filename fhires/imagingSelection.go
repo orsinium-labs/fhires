@@ -258,6 +258,13 @@ func (r ImagingSelection) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r ImagingSelection) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper ImagingSelection
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *ImagingSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ImagingSelection

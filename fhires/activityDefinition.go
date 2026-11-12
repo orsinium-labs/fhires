@@ -338,6 +338,13 @@ func (r ActivityDefinition) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r ActivityDefinition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper ActivityDefinition
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *ActivityDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ActivityDefinition

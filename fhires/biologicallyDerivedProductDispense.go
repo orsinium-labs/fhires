@@ -109,6 +109,13 @@ func (r BiologicallyDerivedProductDispense) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r BiologicallyDerivedProductDispense) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper BiologicallyDerivedProductDispense
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *BiologicallyDerivedProductDispense) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper BiologicallyDerivedProductDispense

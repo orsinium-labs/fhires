@@ -102,6 +102,13 @@ func (r PractitionerRole) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r PractitionerRole) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper PractitionerRole
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *PractitionerRole) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper PractitionerRole

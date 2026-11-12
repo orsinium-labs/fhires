@@ -320,6 +320,13 @@ func (r InsurancePlan) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r InsurancePlan) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper InsurancePlan
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *InsurancePlan) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper InsurancePlan

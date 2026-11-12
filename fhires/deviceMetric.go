@@ -111,6 +111,13 @@ func (r DeviceMetric) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r DeviceMetric) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper DeviceMetric
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *DeviceMetric) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper DeviceMetric

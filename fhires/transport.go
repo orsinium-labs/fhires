@@ -331,6 +331,13 @@ func (r Transport) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r Transport) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper Transport
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *Transport) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Transport

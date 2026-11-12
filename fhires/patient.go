@@ -225,6 +225,13 @@ func (r Patient) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r Patient) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper Patient
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *Patient) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Patient

@@ -120,6 +120,13 @@ func (r SupplyRequest) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r SupplyRequest) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper SupplyRequest
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *SupplyRequest) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper SupplyRequest

@@ -159,6 +159,13 @@ func (r ChargeItem) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r ChargeItem) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper ChargeItem
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *ChargeItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ChargeItem

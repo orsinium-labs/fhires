@@ -312,6 +312,13 @@ func (r SpecimenDefinition) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r SpecimenDefinition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper SpecimenDefinition
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *SpecimenDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper SpecimenDefinition

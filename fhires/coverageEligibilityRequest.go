@@ -246,6 +246,13 @@ func (r CoverageEligibilityRequest) MarshalJSON() ([]byte, error) {
 	return marshalJSON(r.ResourceType(), Wrapper(r))
 }
 
+// UnmarshalXML implements [xml.Marshaler].
+func (r CoverageEligibilityRequest) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type Wrapper CoverageEligibilityRequest
+	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
+}
+
+
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *CoverageEligibilityRequest) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper CoverageEligibilityRequest
