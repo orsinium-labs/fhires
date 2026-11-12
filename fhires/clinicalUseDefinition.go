@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A single issue - either an indication, contraindication, interaction or an undesirable effect for a medicinal product, medication, device or procedure.
 //
 // Status: draft
@@ -281,4 +283,13 @@ func (r ClinicalUseDefinition) ResourceType() string {
 func (r ClinicalUseDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper ClinicalUseDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *ClinicalUseDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper ClinicalUseDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = ClinicalUseDefinition(w)
+	return err
 }

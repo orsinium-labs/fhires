@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A search parameter that defines a named search item that can be used to search/filter on a resource.
 //
 // Status: draft
@@ -226,4 +228,13 @@ func (r SearchParameter) ResourceType() string {
 func (r SearchParameter) MarshalJSON() ([]byte, error) {
 	type Wrapper SearchParameter
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *SearchParameter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper SearchParameter
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = SearchParameter(w)
+	return err
 }

@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Record details about an anatomical structure.
 //
 //	This resource may be used when a coded concept does not provide the necessary detail needed for the use case.
@@ -153,4 +155,13 @@ func (r BodyStructure) ResourceType() string {
 func (r BodyStructure) MarshalJSON() ([]byte, error) {
 	type Wrapper BodyStructure
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *BodyStructure) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper BodyStructure
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = BodyStructure(w)
+	return err
 }

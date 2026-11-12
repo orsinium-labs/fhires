@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A food or supplement that is consumed by patients.
 //
 // Status: draft
@@ -187,4 +189,13 @@ func (r NutritionProduct) ResourceType() string {
 func (r NutritionProduct) MarshalJSON() ([]byte, error) {
 	type Wrapper NutritionProduct
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *NutritionProduct) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper NutritionProduct
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = NutritionProduct(w)
+	return err
 }

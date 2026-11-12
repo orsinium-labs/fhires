@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A compartment definition that defines how resources are accessed on a server.
 //
 // Status: draft
@@ -164,4 +166,13 @@ func (r CompartmentDefinition) ResourceType() string {
 func (r CompartmentDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper CompartmentDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *CompartmentDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper CompartmentDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = CompartmentDefinition(w)
+	return err
 }

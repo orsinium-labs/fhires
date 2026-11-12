@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A biological material originating from a biological entity intended to be transplanted or infused into another (possibly the same) biological entity.
 //
 // Status: draft
@@ -147,4 +149,13 @@ func (r BiologicallyDerivedProduct) ResourceType() string {
 func (r BiologicallyDerivedProduct) MarshalJSON() ([]byte, error) {
 	type Wrapper BiologicallyDerivedProduct
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *BiologicallyDerivedProduct) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper BiologicallyDerivedProduct
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = BiologicallyDerivedProduct(w)
+	return err
 }

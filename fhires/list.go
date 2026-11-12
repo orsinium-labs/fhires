@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A List is a curated collection of resources, for things such as problem lists, allergy lists, facility list, organization list, etc.
 //
 // Status: draft
@@ -121,4 +123,13 @@ func (r List) ResourceType() string {
 func (r List) MarshalJSON() ([]byte, error) {
 	type Wrapper List
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *List) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper List
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = List(w)
+	return err
 }

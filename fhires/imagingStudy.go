@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Representation of the content produced in a DICOM imaging study.
 //
 // A study comprises a set of series, each of which includes a set of Service-Object Pair Instances (SOP Instances - images or other data) acquired or produced in a common context.  A series is of only one modality (e.g. X-ray, CT, MR, ultrasound), but a study may have multiple series of different modalities.
@@ -231,4 +233,13 @@ func (r ImagingStudy) ResourceType() string {
 func (r ImagingStudy) MarshalJSON() ([]byte, error) {
 	type Wrapper ImagingStudy
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *ImagingStudy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper ImagingStudy
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = ImagingStudy(w)
+	return err
 }

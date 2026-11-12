@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The technical details of an endpoint that can be used for electronic services, such as for web services providing XDS.b, a REST endpoint for another FHIR server, or a s/Mime email address.
 //
 // This may include any security context information.
@@ -123,4 +125,13 @@ func (r Endpoint) ResourceType() string {
 func (r Endpoint) MarshalJSON() ([]byte, error) {
 	type Wrapper Endpoint
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Endpoint) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Endpoint
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Endpoint(w)
+	return err
 }

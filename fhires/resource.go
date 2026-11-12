@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The base class for all resources.
 type BaseResource struct {
 	// The logical id of the resource, as used in the URL for the resource.
@@ -45,4 +47,13 @@ func (r Resource) ResourceType() string {
 func (r Resource) MarshalJSON() ([]byte, error) {
 	type Wrapper Resource
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Resource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Resource
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Resource(w)
+	return err
 }

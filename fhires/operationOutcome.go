@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A collection of error, warning, or information messages that result from a system action.
 //
 // Status: active
@@ -95,4 +97,13 @@ func (r OperationOutcome) ResourceType() string {
 func (r OperationOutcome) MarshalJSON() ([]byte, error) {
 	type Wrapper OperationOutcome
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *OperationOutcome) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper OperationOutcome
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = OperationOutcome(w)
+	return err
 }

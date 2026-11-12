@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The ActorDefinition resource is used to describe an actor - a human or an application that plays a role in data exchange, and that may have obligations associated with the role the actor plays.
 //
 // Status: draft
@@ -149,4 +151,13 @@ func (r ActorDefinition) ResourceType() string {
 func (r ActorDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper ActorDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *ActorDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper ActorDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = ActorDefinition(w)
+	return err
 }

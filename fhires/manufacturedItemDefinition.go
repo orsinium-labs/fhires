@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The definition and characteristics of a medicinal manufactured item, such as a tablet or capsule, as contained in a packaged medicinal product.
 //
 // Status: draft
@@ -171,4 +173,13 @@ func (r ManufacturedItemDefinition) ResourceType() string {
 func (r ManufacturedItemDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper ManufacturedItemDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *ManufacturedItemDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper ManufacturedItemDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = ManufacturedItemDefinition(w)
+	return err
 }

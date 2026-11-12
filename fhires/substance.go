@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A homogeneous material with a definite composition.
 //
 // Status: draft
@@ -96,4 +98,13 @@ func (r Substance) ResourceType() string {
 func (r Substance) MarshalJSON() ([]byte, error) {
 	type Wrapper Substance
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Substance) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Substance
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Substance(w)
+	return err
 }

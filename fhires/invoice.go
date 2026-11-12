@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Invoice containing collected ChargeItems from an Account with calculated individual and total price for Billing purpose.
 //
 // Status: draft
@@ -161,4 +163,13 @@ func (r Invoice) ResourceType() string {
 func (r Invoice) MarshalJSON() ([]byte, error) {
 	type Wrapper Invoice
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Invoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Invoice
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Invoice(w)
+	return err
 }

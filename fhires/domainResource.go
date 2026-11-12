@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A resource that includes narrative, extensions, and contained resources.
 //
 // Status: active
@@ -42,4 +44,13 @@ func (r DomainResource) ResourceType() string {
 func (r DomainResource) MarshalJSON() ([]byte, error) {
 	type Wrapper DomainResource
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *DomainResource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper DomainResource
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = DomainResource(w)
+	return err
 }

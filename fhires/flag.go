@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Prospective warnings of potential issues when providing care to the patient.
 //
 // Status: draft
@@ -74,4 +76,13 @@ func (r Flag) ResourceType() string {
 func (r Flag) MarshalJSON() ([]byte, error) {
 	type Wrapper Flag
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Flag) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Flag
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Flag(w)
+	return err
 }

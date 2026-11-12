@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // This resource allows for the definition of some activity to be performed, independent of a particular patient, practitioner, or other performance context.
 //
 // Status: draft
@@ -334,4 +336,13 @@ func (r ActivityDefinition) ResourceType() string {
 func (r ActivityDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper ActivityDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *ActivityDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper ActivityDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = ActivityDefinition(w)
+	return err
 }

@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A medically related item or items, in a container or package.
 //
 // Status: draft
@@ -228,4 +230,13 @@ func (r PackagedProductDefinition) ResourceType() string {
 func (r PackagedProductDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper PackagedProductDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *PackagedProductDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper PackagedProductDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = PackagedProductDefinition(w)
+	return err
 }

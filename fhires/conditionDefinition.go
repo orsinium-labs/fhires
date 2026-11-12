@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A definition of a condition and information relevant to managing it.
 //
 // Status: draft
@@ -285,4 +287,13 @@ func (r ConditionDefinition) ResourceType() string {
 func (r ConditionDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper ConditionDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *ConditionDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper ConditionDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = ConditionDefinition(w)
+	return err
 }

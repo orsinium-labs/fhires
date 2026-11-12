@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Defines the characteristics of a message that can be shared between systems, including the type of event that initiates the message, the content to be transmitted and what response(s), if any, are permitted.
 //
 // Purpose: Allows messages to be defined once and re-used across systems.
@@ -222,4 +224,13 @@ func (r MessageDefinition) ResourceType() string {
 func (r MessageDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper MessageDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *MessageDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper MessageDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = MessageDefinition(w)
+	return err
 }

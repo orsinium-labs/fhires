@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Describes a stream of resource state changes identified by trigger criteria and annotated with labels useful to filter projections from this topic.
 //
 // Status: draft
@@ -368,4 +370,13 @@ func (r SubscriptionTopic) ResourceType() string {
 func (r SubscriptionTopic) MarshalJSON() ([]byte, error) {
 	type Wrapper SubscriptionTopic
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *SubscriptionTopic) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper SubscriptionTopic
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = SubscriptionTopic(w)
+	return err
 }

@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The subscription resource describes a particular client's request to be notified about a SubscriptionTopic.
 //
 // Status: draft
@@ -166,4 +168,13 @@ func (r Subscription) ResourceType() string {
 func (r Subscription) MarshalJSON() ([]byte, error) {
 	type Wrapper Subscription
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Subscription) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Subscription
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Subscription(w)
+	return err
 }

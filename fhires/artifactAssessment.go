@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // This Resource provides one or more comments, classifiers or ratings about a Resource and supports attribution and rights management metadata for the added content.
 //
 // Status: draft
@@ -126,4 +128,13 @@ func (r ArtifactAssessment) ResourceType() string {
 func (r ArtifactAssessment) MarshalJSON() ([]byte, error) {
 	type Wrapper ArtifactAssessment
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *ArtifactAssessment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper ArtifactAssessment
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = ArtifactAssessment(w)
+	return err
 }

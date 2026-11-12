@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A clinical condition, problem, diagnosis, or other event, situation, issue, or clinical concept that has risen to a level of concern.
 //
 // Status: draft
@@ -170,4 +172,13 @@ func (r Condition) ResourceType() string {
 func (r Condition) MarshalJSON() ([]byte, error) {
 	type Wrapper Condition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Condition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Condition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Condition(w)
+	return err
 }

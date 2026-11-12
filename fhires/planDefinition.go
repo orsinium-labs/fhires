@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact.
 //
 // The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.
@@ -668,4 +670,13 @@ func (r PlanDefinition) ResourceType() string {
 func (r PlanDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper PlanDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *PlanDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper PlanDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = PlanDefinition(w)
+	return err
 }

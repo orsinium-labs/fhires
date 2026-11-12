@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Indicates that a medication product is to be or has been dispensed for a named person/patient.
 //
 //	This includes a description of the medication product (supply) provided and the instructions for administering the medication.  The medication dispense is the result of a pharmacy system responding to a medication order.
@@ -190,4 +192,13 @@ func (r MedicationDispense) ResourceType() string {
 func (r MedicationDispense) MarshalJSON() ([]byte, error) {
 	type Wrapper MedicationDispense
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *MedicationDispense) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper MedicationDispense
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = MedicationDispense(w)
+	return err
 }

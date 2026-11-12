@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Information about a person that is involved in a patient's health or the care for a patient, but who is not the target of healthcare, nor has a formal responsibility in the care process.
 //
 // Purpose: Need to track persons related to the patient or the healthcare process.
@@ -113,4 +115,13 @@ func (r RelatedPerson) ResourceType() string {
 func (r RelatedPerson) MarshalJSON() ([]byte, error) {
 	type Wrapper RelatedPerson
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *RelatedPerson) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper RelatedPerson
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = RelatedPerson(w)
+	return err
 }

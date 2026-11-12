@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The ChargeItemDefinition resource provides the properties that apply to the (billing) codes necessary to calculate costs and prices.
 //
 // The properties may differ largely depending on type and realm, therefore this resource gives only a rough structure and requires profiling for each type of billing code system.
@@ -237,4 +239,13 @@ func (r ChargeItemDefinition) ResourceType() string {
 func (r ChargeItemDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper ChargeItemDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *ChargeItemDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper ChargeItemDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = ChargeItemDefinition(w)
+	return err
 }

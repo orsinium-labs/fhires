@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Represents a defined collection of entities that may be discussed or acted upon collectively but which are not expected to act collectively, and are not formally or legally recognized; i.e.
 //
 // a collection of entities that isn't an Organization.
@@ -154,4 +156,13 @@ func (r Group) ResourceType() string {
 func (r Group) MarshalJSON() ([]byte, error) {
 	type Wrapper Group
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Group) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Group
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Group(w)
+	return err
 }

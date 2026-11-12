@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Todo.
 //
 // Status: draft
@@ -143,4 +145,13 @@ func (r SubstanceReferenceInformation) ResourceType() string {
 func (r SubstanceReferenceInformation) MarshalJSON() ([]byte, error) {
 	type Wrapper SubstanceReferenceInformation
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *SubstanceReferenceInformation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper SubstanceReferenceInformation
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = SubstanceReferenceInformation(w)
+	return err
 }

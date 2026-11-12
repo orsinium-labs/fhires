@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // This resource is primarily used for the identification and definition of a medication, including ingredients, for the purposes of prescribing, dispensing, and administering a medication as well as for making statements about medication use.
 //
 // Status: draft
@@ -134,4 +136,13 @@ func (r Medication) ResourceType() string {
 func (r Medication) MarshalJSON() ([]byte, error) {
 	type Wrapper Medication
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Medication) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Medication
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Medication(w)
+	return err
 }

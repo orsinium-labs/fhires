@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Details of a Health Insurance product/plan provided by an organization.
 //
 // Status: draft
@@ -316,4 +318,13 @@ func (r InsurancePlan) ResourceType() string {
 func (r InsurancePlan) MarshalJSON() ([]byte, error) {
 	type Wrapper InsurancePlan
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *InsurancePlan) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper InsurancePlan
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = InsurancePlan(w)
+	return err
 }

@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // This is a specialized resource that defines the characteristics and capabilities of a device.
 //
 // Status: draft
@@ -580,4 +582,13 @@ func (r DeviceDefinition) ResourceType() string {
 func (r DeviceDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper DeviceDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *DeviceDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper DeviceDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = DeviceDefinition(w)
+	return err
 }

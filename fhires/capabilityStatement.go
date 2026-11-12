@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A Capability Statement documents a set of capabilities (behaviors) of a FHIR Server or Client for a particular version of FHIR that may be used as a statement of actual server functionality or a statement of required or desired server implementation.
 //
 // Status: active
@@ -684,4 +686,13 @@ func (r CapabilityStatement) ResourceType() string {
 func (r CapabilityStatement) MarshalJSON() ([]byte, error) {
 	type Wrapper CapabilityStatement
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *CapabilityStatement) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper CapabilityStatement
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = CapabilityStatement(w)
+	return err
 }

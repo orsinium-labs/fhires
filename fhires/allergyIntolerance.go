@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Risk of harmful or undesirable, physiological response which is unique to an individual and associated with exposure to a substance.
 //
 // Purpose: To record a clinical assessment of a propensity, or potential risk to an individual, of an adverse reaction upon future exposure to the specified substance, or class of substance.
@@ -182,4 +184,13 @@ func (r AllergyIntolerance) ResourceType() string {
 func (r AllergyIntolerance) MarshalJSON() ([]byte, error) {
 	type Wrapper AllergyIntolerance
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *AllergyIntolerance) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper AllergyIntolerance
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = AllergyIntolerance(w)
+	return err
 }

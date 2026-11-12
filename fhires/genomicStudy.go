@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A set of analyses performed to analyze and generate genomic data.
 //
 // Status: draft
@@ -236,4 +238,13 @@ func (r GenomicStudy) ResourceType() string {
 func (r GenomicStudy) MarshalJSON() ([]byte, error) {
 	type Wrapper GenomicStudy
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *GenomicStudy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper GenomicStudy
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = GenomicStudy(w)
+	return err
 }

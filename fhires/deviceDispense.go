@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Indicates that a device is to be or has been dispensed for a named person/patient.
 //
 //	This includes a description of the product (supply) provided and the instructions for using the device.
@@ -131,4 +133,13 @@ func (r DeviceDispense) ResourceType() string {
 func (r DeviceDispense) MarshalJSON() ([]byte, error) {
 	type Wrapper DeviceDispense
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *DeviceDispense) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper DeviceDispense
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = DeviceDispense(w)
+	return err
 }

@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Regulatory approval, clearance or licencing related to a regulated product, treatment, facility or activity that is cited in a guidance, regulation, rule or legislative act.
 //
 // An example is Market Authorization relating to a Medicinal Product.
@@ -116,4 +118,13 @@ func (r RegulatedAuthorization) ResourceType() string {
 func (r RegulatedAuthorization) MarshalJSON() ([]byte, error) {
 	type Wrapper RegulatedAuthorization
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *RegulatedAuthorization) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper RegulatedAuthorization
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = RegulatedAuthorization(w)
+	return err
 }

@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The Care Team includes all the people and organizations who plan to participate in the coordination and delivery of care.
 //
 // Status: draft
@@ -118,4 +120,13 @@ func (r CareTeam) ResourceType() string {
 func (r CareTeam) MarshalJSON() ([]byte, error) {
 	type Wrapper CareTeam
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *CareTeam) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper CareTeam
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = CareTeam(w)
+	return err
 }

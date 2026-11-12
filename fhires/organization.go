@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A formally or informally recognized grouping of people or organizations formed for the purpose of achieving some form of collective action.
 //
 //	Includes companies, institutions, corporations, departments, community groups, healthcare practice groups, payer/insurer, etc.
@@ -111,4 +113,13 @@ func (r Organization) ResourceType() string {
 func (r Organization) MarshalJSON() ([]byte, error) {
 	type Wrapper Organization
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Organization) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Organization
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Organization(w)
+	return err
 }

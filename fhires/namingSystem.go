@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A curated namespace that issues unique symbols within that namespace for the identification of concepts, people, devices, etc.
 //
 //	Represents a "System" used within the Identifier and Coding data types.
@@ -246,4 +248,13 @@ func (r NamingSystem) ResourceType() string {
 func (r NamingSystem) MarshalJSON() ([]byte, error) {
 	type Wrapper NamingSystem
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *NamingSystem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper NamingSystem
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = NamingSystem(w)
+	return err
 }

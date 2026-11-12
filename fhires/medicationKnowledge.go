@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Information about a medication that is used to support knowledge.
 //
 // Status: draft
@@ -604,4 +606,13 @@ func (r MedicationKnowledge) ResourceType() string {
 func (r MedicationKnowledge) MarshalJSON() ([]byte, error) {
 	type Wrapper MedicationKnowledge
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *MedicationKnowledge) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper MedicationKnowledge
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = MedicationKnowledge(w)
+	return err
 }

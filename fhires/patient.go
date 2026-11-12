@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Demographics and other administrative information about an individual or animal receiving care or other health-related services.
 //
 // Purpose: Tracking patient is the center of the healthcare process.
@@ -221,4 +223,13 @@ func (r Patient) ResourceType() string {
 func (r Patient) MarshalJSON() ([]byte, error) {
 	type Wrapper Patient
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Patient) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Patient
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Patient(w)
+	return err
 }

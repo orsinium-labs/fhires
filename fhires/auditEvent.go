@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A record of an event relevant for purposes such as operations, privacy, security, maintenance, and performance analysis.
 //
 // Status: draft
@@ -294,4 +296,13 @@ func (r AuditEvent) ResourceType() string {
 func (r AuditEvent) MarshalJSON() ([]byte, error) {
 	type Wrapper AuditEvent
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *AuditEvent) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper AuditEvent
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = AuditEvent(w)
+	return err
 }

@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A record of significant events/milestones key data throughout the history of an Encounter
 //
 // Status: draft
@@ -117,4 +119,13 @@ func (r EncounterHistory) ResourceType() string {
 func (r EncounterHistory) MarshalJSON() ([]byte, error) {
 	type Wrapper EncounterHistory
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *EncounterHistory) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper EncounterHistory
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = EncounterHistory(w)
+	return err
 }

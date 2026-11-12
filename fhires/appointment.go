@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time.
 //
 // This may result in one or more Encounter(s).
@@ -339,4 +341,13 @@ func (r Appointment) ResourceType() string {
 func (r Appointment) MarshalJSON() ([]byte, error) {
 	type Wrapper Appointment
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Appointment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Appointment
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Appointment(w)
+	return err
 }

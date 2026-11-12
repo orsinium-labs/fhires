@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Properties of a substance specific to it being a polymer.
 //
 // Status: draft
@@ -234,4 +236,13 @@ func (r SubstancePolymer) ResourceType() string {
 func (r SubstancePolymer) MarshalJSON() ([]byte, error) {
 	type Wrapper SubstancePolymer
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *SubstancePolymer) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper SubstancePolymer
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = SubstancePolymer(w)
+	return err
 }

@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Demographics and administrative information about a person independent of a specific health-related context.
 //
 // Purpose: Need to track persons potentially across multiple roles.
@@ -145,4 +147,13 @@ func (r Person) ResourceType() string {
 func (r Person) MarshalJSON() ([]byte, error) {
 	type Wrapper Person
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Person) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Person
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Person(w)
+	return err
 }

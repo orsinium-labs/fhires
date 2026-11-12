@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // An action that is or was performed on or for a patient, practitioner, device, organization, or location.
 //
 // For example, this can be a physical intervention on a patient like an operation, or less invasive like long term services, counseling, or hypnotherapy.  This can be a quality or safety inspection for a location, organization, or device.  This can be an accreditation procedure on a practitioner for licensing.
@@ -220,4 +222,13 @@ func (r Procedure) ResourceType() string {
 func (r Procedure) MarshalJSON() ([]byte, error) {
 	type Wrapper Procedure
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Procedure) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Procedure
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Procedure(w)
+	return err
 }

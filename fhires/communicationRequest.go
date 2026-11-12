@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A request to convey information; e.g.
 //
 // the CDS system proposes that an alert be sent to a responsible provider, the CDS system proposes that the public health agency be notified about a reportable condition.
@@ -152,4 +154,13 @@ func (r CommunicationRequest) ResourceType() string {
 func (r CommunicationRequest) MarshalJSON() ([]byte, error) {
 	type Wrapper CommunicationRequest
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *CommunicationRequest) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper CommunicationRequest
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = CommunicationRequest(w)
+	return err
 }

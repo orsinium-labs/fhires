@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A record of association of a device.
 //
 // Status: draft
@@ -87,4 +89,13 @@ func (r DeviceAssociation) ResourceType() string {
 func (r DeviceAssociation) MarshalJSON() ([]byte, error) {
 	type Wrapper DeviceAssociation
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *DeviceAssociation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper DeviceAssociation
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = DeviceAssociation(w)
+	return err
 }

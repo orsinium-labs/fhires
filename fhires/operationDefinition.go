@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A formal computable definition of an operation (on the RESTful interface) or a named query (using the search interaction).
 //
 // Status: active
@@ -343,4 +345,13 @@ func (r OperationDefinition) ResourceType() string {
 func (r OperationDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper OperationDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *OperationDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper OperationDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = OperationDefinition(w)
+	return err
 }

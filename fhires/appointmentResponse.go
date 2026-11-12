@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A reply to an appointment request for a patient and/or practitioner(s), such as a confirmation or rejection.
 //
 // Status: draft
@@ -84,4 +86,13 @@ func (r AppointmentResponse) ResourceType() string {
 func (r AppointmentResponse) MarshalJSON() ([]byte, error) {
 	type Wrapper AppointmentResponse
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *AppointmentResponse) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper AppointmentResponse
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = AppointmentResponse(w)
+	return err
 }

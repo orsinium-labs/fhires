@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Nucleic acids are defined by three distinct elements: the base, sugar and linkage.
 //
 // Individual substance/moiety IDs will be created for each of these elements. The nucleotide sequence will be always entered in the 5’-3’ direction.
@@ -165,4 +167,13 @@ func (r SubstanceNucleicAcid) ResourceType() string {
 func (r SubstanceNucleicAcid) MarshalJSON() ([]byte, error) {
 	type Wrapper SubstanceNucleicAcid
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *SubstanceNucleicAcid) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper SubstanceNucleicAcid
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = SubstanceNucleicAcid(w)
+	return err
 }

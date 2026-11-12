@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The findings and interpretation of diagnostic tests performed on patients, groups of patients, products, substances, devices, and locations, and/or specimens derived from these.
 //
 // The report includes clinical context such as requesting provider information, and some mix of atomic results, images, textual and coded interpretations, and formatted representation of diagnostic reports. The report also includes non-clinical context such as batch analysis and stability reporting of products and substances.
@@ -185,4 +187,13 @@ func (r DiagnosticReport) ResourceType() string {
 func (r DiagnosticReport) MarshalJSON() ([]byte, error) {
 	type Wrapper DiagnosticReport
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *DiagnosticReport) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper DiagnosticReport
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = DiagnosticReport(w)
+	return err
 }

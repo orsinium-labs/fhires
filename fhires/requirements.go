@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The Requirements resource is used to describe an actor - a human or an application that plays a role in data exchange, and that may have obligations associated with the role the actor plays.
 //
 // Status: draft
@@ -212,4 +214,13 @@ func (r Requirements) ResourceType() string {
 func (r Requirements) MarshalJSON() ([]byte, error) {
 	type Wrapper Requirements
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Requirements) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Requirements
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Requirements(w)
+	return err
 }

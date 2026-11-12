@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // This resource provides the status of the payment for goods and services rendered, and the request and response resource references.
 //
 // Status: draft
@@ -70,4 +72,13 @@ func (r PaymentNotice) ResourceType() string {
 func (r PaymentNotice) MarshalJSON() ([]byte, error) {
 	type Wrapper PaymentNotice
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *PaymentNotice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper PaymentNotice
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = PaymentNotice(w)
+	return err
 }

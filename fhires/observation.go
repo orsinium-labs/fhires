@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Measurements and simple assertions made about a patient, device or other subject.
 //
 // Purpose: Observations are a key aspect of healthcare.  This resource is used to capture those that do not require more sophisticated mechanisms.
@@ -355,4 +357,13 @@ func (r Observation) ResourceType() string {
 func (r Observation) MarshalJSON() ([]byte, error) {
 	type Wrapper Observation
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Observation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Observation
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Observation(w)
+	return err
 }

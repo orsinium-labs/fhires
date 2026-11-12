@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // This resource describes the properties (regulated, has real time clock, etc.), adminstrative (manufacturer name, model number, serial number, firmware, etc.), and type (knee replacement, blood pressure cuff, MRI, etc.) of a physical unit (these values do not change much within a given module, for example the serail number, manufacturer name, and model number).
 //
 // An actual unit may consist of several modules in a distinct hierarchy and these are represented by multiple Device resources and bound through the 'parent' element.
@@ -315,4 +317,13 @@ func (r Device) ResourceType() string {
 func (r Device) MarshalJSON() ([]byte, error) {
 	type Wrapper Device
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Device) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Device
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Device(w)
+	return err
 }

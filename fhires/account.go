@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A financial tool for tracking value accrued for a particular purpose.
 //
 //	In the healthcare field, used to track charges for a patient, cost centers, etc.
@@ -284,4 +286,13 @@ func (r Account) ResourceType() string {
 func (r Account) MarshalJSON() ([]byte, error) {
 	type Wrapper Account
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Account) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Account
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Account(w)
+	return err
 }

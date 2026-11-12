@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A TerminologyCapabilities resource documents a set of capabilities (behaviors) of a FHIR Terminology Server that may be used as a statement of actual server functionality or a statement of required or desired server implementation.
 //
 // Status: draft
@@ -439,4 +441,13 @@ func (r TerminologyCapabilities) ResourceType() string {
 func (r TerminologyCapabilities) MarshalJSON() ([]byte, error) {
 	type Wrapper TerminologyCapabilities
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *TerminologyCapabilities) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper TerminologyCapabilities
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = TerminologyCapabilities(w)
+	return err
 }

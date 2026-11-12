@@ -56,6 +56,15 @@ func TestXMLEncode(t *testing.T) {
 	eq(t, string(raw), `<Encounter><id>123</id><status>completed</status></Encounter>`)
 }
 
+func TestXMLDecode(t *testing.T) {
+	var res fhires.Encounter
+	input := `<Encounter><id value="123"/><status value="completed"/></Encounter>`
+	err := xml.Unmarshal([]byte(input), &res)
+	noErr(t, err)
+	eq(t, *res.ID, "123")
+	eq(t, res.Status, fhires.EncounterStatusCompleted)
+}
+
 func TestXMLRoundTrip(t *testing.T) {
 	resIn := fhires.Encounter{
 		ID:     new("123"),

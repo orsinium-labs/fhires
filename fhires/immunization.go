@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Describes the event of a patient being administered a vaccine or a record of an immunization as reported by a patient, a clinician or another party.
 //
 // Status: draft
@@ -241,4 +243,13 @@ func (r Immunization) ResourceType() string {
 func (r Immunization) MarshalJSON() ([]byte, error) {
 	type Wrapper Immunization
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Immunization) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Immunization
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Immunization(w)
+	return err
 }

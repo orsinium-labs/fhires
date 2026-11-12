@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A definition of a FHIR structure.
 //
 // This resource is used to describe the underlying resources, data types defined in FHIR, and also for describing extensions and constraints on resources and data types.
@@ -301,4 +303,13 @@ func (r StructureDefinition) ResourceType() string {
 func (r StructureDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper StructureDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *StructureDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper StructureDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = StructureDefinition(w)
+	return err
 }

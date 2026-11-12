@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The SubscriptionStatus resource describes the state of a Subscription during notifications.
 //
 // It is not persisted.
@@ -99,4 +101,13 @@ func (r SubscriptionStatus) ResourceType() string {
 func (r SubscriptionStatus) MarshalJSON() ([]byte, error) {
 	type Wrapper SubscriptionStatus
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *SubscriptionStatus) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper SubscriptionStatus
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = SubscriptionStatus(w)
+	return err
 }

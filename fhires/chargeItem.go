@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The resource ChargeItem describes the provision of healthcare provider products for a certain patient, therefore referring not only to the product, but containing in addition details of the provision, like date, time, amounts and participating organizations and persons.
 //
 // Main Usage of the ChargeItem is to enable the billing process and internal cost allocation.
@@ -155,4 +157,13 @@ func (r ChargeItem) ResourceType() string {
 func (r ChargeItem) MarshalJSON() ([]byte, error) {
 	type Wrapper ChargeItem
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *ChargeItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper ChargeItem
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = ChargeItem(w)
+	return err
 }

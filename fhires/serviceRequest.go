@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A record of a request for service such as diagnostic investigations, treatments, or operations to be performed.
 //
 // Status: draft
@@ -251,4 +253,13 @@ func (r ServiceRequest) ResourceType() string {
 func (r ServiceRequest) MarshalJSON() ([]byte, error) {
 	type Wrapper ServiceRequest
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *ServiceRequest) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper ServiceRequest
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = ServiceRequest(w)
+	return err
 }

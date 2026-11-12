@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Financial instrument which may be used to reimburse or pay for health care products and services.
 //
 // Includes both insurance and self-payment.
@@ -233,4 +235,13 @@ func (r Coverage) ResourceType() string {
 func (r Coverage) MarshalJSON() ([]byte, error) {
 	type Wrapper Coverage
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Coverage) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Coverage
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Coverage(w)
+	return err
 }

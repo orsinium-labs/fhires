@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The EvidenceVariable resource describes an element that knowledge (Evidence) is about.
 //
 // Purpose: Need to be able to define and reuse the definition of individual elements of a research question.
@@ -364,4 +366,13 @@ func (r EvidenceVariable) ResourceType() string {
 func (r EvidenceVariable) MarshalJSON() ([]byte, error) {
 	type Wrapper EvidenceVariable
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *EvidenceVariable) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper EvidenceVariable
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = EvidenceVariable(w)
+	return err
 }

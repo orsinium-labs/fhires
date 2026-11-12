@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // This resource describes a product or service that is available through a program and includes the conditions and constraints of availability.
 //
 //	All of the information in this resource is specific to the inclusion of the item in the formulary and is not inherent to the item itself.
@@ -52,4 +54,13 @@ func (r FormularyItem) ResourceType() string {
 func (r FormularyItem) MarshalJSON() ([]byte, error) {
 	type Wrapper FormularyItem
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *FormularyItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper FormularyItem
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = FormularyItem(w)
+	return err
 }

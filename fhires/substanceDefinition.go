@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The detailed description of a substance, typically at a level beyond what is used for prescribing.
 //
 // Status: draft
@@ -475,4 +477,13 @@ func (r SubstanceDefinition) ResourceType() string {
 func (r SubstanceDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper SubstanceDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *SubstanceDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper SubstanceDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = SubstanceDefinition(w)
+	return err
 }

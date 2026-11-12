@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A record of dispensation of a biologically derived product.
 //
 // Status: draft
@@ -105,4 +107,13 @@ func (r BiologicallyDerivedProductDispense) ResourceType() string {
 func (r BiologicallyDerivedProductDispense) MarshalJSON() ([]byte, error) {
 	type Wrapper BiologicallyDerivedProductDispense
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *BiologicallyDerivedProductDispense) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper BiologicallyDerivedProductDispense
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = BiologicallyDerivedProductDispense(w)
+	return err
 }

@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Describes a comparison of an immunization event against published recommendations to determine if the administration is "valid" in relation to those  recommendations.
 //
 // Status: draft
@@ -72,4 +74,13 @@ func (r ImmunizationEvaluation) ResourceType() string {
 func (r ImmunizationEvaluation) MarshalJSON() ([]byte, error) {
 	type Wrapper ImmunizationEvaluation
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *ImmunizationEvaluation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper ImmunizationEvaluation
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = ImmunizationEvaluation(w)
+	return err
 }

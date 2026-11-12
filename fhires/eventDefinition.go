@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The EventDefinition resource provides a reusable description of when a particular event can occur.
 //
 // Status: draft
@@ -192,4 +194,13 @@ func (r EventDefinition) ResourceType() string {
 func (r EventDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper EventDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *EventDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper EventDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = EventDefinition(w)
+	return err
 }

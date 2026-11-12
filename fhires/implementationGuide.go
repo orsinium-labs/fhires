@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A set of rules of how a particular interoperability or standards problem is solved - typically through the use of FHIR resources.
 //
 // This resource is used to gather all the parts of an implementation guide into a logical whole and to publish a computable definition of all the parts.
@@ -554,4 +556,13 @@ func (r ImplementationGuide) ResourceType() string {
 func (r ImplementationGuide) MarshalJSON() ([]byte, error) {
 	type Wrapper ImplementationGuide
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *ImplementationGuide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper ImplementationGuide
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = ImplementationGuide(w)
+	return err
 }

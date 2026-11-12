@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Defines an affiliation/assotiation/relationship between 2 distinct organizations, that is not a part-of relationship/sub-division relationship.
 //
 // Purpose: Need to define relationships between organizations that are not sub-divisions of the same organization (part-of relationships).
@@ -78,4 +80,13 @@ func (r OrganizationAffiliation) ResourceType() string {
 func (r OrganizationAffiliation) MarshalJSON() ([]byte, error) {
 	type Wrapper OrganizationAffiliation
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *OrganizationAffiliation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper OrganizationAffiliation
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = OrganizationAffiliation(w)
+	return err
 }

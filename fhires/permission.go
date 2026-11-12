@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Permission resource holds access rules for a given data and context.
 //
 // Status: draft
@@ -201,4 +203,13 @@ func (r Permission) ResourceType() string {
 func (r Permission) MarshalJSON() ([]byte, error) {
 	type Wrapper Permission
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Permission) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Permission
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Permission(w)
+	return err
 }

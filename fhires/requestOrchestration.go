@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A set of related requests that can be used to capture intended activities that have inter-dependencies such as "give this medication after that one".
 //
 // Status: draft
@@ -387,4 +389,13 @@ func (r RequestOrchestration) ResourceType() string {
 func (r RequestOrchestration) MarshalJSON() ([]byte, error) {
 	type Wrapper RequestOrchestration
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *RequestOrchestration) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper RequestOrchestration
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = RequestOrchestration(w)
+	return err
 }

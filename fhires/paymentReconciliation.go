@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // This resource provides the details including amount of a payment and allocates the payment items being paid.
 //
 // Status: draft
@@ -188,4 +190,13 @@ func (r PaymentReconciliation) ResourceType() string {
 func (r PaymentReconciliation) MarshalJSON() ([]byte, error) {
 	type Wrapper PaymentReconciliation
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *PaymentReconciliation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper PaymentReconciliation
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = PaymentReconciliation(w)
+	return err
 }

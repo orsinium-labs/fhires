@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A structured set of tests against a FHIR server or client implementation to determine compliance against the FHIR specification.
 //
 // Status: draft
@@ -882,4 +884,13 @@ func (r TestScript) ResourceType() string {
 func (r TestScript) MarshalJSON() ([]byte, error) {
 	type Wrapper TestScript
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *TestScript) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper TestScript
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = TestScript(w)
+	return err
 }

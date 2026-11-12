@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Indicates an actual or potential clinical issue with or between one or more active or proposed clinical actions for a patient; e.g.
 //
 // Drug-drug interaction, Ineffective treatment frequency, Procedure-condition conflict, gaps in care, etc.
@@ -147,4 +149,13 @@ func (r DetectedIssue) ResourceType() string {
 func (r DetectedIssue) MarshalJSON() ([]byte, error) {
 	type Wrapper DetectedIssue
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *DetectedIssue) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper DetectedIssue
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = DetectedIssue(w)
+	return err
 }

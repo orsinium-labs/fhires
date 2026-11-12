@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Set of definitional characteristics for a kind of observation or measurement produced or consumed by an orderable health care service.
 //
 // Purpose: In a catalog of health-related services that use or produce observations and measurements, this resource describes the expected characteristics of these observation / measurements.
@@ -289,4 +291,13 @@ func (r ObservationDefinition) ResourceType() string {
 func (r ObservationDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper ObservationDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *ObservationDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper ObservationDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = ObservationDefinition(w)
+	return err
 }

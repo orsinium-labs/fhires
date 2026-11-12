@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The Library resource is a general-purpose container for knowledge asset definitions.
 //
 // It can be used to describe and expose existing knowledge assets such as logic libraries and information model descriptions, as well as to describe a collection of knowledge assets.
@@ -202,4 +204,13 @@ func (r Library) ResourceType() string {
 func (r Library) MarshalJSON() ([]byte, error) {
 	type Wrapper Library
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Library) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Library
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Library(w)
+	return err
 }

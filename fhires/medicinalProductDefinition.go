@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Detailed definition of a medicinal product, typically for uses other than direct patient care (e.g.
 //
 // regulatory use, drug catalogs, to support prescribing, adverse events management etc.).
@@ -323,4 +325,13 @@ func (r MedicinalProductDefinition) ResourceType() string {
 func (r MedicinalProductDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper MedicinalProductDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *MedicinalProductDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper MedicinalProductDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = MedicinalProductDefinition(w)
+	return err
 }

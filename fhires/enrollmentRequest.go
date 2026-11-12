@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // This resource provides the insurance enrollment details to the insurer regarding a specified coverage.
 //
 // Status: draft
@@ -58,4 +60,13 @@ func (r EnrollmentRequest) ResourceType() string {
 func (r EnrollmentRequest) MarshalJSON() ([]byte, error) {
 	type Wrapper EnrollmentRequest
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *EnrollmentRequest) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper EnrollmentRequest
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = EnrollmentRequest(w)
+	return err
 }

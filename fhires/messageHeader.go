@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The header for a message exchange that is either requesting or responding to an action.
 //
 //	The reference(s) that are the subject of the action as well as other information related to the action are typically transmitted in a bundle in which the MessageHeader resource instance is the first resource in the bundle.
@@ -186,4 +188,13 @@ func (r MessageHeader) ResourceType() string {
 func (r MessageHeader) MarshalJSON() ([]byte, error) {
 	type Wrapper MessageHeader
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *MessageHeader) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper MessageHeader
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = MessageHeader(w)
+	return err
 }

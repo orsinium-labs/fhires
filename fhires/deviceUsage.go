@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A record of a device being used by a patient where the record is the result of a report from the patient or a clinician.
 //
 // Status: draft
@@ -119,4 +121,13 @@ func (r DeviceUsage) ResourceType() string {
 func (r DeviceUsage) MarshalJSON() ([]byte, error) {
 	type Wrapper DeviceUsage
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *DeviceUsage) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper DeviceUsage
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = DeviceUsage(w)
+	return err
 }

@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A ResearchSubject is a participant or object which is the recipient of investigative activities in a research study.
 //
 // Status: draft
@@ -105,4 +107,13 @@ func (r ResearchSubject) ResourceType() string {
 func (r ResearchSubject) MarshalJSON() ([]byte, error) {
 	type Wrapper ResearchSubject
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *ResearchSubject) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper ResearchSubject
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = ResearchSubject(w)
+	return err
 }

@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The Citation Resource enables reference to any knowledge artifact for purposes of identification and attribution.
 //
 // The Citation Resource supports existing reference structures and developing publication practices such as versioning, expressing complex contributorship roles, and referencing computable resources.
@@ -819,4 +821,13 @@ func (r Citation) ResourceType() string {
 func (r Citation) MarshalJSON() ([]byte, error) {
 	type Wrapper Citation
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Citation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Citation
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Citation(w)
+	return err
 }

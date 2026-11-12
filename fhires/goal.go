@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Describes the intended objective(s) for a patient, group or organization care, for example, weight loss, restoring an activity of daily living, obtaining herd immunity via immunization, meeting a process improvement objective, etc.
 //
 // Status: draft
@@ -139,4 +141,13 @@ func (r Goal) ResourceType() string {
 func (r Goal) MarshalJSON() ([]byte, error) {
 	type Wrapper Goal
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Goal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Goal
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Goal(w)
+	return err
 }

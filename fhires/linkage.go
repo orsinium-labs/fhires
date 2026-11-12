@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Identifies two or more records (resource instances) that refer to the same real-world "occurrence".
 //
 // Status: draft
@@ -75,4 +77,13 @@ func (r Linkage) ResourceType() string {
 func (r Linkage) MarshalJSON() ([]byte, error) {
 	type Wrapper Linkage
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Linkage) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Linkage
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Linkage(w)
+	return err
 }

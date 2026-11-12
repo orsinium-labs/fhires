@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A medicinal product in the final form which is suitable for administering to a patient (after any mixing of multiple components, dissolution etc.
 //
 // has been performed).
@@ -206,4 +208,13 @@ func (r AdministrableProductDefinition) ResourceType() string {
 func (r AdministrableProductDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper AdministrableProductDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *AdministrableProductDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper AdministrableProductDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = AdministrableProductDefinition(w)
+	return err
 }

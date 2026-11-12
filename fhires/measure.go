@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The Measure resource provides the definition of a quality measure.
 //
 // Status: draft
@@ -521,4 +523,13 @@ func (r Measure) ResourceType() string {
 func (r Measure) MarshalJSON() ([]byte, error) {
 	type Wrapper Measure
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Measure) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Measure
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Measure(w)
+	return err
 }

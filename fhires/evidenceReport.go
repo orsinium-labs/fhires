@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The EvidenceReport Resource is a specialized container for a collection of resources and codeable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.
 //
 // Status: draft
@@ -310,4 +312,13 @@ func (r EvidenceReport) ResourceType() string {
 func (r EvidenceReport) MarshalJSON() ([]byte, error) {
 	type Wrapper EvidenceReport
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *EvidenceReport) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper EvidenceReport
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = EvidenceReport(w)
+	return err
 }

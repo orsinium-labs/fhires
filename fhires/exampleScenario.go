@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A walkthrough of a workflow showing the interaction between systems and the instances shared, possibly including the evolution of instances over time.
 //
 // Status: draft
@@ -426,4 +428,13 @@ func (r ExampleScenario) ResourceType() string {
 func (r ExampleScenario) MarshalJSON() ([]byte, error) {
 	type Wrapper ExampleScenario
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *ExampleScenario) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper ExampleScenario
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = ExampleScenario(w)
+	return err
 }

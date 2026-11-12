@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // An ingredient of a manufactured item or pharmaceutical product.
 //
 // Status: draft
@@ -208,4 +210,13 @@ func (r Ingredient) ResourceType() string {
 func (r Ingredient) MarshalJSON() ([]byte, error) {
 	type Wrapper Ingredient
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Ingredient) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Ingredient
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Ingredient(w)
+	return err
 }

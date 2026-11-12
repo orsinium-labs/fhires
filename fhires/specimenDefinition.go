@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A kind of specimen with associated set of requirements.
 //
 // Status: draft
@@ -308,4 +310,13 @@ func (r SpecimenDefinition) ResourceType() string {
 func (r SpecimenDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper SpecimenDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *SpecimenDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper SpecimenDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = SpecimenDefinition(w)
+	return err
 }

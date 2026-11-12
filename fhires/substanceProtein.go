@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A SubstanceProtein is defined as a single unit of a linear amino acid sequence, or a combination of subunits that are either covalently linked or have a defined invariant stoichiometric relationship.
 //
 // This includes all synthetic, recombinant and purified SubstanceProteins of defined sequence, whether the use is therapeutic or prophylactic. This set of elements will be used to describe albumins, coagulation factors, cytokines, growth factors, peptide/SubstanceProtein hormones, enzymes, toxins, toxoids, recombinant vaccines, and immunomodulators.
@@ -101,4 +103,13 @@ func (r SubstanceProtein) ResourceType() string {
 func (r SubstanceProtein) MarshalJSON() ([]byte, error) {
 	type Wrapper SubstanceProtein
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *SubstanceProtein) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper SubstanceProtein
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = SubstanceProtein(w)
+	return err
 }

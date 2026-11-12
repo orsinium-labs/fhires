@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A resource that represents the data of a single raw artifact as digital content accessible in its native format.
 //
 //	A Binary resource can contain any content, whether text, image, pdf, zip archive, etc.
@@ -33,4 +35,13 @@ func (r Binary) ResourceType() string {
 func (r Binary) MarshalJSON() ([]byte, error) {
 	type Wrapper Binary
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Binary) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Binary
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Binary(w)
+	return err
 }

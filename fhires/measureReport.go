@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The MeasureReport resource contains the results of the calculation of a measure; and optionally a reference to the resources involved in that calculation.
 //
 // Status: draft
@@ -318,4 +320,13 @@ func (r MeasureReport) ResourceType() string {
 func (r MeasureReport) MarshalJSON() ([]byte, error) {
 	type Wrapper MeasureReport
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *MeasureReport) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper MeasureReport
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = MeasureReport(w)
+	return err
 }

@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Describes validation requirements, source(s), status and dates for one or more elements.
 //
 // Status: draft
@@ -169,4 +171,13 @@ func (r VerificationResult) ResourceType() string {
 func (r VerificationResult) MarshalJSON() ([]byte, error) {
 	type Wrapper VerificationResult
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *VerificationResult) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper VerificationResult
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = VerificationResult(w)
+	return err
 }

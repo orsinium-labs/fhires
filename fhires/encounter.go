@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // An interaction between healthcare provider(s), and/or patient(s) for the purpose of providing healthcare service(s) or assessing the health status of patient(s).
 //
 // Status: draft
@@ -305,4 +307,13 @@ func (r Encounter) ResourceType() string {
 func (r Encounter) MarshalJSON() ([]byte, error) {
 	type Wrapper Encounter
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Encounter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Encounter
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Encounter(w)
+	return err
 }

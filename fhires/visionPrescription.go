@@ -1,6 +1,8 @@
 package fhires
 
 import (
+	"encoding/xml"
+
 	decimal "github.com/shopspring/decimal"
 )
 
@@ -148,4 +150,13 @@ func (r VisionPrescription) ResourceType() string {
 func (r VisionPrescription) MarshalJSON() ([]byte, error) {
 	type Wrapper VisionPrescription
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *VisionPrescription) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper VisionPrescription
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = VisionPrescription(w)
+	return err
 }

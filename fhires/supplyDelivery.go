@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Record of delivery of what is supplied.
 //
 // Status: draft
@@ -104,4 +106,13 @@ func (r SupplyDelivery) ResourceType() string {
 func (r SupplyDelivery) MarshalJSON() ([]byte, error) {
 	type Wrapper SupplyDelivery
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *SupplyDelivery) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper SupplyDelivery
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = SupplyDelivery(w)
+	return err
 }

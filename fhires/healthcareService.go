@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The details of a healthcare service available at a location or in a catalog.
 //
 //	In the case where there is a hierarchy of services (for example, Lab -> Pathology -> Wound Cultures), this can be represented using a set of linked HealthcareServices.
@@ -155,4 +157,13 @@ func (r HealthcareService) ResourceType() string {
 func (r HealthcareService) MarshalJSON() ([]byte, error) {
 	type Wrapper HealthcareService
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *HealthcareService) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper HealthcareService
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = HealthcareService(w)
+	return err
 }

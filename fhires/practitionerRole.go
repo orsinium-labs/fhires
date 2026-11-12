@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A specific set of Roles/Locations/specialties/services that a practitioner may perform, or has performed at an organization during a period of time.
 //
 // Purpose: Need to track services that a healthcare provider is able to provide at an organization's location, and the services that they can perform there.
@@ -98,4 +100,13 @@ func (r PractitionerRole) ResourceType() string {
 func (r PractitionerRole) MarshalJSON() ([]byte, error) {
 	type Wrapper PractitionerRole
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *PractitionerRole) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper PractitionerRole
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = PractitionerRole(w)
+	return err
 }

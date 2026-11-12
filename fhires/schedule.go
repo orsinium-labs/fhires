@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A container for slots of time that may be available for booking appointments.
 //
 // Status: draft
@@ -70,4 +72,13 @@ func (r Schedule) ResourceType() string {
 func (r Schedule) MarshalJSON() ([]byte, error) {
 	type Wrapper Schedule
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Schedule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Schedule
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Schedule(w)
+	return err
 }

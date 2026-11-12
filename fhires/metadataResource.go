@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Common Interface declaration for conformance and knowledge artifact resources.
 //
 // Status: active
@@ -183,4 +185,13 @@ func (r MetadataResource) ResourceType() string {
 func (r MetadataResource) MarshalJSON() ([]byte, error) {
 	type Wrapper MetadataResource
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *MetadataResource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper MetadataResource
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = MetadataResource(w)
+	return err
 }

@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // This resource provides eligibility and plan details from the processing of an CoverageEligibilityRequest resource.
 //
 // Status: draft
@@ -261,4 +263,13 @@ func (r CoverageEligibilityResponse) ResourceType() string {
 func (r CoverageEligibilityResponse) MarshalJSON() ([]byte, error) {
 	type Wrapper CoverageEligibilityResponse
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *CoverageEligibilityResponse) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper CoverageEligibilityResponse
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = CoverageEligibilityResponse(w)
+	return err
 }

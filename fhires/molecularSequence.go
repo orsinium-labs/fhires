@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Representation of a molecular sequence.
 //
 // Status: draft
@@ -189,4 +191,13 @@ func (r MolecularSequence) ResourceType() string {
 func (r MolecularSequence) MarshalJSON() ([]byte, error) {
 	type Wrapper MolecularSequence
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *MolecularSequence) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper MolecularSequence
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = MolecularSequence(w)
+	return err
 }

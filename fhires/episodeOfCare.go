@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // An association between a patient and an organization / healthcare provider(s) during which time encounters may occur.
 //
 // The managing organization assumes a level of responsibility for the patient during this time.
@@ -163,4 +165,13 @@ func (r EpisodeOfCare) ResourceType() string {
 func (r EpisodeOfCare) MarshalJSON() ([]byte, error) {
 	type Wrapper EpisodeOfCare
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *EpisodeOfCare) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper EpisodeOfCare
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = EpisodeOfCare(w)
+	return err
 }

@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A guidance response is the formal response to a guidance request, including any output parameters returned by the evaluation, as well as the description of any proposed actions to be taken.
 //
 // Purpose: The GuidanceResponse resource supports recording the results of decision support interactions, reportability determination for public health, as well as the communication of additional data requirements for subsequent interactions.
@@ -92,4 +94,13 @@ func (r GuidanceResponse) ResourceType() string {
 func (r GuidanceResponse) MarshalJSON() ([]byte, error) {
 	type Wrapper GuidanceResponse
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *GuidanceResponse) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper GuidanceResponse
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = GuidanceResponse(w)
+	return err
 }

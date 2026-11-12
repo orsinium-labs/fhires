@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A record of a non-patient specific request for a medication, substance, device, certain types of biologically derived product, and nutrition product used in the healthcare setting.
 //
 // Status: draft
@@ -116,4 +118,13 @@ func (r SupplyRequest) ResourceType() string {
 func (r SupplyRequest) MarshalJSON() ([]byte, error) {
 	type Wrapper SupplyRequest
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *SupplyRequest) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper SupplyRequest
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = SupplyRequest(w)
+	return err
 }

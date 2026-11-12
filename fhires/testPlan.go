@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A plan for executing testing on an artifact or specifications
 //
 // Status: draft
@@ -338,4 +340,13 @@ func (r TestPlan) ResourceType() string {
 func (r TestPlan) MarshalJSON() ([]byte, error) {
 	type Wrapper TestPlan
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *TestPlan) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper TestPlan
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = TestPlan(w)
+	return err
 }

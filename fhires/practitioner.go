@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A person who is directly or indirectly involved in the provisioning of healthcare or related services.
 //
 // Purpose: Need to track doctors, staff, locums etc. for both healthcare practitioners, funders, etc.
@@ -143,4 +145,13 @@ func (r Practitioner) ResourceType() string {
 func (r Practitioner) MarshalJSON() ([]byte, error) {
 	type Wrapper Practitioner
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Practitioner) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Practitioner
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Practitioner(w)
+	return err
 }

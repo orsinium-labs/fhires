@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A formal computable definition of a graph of resources - that is, a coherent set of resources that form a graph by following references.
 //
 // The Graph Definition resource defines a set and makes rules about the set.
@@ -250,4 +252,13 @@ func (r GraphDefinition) ResourceType() string {
 func (r GraphDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper GraphDefinition
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *GraphDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper GraphDefinition
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = GraphDefinition(w)
+	return err
 }

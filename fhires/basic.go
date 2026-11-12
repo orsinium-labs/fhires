@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Basic is used for handling concepts not yet defined in FHIR, narrative-only resources that don't map to an existing resource, and custom resources not appropriate for inclusion in the FHIR specification.
 //
 // Purpose: Need some way to safely (without breaking interoperability) allow implementers to exchange content not supported by the initial set of declared resources.
@@ -60,4 +62,13 @@ func (r Basic) ResourceType() string {
 func (r Basic) MarshalJSON() ([]byte, error) {
 	type Wrapper Basic
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *Basic) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper Basic
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = Basic(w)
+	return err
 }

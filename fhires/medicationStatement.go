@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A record of a medication that is being consumed by a patient.
 //
 //	A MedicationStatement may indicate that the patient may be taking the medication now or has taken the medication in the past or will be taking the medication in the future.  The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician.  A common scenario where this information is captured is during the history taking process during a patient visit or stay.   The medication information may come from sources such as the patient's memory, from a prescription bottle,  or from a list of medications the patient, clinician or other party maintains.
@@ -135,4 +137,13 @@ func (r MedicationStatement) ResourceType() string {
 func (r MedicationStatement) MarshalJSON() ([]byte, error) {
 	type Wrapper MedicationStatement
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *MedicationStatement) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper MedicationStatement
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = MedicationStatement(w)
+	return err
 }

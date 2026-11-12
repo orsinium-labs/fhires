@@ -1,11 +1,13 @@
 package fhires
 
 import (
+	"bytes"
 	jsontext "encoding/json/jsontext"
 	"encoding/json/v2"
 	"encoding/xml"
 	"errors"
 	"fmt"
+	"io"
 )
 
 type IResource interface {
@@ -31,7 +33,7 @@ var (
 
 // MarshalXML implements [xml.Marshaler].
 func (r AnyResource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	return e.Encode(r.Value)
+	return e.EncodeElement(r.Value, start)
 }
 
 // UnmarshalXML implements [xml.Unmarshaler].
@@ -107,6 +109,63 @@ func marshalJSON(t string, r any) ([]byte, error) {
 	}
 	b = append([]byte(`{"resourceType":"`+t+`",`), b[1:]...)
 	return b, nil
+}
+
+func unmarshalXML(d *xml.Decoder, start xml.StartElement, r any) error {
+	var b bytes.Buffer
+	encoder := xml.NewEncoder(&b)
+	err := encoder.EncodeToken(start)
+	if err != nil {
+		return fmt.Errorf("encode start token: %w", err)
+	}
+	for {
+		token, err := d.Token()
+		if err != nil && err != io.EOF {
+			return fmt.Errorf("get next token: %w", err)
+		}
+		if token == nil {
+			break
+		}
+		switch startElement := token.(type) {
+		case xml.StartElement:
+			fhirValue := findValue(startElement.Attr)
+			if fhirValue != "" {
+				err := encoder.EncodeElement(fhirValue, xml.StartElement{Name: startElement.Name})
+				if err != nil {
+					return fmt.Errorf("encode value element: %w", err)
+				}
+				err = d.Skip()
+				if err != nil {
+					return fmt.Errorf(": %w", err)
+				}
+			} else {
+				err := encoder.EncodeToken(startElement)
+				if err != nil {
+					return fmt.Errorf("encode non-value element: %w", err)
+				}
+			}
+		default:
+			err := encoder.EncodeToken(token)
+			if err != nil {
+				return fmt.Errorf("encode element: %w", err)
+			}
+		}
+	}
+	err = encoder.Flush()
+	if err != nil {
+		return fmt.Errorf(": %w", err)
+	}
+
+	return xml.NewDecoder(&b).Decode(r)
+}
+
+func findValue(attr []xml.Attr) string {
+	for _, a := range attr {
+		if a.Name.Local == "value" {
+			return a.Value
+		}
+	}
+	return ""
 }
 
 // Get resource instance for the given resource name.

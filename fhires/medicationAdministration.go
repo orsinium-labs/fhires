@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Describes the event of a patient consuming or otherwise being administered a medication.
 //
 //	This may be as simple as swallowing a tablet or it may be a long running infusion. Related resources tie this event to the authorizing prescription, and the specific encounter between patient and health care practitioner. This event can also be used to record waste using a status of not-done and the appropriate statusReason.
@@ -191,4 +193,13 @@ func (r MedicationAdministration) ResourceType() string {
 func (r MedicationAdministration) MarshalJSON() ([]byte, error) {
 	type Wrapper MedicationAdministration
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *MedicationAdministration) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper MedicationAdministration
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = MedicationAdministration(w)
+	return err
 }

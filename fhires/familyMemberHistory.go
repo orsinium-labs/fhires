@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Significant health conditions for a person related to the patient relevant in the context of care for the patient.
 //
 // Status: draft
@@ -224,4 +226,13 @@ func (r FamilyMemberHistory) ResourceType() string {
 func (r FamilyMemberHistory) MarshalJSON() ([]byte, error) {
 	type Wrapper FamilyMemberHistory
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *FamilyMemberHistory) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper FamilyMemberHistory
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = FamilyMemberHistory(w)
+	return err
 }

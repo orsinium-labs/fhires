@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A patient's point-in-time set of recommendations (i.e.
 //
 // forecasting) according to a published schedule with optional supporting justification.
@@ -140,4 +142,13 @@ func (r ImmunizationRecommendation) ResourceType() string {
 func (r ImmunizationRecommendation) MarshalJSON() ([]byte, error) {
 	type Wrapper ImmunizationRecommendation
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *ImmunizationRecommendation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper ImmunizationRecommendation
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = ImmunizationRecommendation(w)
+	return err
 }

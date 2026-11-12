@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // The CoverageEligibilityRequest provides patient and insurance coverage information to an insurer for them to respond, in the form of an CoverageEligibilityResponse, with information regarding whether the stated coverage is valid and in-force and optionally to provide the insurance details of the policy.
 //
 // Status: draft
@@ -242,4 +244,13 @@ func (r CoverageEligibilityRequest) ResourceType() string {
 func (r CoverageEligibilityRequest) MarshalJSON() ([]byte, error) {
 	type Wrapper CoverageEligibilityRequest
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *CoverageEligibilityRequest) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper CoverageEligibilityRequest
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = CoverageEligibilityRequest(w)
+	return err
 }

@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Describes the intention of how one or more practitioners intend to deliver care for a particular patient, group or community for a period of time, possibly limited to care for a specific condition or set of conditions.
 //
 // Status: draft
@@ -169,4 +171,13 @@ func (r CarePlan) ResourceType() string {
 func (r CarePlan) MarshalJSON() ([]byte, error) {
 	type Wrapper CarePlan
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *CarePlan) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper CarePlan
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = CarePlan(w)
+	return err
 }

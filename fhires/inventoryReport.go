@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // A report of inventory or stock items.
 //
 // Status: draft
@@ -122,4 +124,13 @@ func (r InventoryReport) ResourceType() string {
 func (r InventoryReport) MarshalJSON() ([]byte, error) {
 	type Wrapper InventoryReport
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *InventoryReport) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper InventoryReport
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = InventoryReport(w)
+	return err
 }

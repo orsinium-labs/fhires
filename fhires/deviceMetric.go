@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Describes a measurement, calculation or setting capability of a device.
 //
 //	The DeviceMetric resource is derived from the ISO/IEEE 11073-10201 Domain Information Model standard, but is more widely applicable.
@@ -107,4 +109,13 @@ func (r DeviceMetric) ResourceType() string {
 func (r DeviceMetric) MarshalJSON() ([]byte, error) {
 	type Wrapper DeviceMetric
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *DeviceMetric) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper DeviceMetric
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = DeviceMetric(w)
+	return err
 }

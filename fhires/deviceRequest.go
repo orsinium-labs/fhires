@@ -1,5 +1,7 @@
 package fhires
 
+import "encoding/xml"
+
 // Represents a request a device to be provided to a specific patient.
 //
 // The device may be an implantable device to be subsequently implanted, or an external assistive device, such as a walker, to be delivered and subsequently be used.
@@ -148,4 +150,13 @@ func (r DeviceRequest) ResourceType() string {
 func (r DeviceRequest) MarshalJSON() ([]byte, error) {
 	type Wrapper DeviceRequest
 	return marshalJSON(r.ResourceType(), Wrapper(r))
+}
+
+// UnmarshalXML implements [xml.Unmarshaler].
+func (r *DeviceRequest) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type Wrapper DeviceRequest
+	w := Wrapper(*r)
+	err := unmarshalXML(d, start, &w)
+	*r = DeviceRequest(w)
+	return err
 }
