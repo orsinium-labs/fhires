@@ -30,6 +30,10 @@ type BaseResource struct {
 	Language *string `bson:"language,omitempty" json:"language,omitempty" xml:"language,omitempty"`
 }
 
+func (r BaseResource) GetBaseResource() BaseResource {
+	return r
+}
+
 func (r BaseResource) ResourceType() string {
 	return "Resource"
 }

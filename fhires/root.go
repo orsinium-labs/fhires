@@ -10,6 +10,7 @@ import (
 
 type IResource interface {
 	json.Marshaler
+	GetBaseResource() BaseResource
 	ResourceType() string
 }
 
