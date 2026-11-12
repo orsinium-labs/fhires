@@ -33,32 +33,27 @@ var (
 
 // MarshalXML implements [xml.Marshaler].
 func (r AnyResource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	return e.EncodeElement(r.Value, start)
+	if r.Value == nil {
+		return nil
+	}
+	outName := start.Name
+	resName := xml.Name{Local: r.Value.ResourceType()}
+	err := e.EncodeToken(xml.StartElement{Name: outName})
+	if err != nil {
+		return err
+	}
+	inner := start.Copy()
+	inner.Name = resName
+	err = e.EncodeElement(r.Value, inner)
+	if err != nil {
+		return err
+	}
+	return e.EncodeToken(xml.EndElement{Name: outName})
 }
 
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *AnyResource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	var b []byte
-	err := d.DecodeElement(&b, &start)
-	if err != nil {
-		return err
-	}
-	if len(b) == 0 {
-		return errors.New("empty XML content")
-	}
-
-	var res struct {
-		XMLName xml.Name
-	}
-	err = xml.Unmarshal(b, &res)
-	if err != nil {
-		return err
-	}
-	if res.XMLName.Local == "" {
-		return errors.New("not a valid resource")
-	}
-
-	val := GetResource(res.XMLName.Local)
+	r.Value = GetResource(start.Name.Local)
 	if val == nil {
 		return fmt.Errorf("unsupported resourceType: %s", res.XMLName)
 	}
