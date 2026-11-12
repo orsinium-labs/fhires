@@ -6,8 +6,8 @@ import "encoding/json/v2"
 //
 // Status: active
 //
-// http://hl7.org/fhir/StructureDefinition/Resource
-type Resource struct {
+// http://hl7.org/fhir/StructureDefinition/BaseResource
+type BaseResource struct {
 	// The logical id of the resource, as used in the URL for the resource.
 	//
 	// Once assigned, this value never changes.
@@ -30,13 +30,13 @@ type Resource struct {
 	Language *string `bson:"language,omitempty" json:"language,omitempty" xml:"language,omitempty"`
 }
 
-func (r Resource) ResourceType() string {
+func (r BaseResource) ResourceType() string {
 	return "Resource"
 }
 
 // MarshalJSON implements json.Marshaler
-func (r Resource) MarshalJSON() ([]byte, error) {
-	type Wrapper Resource
+func (r BaseResource) MarshalJSON() ([]byte, error) {
+	type Wrapper BaseResource
 	return json.Marshal(struct {
 		Wrapper
 		ResourceType string `json:"resourceType"`

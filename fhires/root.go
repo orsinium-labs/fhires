@@ -226,7 +226,7 @@ var registry = map[string]IResource{
 	"Requirements":                       Requirements{},
 	"ResearchStudy":                      ResearchStudy{},
 	"ResearchSubject":                    ResearchSubject{},
-	"Resource":                           Resource{},
+	"Resource":                           BaseResource{},
 	"RiskAssessment":                     RiskAssessment{},
 	"Schedule":                           Schedule{},
 	"SearchParameter":                    SearchParameter{},
