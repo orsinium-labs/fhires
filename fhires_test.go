@@ -53,7 +53,7 @@ func TestXMLEncode(t *testing.T) {
 	}
 	raw, err := xml.Marshal(resIn)
 	noErr(t, err)
-	eq(t, string(raw), `<Encounter ><id>123</id><status>completed</status></Encounter>`)
+	eq(t, string(raw), `<Encounter><id value="123"></id><status value="completed"></status></Encounter>`)
 }
 
 func TestXMLDecode(t *testing.T) {
@@ -115,7 +115,6 @@ func TestAnyResourceXMLRoundTrip(t *testing.T) {
 	}
 	raw, err := xml.Marshal(bunIn)
 	noErr(t, err)
-	println(string(raw))
 
 	var bunOut fhires.Bundle
 	err = xml.Unmarshal(raw, &bunOut)

@@ -70,7 +70,8 @@ func (r *AnyResource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 		return fmt.Errorf("unsupported resourceType: %s", token.Name.Local)
 	}
 	ptr := reflect.New(reflect.TypeOf(r.Value))
-	if err := d.DecodeElement(ptr.Interface(), &token); err != nil {
+	err = d.DecodeElement(ptr.Interface(), &token)
+	if err != nil {
 		return err
 	}
 	r.Value = ptr.Elem().Interface().(IResource)
@@ -126,57 +127,62 @@ func marshalJSON(t string, r any) ([]byte, error) {
 
 func marshalXML(e *xml.Encoder, start xml.StartElement, t string, r any) error {
 	var b bytes.Buffer
-	err := xml.NewEncoder(&b).Encode(r)
-	if err != nil && err != io.EOF {
+	start.Name.Local = t
+	err := xml.NewEncoder(&b).EncodeElement(r, start)
+	if err != nil {
 		return fmt.Errorf("encode: %w", err)
 	}
+
+	var pending *xml.StartElement
+	var value []byte
+	flushStart := func() error {
+		if pending == nil {
+			return nil
+		}
+		if len(value) > 0 {
+			pending.Attr = append(pending.Attr, xml.Attr{
+				Name:  xml.Name{Local: "value"},
+				Value: string(value),
+			})
+		}
+		err := e.EncodeToken(*pending)
+		pending = nil
+		value = nil
+		return err
+	}
+
 	d := xml.NewDecoder(&b)
-	var prev *xml.StartElement
 	for {
 		token, err := d.Token()
-		if err != nil && err != io.EOF {
+		if err == io.EOF {
+			return nil
+		}
+		if err != nil {
 			return fmt.Errorf("get next token: %w", err)
 		}
-		if token == nil {
-			break
-		}
-		fmt.Printf("%T\n", token)
 		switch element := token.(type) {
-		case xml.StartElement:
-			prev = &element
 		case xml.CharData:
-			err := e.EncodeToken(xml.StartElement{
-				Name: prev.Name,
-				Attr: []xml.Attr{{
-					Name:  xml.Name{Local: "value"},
-					Value: string(element),
-				}},
-			})
-			if err != nil {
-				return fmt.Errorf("encode non-value element: %w", err)
+			if pending != nil {
+				value = append(value, element...)
+				continue
 			}
-			prev = nil
-		case xml.EndElement:
-			if prev != nil {
-				err := e.EncodeElement(*prev, start)
-				if err != nil {
-					return fmt.Errorf("encode element: %w", err)
-				}
-			} else {
-				err := e.EncodeToken(token)
-				if err != nil {
-					return fmt.Errorf("encode element: %w", err)
-				}
-			}
-
 		default:
-			err := e.EncodeToken(token)
+			err := flushStart()
 			if err != nil {
-				return fmt.Errorf("encode element: %w", err)
+				return fmt.Errorf("encode start element: %w", err)
 			}
+			startElement, isStart := token.(xml.StartElement)
+			if isStart {
+				copy := startElement.Copy()
+				pending = &copy
+				continue
+			}
+		}
+		err = e.EncodeToken(token)
+		if err != nil {
+			return fmt.Errorf("encode element: %w", err)
 		}
 	}
-	return nil
 }
 
 func unmarshalXML(d *xml.Decoder, start xml.StartElement, t string, r any) error {
