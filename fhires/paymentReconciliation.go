@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // This resource provides the details including amount of a payment and allocates the payment items being paid.
 //
 // Status: draft
@@ -189,11 +187,5 @@ func (r PaymentReconciliation) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r PaymentReconciliation) MarshalJSON() ([]byte, error) {
 	type Wrapper PaymentReconciliation
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

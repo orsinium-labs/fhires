@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Record details about an anatomical structure.
 //
 //	This resource may be used when a coded concept does not provide the necessary detail needed for the use case.
@@ -154,11 +152,5 @@ func (r BodyStructure) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r BodyStructure) MarshalJSON() ([]byte, error) {
 	type Wrapper BodyStructure
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

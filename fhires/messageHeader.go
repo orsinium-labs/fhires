@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // The header for a message exchange that is either requesting or responding to an action.
 //
 //	The reference(s) that are the subject of the action as well as other information related to the action are typically transmitted in a bundle in which the MessageHeader resource instance is the first resource in the bundle.
@@ -187,11 +185,5 @@ func (r MessageHeader) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r MessageHeader) MarshalJSON() ([]byte, error) {
 	type Wrapper MessageHeader
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

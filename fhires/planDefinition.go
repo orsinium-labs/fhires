@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact.
 //
 // The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.
@@ -669,11 +667,5 @@ func (r PlanDefinition) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r PlanDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper PlanDefinition
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

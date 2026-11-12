@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Demographics and other administrative information about an individual or animal receiving care or other health-related services.
 //
 // Purpose: Tracking patient is the center of the healthcare process.
@@ -222,11 +220,5 @@ func (r Patient) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Patient) MarshalJSON() ([]byte, error) {
 	type Wrapper Patient
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

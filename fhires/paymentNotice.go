@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // This resource provides the status of the payment for goods and services rendered, and the request and response resource references.
 //
 // Status: draft
@@ -71,11 +69,5 @@ func (r PaymentNotice) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r PaymentNotice) MarshalJSON() ([]byte, error) {
 	type Wrapper PaymentNotice
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

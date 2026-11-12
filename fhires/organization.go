@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A formally or informally recognized grouping of people or organizations formed for the purpose of achieving some form of collective action.
 //
 //	Includes companies, institutions, corporations, departments, community groups, healthcare practice groups, payer/insurer, etc.
@@ -112,11 +110,5 @@ func (r Organization) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Organization) MarshalJSON() ([]byte, error) {
 	type Wrapper Organization
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

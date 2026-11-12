@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Demographics and administrative information about a person independent of a specific health-related context.
 //
 // Purpose: Need to track persons potentially across multiple roles.
@@ -146,11 +144,5 @@ func (r Person) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Person) MarshalJSON() ([]byte, error) {
 	type Wrapper Person
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

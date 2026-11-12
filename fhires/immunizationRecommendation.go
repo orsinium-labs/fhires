@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A patient's point-in-time set of recommendations (i.e.
 //
 // forecasting) according to a published schedule with optional supporting justification.
@@ -141,11 +139,5 @@ func (r ImmunizationRecommendation) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r ImmunizationRecommendation) MarshalJSON() ([]byte, error) {
 	type Wrapper ImmunizationRecommendation
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

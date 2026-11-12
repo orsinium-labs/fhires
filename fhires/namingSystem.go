@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A curated namespace that issues unique symbols within that namespace for the identification of concepts, people, devices, etc.
 //
 //	Represents a "System" used within the Identifier and Coding data types.
@@ -247,11 +245,5 @@ func (r NamingSystem) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r NamingSystem) MarshalJSON() ([]byte, error) {
 	type Wrapper NamingSystem
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

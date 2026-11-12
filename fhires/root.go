@@ -100,6 +100,15 @@ func (r *AnyResource) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+func marshalJSON(t string, r any) ([]byte, error) {
+	b, err := json.Marshal(r)
+	if err != nil {
+		return nil, err
+	}
+	b = append([]byte(`{"resourceType":"`+t+`",`), b[1:]...)
+	return b, nil
+}
+
 // Get resource instance for the given resource name.
 //
 // For example, returns [Encounter] for "Encounter".

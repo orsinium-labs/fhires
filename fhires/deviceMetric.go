@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Describes a measurement, calculation or setting capability of a device.
 //
 //	The DeviceMetric resource is derived from the ISO/IEEE 11073-10201 Domain Information Model standard, but is more widely applicable.
@@ -108,11 +106,5 @@ func (r DeviceMetric) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r DeviceMetric) MarshalJSON() ([]byte, error) {
 	type Wrapper DeviceMetric
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

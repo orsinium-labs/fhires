@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A set of related requests that can be used to capture intended activities that have inter-dependencies such as "give this medication after that one".
 //
 // Status: draft
@@ -388,11 +386,5 @@ func (r RequestOrchestration) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r RequestOrchestration) MarshalJSON() ([]byte, error) {
 	type Wrapper RequestOrchestration
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

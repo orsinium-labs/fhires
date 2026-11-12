@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // The Measure resource provides the definition of a quality measure.
 //
 // Status: draft
@@ -522,11 +520,5 @@ func (r Measure) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Measure) MarshalJSON() ([]byte, error) {
 	type Wrapper Measure
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

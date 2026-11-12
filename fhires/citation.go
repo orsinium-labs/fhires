@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // The Citation Resource enables reference to any knowledge artifact for purposes of identification and attribution.
 //
 // The Citation Resource supports existing reference structures and developing publication practices such as versioning, expressing complex contributorship roles, and referencing computable resources.
@@ -820,11 +818,5 @@ func (r Citation) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Citation) MarshalJSON() ([]byte, error) {
 	type Wrapper Citation
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

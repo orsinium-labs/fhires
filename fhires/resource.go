@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // The base class for all resources.
 type BaseResource struct {
 	// The logical id of the resource, as used in the URL for the resource.
@@ -46,11 +44,5 @@ func (r Resource) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Resource) MarshalJSON() ([]byte, error) {
 	type Wrapper Resource
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

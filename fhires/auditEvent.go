@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A record of an event relevant for purposes such as operations, privacy, security, maintenance, and performance analysis.
 //
 // Status: draft
@@ -295,11 +293,5 @@ func (r AuditEvent) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r AuditEvent) MarshalJSON() ([]byte, error) {
 	type Wrapper AuditEvent
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

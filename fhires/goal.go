@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Describes the intended objective(s) for a patient, group or organization care, for example, weight loss, restoring an activity of daily living, obtaining herd immunity via immunization, meeting a process improvement objective, etc.
 //
 // Status: draft
@@ -140,11 +138,5 @@ func (r Goal) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Goal) MarshalJSON() ([]byte, error) {
 	type Wrapper Goal
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

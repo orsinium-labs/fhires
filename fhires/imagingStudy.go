@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Representation of the content produced in a DICOM imaging study.
 //
 // A study comprises a set of series, each of which includes a set of Service-Object Pair Instances (SOP Instances - images or other data) acquired or produced in a common context.  A series is of only one modality (e.g. X-ray, CT, MR, ultrasound), but a study may have multiple series of different modalities.
@@ -232,11 +230,5 @@ func (r ImagingStudy) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r ImagingStudy) MarshalJSON() ([]byte, error) {
 	type Wrapper ImagingStudy
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

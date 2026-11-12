@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A biological material originating from a biological entity intended to be transplanted or infused into another (possibly the same) biological entity.
 //
 // Status: draft
@@ -148,11 +146,5 @@ func (r BiologicallyDerivedProduct) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r BiologicallyDerivedProduct) MarshalJSON() ([]byte, error) {
 	type Wrapper BiologicallyDerivedProduct
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

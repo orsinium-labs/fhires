@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A compartment definition that defines how resources are accessed on a server.
 //
 // Status: draft
@@ -165,11 +163,5 @@ func (r CompartmentDefinition) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r CompartmentDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper CompartmentDefinition
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

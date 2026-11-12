@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Measurements and simple assertions made about a patient, device or other subject.
 //
 // Purpose: Observations are a key aspect of healthcare.  This resource is used to capture those that do not require more sophisticated mechanisms.
@@ -356,11 +354,5 @@ func (r Observation) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Observation) MarshalJSON() ([]byte, error) {
 	type Wrapper Observation
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A formal computable definition of a graph of resources - that is, a coherent set of resources that form a graph by following references.
 //
 // The Graph Definition resource defines a set and makes rules about the set.
@@ -251,11 +249,5 @@ func (r GraphDefinition) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r GraphDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper GraphDefinition
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

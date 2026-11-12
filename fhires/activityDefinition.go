@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // This resource allows for the definition of some activity to be performed, independent of a particular patient, practitioner, or other performance context.
 //
 // Status: draft
@@ -335,11 +333,5 @@ func (r ActivityDefinition) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r ActivityDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper ActivityDefinition
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

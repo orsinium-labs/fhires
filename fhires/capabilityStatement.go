@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A Capability Statement documents a set of capabilities (behaviors) of a FHIR Server or Client for a particular version of FHIR that may be used as a statement of actual server functionality or a statement of required or desired server implementation.
 //
 // Status: active
@@ -685,11 +683,5 @@ func (r CapabilityStatement) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r CapabilityStatement) MarshalJSON() ([]byte, error) {
 	type Wrapper CapabilityStatement
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

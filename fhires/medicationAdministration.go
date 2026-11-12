@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Describes the event of a patient consuming or otherwise being administered a medication.
 //
 //	This may be as simple as swallowing a tablet or it may be a long running infusion. Related resources tie this event to the authorizing prescription, and the specific encounter between patient and health care practitioner. This event can also be used to record waste using a status of not-done and the appropriate statusReason.
@@ -192,11 +190,5 @@ func (r MedicationAdministration) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r MedicationAdministration) MarshalJSON() ([]byte, error) {
 	type Wrapper MedicationAdministration
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

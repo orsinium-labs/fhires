@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A definition of a FHIR structure.
 //
 // This resource is used to describe the underlying resources, data types defined in FHIR, and also for describing extensions and constraints on resources and data types.
@@ -302,11 +300,5 @@ func (r StructureDefinition) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r StructureDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper StructureDefinition
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

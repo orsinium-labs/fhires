@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A clinical condition, problem, diagnosis, or other event, situation, issue, or clinical concept that has risen to a level of concern.
 //
 // Status: draft
@@ -171,11 +169,5 @@ func (r Condition) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Condition) MarshalJSON() ([]byte, error) {
 	type Wrapper Condition
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Prospective warnings of potential issues when providing care to the patient.
 //
 // Status: draft
@@ -75,11 +73,5 @@ func (r Flag) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Flag) MarshalJSON() ([]byte, error) {
 	type Wrapper Flag
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // The EventDefinition resource provides a reusable description of when a particular event can occur.
 //
 // Status: draft
@@ -193,11 +191,5 @@ func (r EventDefinition) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r EventDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper EventDefinition
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

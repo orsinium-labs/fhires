@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Todo.
 //
 // Status: draft
@@ -144,11 +142,5 @@ func (r SubstanceReferenceInformation) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r SubstanceReferenceInformation) MarshalJSON() ([]byte, error) {
 	type Wrapper SubstanceReferenceInformation
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

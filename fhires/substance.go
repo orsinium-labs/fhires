@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A homogeneous material with a definite composition.
 //
 // Status: draft
@@ -97,11 +95,5 @@ func (r Substance) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Substance) MarshalJSON() ([]byte, error) {
 	type Wrapper Substance
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

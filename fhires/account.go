@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A financial tool for tracking value accrued for a particular purpose.
 //
 //	In the healthcare field, used to track charges for a patient, cost centers, etc.
@@ -285,11 +283,5 @@ func (r Account) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Account) MarshalJSON() ([]byte, error) {
 	type Wrapper Account
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

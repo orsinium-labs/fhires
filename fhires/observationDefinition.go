@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Set of definitional characteristics for a kind of observation or measurement produced or consumed by an orderable health care service.
 //
 // Purpose: In a catalog of health-related services that use or produce observations and measurements, this resource describes the expected characteristics of these observation / measurements.
@@ -290,11 +288,5 @@ func (r ObservationDefinition) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r ObservationDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper ObservationDefinition
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

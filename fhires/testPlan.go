@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A plan for executing testing on an artifact or specifications
 //
 // Status: draft
@@ -339,11 +337,5 @@ func (r TestPlan) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r TestPlan) MarshalJSON() ([]byte, error) {
 	type Wrapper TestPlan
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

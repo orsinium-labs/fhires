@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A search parameter that defines a named search item that can be used to search/filter on a resource.
 //
 // Status: draft
@@ -227,11 +225,5 @@ func (r SearchParameter) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r SearchParameter) MarshalJSON() ([]byte, error) {
 	type Wrapper SearchParameter
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // The technical details of an endpoint that can be used for electronic services, such as for web services providing XDS.b, a REST endpoint for another FHIR server, or a s/Mime email address.
 //
 // This may include any security context information.
@@ -124,11 +122,5 @@ func (r Endpoint) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Endpoint) MarshalJSON() ([]byte, error) {
 	type Wrapper Endpoint
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // The Requirements resource is used to describe an actor - a human or an application that plays a role in data exchange, and that may have obligations associated with the role the actor plays.
 //
 // Status: draft
@@ -213,11 +211,5 @@ func (r Requirements) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Requirements) MarshalJSON() ([]byte, error) {
 	type Wrapper Requirements
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

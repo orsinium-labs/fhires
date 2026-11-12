@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // An action that is or was performed on or for a patient, practitioner, device, organization, or location.
 //
 // For example, this can be a physical intervention on a patient like an operation, or less invasive like long term services, counseling, or hypnotherapy.  This can be a quality or safety inspection for a location, organization, or device.  This can be an accreditation procedure on a practitioner for licensing.
@@ -221,11 +219,5 @@ func (r Procedure) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Procedure) MarshalJSON() ([]byte, error) {
 	type Wrapper Procedure
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

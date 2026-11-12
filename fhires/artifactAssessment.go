@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // This Resource provides one or more comments, classifiers or ratings about a Resource and supports attribution and rights management metadata for the added content.
 //
 // Status: draft
@@ -127,11 +125,5 @@ func (r ArtifactAssessment) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r ArtifactAssessment) MarshalJSON() ([]byte, error) {
 	type Wrapper ArtifactAssessment
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

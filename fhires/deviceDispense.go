@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Indicates that a device is to be or has been dispensed for a named person/patient.
 //
 //	This includes a description of the product (supply) provided and the instructions for using the device.
@@ -132,11 +130,5 @@ func (r DeviceDispense) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r DeviceDispense) MarshalJSON() ([]byte, error) {
 	type Wrapper DeviceDispense
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

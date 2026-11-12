@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A set of analyses performed to analyze and generate genomic data.
 //
 // Status: draft
@@ -237,11 +235,5 @@ func (r GenomicStudy) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r GenomicStudy) MarshalJSON() ([]byte, error) {
 	type Wrapper GenomicStudy
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

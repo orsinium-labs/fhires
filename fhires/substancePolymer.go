@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Properties of a substance specific to it being a polymer.
 //
 // Status: draft
@@ -235,11 +233,5 @@ func (r SubstancePolymer) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r SubstancePolymer) MarshalJSON() ([]byte, error) {
 	type Wrapper SubstancePolymer
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

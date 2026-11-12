@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A set of rules of how a particular interoperability or standards problem is solved - typically through the use of FHIR resources.
 //
 // This resource is used to gather all the parts of an implementation guide into a logical whole and to publish a computable definition of all the parts.
@@ -555,11 +553,5 @@ func (r ImplementationGuide) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r ImplementationGuide) MarshalJSON() ([]byte, error) {
 	type Wrapper ImplementationGuide
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

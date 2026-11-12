@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Represents a request a device to be provided to a specific patient.
 //
 // The device may be an implantable device to be subsequently implanted, or an external assistive device, such as a walker, to be delivered and subsequently be used.
@@ -149,11 +147,5 @@ func (r DeviceRequest) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r DeviceRequest) MarshalJSON() ([]byte, error) {
 	type Wrapper DeviceRequest
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

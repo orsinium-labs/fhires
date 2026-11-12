@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // The EvidenceVariable resource describes an element that knowledge (Evidence) is about.
 //
 // Purpose: Need to be able to define and reuse the definition of individual elements of a research question.
@@ -365,11 +363,5 @@ func (r EvidenceVariable) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r EvidenceVariable) MarshalJSON() ([]byte, error) {
 	type Wrapper EvidenceVariable
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

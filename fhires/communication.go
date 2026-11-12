@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A clinical or business level record of information being transmitted or shared; e.g.
 //
 // an alert that was sent to a responsible provider, a public health agency communication to a provider/reporter in response to a case report for a reportable condition.
@@ -154,11 +152,5 @@ func (r Communication) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Communication) MarshalJSON() ([]byte, error) {
 	type Wrapper Communication
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

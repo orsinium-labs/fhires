@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A specific set of Roles/Locations/specialties/services that a practitioner may perform, or has performed at an organization during a period of time.
 //
 // Purpose: Need to track services that a healthcare provider is able to provide at an organization's location, and the services that they can perform there.
@@ -99,11 +97,5 @@ func (r PractitionerRole) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r PractitionerRole) MarshalJSON() ([]byte, error) {
 	type Wrapper PractitionerRole
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

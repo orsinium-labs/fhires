@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Risk of harmful or undesirable, physiological response which is unique to an individual and associated with exposure to a substance.
 //
 // Purpose: To record a clinical assessment of a propensity, or potential risk to an individual, of an adverse reaction upon future exposure to the specified substance, or class of substance.
@@ -183,11 +181,5 @@ func (r AllergyIntolerance) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r AllergyIntolerance) MarshalJSON() ([]byte, error) {
 	type Wrapper AllergyIntolerance
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

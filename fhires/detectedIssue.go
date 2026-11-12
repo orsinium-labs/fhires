@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Indicates an actual or potential clinical issue with or between one or more active or proposed clinical actions for a patient; e.g.
 //
 // Drug-drug interaction, Ineffective treatment frequency, Procedure-condition conflict, gaps in care, etc.
@@ -148,11 +146,5 @@ func (r DetectedIssue) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r DetectedIssue) MarshalJSON() ([]byte, error) {
 	type Wrapper DetectedIssue
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

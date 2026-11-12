@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A request to supply a diet, formula feeding (enteral) or oral nutritional supplement to a patient/resident.
 //
 // Status: draft
@@ -440,11 +438,5 @@ func (r NutritionOrder) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r NutritionOrder) MarshalJSON() ([]byte, error) {
 	type Wrapper NutritionOrder
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

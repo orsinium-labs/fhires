@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // This resource describes a product or service that is available through a program and includes the conditions and constraints of availability.
 //
 //	All of the information in this resource is specific to the inclusion of the item in the formulary and is not inherent to the item itself.
@@ -53,11 +51,5 @@ func (r FormularyItem) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r FormularyItem) MarshalJSON() ([]byte, error) {
 	type Wrapper FormularyItem
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

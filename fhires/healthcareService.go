@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // The details of a healthcare service available at a location or in a catalog.
 //
 //	In the case where there is a hierarchy of services (for example, Lab -> Pathology -> Wound Cultures), this can be represented using a set of linked HealthcareServices.
@@ -156,11 +154,5 @@ func (r HealthcareService) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r HealthcareService) MarshalJSON() ([]byte, error) {
 	type Wrapper HealthcareService
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

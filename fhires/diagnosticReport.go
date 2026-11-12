@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // The findings and interpretation of diagnostic tests performed on patients, groups of patients, products, substances, devices, and locations, and/or specimens derived from these.
 //
 // The report includes clinical context such as requesting provider information, and some mix of atomic results, images, textual and coded interpretations, and formatted representation of diagnostic reports. The report also includes non-clinical context such as batch analysis and stability reporting of products and substances.
@@ -186,11 +184,5 @@ func (r DiagnosticReport) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r DiagnosticReport) MarshalJSON() ([]byte, error) {
 	type Wrapper DiagnosticReport
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

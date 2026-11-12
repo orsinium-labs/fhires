@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Nucleic acids are defined by three distinct elements: the base, sugar and linkage.
 //
 // Individual substance/moiety IDs will be created for each of these elements. The nucleotide sequence will be always entered in the 5’-3’ direction.
@@ -166,11 +164,5 @@ func (r SubstanceNucleicAcid) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r SubstanceNucleicAcid) MarshalJSON() ([]byte, error) {
 	type Wrapper SubstanceNucleicAcid
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

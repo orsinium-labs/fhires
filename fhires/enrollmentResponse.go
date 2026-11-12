@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // This resource provides enrollment and plan details from the processing of an EnrollmentRequest resource.
 //
 // Status: draft
@@ -61,11 +59,5 @@ func (r EnrollmentResponse) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r EnrollmentResponse) MarshalJSON() ([]byte, error) {
 	type Wrapper EnrollmentResponse
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

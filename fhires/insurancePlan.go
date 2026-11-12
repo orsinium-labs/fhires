@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Details of a Health Insurance product/plan provided by an organization.
 //
 // Status: draft
@@ -317,11 +315,5 @@ func (r InsurancePlan) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r InsurancePlan) MarshalJSON() ([]byte, error) {
 	type Wrapper InsurancePlan
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

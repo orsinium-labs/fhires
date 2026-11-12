@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A report of inventory or stock items.
 //
 // Status: draft
@@ -123,11 +121,5 @@ func (r InventoryReport) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r InventoryReport) MarshalJSON() ([]byte, error) {
 	type Wrapper InventoryReport
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

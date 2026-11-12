@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A walkthrough of a workflow showing the interaction between systems and the instances shared, possibly including the evolution of instances over time.
 //
 // Status: draft
@@ -427,11 +425,5 @@ func (r ExampleScenario) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r ExampleScenario) MarshalJSON() ([]byte, error) {
 	type Wrapper ExampleScenario
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

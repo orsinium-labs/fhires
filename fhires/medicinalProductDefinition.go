@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Detailed definition of a medicinal product, typically for uses other than direct patient care (e.g.
 //
 // regulatory use, drug catalogs, to support prescribing, adverse events management etc.).
@@ -324,11 +322,5 @@ func (r MedicinalProductDefinition) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r MedicinalProductDefinition) MarshalJSON() ([]byte, error) {
 	type Wrapper MedicinalProductDefinition
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

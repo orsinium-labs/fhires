@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // An order or request for both supply of the medication and the instructions for administration of the medication to a patient.
 //
 // The resource is called "MedicationRequest" rather than "MedicationPrescription" or "MedicationOrder" to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.
@@ -289,11 +287,5 @@ func (r MedicationRequest) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r MedicationRequest) MarshalJSON() ([]byte, error) {
 	type Wrapper MedicationRequest
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

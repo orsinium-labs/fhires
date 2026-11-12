@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A person who is directly or indirectly involved in the provisioning of healthcare or related services.
 //
 // Purpose: Need to track doctors, staff, locums etc. for both healthcare practitioners, funders, etc.
@@ -144,11 +142,5 @@ func (r Practitioner) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Practitioner) MarshalJSON() ([]byte, error) {
 	type Wrapper Practitioner
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // A record of a non-patient specific request for a medication, substance, device, certain types of biologically derived product, and nutrition product used in the healthcare setting.
 //
 // Status: draft
@@ -117,11 +115,5 @@ func (r SupplyRequest) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r SupplyRequest) MarshalJSON() ([]byte, error) {
 	type Wrapper SupplyRequest
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

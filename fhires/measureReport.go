@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // The MeasureReport resource contains the results of the calculation of a measure; and optionally a reference to the resources involved in that calculation.
 //
 // Status: draft
@@ -319,11 +317,5 @@ func (r MeasureReport) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r MeasureReport) MarshalJSON() ([]byte, error) {
 	type Wrapper MeasureReport
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

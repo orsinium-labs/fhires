@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/json/v2"
-
 // Financial instrument which may be used to reimburse or pay for health care products and services.
 //
 // Includes both insurance and self-payment.
@@ -234,11 +232,5 @@ func (r Coverage) ResourceType() string {
 // MarshalJSON implements json.Marshaler
 func (r Coverage) MarshalJSON() ([]byte, error) {
 	type Wrapper Coverage
-	return json.Marshal(struct {
-		Wrapper
-		ResourceType string `json:"resourceType"`
-	}{
-		ResourceType: r.ResourceType(),
-		Wrapper:      Wrapper(r),
-	})
+	return marshalJSON(r.ResourceType(), Wrapper(r))
 }

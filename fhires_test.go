@@ -22,6 +22,16 @@ func noErr(t *testing.T, err error) {
 	}
 }
 
+func TestJSONEncode(t *testing.T) {
+	resIn := fhires.Encounter{
+		ID:     new("123"),
+		Status: fhires.EncounterStatusCompleted,
+	}
+	raw, err := json.Marshal(resIn)
+	noErr(t, err)
+	eq(t, string(raw), `{"resourceType":"Encounter","id":"123","status":"completed"}`)
+}
+
 func TestJSONRoundTrip(t *testing.T) {
 	resIn := fhires.Encounter{
 		ID:     new("123"),
