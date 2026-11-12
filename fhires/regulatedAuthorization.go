@@ -126,7 +126,6 @@ func (r RegulatedAuthorization) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
 }
 
-
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *RegulatedAuthorization) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper RegulatedAuthorization

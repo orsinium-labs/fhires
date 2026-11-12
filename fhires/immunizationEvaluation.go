@@ -82,7 +82,6 @@ func (r ImmunizationEvaluation) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
 }
 
-
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *ImmunizationEvaluation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ImmunizationEvaluation

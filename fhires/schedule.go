@@ -80,7 +80,6 @@ func (r Schedule) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
 }
 
-
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *Schedule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Schedule

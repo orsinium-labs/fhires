@@ -136,7 +136,6 @@ func (r ArtifactAssessment) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
 }
 
-
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *ArtifactAssessment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ArtifactAssessment

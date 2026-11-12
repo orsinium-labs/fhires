@@ -115,7 +115,6 @@ func (r ResearchSubject) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
 }
 
-
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *ResearchSubject) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ResearchSubject

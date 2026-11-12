@@ -614,7 +614,6 @@ func (r MedicationKnowledge) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
 }
 
-
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *MedicationKnowledge) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper MedicationKnowledge

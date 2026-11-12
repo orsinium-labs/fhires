@@ -216,7 +216,6 @@ func (r AdministrableProductDefinition) MarshalXML(e *xml.Encoder, start xml.Sta
 	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
 }
 
-
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *AdministrableProductDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper AdministrableProductDefinition

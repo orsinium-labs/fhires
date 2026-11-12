@@ -271,7 +271,6 @@ func (r CoverageEligibilityResponse) MarshalXML(e *xml.Encoder, start xml.StartE
 	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
 }
 
-
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *CoverageEligibilityResponse) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper CoverageEligibilityResponse

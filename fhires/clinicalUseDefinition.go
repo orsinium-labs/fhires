@@ -291,7 +291,6 @@ func (r ClinicalUseDefinition) MarshalXML(e *xml.Encoder, start xml.StartElement
 	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
 }
 
-
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *ClinicalUseDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ClinicalUseDefinition

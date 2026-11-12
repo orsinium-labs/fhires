@@ -278,7 +278,6 @@ func (r SubstanceSourceMaterial) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
 }
 
-
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *SubstanceSourceMaterial) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper SubstanceSourceMaterial

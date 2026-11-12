@@ -325,7 +325,6 @@ func (r Device) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
 }
 
-
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *Device) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Device

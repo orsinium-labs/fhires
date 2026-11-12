@@ -378,7 +378,6 @@ func (r SubscriptionTopic) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
 }
 
-
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *SubscriptionTopic) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper SubscriptionTopic

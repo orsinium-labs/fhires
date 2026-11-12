@@ -679,7 +679,6 @@ func (r ValueSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
 }
 
-
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *ValueSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper ValueSet

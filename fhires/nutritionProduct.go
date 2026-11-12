@@ -197,7 +197,6 @@ func (r NutritionProduct) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
 }
 
-
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *NutritionProduct) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper NutritionProduct

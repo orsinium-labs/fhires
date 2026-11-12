@@ -155,7 +155,6 @@ func (r Person) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
 }
 
-
 // UnmarshalXML implements [xml.Unmarshaler].
 func (r *Person) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	type Wrapper Person
