@@ -2,11 +2,7 @@ package fhires
 
 import "encoding/json/v2"
 
-// This is the base resource type for everything.
-//
-// Status: active
-//
-// http://hl7.org/fhir/StructureDefinition/BaseResource
+// The base class for all resources.
 type BaseResource struct {
 	// The logical id of the resource, as used in the URL for the resource.
 	//
@@ -34,13 +30,22 @@ func (r BaseResource) GetBaseResource() BaseResource {
 	return r
 }
 
-func (r BaseResource) ResourceType() string {
+// This is the base resource type for everything.
+//
+// Status: active
+//
+// http://hl7.org/fhir/StructureDefinition/BaseResource
+type Resource struct {
+	BaseResource
+}
+
+func (r Resource) ResourceType() string {
 	return "Resource"
 }
 
 // MarshalJSON implements json.Marshaler
-func (r BaseResource) MarshalJSON() ([]byte, error) {
-	type Wrapper BaseResource
+func (r Resource) MarshalJSON() ([]byte, error) {
+	type Wrapper Resource
 	return json.Marshal(struct {
 		Wrapper
 		ResourceType string `json:"resourceType"`

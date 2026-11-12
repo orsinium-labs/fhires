@@ -98,7 +98,7 @@ type ParametersParameter struct {
 	// Conveys the content if the parameter is a whole resource.
 	//
 	// Comment: When resolving references in resources, the operation definition may specify how references may be resolved between parameters. If a reference cannot be resolved between the parameters, the application should fall back to its general resource resolution methods.
-	Resource AnyResource `bson:"resource,omitempty" json:"resource,omitempty" xml:"resource,omitempty"`
+	Resource AnyResource `bson:"resource,omitempty" json:"resource,omitzero" xml:"resource,omitempty"`
 	// A named part of a multi-part parameter.
 	Part []ParametersParameter `bson:"part,omitempty" json:"part,omitempty"`
 }

@@ -23,10 +23,10 @@ type AnyResource struct {
 }
 
 var (
-	_ json.MarshalerTo     = AnyResource{}
-	_ json.UnmarshalerFrom = &AnyResource{}
-	_ xml.Marshaler        = AnyResource{}
-	_ xml.Unmarshaler      = &AnyResource{}
+	_ json.MarshalerTo = AnyResource{}
+	_ json.Unmarshaler = &AnyResource{}
+	_ xml.Marshaler    = AnyResource{}
+	_ xml.Unmarshaler  = &AnyResource{}
 )
 
 // MarshalXML implements [xml.Marshaler].
@@ -63,14 +63,14 @@ func (r AnyResource) MarshalJSONTo(e *jsontext.Encoder) error {
 	return json.MarshalEncode(e, r.Value)
 }
 
-// UnmarshalJSONFrom implements [json.UnmarshalerFrom].
-func (r *AnyResource) UnmarshalJSONFrom(d *jsontext.Decoder) error {
+// UnmarshalJSON implements [json.Unmarshaler].
+func (r *AnyResource) UnmarshalJSON(b []byte) error {
 	var res struct {
 		ResourceType string `json:"resourceType"`
 	}
-	err := json.UnmarshalDecode(d, &res, json.RejectUnknownMembers(false))
+	err := json.Unmarshal(b, &res, json.RejectUnknownMembers(false))
 	if err != nil {
-		return err
+		return fmt.Errorf("read resourceType: %w", err)
 	}
 	if res.ResourceType == "" {
 		return errors.New("not a valid resource")
@@ -79,9 +79,9 @@ func (r *AnyResource) UnmarshalJSONFrom(d *jsontext.Decoder) error {
 	if val == nil {
 		return fmt.Errorf("unsupported resourceType: %s", res.ResourceType)
 	}
-	err = json.UnmarshalDecode(d, &val)
+	err = json.Unmarshal(b, &val)
 	if err != nil {
-		return err
+		return fmt.Errorf("read resource of the provided resourceType: %w", err)
 	}
 	r.Value = val
 	return nil
@@ -227,7 +227,7 @@ var registry = map[string]IResource{
 	"Requirements":                       Requirements{},
 	"ResearchStudy":                      ResearchStudy{},
 	"ResearchSubject":                    ResearchSubject{},
-	"Resource":                           BaseResource{},
+	"Resource":                           Resource{},
 	"RiskAssessment":                     RiskAssessment{},
 	"Schedule":                           Schedule{},
 	"SearchParameter":                    SearchParameter{},
