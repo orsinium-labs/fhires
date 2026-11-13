@@ -13,6 +13,12 @@ type DomainResource struct {
 	//
 	// Comment: Contained resources do not have a narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a "text blob" or where text is additionally entered raw or narrated and encoded information is added later.
 	Text *Narrative `bson:"text,omitempty" json:"text,omitempty" xml:"text,omitempty"`
+	// Contained, inline Resources.
+	//
+	// These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, nor can they have their own independent transaction scope. This is allowed to be a Parameters resource if and only if it is referenced by a resource that provides context/meaning.
+	//
+	// Comment: This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again. Contained resources may have profiles and tags in their meta elements, but SHALL NOT have security labels.
+	Contained AnyResource `bson:"contained,omitempty" json:"contained,omitzero" xml:"contained,omitempty"`
 	// These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, nor can they have their own independent transaction scope.
 	//
 	// This is allowed to be a Parameters resource if and only if it is referenced by a resource that provides context/meaning.
