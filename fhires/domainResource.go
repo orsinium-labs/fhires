@@ -1,7 +1,5 @@
 package fhires
 
-import "encoding/xml"
-
 // A resource that includes narrative, extensions, and contained resources.
 //
 // Status: active
@@ -34,29 +32,4 @@ type DomainResource struct {
 	//
 	// Comment: There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.
 	ModifierExtension []Extension `bson:"modifierExtension,omitempty" json:"modifierExtension,omitempty" xml:"modifierExtension,omitempty"`
-}
-
-func (r DomainResource) ResourceType() string {
-	return "DomainResource"
-}
-
-// MarshalJSON implements [json.Marshaler]
-func (r DomainResource) MarshalJSON() ([]byte, error) {
-	type Wrapper DomainResource
-	return marshalJSON(r.ResourceType(), Wrapper(r))
-}
-
-// UnmarshalXML implements [xml.Marshaler].
-func (r DomainResource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type Wrapper DomainResource
-	return marshalXML(e, start, r.ResourceType(), Wrapper(r))
-}
-
-// UnmarshalXML implements [xml.Unmarshaler].
-func (r *DomainResource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type Wrapper DomainResource
-	w := Wrapper(*r)
-	err := unmarshalXML(d, start, r.ResourceType(), &w)
-	*r = DomainResource(w)
-	return err
 }

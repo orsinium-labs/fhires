@@ -351,8 +351,6 @@ func GetResource(resourceType string) IResource {
 		return DiagnosticReport{}
 	case "DocumentReference":
 		return DocumentReference{}
-	case "DomainResource":
-		return DomainResource{}
 	case "Encounter":
 		return Encounter{}
 	case "EncounterHistory":
@@ -513,8 +511,6 @@ func GetResource(resourceType string) IResource {
 		return ResearchStudy{}
 	case "ResearchSubject":
 		return ResearchSubject{}
-	case "Resource":
-		return Resource{}
 	case "RiskAssessment":
 		return RiskAssessment{}
 	case "Schedule":
